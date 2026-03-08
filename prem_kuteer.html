@@ -21,10 +21,10 @@
             --secondary-pink: #f06292;
             --baby-pink: #fff0f5;
             --pure-white: #ffffff;
-            --border-color: #f8bbd0;
+            --border-pink: #f8bbd0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: 0.3s ease; }
 
         body { 
             font-family: 'Kalpurush', Arial, sans-serif; 
@@ -37,148 +37,148 @@
         }
 
         .container { 
-            width: 100%; max-width: 750px; 
+            width: 100%; max-width: 800px; 
             background: var(--pure-white);
-            padding: 40px 30px; border-radius: 35px; 
-            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.1); 
-            border: 2px solid var(--border-color);
+            padding: 40px 30px; border-radius: 40px; 
+            box-shadow: 0 25px 70px rgba(233, 30, 99, 0.12); 
+            border: 3px solid var(--border-pink);
             position: relative; align-self: flex-start;
         }
 
-        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
-        .ch-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-pink); box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2); }
-        .ch-title { font-size: 42px; color: var(--primary-pink); font-family: 'LeCristalDeLune', serif; letter-spacing: 2px; }
+        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center; }
+        .ch-logo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 5px solid var(--primary-pink); box-shadow: 0 10px 25px rgba(233, 30, 99, 0.2); }
+        .ch-title { font-size: 45px; color: var(--primary-pink); font-family: 'LeCristalDeLune', serif; letter-spacing: 2px; }
         .btn-home { position: absolute; top: 25px; left: 25px; text-decoration: none; color: var(--primary-pink); font-size: 14px; font-weight: bold; }
 
-        /* Login UI */
-        #loginScreen { text-align: center; padding: 50px 0; }
-        .pass-input { width: 100%; max-width: 350px; padding: 18px; border: 2px solid var(--baby-pink); border-radius: 20px; font-size: 20px; text-align: center; margin-bottom: 25px; outline: none; background: var(--baby-pink); color: #333; font-weight: bold; }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 18px 45px; border-radius: 18px; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 10px 25px rgba(233, 30, 99, 0.3); }
+        /* Login Screen */
+        #loginScreen { text-align: center; padding: 60px 0; }
+        .pass-input { width: 100%; max-width: 380px; padding: 20px; border: 3px solid var(--baby-pink); border-radius: 20px; font-size: 22px; text-align: center; margin-bottom: 30px; outline: none; background: var(--baby-pink); color: #333; font-weight: bold; }
+        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 20px 50px; border-radius: 20px; font-size: 24px; font-weight: bold; cursor: pointer; box-shadow: 0 12px 30px rgba(233, 30, 99, 0.3); width: 100%; max-width: 380px; }
 
-        /* User Portal */
+        /* User Interface */
         #userPortal { display: none; }
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 25px 0 10px; font-size: 18px; }
-        input, select { width: 100%; padding: 18px; border: 2px solid var(--baby-pink); border-radius: 15px; font-size: 17px; outline: none; background: #fff; }
+        h2.section-title { color: var(--primary-pink); text-align: center; margin-bottom: 35px; font-size: 32px; border-bottom: 2px solid var(--baby-pink); padding-bottom: 15px; }
+        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 25px 0 10px; font-size: 20px; }
+        input[type="text"], select, input[type="file"] { width: 100%; padding: 18px; border: 2px solid var(--border-pink); border-radius: 18px; font-size: 18px; outline: none; background: #fff; }
         input:focus, select:focus { border-color: var(--primary-pink); background: var(--baby-pink); }
 
-        /* Admin Section Box - LARGE & PROMINENT */
+        /* Admin Inbox - PROMINENT BOX */
         #adminDashboard { 
             display: none; 
-            margin-top: 50px; 
+            margin-top: 60px; 
             background: #fff;
-            border: 4px solid var(--primary-pink); 
-            padding: 40px; 
-            border-radius: 35px; 
-            box-shadow: 0 25px 50px rgba(233, 30, 99, 0.2);
+            border: 5px solid var(--primary-pink); 
+            padding: 45px; 
+            border-radius: 40px; 
+            box-shadow: 0 30px 80px rgba(233, 30, 99, 0.25);
         }
         #adminDashboard h3 { 
             color: var(--primary-pink); 
-            font-size: 40px; 
-            margin-bottom: 30px; 
+            font-size: 45px; 
+            margin-bottom: 35px; 
             text-align: center; 
             font-family: 'LeCristalDeLune', serif;
-            border-bottom: 3px solid var(--baby-pink);
-            padding-bottom: 20px;
+            border-bottom: 4px solid var(--baby-pink);
+            padding-bottom: 25px;
         }
 
-        /* Control Panel Box */
+        /* Project Control Box */
         .admin-controls-box { 
             background: var(--baby-pink); 
-            padding: 25px; 
+            padding: 30px; 
             border-radius: 25px; 
-            margin-bottom: 35px; 
+            margin-bottom: 40px; 
             border: 2px dashed var(--primary-pink);
         }
-        .admin-controls-box p { font-size: 20px; font-weight: bold; color: var(--primary-pink); margin-bottom: 15px; }
+        .admin-controls-box p { font-size: 22px; font-weight: bold; color: var(--primary-pink); margin-bottom: 20px; }
 
         .list-card { 
             background: white; 
-            border: 1px solid var(--border-color); 
-            padding: 25px; 
-            border-radius: 25px; 
-            margin-bottom: 25px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 2px solid var(--baby-pink); 
+            padding: 30px; 
+            border-radius: 30px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
-        .list-card b { color: var(--primary-pink); font-size: 24px; }
-        .list-card p { font-size: 18px; color: #444; margin-top: 8px; }
+        .list-card b { color: var(--primary-pink); font-size: 28px; display: block; margin-bottom: 10px; }
+        .list-card p { font-size: 20px; color: #444; margin-bottom: 15px; }
 
-        audio { width: 100%; margin-top: 15px; height: 40px; }
+        audio { width: 100%; height: 45px; margin-top: 15px; }
 
-        #statusMsg { text-align: center; margin-top: 25px; font-weight: bold; font-size: 18px; color: var(--primary-pink); }
-        .admin-trigger { background:none; border:none; color:#ddd; font-size:12px; margin-top:70px; cursor:pointer; width:100%; }
-        
         .delete-btn {
-            background: #ffecf2;
-            color: #d32f2f;
-            border: 1px solid #ffcdd2;
-            padding: 8px 15px;
-            border-radius: 10px;
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #ffcdd2;
+            padding: 12px 25px;
+            border-radius: 15px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
-            margin-top: 15px;
+            font-size: 18px;
+            margin-top: 20px;
         }
-        .delete-btn:hover { background: #d32f2f; color: white; }
+        .delete-btn:hover { background: #c62828; color: white; border-color: #c62828; }
+
+        #statusMsg { text-align: center; margin-top: 30px; font-weight: bold; font-size: 20px; color: var(--primary-pink); }
+        .admin-trigger { background:none; border:none; color:#eee; font-size:10px; margin-top:80px; cursor:pointer; width:100%; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোম</a>
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Home</a>
     
     <div class="header">
         <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo">
-        <h1 class="ch-title">প্রেম কুটির</h1>
+        <h1 class="ch-title">Prem Kuteer</h1>
     </div>
 
-    <!-- লগইন স্ক্রিন -->
+    <!-- Login Area -->
     <div id="loginScreen">
-        <p style="margin-bottom: 20px; font-weight: bold; color: #888; font-size: 18px;">পোর্টাল কোড দিন</p>
-        <input type="password" id="entryPass" class="pass-input" placeholder="ACCESS CODE">
+        <p style="margin-bottom: 20px; font-weight: bold; color: #888; font-size: 20px;">Portal Access Code Din</p>
+        <input type="password" id="entryPass" class="pass-input" placeholder="CODE">
         <br>
-        <button class="btn-main" onclick="checkEntry()">প্রবেশ করুন <i class="fas fa-door-open"></i></button>
-        <p id="entryError" style="color:red; margin-top:15px; display:none; font-weight: bold;">ভুল পাসওয়ার্ড!</p>
+        <button class="btn-main" onclick="checkEntry()">Enter Portal <i class="fas fa-heart"></i></button>
+        <p id="entryError" style="color:red; margin-top:15px; display:none; font-weight: bold;">Bhul Password!</p>
     </div>
 
-    <!-- ইউজার পোর্টাল -->
+    <!-- User Section -->
     <div id="userPortal">
-        <h2 style="text-align:center; color:var(--primary-pink); margin-bottom:30px; font-size: 28px;">আপনার কাজ জমা দিন</h2>
+        <h2 class="section-title">Submit Your Work</h2>
         
-        <label>আপনার নাম:</label>
-        <input type="text" id="uName" placeholder="নাম লিখুন">
+        <label>Apnar Naam:</label>
+        <input type="text" id="uName" placeholder="Naam likhun">
 
-        <label>প্রজেক্ট সিলেক্ট করুন:</label>
-        <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
+        <label>Project Select Korun:</label>
+        <select id="uProject"><option value="">Loading Projects...</option></select>
 
-        <label>কাজের ধরন:</label>
+        <label>Kaajer Dhoron:</label>
         <select id="uCategory">
-            <option value="Voice">🎙️ ভয়েস অডিও</option>
-            <option value="Script">✍️ গল্প / স্ক্রিপ্ট</option>
+            <option value="Voice">🎙️ Voice Audio</option>
+            <option value="Script">✍️ Story / Script</option>
         </select>
 
-        <label>ফাইল সিলেক্ট করুন:</label>
+        <label>File Select Korun:</label>
         <input type="file" id="uFile">
 
-        <button class="btn-main" style="width:100%; margin-top:35px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
+        <button class="btn-main" style="width:100%; margin-top:40px;" onclick="submitWork()">Submit Work <i class="fas fa-paper-plane"></i></button>
         <div id="statusMsg"></div>
 
-        <button onclick="showAdminLogin()" class="admin-trigger">অ্যাডমিন প্যানেল</button>
+        <button onclick="showAdminLogin()" class="admin-trigger">Admin Panel</button>
     </div>
 
-    <!-- অ্যাডমিন প্যানেল (বড় বক্স) -->
+    <!-- Admin Panel (The Big Box) -->
     <div id="adminDashboard">
         <h3>Admin Inbox</h3>
         
-        <!-- প্রজেক্ট কন্ট্রোল বক্স (Master এবং Admin উভয়ের জন্য এখন খোলা) -->
         <div id="adminControlPanel" class="admin-controls-box">
-            <p><i class="fas fa-tools"></i> অ্যাডমিন কন্ট্রোল প্যানেল</p>
-            <div style="display:flex; gap:12px; flex-wrap: wrap;">
-                <input type="text" id="newProjectName" placeholder="নতুন প্রজেক্ট নাম" style="flex: 1; min-width: 200px;">
-                <button onclick="addProject()" style="background:var(--primary-pink); color:white; border:none; padding:15px 25px; border-radius:15px; cursor:pointer; font-weight: bold; font-size: 16px;">Add Project</button>
+            <p><i class="fas fa-plus-circle"></i> Add New Project</p>
+            <div style="display:flex; gap:15px; flex-wrap: wrap;">
+                <input type="text" id="newProjectName" placeholder="Project Name" style="flex: 1; min-width: 250px;">
+                <button onclick="addProject()" style="background:var(--primary-pink); color:white; border:none; padding:15px 30px; border-radius:15px; cursor:pointer; font-weight: bold; font-size: 18px;">Add</button>
             </div>
         </div>
 
-        <div id="inboxList" style="font-size: 18px;">লোড হচ্ছে...</div>
+        <div id="inboxList">Inbox loading...</div>
     </div>
 </div>
 
@@ -197,8 +197,6 @@
     const CLOUD_NAME = 'dy9bujsit'; 
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
 
-    let loggedInAs = ""; // "Master" or "Admin"
-
     window.onload = () => auth.signInAnonymously();
 
     function checkEntry() {
@@ -214,7 +212,7 @@
 
     function loadProjects() {
         dbRef.collection('projects').where('channel', '==', 'প্রেম কুটির').onSnapshot(snap => {
-            let html = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
+            let html = '<option value="" disabled selected>Project Beche Nin</option>';
             snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
             document.getElementById('uProject').innerHTML = html;
         });
@@ -233,9 +231,9 @@
         const file = document.getElementById('uFile').files[0];
         const status = document.getElementById('statusMsg');
 
-        if(!name || !project || !file) return alert("সব তথ্য দিন!");
+        if(!name || !project || !file) return alert("Sob info din!");
 
-        status.innerText = "⏳ ফাইল আপলোড হচ্ছে...";
+        status.innerText = "⏳ Uploading file...";
         const fd = new FormData();
         fd.append('file', file);
         fd.append('upload_preset', UPLOAD_PRESET);
@@ -250,32 +248,28 @@
                     fileUrl: data.secure_url, channel: 'প্রেম কুটির',
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                status.innerText = "✅ সফলভাবে জমা হয়েছে!";
+                status.innerText = "✅ Safolbhabe joma hoyeche!";
                 document.getElementById('uName').value = "";
                 document.getElementById('uFile').value = "";
             }
-        } catch(e) { status.innerText = "❌ ব্যর্থ হয়েছে!"; }
+        } catch(e) { status.innerText = "❌ Fail hoyeche!"; }
     }
 
     function showAdminLogin() {
-        const input = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+        const input = prompt("Admin Password Din:");
         const pass = input ? input.trim() : "";
         
-        if(pass === "Master2002") {
-            loggedInAs = "Master";
-            openAdminPanel();
-        } else if(pass === "Neha123") {
-            loggedInAs = "Admin";
+        // Ekhone Neha123 ar Master2002 duto password-ei full access thakbe
+        if(pass === "Master2002" || pass === "Neha123") {
             openAdminPanel();
         } else if(input !== null) {
-            alert("ভুল পাসওয়ার্ড!");
+            alert("Bhul Password!");
         }
     }
 
     function openAdminPanel() {
         document.getElementById('userPortal').style.display = "none";
         document.getElementById('adminDashboard').style.display = "block";
-        // প্রজেক্ট প্যানেল এখন উভয়ের জন্যই উন্মুক্ত
         loadInbox();
     }
 
@@ -288,22 +282,22 @@
                 const isAudio = d.fileUrl.match(/\.(mp3|wav|ogg)$/i);
                 html += `
                     <div class="list-card">
-                        <b>👤 ${d.sender}</b>
-                        <p>📦 প্রজেক্ট: ${d.project} | 📂 ক্যাটাগরি: ${d.category}</p>
-                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : `<a href="${d.fileUrl}" target="_blank" style="color:var(--primary-pink); font-size:18px; font-weight:bold; display:block; margin-top:15px;">ফাইল দেখুন <i class="fas fa-external-link-alt"></i></a>`}
+                        <b>👤 Sender: ${d.sender}</b>
+                        <p>📦 Project: ${d.project} | 📂 Category: ${d.category}</p>
+                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : `<a href="${d.fileUrl}" target="_blank" style="color:var(--primary-pink); font-size:20px; font-weight:bold; display:block; margin-top:15px;">View File <i class="fas fa-external-link-alt"></i></a>`}
                         
-                        <div style="text-align:right; margin-top:15px;">
-                            <button class="delete-btn" onclick="deleteDoc('${doc.id}')"><i class="fas fa-trash"></i> ডিলিট করুন</button>
+                        <div style="text-align:right; margin-top:20px;">
+                            <button class="delete-btn" onclick="deleteDoc('${doc.id}')"><i class="fas fa-trash"></i> Delete Task</button>
                         </div>
                     </div>
                 `;
             });
-            list.innerHTML = html || "<p style='text-align:center; color:#999;'>ইনবক্স খালি।</p>";
+            list.innerHTML = html || "<p style='text-align:center; color:#999; font-size:22px;'>Inbox Khali.</p>";
         });
     }
 
     async function deleteDoc(id) {
-        if(confirm("আপনি কি নিশ্চিত এটি ডিলিট করতে চান?")) await dbRef.collection('tasks').doc(id).delete();
+        if(confirm("Delete korben?")) await dbRef.collection('tasks').doc(id).delete();
     }
 </script>
 </body>
