@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Go - প্রেম কুটির পোর্টাল</title>
+    
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #e91e63;
+            --secondary-color: #f06292;
+            --light-bg: #fff0f5;
+            --card-bg: #ffffff;
+            --text-dark: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', Arial, sans-serif; transition: 0.3s ease; }
+        
+        body { 
+            background: linear-gradient(135deg, var(--light-bg) 0%, #ffffff 100%);
+            color: var(--text-dark); 
+            min-height: 100vh; 
+            padding: 20px 10px; 
+        }
+
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 30px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.1); 
+            position: relative; 
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* Header */
+        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
+        .ch-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-color); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .ch-title { font-size: 32px; color: var(--primary-color); font-weight: bold; }
+        .btn-home { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--primary-color); font-weight: bold; font-size: 14px; }
+
+        /* Login Screen */
+        #loginScreen { text-align: center; padding: 40px 0; }
+        .pass-input { width: 100%; max-width: 320px; padding: 15px; border: 2px solid #fce4ec; border-radius: 15px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; background: white; }
+        .pass-input:focus { border-color: var(--primary-color); }
+        .btn-main { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; max-width: 320px; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); }
+
+        /* Tabs */
+        .tabs { display: flex; background: #eee; border-radius: 15px; margin-bottom: 25px; overflow: hidden; padding: 5px; }
+        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; color: #666; border-radius: 12px; }
+        .tab.active { background: var(--primary-color); color: white; }
+
+        /* Form Elements */
+        label { font-weight: bold; color: var(--primary-color); display: block; margin: 15px 0 5px; font-size: 14px; }
+        input[type="text"], select, textarea, input[type="file"] { width: 100%; padding: 14px; border: 2px solid #fce4ec; border-radius: 12px; font-size: 15px; outline: none; background: #fff; }
+        textarea { min-height: 120px; }
+
+        /* Cards */
+        .list-card { background: white; border: 1px solid #fce4ec; padding: 20px; border-radius: 18px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative; }
+        .list-card b { color: var(--primary-color); font-size: 18px; display: block; margin-bottom: 5px; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; background: #eee; color: #666; margin-top: 10px; }
+        
+        .audio-player { width: 100%; margin-top: 15px; height: 35px; }
+
+        #adminDashboard { display: none; margin-top: 40px; border-top: 2px dashed #eee; padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোম</a>
+    
+    <div class="header">
+        <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo">
+        <h1 class="ch-title">প্রেম কুটির</h1>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen">
+        <p style="margin-bottom: 25px; color:#666; font-weight:bold;">পোর্টাল অ্যাক্সেস কোড দিন</p>
+        <input type="password" id="passInput" class="pass-input" placeholder="কোড লিখুন">
+        <br>
+        <button class="btn-main" onclick="checkAccess()">প্রবেশ করুন <i class="fas fa-door-open"></i></button>
+        <p id="loginError" style="color:#e91e63; margin-top:15px; display:none; font-weight:bold;">ভুল কোড!</p>
+    </div>
+
+    <!-- MAIN PORTAL -->
+    <div id="mainPortal" style="display:none;">
+        <div id="adminControls" style="display:none; text-align:center; margin-bottom:20px;">
+            <div style="background:var(--primary-color); color:white; padding:10px; border-radius:15px; font-weight:bold; font-size:14px;">
+                <i class="fas fa-user-shield"></i> স্বাগতম, <span id="currentUserName"></span>
+            </div>
+            <button onclick="location.reload()" style="background:none; border:none; color:#888; font-size:12px; margin-top:5px; cursor:pointer;">লগ আউট</button>
+        </div>
+
+        <div class="tabs" id="userTabs">
+            <div class="tab active" onclick="switchTab('upload')">কাজ জমা দিন</div>
+            <div class="tab" onclick="switchTab('stories')">রাইটার্স জোন</div>
+        </div>
+
+        <!-- UPLOAD SECTION -->
+        <div id="uploadSection">
+            <label>চলমান প্রজেক্ট:</label>
+            <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
+            
+            <label>কাজের ধরন:</label>
+            <select id="uCategory">
+                <option value="Voice">🎙️ ভয়েস অডিও</option>
+                <option value="Script">✍️ স্ক্রিপ্ট / গল্প</option>
+                <option value="Other">📁 অন্যান্য</option>
+            </select>
+            
+            <label>আপনার নাম:</label>
+            <input type="text" id="uName" placeholder="নাম লিখুন">
+            
+            <label>ফাইল সিলেক্ট করুন:</label>
+            <input type="file" id="uFile">
+            
+            <button class="btn-main" style="margin-top:25px; width:100%; max-width:100%;" onclick="submitWork()">জমা দিন <i class="fas fa-upload"></i></button>
+            <div id="uploadMsg" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
+        </div>
+
+        <!-- STORIES SECTION -->
+        <div id="storiesSection" style="display:none;">
+            <label>লেখকের নাম:</label>
+            <input type="text" id="sAuthor" placeholder="নাম">
+            <label>গল্পের শিরোনাম:</label>
+            <input type="text" id="sTitle" placeholder="শিরোনাম">
+            <label>গল্পটি লিখুন:</label>
+            <textarea id="sText" placeholder="এখানে লিখুন..."></textarea>
+            <button class="btn-main" style="margin-top:25px; width:100%; max-width:100%;" onclick="submitStory()">গল্প পাঠান <i class="fas fa-paper-plane"></i></button>
+            <div id="storyMsg" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="adminDashboard">
+            <h3 style="color:var(--primary-color); margin-bottom:20px; border-bottom: 2px solid #fce4ec; padding-bottom:10px;"><i class="fas fa-inbox"></i> প্রেম কুটির ইনবক্স</h3>
+            <div id="inboxList">লোড হচ্ছে...</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+    const firebaseConfig = { apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", projectId: "prothomkotha-2002" };
+    const appId = "golposolpo-premium";
+    const CLOUD_NAME = 'dy9bujsit'; 
+    const UPLOAD_PRESET = 'Prothom Kotha Voice';
+    const channelName = "প্রেম কুটির";
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const dbRef = db.collection('artifacts').doc(appId).collection('public').doc('data');
+
+    // Role Settings
+    const ROLES = {
+        "Master2002": "Master Admin",
+        "Neha123": "প্রধান মেন্টর" // সব মেন্টর এই পাসওয়ার্ড ব্যবহার করবেন
+    };
+
+    let userRole = ""; 
+    let roleName = "";
+
+    window.onload = () => auth.signInAnonymously();
+
+    function checkAccess() {
+        const pass = document.getElementById('passInput').value;
+        if(pass === "PKUSER") { 
+            userRole = "MEMBER";
+            startPortal();
+        } else if(ROLES[pass]) {
+            userRole = "ADMIN";
+            roleName = ROLES[pass];
+            startPortal();
+        } else {
+            document.getElementById('loginError').style.display = "block";
+        }
+    }
+
+    function startPortal() {
+        document.getElementById('loginScreen').style.display = "none";
+        document.getElementById('mainPortal').style.display = "block";
+        loadProjects();
+        
+        if(userRole === "ADMIN") {
+            document.getElementById('adminControls').style.display = "block";
+            document.getElementById('currentUserName').innerText = roleName;
+            document.getElementById('adminDashboard').style.display = "block";
+            loadInbox();
+        } else {
+            document.getElementById('adminDashboard').style.display = "none";
+        }
+    }
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('uploadSection').style.display = tab === 'upload' ? 'block' : 'none';
+        document.getElementById('storiesSection').style.display = tab === 'stories' ? 'block' : 'none';
+        event.target.classList.add('active');
+    }
+
+    function loadProjects() {
+        dbRef.collection('projects').onSnapshot(snap => {
+            let html = '<option value="" disabled selected>প্রজেক্ট সিলেক্ট করুন</option>';
+            snap.forEach(doc => {
+                if(doc.data().channel === channelName) {
+                    html += `<option value="${doc.id}">${doc.data().name}</option>`;
+                }
+            });
+            document.getElementById('uProject').innerHTML = html;
+        });
+    }
+
+    async function submitWork() {
+        const pId = document.getElementById('uProject').value;
+        const cat = document.getElementById('uCategory').value;
+        const name = document.getElementById('uName').value.trim();
+        const file = document.getElementById('uFile').files[0];
+        const msg = document.getElementById('uploadMsg');
+
+        if(!pId || !name || !file) return alert("সব তথ্য দিন!");
+        
+        msg.style.color = "var(--primary-color)";
+        msg.innerText = "⏳ আপলোড হচ্ছে...";
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            if(data.secure_url) {
+                await dbRef.collection('tasks').add({
+                    channel: channelName,
+                    projectName: document.getElementById('uProject').options[document.getElementById('uProject').selectedIndex].text,
+                    category: cat,
+                    sender: name,
+                    fileUrl: data.secure_url,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                msg.style.color = "green";
+                msg.innerText = "✅ সফলভাবে জমা হয়েছে!";
+                document.getElementById('uFile').value = "";
+            }
+        } catch(e) { msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
+    }
+
+    async function submitStory() {
+        const author = document.getElementById('sAuthor').value.trim();
+        const title = document.getElementById('sTitle').value.trim();
+        const text = document.getElementById('sText').value.trim();
+        const msg = document.getElementById('storyMsg');
+
+        if(!author || !title || !text) return alert("সব ঘর পূরণ করুন!");
+        
+        msg.innerText = "⏳ পাঠানো হচ্ছে...";
+        try {
+            await dbRef.collection('channel_stories').add({
+                channel: channelName,
+                author, title, text,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            msg.innerText = "✅ গল্প জমা হয়েছে!";
+            document.getElementById('sAuthor').value = "";
+            document.getElementById('sTitle').value = "";
+            document.getElementById('sText').value = "";
+        } catch(e) { msg.innerText = "❌ ব্যর্থ!"; }
+    }
+
+    function loadInbox() {
+        dbRef.collection('tasks').where('channel', '==', channelName).orderBy('timestamp', 'desc').onSnapshot(snap => {
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                const isAudio = d.fileUrl.match(/\.(mp3|wav|ogg)$/i);
+                html += `
+                    <div class="list-card">
+                        <b>👤 ${d.sender}</b>
+                        <p style="font-size:12px; color:#888;">📦 প্রজেক্ট: ${d.projectName} | 📂 ক্যাটাগরি: ${d.category}</p>
+                        ${isAudio ? `<audio controls class="audio-player" src="${d.fileUrl}"></audio>` : ''}
+                        <div style="margin-top:10px; display:flex; gap:10px;">
+                            <a href="${d.fileUrl}" target="_blank" style="font-size:12px; color:var(--primary-color); text-decoration:none; font-weight:bold;"><i class="fas fa-external-link-alt"></i> ফাইল দেখুন</a>
+                            ${roleName === 'Master Admin' ? `<button onclick="deleteDoc('tasks', '${doc.id}')" style="color:red; background:none; border:none; cursor:pointer; font-size:12px;">ডিলিট</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('inboxList').innerHTML = html || "<p style='text-align:center; color:#888;'>কোনো ফাইল জমা নেই।</p>";
+        });
+    }
+
+    async function deleteDoc(col, id) {
+        if(confirm("ডিলিট করবেন?")) await dbRef.collection(col).doc(id).delete();
+    }
+</script>
+</body>
+</html>
