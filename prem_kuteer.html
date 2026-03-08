@@ -19,87 +19,130 @@
         :root {
             --primary-pink: #e91e63;
             --secondary-pink: #f06292;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --baby-pink: #fff0f5;
+            --pure-white: #ffffff;
+            --border-color: #f8bbd0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
 
         body { 
             font-family: 'Kalpurush', Arial, sans-serif; 
-            background: linear-gradient(135deg, #121212 0%, #000000 100%);
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--baby-pink) 0%, #ffffff 100%);
+            color: #333;
             min-height: 100vh;
-            padding: 20px 15px;
+            padding: 30px 15px;
             display: flex;
             justify-content: center;
         }
 
-        /* Ambient Glows */
-        .glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; z-index: -1; filter: blur(100px); opacity: 0.2; animation: pulse 10s infinite alternate; }
-        .glow-1 { background: var(--primary-pink); top: -100px; left: -100px; }
-        .glow-2 { background: #00d2ff; bottom: -100px; right: -100px; }
-        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
-
         .container { 
-            width: 100%; max-width: 650px; 
-            background: var(--glass-bg); backdrop-filter: blur(25px);
+            width: 100%; max-width: 750px; 
+            background: var(--pure-white);
             padding: 40px 30px; border-radius: 35px; 
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8); 
-            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.1); 
+            border: 2px solid var(--border-color);
             position: relative; align-self: flex-start;
         }
 
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
-        .ch-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primary-pink); box-shadow: 0 10px 20px rgba(233, 30, 99, 0.3); background: white; }
-        .ch-title { font-size: 38px; color: var(--primary-pink); font-family: 'LeCristalDeLune', serif; letter-spacing: 2px; }
-        .btn-home { position: absolute; top: 25px; left: 25px; text-decoration: none; color: #666; font-size: 14px; font-weight: bold; }
+        .ch-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-pink); box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2); }
+        .ch-title { font-size: 42px; color: var(--primary-pink); font-family: 'LeCristalDeLune', serif; letter-spacing: 2px; }
+        .btn-home { position: absolute; top: 25px; left: 25px; text-decoration: none; color: var(--primary-pink); font-size: 14px; font-weight: bold; }
 
-        /* Login Screen */
-        #loginScreen { text-align: center; padding: 40px 0; }
-        .pass-input { width: 100%; max-width: 320px; padding: 15px; border: 1px solid var(--glass-border); border-radius: 18px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; background: rgba(255,255,255,0.05); color: white; }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 15px 35px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2); }
+        /* Login UI */
+        #loginScreen { text-align: center; padding: 50px 0; }
+        .pass-input { width: 100%; max-width: 350px; padding: 18px; border: 2px solid var(--baby-pink); border-radius: 20px; font-size: 20px; text-align: center; margin-bottom: 25px; outline: none; background: var(--baby-pink); color: #333; font-weight: bold; }
+        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 18px 45px; border-radius: 18px; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 10px 25px rgba(233, 30, 99, 0.3); }
 
-        /* User Section */
+        /* User Portal */
         #userPortal { display: none; }
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 20px 0 8px; font-size: 15px; }
-        input, select { width: 100%; padding: 15px; border: 1px solid var(--glass-border); border-radius: 15px; font-size: 16px; outline: none; background: rgba(255,255,255,0.03); color: white; }
-        select option { background: #1a1a1a; }
+        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 25px 0 10px; font-size: 18px; }
+        input, select { width: 100%; padding: 18px; border: 2px solid var(--baby-pink); border-radius: 15px; font-size: 17px; outline: none; background: #fff; }
+        input:focus, select:focus { border-color: var(--primary-pink); background: var(--baby-pink); }
 
-        /* Admin Dashboard */
-        #adminDashboard { display: none; margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 30px; }
-        .list-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 18px; border-radius: 20px; margin-bottom: 15px; }
-        .list-card b { color: var(--primary-pink); font-size: 17px; }
-        audio { width: 100%; margin-top: 15px; height: 35px; filter: invert(100%) hue-rotate(180deg) brightness(1.5); }
+        /* Admin Section Box - LARGE & PROMINENT */
+        #adminDashboard { 
+            display: none; 
+            margin-top: 50px; 
+            background: #fff;
+            border: 4px solid var(--primary-pink); 
+            padding: 40px; 
+            border-radius: 35px; 
+            box-shadow: 0 25px 50px rgba(233, 30, 99, 0.2);
+        }
+        #adminDashboard h3 { 
+            color: var(--primary-pink); 
+            font-size: 40px; 
+            margin-bottom: 30px; 
+            text-align: center; 
+            font-family: 'LeCristalDeLune', serif;
+            border-bottom: 3px solid var(--baby-pink);
+            padding-bottom: 20px;
+        }
 
-        #statusMsg { text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px; color: var(--primary-pink); }
+        /* Control Panel Box */
+        .admin-controls-box { 
+            background: var(--baby-pink); 
+            padding: 25px; 
+            border-radius: 25px; 
+            margin-bottom: 35px; 
+            border: 2px dashed var(--primary-pink);
+        }
+        .admin-controls-box p { font-size: 20px; font-weight: bold; color: var(--primary-pink); margin-bottom: 15px; }
+
+        .list-card { 
+            background: white; 
+            border: 1px solid var(--border-color); 
+            padding: 25px; 
+            border-radius: 25px; 
+            margin-bottom: 25px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        .list-card b { color: var(--primary-pink); font-size: 24px; }
+        .list-card p { font-size: 18px; color: #444; margin-top: 8px; }
+
+        audio { width: 100%; margin-top: 15px; height: 40px; }
+
+        #statusMsg { text-align: center; margin-top: 25px; font-weight: bold; font-size: 18px; color: var(--primary-pink); }
+        .admin-trigger { background:none; border:none; color:#ddd; font-size:12px; margin-top:70px; cursor:pointer; width:100%; }
+        
+        .delete-btn {
+            background: #ffecf2;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .delete-btn:hover { background: #d32f2f; color: white; }
     </style>
 </head>
 <body>
 
-<div class="glow glow-1"></div>
-<div class="glow glow-2"></div>
-
 <div class="container">
-    <a href="index.html" class="btn-home"><i class="fas fa-chevron-left"></i> হোম</a>
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোম</a>
     
     <div class="header">
         <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo">
         <h1 class="ch-title">প্রেম কুটির</h1>
     </div>
 
-    <!-- ১. লগইন স্ক্রিন (PKADMIN) -->
+    <!-- লগইন স্ক্রিন -->
     <div id="loginScreen">
-        <p style="margin-bottom: 20px; color:#888;">পোর্টাল কোড দিন</p>
-        <input type="password" id="entryPass" class="pass-input" placeholder="পাসওয়ার্ড">
+        <p style="margin-bottom: 20px; font-weight: bold; color: #888; font-size: 18px;">পোর্টাল কোড দিন</p>
+        <input type="password" id="entryPass" class="pass-input" placeholder="ACCESS CODE">
         <br>
-        <button class="btn-main" onclick="checkEntry()">প্রবেশ করুন</button>
-        <p id="entryError" style="color:red; margin-top:10px; display:none;">ভুল পাসওয়ার্ড!</p>
+        <button class="btn-main" onclick="checkEntry()">প্রবেশ করুন <i class="fas fa-door-open"></i></button>
+        <p id="entryError" style="color:red; margin-top:15px; display:none; font-weight: bold;">ভুল পাসওয়ার্ড!</p>
     </div>
 
-    <!-- ২. ইউজার সেকশন (গল্প বা ভয়েস পাঠানোর অপশন) -->
+    <!-- ইউজার পোর্টাল -->
     <div id="userPortal">
-        <h3 style="text-align:center; color:#888; margin-bottom:20px;">আপনার কাজ জমা দিন</h3>
+        <h2 style="text-align:center; color:var(--primary-pink); margin-bottom:30px; font-size: 28px;">আপনার কাজ জমা দিন</h2>
         
         <label>আপনার নাম:</label>
         <input type="text" id="uName" placeholder="নাম লিখুন">
@@ -110,23 +153,32 @@
         <label>কাজের ধরন:</label>
         <select id="uCategory">
             <option value="Voice">🎙️ ভয়েস অডিও</option>
-            <option value="Script">✍️ স্ক্রিপ্ট</option>
+            <option value="Script">✍️ গল্প / স্ক্রিপ্ট</option>
         </select>
 
         <label>ফাইল সিলেক্ট করুন:</label>
-        <input type="file" id="uFile" accept="audio/*, .pdf, .doc, .txt">
+        <input type="file" id="uFile">
 
-        <button class="btn-main" style="width:100%; margin-top:30px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
+        <button class="btn-main" style="width:100%; margin-top:35px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
         <div id="statusMsg"></div>
 
-        <!-- অ্যাডমিন প্যানেল ট্রিগার -->
-        <button onclick="showAdminLogin()" style="background:none; border:none; color:#444; font-size:12px; margin-top:50px; cursor:pointer; width:100%;">অ্যাডমিন প্যানেল</button>
+        <button onclick="showAdminLogin()" class="admin-trigger">অ্যাডমিন প্যানেল</button>
     </div>
 
-    <!-- ৩. অ্যাডমিন ইনবক্স (শুধু অ্যাডমিন দেখবে) -->
+    <!-- অ্যাডমিন প্যানেল (বড় বক্স) -->
     <div id="adminDashboard">
-        <h3 style="color:var(--primary-pink); margin-bottom:20px; text-align:center; border-bottom:1px solid #333; padding-bottom:10px;">📥 ইনবক্স (সব কাজ)</h3>
-        <div id="inboxList">লোড হচ্ছে...</div>
+        <h3>Admin Inbox</h3>
+        
+        <!-- প্রজেক্ট কন্ট্রোল বক্স (Master এবং Admin উভয়ের জন্য এখন খোলা) -->
+        <div id="adminControlPanel" class="admin-controls-box">
+            <p><i class="fas fa-tools"></i> অ্যাডমিন কন্ট্রোল প্যানেল</p>
+            <div style="display:flex; gap:12px; flex-wrap: wrap;">
+                <input type="text" id="newProjectName" placeholder="নতুন প্রজেক্ট নাম" style="flex: 1; min-width: 200px;">
+                <button onclick="addProject()" style="background:var(--primary-pink); color:white; border:none; padding:15px 25px; border-radius:15px; cursor:pointer; font-weight: bold; font-size: 16px;">Add Project</button>
+            </div>
+        </div>
+
+        <div id="inboxList" style="font-size: 18px;">লোড হচ্ছে...</div>
     </div>
 </div>
 
@@ -145,11 +197,12 @@
     const CLOUD_NAME = 'dy9bujsit'; 
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
 
+    let loggedInAs = ""; // "Master" or "Admin"
+
     window.onload = () => auth.signInAnonymously();
 
-    // Entry Logic
     function checkEntry() {
-        const pass = document.getElementById('entryPass').value;
+        const pass = document.getElementById('entryPass').value.trim();
         if(pass === "PKADMIN") {
             document.getElementById('loginScreen').style.display = "none";
             document.getElementById('userPortal').style.display = "block";
@@ -159,7 +212,6 @@
         }
     }
 
-    // Load Projects
     function loadProjects() {
         dbRef.collection('projects').where('channel', '==', 'প্রেম কুটির').onSnapshot(snap => {
             let html = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
@@ -168,14 +220,20 @@
         });
     }
 
-    // Submit Work
+    async function addProject() {
+        const name = document.getElementById('newProjectName').value.trim();
+        if(!name) return;
+        await dbRef.collection('projects').add({ name, channel: 'প্রেম কুটির' });
+        document.getElementById('newProjectName').value = "";
+    }
+
     async function submitWork() {
         const name = document.getElementById('uName').value.trim();
         const project = document.getElementById('uProject').value;
         const file = document.getElementById('uFile').files[0];
         const status = document.getElementById('statusMsg');
 
-        if(!name || !project || !file) return alert("সব তথ্য পূরণ করুন!");
+        if(!name || !project || !file) return alert("সব তথ্য দিন!");
 
         status.innerText = "⏳ ফাইল আপলোড হচ্ছে...";
         const fd = new FormData();
@@ -187,14 +245,11 @@
             const data = await res.json();
             if(data.secure_url) {
                 await dbRef.collection('tasks').add({
-                    sender: name,
-                    project: project,
+                    sender: name, project: project,
                     category: document.getElementById('uCategory').value,
-                    fileUrl: data.secure_url,
-                    channel: 'প্রেম কুটির',
+                    fileUrl: data.secure_url, channel: 'প্রেম কুটির',
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                status.style.color = "green";
                 status.innerText = "✅ সফলভাবে জমা হয়েছে!";
                 document.getElementById('uName').value = "";
                 document.getElementById('uFile').value = "";
@@ -202,18 +257,31 @@
         } catch(e) { status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // Admin Access
     function showAdminLogin() {
-        const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+        const input = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+        const pass = input ? input.trim() : "";
+        
         if(pass === "Master2002") {
-            document.getElementById('userPortal').style.display = "none";
-            document.getElementById('adminDashboard').style.display = "block";
-            loadInbox();
-        } else { alert("ভুল পাসওয়ার্ড!"); }
+            loggedInAs = "Master";
+            openAdminPanel();
+        } else if(pass === "Neha123") {
+            loggedInAs = "Admin";
+            openAdminPanel();
+        } else if(input !== null) {
+            alert("ভুল পাসওয়ার্ড!");
+        }
+    }
+
+    function openAdminPanel() {
+        document.getElementById('userPortal').style.display = "none";
+        document.getElementById('adminDashboard').style.display = "block";
+        // প্রজেক্ট প্যানেল এখন উভয়ের জন্যই উন্মুক্ত
+        loadInbox();
     }
 
     function loadInbox() {
         dbRef.collection('tasks').where('channel', '==', 'প্রেম কুটির').orderBy('timestamp', 'desc').onSnapshot(snap => {
+            const list = document.getElementById('inboxList');
             let html = "";
             snap.forEach(doc => {
                 const d = doc.data();
@@ -221,20 +289,21 @@
                 html += `
                     <div class="list-card">
                         <b>👤 ${d.sender}</b>
-                        <p style="font-size:12px; color:#888; margin:5px 0;">📦 প্রজেক্ট: ${d.project} | 📂 ক্যাটাগরি: ${d.category}</p>
-                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : `<a href="${d.fileUrl}" target="_blank" style="color:var(--primary-pink); font-size:13px;">ফাইলটি দেখুন <i class="fas fa-external-link-alt"></i></a>`}
-                        <div style="text-align:right; margin-top:10px;">
-                            <button onclick="deleteDoc('${doc.id}')" style="color:red; background:none; border:none; cursor:pointer; font-size:12px;">ডিলিট</button>
+                        <p>📦 প্রজেক্ট: ${d.project} | 📂 ক্যাটাগরি: ${d.category}</p>
+                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : `<a href="${d.fileUrl}" target="_blank" style="color:var(--primary-pink); font-size:18px; font-weight:bold; display:block; margin-top:15px;">ফাইল দেখুন <i class="fas fa-external-link-alt"></i></a>`}
+                        
+                        <div style="text-align:right; margin-top:15px;">
+                            <button class="delete-btn" onclick="deleteDoc('${doc.id}')"><i class="fas fa-trash"></i> ডিলিট করুন</button>
                         </div>
                     </div>
                 `;
             });
-            document.getElementById('inboxList').innerHTML = html || "কোনো ফাইল জমা পড়েনি।";
+            list.innerHTML = html || "<p style='text-align:center; color:#999;'>ইনবক্স খালি।</p>";
         });
     }
 
     async function deleteDoc(id) {
-        if(confirm("ডিলিট করবেন?")) await dbRef.collection('tasks').doc(id).delete();
+        if(confirm("আপনি কি নিশ্চিত এটি ডিলিট করতে চান?")) await dbRef.collection('tasks').doc(id).delete();
     }
 </script>
 </body>
