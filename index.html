@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Go - পোর্টাল</title>
+    <title>Story Go - Home</title>
     
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* কাস্টম ফন্ট লোড করা হলো */
+        /* Custom Font: Le Cristal de Lune */
         @font-face {
             font-family: 'LeCristalDeLune';
             src: url('Le%20Cristal%20de%20Lune.ttf') format('truetype');
@@ -20,8 +20,8 @@
 
         body { 
             font-family: 'Kalpurush', Arial, sans-serif; 
-            background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #0f0f0f 0%, #000000 100%);
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -29,114 +29,147 @@
             padding: 20px;
         }
 
-        .bg-circle { position: fixed; border-radius: 50%; z-1: -1; filter: blur(80px); opacity: 0.4; animation: float 15s infinite alternate; }
-        .c1 { width: 300px; height: 300px; background: #00d2ff; top: -50px; left: -50px; }
-        .c2 { width: 400px; height: 400px; background: #ff007f; bottom: -100px; right: -50px; }
-        @keyframes float { from { transform: translate(0, 0); } to { transform: translate(50px, 50px); } }
+        /* Ambient Glows */
+        .glow { position: fixed; width: 450px; height: 450px; border-radius: 50%; z-index: -1; filter: blur(120px); opacity: 0.2; animation: move 20s infinite alternate; }
+        .glow-1 { background: #e91e63; top: -150px; left: -150px; }
+        .glow-2 { background: #00d2ff; bottom: -150px; right: -150px; }
+        
+        @keyframes move { from { transform: translate(0, 0); } to { transform: translate(60px, 60px); } }
 
-        .main-container { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(20px);
-            padding: 40px 30px; 
-            border-radius: 30px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8); 
+        .main-card { 
+            background: rgba(255, 255, 255, 0.04); 
+            backdrop-filter: blur(30px);
+            padding: 45px 35px; 
+            border-radius: 40px; 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9); 
             width: 100%;
-            max-width: 500px; 
+            max-width: 460px; 
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
         }
 
-        .app-logo {
-            width: 100px;
-            height: 100px;
-            background: #fff;
+        .logo-wrapper {
+            width: 115px;
+            height: 115px;
+            background: #ffffff;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.4);
+            border: 4px solid #e91e63;
         }
 
-        .app-logo img {
-            width: 60%;
-            height: 60%;
+        .logo-wrapper img {
+            width: 70%;
+            height: 70%;
             object-fit: contain;
         }
 
         h1 { 
-            font-size: 38px; 
-            margin-bottom: 10px; 
-            font-weight: normal; 
+            font-size: 48px; 
+            margin-bottom: 5px; 
             font-family: 'LeCristalDeLune', serif; 
             color: #e91e63;
             letter-spacing: 2px;
+            text-shadow: 0 0 25px rgba(233, 30, 99, 0.5);
         }
-        p { color: #aaa; font-size: 15px; margin-bottom: 30px; }
 
-        .portal-btn {
+        .tagline { color: #8a8a8a; font-size: 14px; margin-bottom: 45px; letter-spacing: 1px; }
+
+        .btn-link {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
-            border-radius: 15px;
+            padding: 20px 25px;
+            border-radius: 25px;
             text-decoration: none;
             color: white;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
-            margin-bottom: 15px;
-            background: rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-pk:hover { background: linear-gradient(45deg, #00d2ff, #3a7bd5); transform: translateY(-5px); border-color: transparent;}
-        .btn-prem:hover { background: linear-gradient(45deg, #e91e63, #f06292); transform: translateY(-5px); border-color: transparent;}
-        .btn-panch:hover { background: linear-gradient(45deg, #f57f17, #ffb300); transform: translateY(-5px); border-color: transparent;}
+        .btn-link:hover {
+            transform: scale(1.03) translateY(-8px);
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.3);
+        }
 
-        .icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .logo-img { width: 45px; height: 45px; border-radius: 12px; object-fit: cover; }
+        /* Theme Accents */
+        .pk-accent:hover { background: linear-gradient(45deg, #00d2ff, #3a7bd5); box-shadow: 0 12px 35px rgba(0, 210, 255, 0.3); }
+        .prem-accent:hover { background: linear-gradient(45deg, #e91e63, #f06292); box-shadow: 0 12px 35px rgba(233, 30, 99, 0.3); }
+
+        .btn-inner { display: flex; align-items: center; gap: 18px; }
+
+        .icon-circle { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 18px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 22px; 
+            background: rgba(255,255,255,0.08);
+        }
+
+        .ch-logo-small { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 18px; 
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .chevron-right { font-size: 14px; opacity: 0.6; }
 
     </style>
 </head>
 <body>
 
-<div class="bg-circle c1"></div>
-<div class="bg-circle c2"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
 
-<div class="main-container">
-    <div class="app-logo">
-        <img src="https://i.ibb.co/0p6wsj3J/image.png" alt="Story Go">
+<div class="main-card">
+    <div class="logo-wrapper">
+        <img src="https://i.ibb.co/0p6wsj3J/image.png" alt="Story Go Logo">
     </div>
+    
     <h1>Story Go</h1>
-    <p>আপনার চ্যানেল সিলেক্ট করুন</p>
+    <p class="tagline">আপনার পছন্দের চ্যানেলটি সিলেক্ট করুন</p>
 
-    <!-- ১. প্রথম কথা (অডিশন) -->
-    <a href="Prothom_kotha.html" class="portal-btn btn-pk">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <div class="icon-box" style="background: rgba(0, 210, 255, 0.2); color: #00d2ff;"><i class="fas fa-microphone"></i></div>
+    <!-- ১. প্রথম কথা অডিশন - prothom_kotha.html -->
+    <a href="prothom_kotha.html" class="btn-link pk-accent">
+        <div class="btn-inner">
+            <div class="icon-circle" style="color: #00d2ff;">
+                <i class="fas fa-microphone-alt"></i>
+            </div>
             <span>প্রথম কথা (অডিশন)</span>
         </div>
-        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right chevron-right"></i>
     </a>
 
-    <!-- ২. প্রেম কুটির -->
-    <a href="prem_kuteer.html" class="portal-btn btn-prem">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <img src="https://i.ibb.co/hJdb514B/Logo.png" class="logo-img">
+    <!-- ২. প্রেম কুটির - prem_kuteer.html -->
+    <a href="prem_kuteer.html" class="btn-link prem-accent">
+        <div class="btn-inner">
+            <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo-small" alt="Prem Kuteer">
             <span>প্রেম কুটির</span>
         </div>
-        <i class="fas fa-lock"></i>
+        <i class="fas fa-chevron-right chevron-right"></i>
     </a>
 
-    <!-- ৩. পাঁচকাহন -->
-    <a href="panchkahan.html" class="portal-btn btn-panch">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="logo-img">
+    <!-- ৩. পাঁচকাহন (Coming Soon) -->
+    <div class="btn-link" style="opacity: 0.5; cursor: not-allowed; margin-bottom: 0;">
+        <div class="btn-inner">
+            <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="ch-logo-small" alt="Panchkahan">
             <span>পাঁচকাহন</span>
         </div>
-        <i class="fas fa-lock"></i>
-    </a>
+        <i class="fas fa-lock chevron-right"></i>
+    </div>
 </div>
 
 </body>
