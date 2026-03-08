@@ -80,7 +80,7 @@
         select option { background: #1a1a1a; color: white; }
 
         /* Inbox Cards */
-        .list-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 20px; border-radius: 20px; margin-bottom: 15px; }
+        .list-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 20px; border-radius: 20px; margin-bottom: 15px; position: relative; }
         .list-card b { color: var(--primary-pink); font-size: 18px; display: block; margin-bottom: 5px; }
         .list-card p { color: #aaa; font-size: 13px; line-height: 1.6; }
         
@@ -88,6 +88,9 @@
 
         .badge-admin { background: var(--primary-pink); color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; display: inline-block; margin-bottom: 25px; font-size: 14px; }
         #statusMsg, #storyMsg { text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px; }
+
+        /* Master Add Project Panel */
+        .master-panel { background: rgba(233, 30, 99, 0.05); border: 1px solid var(--primary-pink); padding: 20px; border-radius: 20px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -122,9 +125,19 @@
             <button onclick="location.reload()" style="background:none; border:none; color:#666; font-size:12px; margin-bottom:20px; cursor:pointer;">লগ আউট</button>
         </div>
 
+        <!-- MASTER ONLY PROJECT PANEL -->
+        <div id="masterPanel" class="master-panel" style="display:none;">
+            <h3 style="color:var(--primary-pink); margin-bottom:15px;"><i class="fas fa-plus-circle"></i> নতুন প্রজেক্ট যোগ করুন</h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="newProjectName" placeholder="প্রজেক্টের নাম">
+                <button onclick="addNewProject()" style="background:var(--primary-pink); color:white; border:none; padding:10px 20px; border-radius:12px; font-weight:bold; cursor:pointer;">যোগ করুন</button>
+            </div>
+        </div>
+
         <div class="tabs" id="userTabs">
-            <div class="tab active" onclick="switchTab('upload')">কাজ জমা দিন</div>
-            <div class="tab" onclick="switchTab('stories')">রাইটার্স জোন</div>
+            <div class="tab active" id="tabUpload" onclick="switchTab('upload')">কাজ জমা দিন</div>
+            <div class="tab" id="tabStories" onclick="switchTab('stories')">রাইটার্স জোন</div>
+            <div class="tab" id="tabInbox" style="display:none;" onclick="switchTab('inbox')">ইনবক্স</div>
         </div>
 
         <!-- UPLOAD SECTION -->
@@ -161,8 +174,8 @@
             <div id="storyMsg"></div>
         </div>
 
-        <!-- ADMIN DASHBOARD -->
-        <div id="adminDashboard" style="margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 30px;">
+        <!-- ADMIN/MENTOR DASHBOARD -->
+        <div id="adminDashboard" style="display:none; margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 30px;">
             <h3 style="color:var(--primary-pink); margin-bottom:20px; font-family: 'LeCristalDeLune', serif; font-size: 28px;"><i class="fas fa-inbox"></i> ইনবক্স</h3>
             <div id="inboxList">লোড হচ্ছে...</div>
         </div>
@@ -217,9 +230,14 @@
             document.getElementById('adminControls').style.display = "block";
             document.getElementById('currentUserName').innerText = roleName;
             document.getElementById('adminDashboard').style.display = "block";
+            document.getElementById('tabInbox').style.display = "block";
+            if(passInput.value === "Master2002") {
+                document.getElementById('masterPanel').style.display = "block";
+            }
             loadInbox();
         } else {
             document.getElementById('adminDashboard').style.display = "none";
+            document.getElementById('tabInbox').style.display = "none";
         }
     }
 
@@ -227,19 +245,32 @@
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById('uploadSection').style.display = tab === 'upload' ? 'block' : 'none';
         document.getElementById('storiesSection').style.display = tab === 'stories' ? 'block' : 'none';
-        event.target.classList.add('active');
+        document.getElementById('adminDashboard').style.display = tab === 'inbox' ? 'block' : 'none';
+        document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
     }
 
     function loadProjects() {
         dbRef.collection('projects').onSnapshot(snap => {
             let html = '<option value="" disabled selected>প্রজেক্ট সিলেক্ট করুন</option>';
             snap.forEach(doc => {
-                if(doc.data().channel === channelName) {
-                    html += `<option value="${doc.id}">${doc.data().name}</option>`;
+                const d = doc.data();
+                if(d.channel === channelName) {
+                    html += `<option value="${doc.id}">${d.name}</option>`;
                 }
             });
             document.getElementById('uProject').innerHTML = html;
         });
+    }
+
+    async function addNewProject() {
+        const name = document.getElementById('newProjectName').value.trim();
+        if(!name) return;
+        await dbRef.collection('projects').add({
+            name: name,
+            channel: channelName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('newProjectName').value = "";
     }
 
     async function submitWork() {
