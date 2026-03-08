@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Go - ভয়েস অডিশন পোর্টাল</title>
+    
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-pink: #e91e63;
+            --secondary-pink: #f06292;
+            --light-pink: #fce4ec;
+            --baby-pink: #fff0f5;
+            --text-dark: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', Arial, sans-serif; transition: all 0.3s ease; }
+        
+        body { 
+            background: linear-gradient(135deg, var(--baby-pink) 0%, #fce4ec 50%, #f8bbd0 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 600px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 35px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.1); 
+            border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--primary-pink); font-weight: bold; margin-bottom: 20px; font-size: 14px; }
+        h1 { font-size: 32px; color: var(--primary-pink); margin-bottom: 5px; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 25px; font-size: 15px; font-weight: bold; }
+
+        /* Off Mode UI */
+        #offModeContainer { display: none; text-align: center; padding: 40px 20px; }
+        #offModeContainer i { font-size: 60px; color: #f44336; margin-bottom: 20px; }
+
+        /* Form Elements */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; color: #555; font-size: 14px; }
+        input, select { width: 100%; padding: 14px; border: 2px solid var(--light-pink); border-radius: 12px; font-size: 16px; outline: none; background: white; }
+        input:focus, select:focus { border-color: var(--primary-pink); }
+
+        .btn-submit { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); margin-top: 10px; }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Admin/Mentor Inbox */
+        #adminArea { display: none; margin-top: 30px; }
+        .audition-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; }
+        .audition-card b { color: var(--primary-pink); font-size: 18px; }
+        .audition-card p { font-size: 13px; color: #666; margin: 5px 0; }
+        audio { width: 100%; margin-top: 15px; height: 35px; }
+
+        /* Master Controls Panel */
+        .master-panel { background: #fdf2f8; padding: 15px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--light-pink); text-align: center; }
+        .toggle-btn { padding: 10px 25px; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; color: white; margin-top: 10px; }
+        .on-color { background: #4caf50; }
+        .off-color { background: #f44336; }
+
+        /* Modal Settings */
+        #loginModal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 100; }
+        .modal-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
+
+        #statusMsg { text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
+    
+    <h1>ভয়েস অডিশন</h1>
+    <p class="subtitle">Story Go - আপনার প্রতিভাকে প্রকাশ করুন</p>
+
+    <!-- OFF MODE SCREEN -->
+    <div id="offModeContainer">
+        <i class="fas fa-microphone-slash"></i>
+        <h2 style="color:#c62828;">অডিশন বর্তমানে বন্ধ</h2>
+        <p style="margin-top:10px; color:#666;">আমরা বর্তমানে নতুন অডিশন নিচ্ছি না। দয়া করে কয়েকদিন পর আবার চেষ্টা করুন।</p>
+    </div>
+
+    <!-- USER FORM (ON MODE) -->
+    <div id="userFormArea">
+        <form id="auditionForm">
+            <div class="form-group">
+                <label>আপনার নাম:</label>
+                <input type="text" id="uName" placeholder="নাম লিখুন" required>
+            </div>
+            <div class="form-group">
+                <label>হোয়াটসঅ্যাপ নম্বর:</label>
+                <input type="text" id="uPhone" placeholder="01XXXXXXXXX" required>
+            </div>
+            <div class="form-group">
+                <label>কাকে অডিশন পাঠাতে চান (মেন্টর):</label>
+                <select id="uMentor" required>
+                    <option value="" disabled selected>মেন্টর বেছে নিন</option>
+                    <option value="বিদিশা মুখার্জি">বিদিশা মুখার্জি</option>
+                    <option value="সঞ্জিত মল্লিক">সঞ্জিত মল্লিক</option>
+                    <option value="সুচিস্মিতা দাস নেহা">সুচিস্মিতা দাস নেহা</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>আপনার ভয়েস অডিও (MP3/WAV):</label>
+                <input type="file" id="uFile" accept="audio/*" required>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">অডিশন জমা দিন <i class="fas fa-paper-plane"></i></button>
+        </form>
+        <div id="statusMsg"></div>
+    </div>
+
+    <!-- ADMIN/MENTOR LOGIN BUTTON -->
+    <button onclick="showLogin()" style="background:none; border:none; color:#bbb; font-size:12px; margin-top:50px; cursor:pointer; width:100%;">মেন্টর/অ্যাডমিন লগইন</button>
+
+    <!-- DASHBOARD AREA -->
+    <div id="adminArea">
+        <div id="masterSection" class="master-panel" style="display:none;">
+            <p style="font-weight:bold; color:var(--primary-pink);">মাস্টার অ্যাডমিন কন্ট্রোল</p>
+            <button id="modeToggle" onclick="toggleAuditionStatus()" class="toggle-btn"></button>
+        </div>
+        <h3 id="inboxTitle" style="color:var(--primary-pink); margin-bottom:20px; text-align:center; border-bottom:1px solid #eee; padding-bottom:10px;">ইনবক্স</h3>
+        <div id="auditionList">চেক করা হচ্ছে...</div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal">
+    <div class="modal-box">
+        <h3 style="color:var(--primary-pink); margin-bottom:20px;">মেন্টর এক্সেস</h3>
+        <input type="password" id="adminPass" placeholder="পাসওয়ার্ড লিখুন" style="text-align:center;">
+        <button class="btn-submit" onclick="handleLogin()" style="margin-top:15px;">প্রবেশ করুন</button>
+        <button onclick="closeLogin()" style="background:none; border:none; margin-top:10px; color:#888; cursor:pointer;">বাতিল</button>
+    </div>
+</div>
+
+<!-- Firebase & Storage Integration -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+    const firebaseConfig = { apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", projectId: "prothomkotha-2002" };
+    const appId = "golposolpo-premium";
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const CLOUD_NAME = 'dy9bujsit'; 
+    const UPLOAD_PRESET = 'Prothom Kotha Voice';
+
+    const dbBase = db.collection('artifacts').doc(appId).collection('public').doc('data');
+    const auditionRef = dbBase.collection('auditions');
+    const configRef = dbBase.collection('settings').doc('audition_mode');
+
+    let currentRole = ""; 
+    let isAuditionOn = true;
+
+    window.onload = () => {
+        auth.signInAnonymously();
+        syncAuditionMode();
+    };
+
+    function syncAuditionMode() {
+        configRef.onSnapshot(doc => {
+            if(doc.exists) {
+                isAuditionOn = doc.data().active;
+                updateUIMode();
+            } else {
+                configRef.set({ active: true });
+            }
+        });
+    }
+
+    function updateUIMode() {
+        const formArea = document.getElementById('userFormArea');
+        const offMsg = document.getElementById('offModeContainer');
+        const toggleBtn = document.getElementById('modeToggle');
+
+        if(isAuditionOn) {
+            formArea.style.display = 'block';
+            offMsg.style.display = 'none';
+            toggleBtn.innerText = "অডিশন বন্ধ করুন (OFF)";
+            toggleBtn.className = "toggle-btn off-color";
+        } else {
+            formArea.style.display = 'none';
+            offMsg.style.display = 'block';
+            toggleBtn.innerText = "অডিশন চালু করুন (ON)";
+            toggleBtn.className = "toggle-btn on-color";
+        }
+    }
+
+    async function toggleAuditionStatus() {
+        if(currentRole !== 'Master') return;
+        await configRef.update({ active: !isAuditionOn });
+    }
+
+    document.getElementById('auditionForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('statusMsg');
+        const file = document.getElementById('uFile').files[0];
+
+        btn.disabled = true;
+        status.style.color = "var(--primary-pink)";
+        status.innerHTML = "⏳ ভয়েস ফাইল আপলোড হচ্ছে, দয়া করে অপেক্ষা করুন...";
+
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            
+            if(data.secure_url) {
+                await auditionRef.add({
+                    name: document.getElementById('uName').value,
+                    phone: document.getElementById('uPhone').value,
+                    mentor: document.getElementById('uMentor').value,
+                    voiceUrl: data.secure_url,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                status.style.color = "green";
+                status.innerHTML = "✅ আপনার ভয়েস অডিশন সফলভাবে জমা হয়েছে!";
+                document.getElementById('auditionForm').reset();
+            }
+        } catch(e) { status.innerHTML = "❌ আপলোড ব্যর্থ হয়েছে!"; }
+        btn.disabled = false;
+    };
+
+    function showLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+    function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
+    
+    function handleLogin() {
+        const pass = document.getElementById('adminPass').value;
+        const passMap = {
+            "Master2002": "Master",
+            "Bidisha123": "বিদিশা মুখার্জি",
+            "Sanjit123": "সঞ্জিত মল্লিক",
+            "Neha123": "সুচিস্মিতা দাস নেহা"
+        };
+
+        if(passMap[pass]) {
+            currentRole = passMap[pass];
+            closeLogin();
+            document.getElementById('userFormArea').style.display = 'none';
+            document.getElementById('offModeContainer').style.display = 'none';
+            document.getElementById('adminArea').style.display = 'block';
+            
+            if(currentRole === 'Master') {
+                document.getElementById('masterSection').style.display = 'block';
+                document.getElementById('inboxTitle').innerText = "মাস্টার ইনবক্স (সব অডিশন)";
+            } else {
+                document.getElementById('inboxTitle').innerText = currentRole + " এর ইনবক্স";
+            }
+            loadAuditions();
+        } else { alert("ভুল পাসওয়ার্ড!"); }
+    }
+
+    function loadAuditions() {
+        auditionRef.orderBy('timestamp', 'desc').onSnapshot(snap => {
+            const list = document.getElementById('auditionList');
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                if(currentRole === 'Master' || d.mentor === currentRole) {
+                    const time = d.timestamp ? new Date(d.timestamp.toMillis()).toLocaleString('bn-BD') : "এখনই";
+                    html += `
+                        <div class="audition-card">
+                            <b>👤 ${d.name}</b>
+                            <p>📞 নম্বর: ${d.phone} | 🎯 মেন্টর: ${d.mentor}</p>
+                            <p style="font-size:11px; color:#999;">⏰ সময়: ${time}</p>
+                            <audio controls src="${d.voiceUrl}"></audio>
+                            ${currentRole === 'Master' ? `<button onclick="deleteDoc('${doc.id}')" style="color:red; margin-top:10px; border:none; background:none; cursor:pointer; font-size:12px; font-weight:bold;">ডিলিট করুন</button>` : ''}
+                        </div>
+                    `;
+                }
+            });
+            list.innerHTML = html || "<p style='text-align:center; color:#888;'>এই মুহূর্তে কোনো অডিশন জমা নেই।</p>";
+        });
+    }
+
+    async function deleteDoc(id) {
+        if(confirm("আপনি কি এটি ডিলিট করতে চান?")) await auditionRef.doc(id).delete();
+    }
+</script>
+</body>
+</html>
