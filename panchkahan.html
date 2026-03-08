@@ -10,15 +10,15 @@
     
     <style>
         :root {
-            --primary-gold: #d4af37; /* গোল্ডেন */
+            --primary-gold: #d4af37; /* Golden */
             --secondary-gold: #f4cf6d;
-            --dark-black: #000000; /* একদম কালো */
-            --surface-black: #0a0a0a; /* সারফেস ব্ল্যাক */
+            --dark-black: #000000; /* Absolute Black */
+            --surface-black: #0a0a0a; /* Surface Black */
             --card-gray: #151515;
             --border-gold: #b8860b;
         }
 
-        /* পুরো পোর্টালে কালপুরুষ ফন্ট সেট করা হলো */
+        /* Puro portale Kalpurush font set kora holo */
         * { 
             margin: 0; 
             padding: 0; 
@@ -46,22 +46,39 @@
         }
 
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
-        .ch-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-gold); box-shadow: 0 0 20px var(--primary-gold); background: #000; }
+        
+        /* Logo size fix kora holo strictly */
+        .ch-logo { 
+            width: 100px !important; 
+            height: 100px !important; 
+            min-width: 100px !important;
+            min-height: 100px !important;
+            max-width: 100px !important;
+            max-height: 100px !important;
+            border-radius: 50% !important; 
+            object-fit: cover !important; 
+            margin-bottom: 15px; 
+            border: 4px solid var(--primary-gold); 
+            box-shadow: 0 0 20px var(--primary-gold); 
+            background: #000; 
+            display: block;
+        }
+
         .ch-title { font-size: 40px; color: var(--primary-gold); font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
         .btn-home { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--primary-gold); font-weight: bold; font-size: 14px; }
 
-        /* লগইন স্ক্রিন */
+        /* Login Screen */
         #loginScreen { text-align: center; padding: 60px 0; }
         .pass-input { width: 100%; max-width: 320px; padding: 15px; border: 2px solid var(--primary-gold); border-radius: 15px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; background: #000; color: var(--primary-gold); font-weight: bold; box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1); }
         .btn-main { background: linear-gradient(45deg, #b8860b, #d4af37); color: #000; border: none; padding: 15px 35px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
         .btn-main:hover { transform: scale(1.02); box-shadow: 0 5px 30px rgba(212, 175, 55, 0.6); }
 
-        /* ট্যাব কন্ট্রোল */
+        /* Tabs Control */
         .tabs { display: flex; background: #0a0a0a; border-radius: 15px; margin-bottom: 25px; overflow: hidden; padding: 5px; border: 1px solid #333; }
         .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; color: #777; border-radius: 10px; font-size: 14px; }
         .tab.active { background: var(--primary-gold); color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
 
-        /* অ্যাডমিন লেআউট */
+        /* Admin Layout */
         .admin-layout { display: grid; grid-template-columns: 260px 1fr; gap: 25px; margin-top: 20px; }
         @media (max-width: 850px) { .admin-layout { grid-template-columns: 1fr; } }
         
@@ -71,13 +88,13 @@
         .folder-item i { margin-right: 10px; }
         .del-folder { color: #ff5252; font-size: 14px; cursor: pointer; padding: 5px; }
 
-        /* ফরম এলিমেন্টস */
+        /* Form Elements */
         label { font-weight: bold; color: var(--primary-gold); display: block; margin: 15px 0 5px; }
         input, select, textarea { width: 100%; padding: 14px; border: 1px solid #222; border-radius: 12px; font-size: 15px; outline: none; background: #0a0a0a; color: #fff; border: 1px solid #333; }
         input:focus { border-color: var(--primary-gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
         textarea { min-height: 120px; }
 
-        /* কার্ড ডিজাইন */
+        /* Card Design */
         .list-card { background: #0f0f0f; border: 1px solid #222; padding: 20px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); border-left: 4px solid var(--primary-gold); }
         .list-card b { color: var(--primary-gold); font-size: 19px; display: block; margin-bottom: 5px; }
         .card-meta { font-size: 13px; color: #888; margin-bottom: 10px; }
@@ -86,7 +103,7 @@
         .btn-del { background: rgba(255, 82, 82, 0.1); color: #ff5252; border: 1px solid rgba(255, 82, 82, 0.2); }
         .btn-view { background: rgba(212, 175, 55, 0.1); color: var(--primary-gold); border: 1px solid rgba(212, 175, 55, 0.2); }
 
-        /* অ্যাডমিন টুলস বক্স */
+        /* Admin Tools Box */
         .admin-box { background: #0a0a0a; padding: 20px; border-radius: 20px; margin-bottom: 25px; border: 1px solid #222; border-top: 2px solid var(--primary-gold); }
         .note-card { background: #111; border: 1px solid #333; border-left: 5px solid var(--primary-gold); padding: 18px; border-radius: 15px; margin-bottom: 15px; position: relative; }
         .note-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; color: var(--primary-gold); border-bottom: 1px solid #222; padding-bottom: 5px; }
@@ -105,11 +122,12 @@
     <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোম</a>
     
     <div class="header">
-        <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="ch-logo">
+        <!-- Logo size strictly fixed here -->
+        <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="ch-logo" alt="Panchkahan Logo">
         <h1 class="ch-title">পাঁচকাহন</h1>
     </div>
 
-    <!-- ১. লগইন স্ক্রিন (মেম্বাররা PCADMIN দিয়ে ঢুকবে) -->
+    <!-- 1. Login Screen (Members enter with PCADMIN) -->
     <div id="loginScreen">
         <p style="margin-bottom: 20px; font-weight: bold; color: #444;">গোপন কোডটি প্রদান করুন</p>
         <input type="password" id="entryPass" class="pass-input" placeholder="ACCESS CODE">
@@ -118,10 +136,10 @@
         <p id="loginError" style="color:#ff5252; margin-top:10px; display:none;">ভুল পাসওয়ার্ড!</p>
     </div>
 
-    <!-- মেইন পোর্টাল এরিয়া -->
+    <!-- Main Portal Area -->
     <div id="mainPortal" style="display:none;">
         
-        <!-- ইউজার প্যানেল -->
+        <!-- User Panel -->
         <div id="userPortal">
             <div class="tabs">
                 <div class="tab active" id="tabWork" onclick="switchUserTab('work')">কাজ জমা দিন</div>
@@ -158,11 +176,11 @@
             <button onclick="showAdminLogin()" class="admin-trigger">অ্যাডমিন প্যানেল</button>
         </div>
 
-        <!-- অ্যাডমিন প্যানেল (Tanima123 / Master2002 এর জন্য) -->
+        <!-- Admin Panel (For Tanima123 / Master2002) -->
         <div id="adminDashboard">
             <h2 style="text-align: center; color: var(--primary-gold); margin-bottom: 25px;">অ্যাডমিন কন্ট্রোল সেন্টার</h2>
 
-            <!-- অ্যাডমিন টুলস: প্রজেক্ট ও ফোল্ডার তৈরি -->
+            <!-- Admin Tools: Create Project & Folder -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
                 <div class="admin-box">
                     <p style="font-weight: bold; color: var(--primary-gold); margin-bottom: 10px;"><i class="fas fa-plus-circle"></i> প্রজেক্ট তৈরি</p>
@@ -177,7 +195,7 @@
             </div>
 
             <div class="admin-layout">
-                <!-- সাইডবার: ফোল্ডার লিস্ট -->
+                <!-- Sidebar: Folder List -->
                 <div class="sidebar" id="folderSidebar">
                     <p style="font-weight: bold; margin-bottom: 15px; color: var(--primary-gold); text-align: center; border-bottom: 1px solid #333; padding-bottom: 5px;">ফোল্ডারসমূহ</p>
                     <div id="folderListUI">লোড হচ্ছে...</div>
@@ -190,11 +208,11 @@
                     </div>
                 </div>
 
-                <!-- কন্টেন্ট এরিয়া -->
+                <!-- Content Area -->
                 <div class="content">
                     <h3 id="currentViewTitle" style="margin-bottom:20px; color:var(--primary-gold); font-size: 24px;">তনিমা'র ইনবক্স</h3>
                     
-                    <!-- কাস্টিং রেকর্ড বুক -->
+                    <!-- Casting Record Book -->
                     <div id="recordView" style="display:none;">
                         <div class="admin-box" style="background: #111;">
                             <input type="text" id="noteTitle" placeholder="রেকর্ডের নাম">
@@ -204,7 +222,7 @@
                         <div id="notesListUI"></div>
                     </div>
 
-                    <!-- ফাইল ইনবক্স লিস্ট -->
+                    <!-- File Inbox List -->
                     <div id="inboxListUI">চেক করা হচ্ছে...</div>
                 </div>
             </div>
@@ -237,7 +255,7 @@
 
     window.onload = () => auth.signInAnonymously();
 
-    // প্রবেশ কোড (PCADMIN)
+    // Entry Code (PCADMIN)
     function checkEntry() {
         const pass = document.getElementById('entryPass').value.trim();
         if(pass === "PCADMIN") {
@@ -249,7 +267,7 @@
         }
     }
 
-    // অ্যাডমিন লগইন (Tanima123 / Master2002)
+    // Admin Login (Tanima123 / Master2002)
     function showAdminLogin() {
         const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
         const ROLES = { "Master2002": "Master Admin", "Tanima123": "তনিমা (মেন্টর)" };
