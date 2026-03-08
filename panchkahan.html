@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Go - পাঁচকাহন পোর্টাল</title>
+    
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Custom Font: Le Cristal de Lune */
+        @font-face {
+            font-family: 'LeCristalDeLune';
+            src: url('Le%20Cristal%20de%20Lune.ttf') format('truetype');
+            font-display: swap;
+        }
+
+        :root {
+            --primary-red: #9b0000;
+            --secondary-red: #ff4d4d;
+            --dark-surface: #1a1a1a;
+            --bg-dark: #0d0d0d;
+            --text-gray: #d1d1d1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+
+        body { 
+            font-family: 'Kalpurush', Arial, sans-serif; 
+            background: radial-gradient(circle at center, #1e0000 0%, var(--bg-dark) 100%);
+            color: var(--text-gray);
+            min-height: 100vh;
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Subtle Fog/Mist Animation */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container { 
+            width: 100%; max-width: 750px; 
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 40px 30px; border-radius: 20px; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7), 0 0 15px rgba(155, 0, 0, 0.2); 
+            border: 1px solid rgba(155, 0, 0, 0.3);
+            position: relative; align-self: flex-start;
+            border-top: 4px solid var(--primary-red);
+        }
+
+        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center; }
+        .ch-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primary-red); box-shadow: 0 0 20px rgba(155, 0, 0, 0.4); }
+        .ch-title { font-size: 45px; color: var(--primary-red); font-family: 'LeCristalDeLune', serif; letter-spacing: 3px; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
+        .btn-home { position: absolute; top: 25px; left: 25px; text-decoration: none; color: var(--primary-red); font-size: 14px; font-weight: bold; opacity: 0.7; }
+        .btn-home:hover { opacity: 1; text-shadow: 0 0 5px var(--primary-red); }
+
+        /* Login UI */
+        #loginScreen { text-align: center; padding: 50px 0; }
+        .pass-input { width: 100%; max-width: 350px; padding: 18px; border: 1px solid #333; border-radius: 12px; font-size: 20px; text-align: center; margin-bottom: 25px; outline: none; background: #111; color: var(--secondary-red); font-weight: bold; }
+        .pass-input:focus { border-color: var(--primary-red); box-shadow: 0 0 10px rgba(155, 0, 0, 0.3); }
+        .btn-main { background: linear-gradient(135deg, var(--primary-red), #5e0000); color: white; border: none; padding: 18px 45px; border-radius: 12px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.4); text-transform: uppercase; }
+        .btn-main:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(155, 0, 0, 0.4); }
+
+        /* User Portal */
+        #userPortal { display: none; }
+        h2.section-title { color: var(--primary-red); text-align: center; margin-bottom: 35px; font-size: 28px; border-bottom: 1px solid rgba(155, 0, 0, 0.2); padding-bottom: 15px; }
+        label { font-weight: bold; color: var(--primary-red); display: block; margin: 25px 0 10px; font-size: 16px; letter-spacing: 1px; }
+        input[type="text"], select, input[type="file"] { width: 100%; padding: 15px; border: 1px solid #333; border-radius: 10px; font-size: 16px; outline: none; background: #1a1a1a; color: #fff; }
+        input:focus, select:focus { border-color: var(--primary-red); }
+
+        /* Admin Section Box */
+        #adminDashboard { 
+            display: none; 
+            margin-top: 50px; 
+            background: #111;
+            border: 2px solid var(--primary-red); 
+            padding: 40px; 
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        #adminDashboard h3 { 
+            color: var(--primary-red); 
+            font-size: 35px; 
+            margin-bottom: 25px; 
+            text-align: center; 
+            font-family: 'LeCristalDeLune', serif;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .admin-controls-box { 
+            background: rgba(155, 0, 0, 0.05); 
+            padding: 25px; 
+            border-radius: 15px; 
+            margin-bottom: 35px; 
+            border: 1px dashed var(--primary-red);
+        }
+        .admin-controls-box p { font-size: 18px; font-weight: bold; color: var(--secondary-red); margin-bottom: 15px; }
+
+        .list-card { 
+            background: #1a1a1a; 
+            border: 1px solid #333; 
+            padding: 25px; 
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+        }
+        .list-card b { color: var(--secondary-red); font-size: 22px; display: block; margin-bottom: 8px; }
+        .list-card p { font-size: 16px; color: #aaa; }
+
+        audio { width: 100%; margin-top: 15px; height: 35px; filter: invert(100%) hue-rotate(180deg) brightness(0.7); }
+
+        #statusMsg { text-align: center; margin-top: 25px; font-weight: bold; font-size: 16px; color: var(--secondary-red); }
+        .admin-trigger { background:none; border:none; color:#333; font-size:10px; margin-top:80px; cursor:pointer; width:100%; }
+        
+        .delete-btn {
+            background: transparent;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+        .delete-btn:hover { background: #ff4d4d; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Home</a>
+    
+    <div class="header">
+        <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="ch-logo">
+        <h1 class="ch-title">পাঁচকাহন</h1>
+    </div>
+
+    <!-- Login Area -->
+    <div id="loginScreen">
+        <p style="margin-bottom: 20px; font-weight: bold; color: #666; font-size: 16px;">গোপন কোড দিন</p>
+        <input type="password" id="entryPass" class="pass-input" placeholder="ACCESS CODE">
+        <br>
+        <button class="btn-main" onclick="checkEntry()">প্রবেশ করুন <i class="fas fa-ghost"></i></button>
+        <p id="entryError" style="color:var(--primary-red); margin-top:15px; display:none; font-weight: bold;">ভুল পাসওয়ার্ড!</p>
+    </div>
+
+    <!-- User Portal -->
+    <div id="userPortal">
+        <h2 class="section-title">Mysterious Submission</h2>
+        
+        <label>আপনার নাম:</label>
+        <input type="text" id="uName" placeholder="নাম লিখুন">
+
+        <label>প্রজেক্ট সিলেক্ট করুন:</label>
+        <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
+
+        <label>কাজের ধরন:</label>
+        <select id="uCategory">
+            <option value="Voice">🎙️ ভৌতিক ভয়েস</option>
+            <option value="Script">✍️ হরর স্ক্রিপ্ট</option>
+        </select>
+
+        <label>ফাইল সিলেক্ট করুন:</label>
+        <input type="file" id="uFile">
+
+        <button class="btn-main" style="width:100%; margin-top:35px;" onclick="submitWork()">জমা দিন <i class="fas fa-skull"></i></button>
+        <div id="statusMsg"></div>
+
+        <button onclick="showAdminLogin()" class="admin-trigger">ADMIN AREA</button>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminDashboard">
+        <h3>Shadow Inbox</h3>
+        
+        <div id="adminControlPanel" class="admin-controls-box">
+            <p><i class="fas fa-plus-circle"></i> নতুন রহস্য যোগ করুন</p>
+            <div style="display:flex; gap:12px; flex-wrap: wrap;">
+                <input type="text" id="newProjectName" placeholder="প্রজেক্টের নাম" style="flex: 1; min-width: 200px;">
+                <button onclick="addProject()" style="background:var(--primary-red); color:white; border:none; padding:15px 25px; border-radius:10px; cursor:pointer; font-weight: bold; font-size: 16px;">ADD</button>
+            </div>
+        </div>
+
+        <div id="inboxList" style="font-size: 18px;">চেক করা হচ্ছে...</div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+    const firebaseConfig = { apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", projectId: "prothomkotha-2002" };
+    const appId = "golposolpo-premium";
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const dbRef = db.collection('artifacts').doc(appId).collection('public').doc('data');
+
+    const CLOUD_NAME = 'dy9bujsit'; 
+    const UPLOAD_PRESET = 'Prothom Kotha Voice';
+    const channelName = "পাঁচকাহন";
+
+    window.onload = () => auth.signInAnonymously();
+
+    function checkEntry() {
+        const pass = document.getElementById('entryPass').value.trim();
+        if(pass === "PCADMIN") {
+            document.getElementById('loginScreen').style.display = "none";
+            document.getElementById('userPortal').style.display = "block";
+            loadProjects();
+        } else {
+            document.getElementById('entryError').style.display = "block";
+        }
+    }
+
+    function loadProjects() {
+        dbRef.collection('projects').where('channel', '==', channelName).onSnapshot(snap => {
+            let html = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
+            snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+            document.getElementById('uProject').innerHTML = html;
+        });
+    }
+
+    async function addProject() {
+        const name = document.getElementById('newProjectName').value.trim();
+        if(!name) return;
+        await dbRef.collection('projects').add({ name, channel: channelName });
+        document.getElementById('newProjectName').value = "";
+    }
+
+    async function submitWork() {
+        const name = document.getElementById('uName').value.trim();
+        const project = document.getElementById('uProject').value;
+        const file = document.getElementById('uFile').files[0];
+        const status = document.getElementById('statusMsg');
+
+        if(!name || !project || !file) {
+            status.style.color = "var(--secondary-red)";
+            status.innerText = "অসম্পূর্ণ তথ্য!";
+            return;
+        }
+
+        status.style.color = "var(--primary-red)";
+        status.innerText = "⏳ রহস্য জমা হচ্ছে...";
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            if(data.secure_url) {
+                await dbRef.collection('tasks').add({
+                    sender: name, project: project,
+                    category: document.getElementById('uCategory').value,
+                    fileUrl: data.secure_url, channel: channelName,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                status.style.color = "#4caf50";
+                status.innerText = "✅ রহস্য জমা হয়েছে!";
+                document.getElementById('uName').value = "";
+                document.getElementById('uFile').value = "";
+            }
+        } catch(e) { status.innerText = "❌ ব্যর্থ হয়েছে!"; }
+    }
+
+    function showAdminLogin() {
+        const input = prompt("অ্যাডমিন পাসওয়ার্ড:");
+        const pass = input ? input.trim() : "";
+        if(pass === "Master2002" || pass === "Sanjit123") {
+            openAdminPanel();
+        } else if(input !== null) {
+            alert("ভুল পাসওয়ার্ড!");
+        }
+    }
+
+    function openAdminPanel() {
+        document.getElementById('userPortal').style.display = "none";
+        document.getElementById('adminDashboard').style.display = "block";
+        loadInbox();
+    }
+
+    function loadInbox() {
+        dbRef.collection('tasks').where('channel', '==', channelName).orderBy('timestamp', 'desc').onSnapshot(snap => {
+            const list = document.getElementById('inboxList');
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                const isAudio = d.fileUrl.match(/\.(mp3|wav|ogg)$/i);
+                html += `
+                    <div class="list-card">
+                        <b>👤 প্রেরক: ${d.sender}</b>
+                        <p>📦 প্রজেক্ট: ${d.project} | 📂 ক্যাটাগরি: ${d.category}</p>
+                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : `<a href="${d.fileUrl}" target="_blank" style="color:var(--secondary-red); font-size:16px; font-weight:bold; display:block; margin-top:15px;">ফাইলটি দেখুন <i class="fas fa-external-link-alt"></i></a>`}
+                        
+                        <div style="text-align:right; margin-top:15px;">
+                            <button class="delete-btn" onclick="deleteDoc('${doc.id}')"><i class="fas fa-trash"></i> ডিলিট</button>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html || "<p style='text-align:center; color:#444;'>ইনবক্স শূন্য।</p>";
+        });
+    }
+
+    async function deleteDoc(id) {
+        if(confirm("আপনি কি নিশ্চিত এটি ডিলিট করতে চান?")) await dbRef.collection('tasks').doc(id).delete();
+    }
+</script>
+</body>
+</html>
