@@ -17,7 +17,7 @@
             --border-pink: #f8bbd0;
         }
 
-        /* পুরো পোর্টালে কালপুরুষ ফন্ট সেট করা হলো */
+        /* All elements set to Kalpurush font */
         * { 
             margin: 0; 
             padding: 0; 
@@ -36,7 +36,7 @@
         }
 
         .container { 
-            width: 100%; max-width: 900px; 
+            width: 100%; max-width: 1000px; 
             background: var(--pure-white);
             padding: 30px; border-radius: 35px; 
             box-shadow: 0 20px 60px rgba(233, 30, 99, 0.1); 
@@ -46,46 +46,54 @@
 
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
         .ch-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-pink); }
-        .ch-title { font-size: 40px; color: var(--primary-pink); font-weight: bold; letter-spacing: 1px; }
+        .ch-title { font-size: 40px; color: var(--primary-pink); font-weight: bold; }
         .btn-home { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 14px; }
 
-        /* লগইন সেকশন */
+        /* Login Screen */
         #loginScreen { text-align: center; padding: 50px 0; }
         .pass-input { width: 100%; max-width: 320px; padding: 15px; border: 2px solid var(--baby-pink); border-radius: 15px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; background: var(--baby-pink); font-weight: bold; }
         .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 15px 35px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); }
 
-        /* ট্যাব সিস্টেম */
+        /* Tabs Control */
         .tabs { display: flex; background: var(--baby-pink); border-radius: 15px; margin-bottom: 25px; overflow: hidden; padding: 5px; }
         .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; color: #666; border-radius: 10px; font-size: 14px; }
         .tab.active { background: var(--primary-pink); color: white; }
 
-        /* অ্যাডমিন ড্যাশবোর্ড গ্রিড */
-        #adminDashboard { display: none; margin-top: 30px; }
-        .admin-grid { display: grid; grid-template-columns: 250px 1fr; gap: 20px; }
-        @media (max-width: 768px) { .admin-grid { grid-template-columns: 1fr; } }
+        /* Sidebar & Folder List */
+        .admin-layout { display: grid; grid-template-columns: 260px 1fr; gap: 25px; margin-top: 20px; }
+        @media (max-width: 850px) { .admin-layout { grid-template-columns: 1fr; } }
         
-        .folder-list { background: #fdf2f8; padding: 15px; border-radius: 20px; border: 1px solid var(--border-pink); }
-        .folder-item { padding: 12px; border-radius: 10px; cursor: pointer; margin-bottom: 5px; font-weight: bold; color: #555; display: flex; align-items: center; gap: 10px; }
-        .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: white; }
+        .sidebar { background: #fdf2f8; padding: 20px; border-radius: 25px; border: 1px solid var(--border-pink); }
+        .folder-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; margin-bottom: 8px; font-weight: bold; color: #555; display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #eee; }
+        .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: white; border-color: var(--primary-pink); }
+        .folder-item i { margin-right: 10px; }
+        .del-folder { color: #ff80ab; font-size: 14px; cursor: pointer; padding: 5px; }
+        .del-folder:hover { color: white; }
 
-        /* ফর্ম এলিমেন্টস */
+        /* Form Controls */
         label { font-weight: bold; color: var(--primary-pink); display: block; margin: 15px 0 5px; }
         input, select, textarea { width: 100%; padding: 14px; border: 1px solid var(--border-pink); border-radius: 12px; font-size: 15px; outline: none; background: #fff; }
         textarea { min-height: 120px; }
 
-        /* কার্ড ডিজাইন */
-        .list-card { background: white; border: 1px solid var(--border-pink); padding: 20px; border-radius: 20px; margin-bottom: 15px; position: relative; }
-        .list-card b { color: var(--primary-pink); font-size: 20px; display: block; margin-bottom: 5px; }
+        /* Work Cards Design */
+        .list-card { background: white; border: 1px solid var(--border-pink); padding: 20px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        .list-card b { color: var(--primary-pink); font-size: 19px; display: block; margin-bottom: 5px; }
+        .card-meta { font-size: 13px; color: #777; margin-bottom: 10px; }
         .card-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-sm { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-sm { padding: 8px 15px; border-radius: 10px; border: none; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 5px; }
         .btn-del { background: #ffebee; color: #c62828; }
         .btn-view { background: #e3f2fd; color: #1976d2; }
 
-        /* কাস্টিং ও রেকর্ড */
-        .note-card { background: #fffde7; border: 1px solid #fbc02d; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .note-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; color: #f57f17; }
+        /* Admin Boxes */
+        .admin-box { background: #fdf2f8; padding: 20px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--primary-pink); }
+        .note-card { background: #fffde7; border: 1px solid #fbc02d; padding: 18px; border-radius: 18px; margin-bottom: 15px; position: relative; }
+        .note-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; color: #f57f17; border-bottom: 1px solid #fff59d; padding-bottom: 5px; }
         
         audio { width: 100%; height: 35px; margin-top: 10px; }
+        .admin-trigger { background:none; border:none; color:#ddd; font-size:11px; margin-top:60px; cursor:pointer; width:100%; text-align: center; }
+        
+        #adminDashboard { display: none; }
+        #userPortal { display: block; }
     </style>
 </head>
 <body>
@@ -98,7 +106,7 @@
         <h1 class="ch-title">প্রেম কুটির</h1>
     </div>
 
-    <!-- লগইন এরিয়া -->
+    <!-- ১. লগইন স্ক্রিন (সবাই PKADMIN দিয়ে প্রবেশ করবে) -->
     <div id="loginScreen">
         <p style="margin-bottom: 20px; font-weight: bold; color: #888;">পোর্টাল অ্যাক্সেস কোড দিন</p>
         <input type="password" id="entryPass" class="pass-input" placeholder="কোড">
@@ -107,21 +115,16 @@
         <p id="loginError" style="color:red; margin-top:10px; display:none;">ভুল পাসওয়ার্ড!</p>
     </div>
 
-    <!-- মেইন পোর্টাল -->
+    <!-- মেইন পোর্টাল এরিয়া -->
     <div id="mainPortal" style="display:none;">
-        <div class="tabs" id="mainTabs">
-            <div class="tab active" onclick="switchMainTab('user')">ইউজার প্যানেল</div>
-            <div class="tab" id="adminTabLink" style="display:none;" onclick="switchMainTab('admin')">অ্যাডমিন প্যানেল</div>
-        </div>
-
-        <!-- ইউজার প্যানেল -->
+        
+        <!-- ইউজার প্যানেল (মেম্বাররা কাজ জমা দিবে) -->
         <div id="userPortal">
             <div class="tabs">
                 <div class="tab active" id="tabWork" onclick="switchUserTab('work')">কাজ জমা দিন</div>
                 <div class="tab" id="tabStory" onclick="switchUserTab('story')">গল্প পাঠান</div>
             </div>
 
-            <!-- কাজ জমা দেওয়ার ফরম -->
             <div id="workUpload">
                 <label>আপনার নাম:</label>
                 <input type="text" id="uName" placeholder="নাম লিখুন">
@@ -129,13 +132,8 @@
                 <label>প্রজেক্ট সিলেক্ট করুন:</label>
                 <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
 
-                <label>কাজের ধরণ:</label>
-                <select id="uCategory">
-                    <option value="ভয়েস">🎙️ ১. ভয়েস</option>
-                    <option value="থাম্বনেল">🖼️ ২. থাম্বনেল</option>
-                    <option value="অডিও এডিট">🎧 ৩. অডিও এডিট</option>
-                    <option value="স্ক্রিপ্টিং">✍️ ৪. স্ক্রিপ্টিং</option>
-                </select>
+                <label>কাজের ধরণ (ফোল্ডার):</label>
+                <select id="uCategory"><option value="">ফোল্ডার লোড হচ্ছে...</option></select>
 
                 <label>ফাইল সিলেক্ট করুন:</label>
                 <input type="file" id="uFile">
@@ -144,49 +142,72 @@
                 <div id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></div>
             </div>
 
-            <!-- গল্প পাঠানোর সেকশন -->
             <div id="storyUpload" style="display:none;">
-                <label>লেখকের নাম:</label>
-                <input type="text" id="sAuthor" placeholder="আপনার নাম">
+                <label>আপনার নাম:</label>
+                <input type="text" id="sAuthor" placeholder="নাম">
                 <label>গল্পের শিরোনাম:</label>
                 <input type="text" id="sTitle" placeholder="শিরোনাম">
-                <label>গল্পটি লিখুন:</label>
-                <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে লিখুন..."></textarea>
+                <textarea id="sText" placeholder="গল্পটি এখানে লিখুন..."></textarea>
                 <button class="btn-main" style="width:100%; margin-top:20px;" onclick="submitStory()">গল্প পাঠান</button>
-                <div id="storyStatusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></div>
+                <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
             </div>
+
+            <button onclick="showAdminLogin()" class="admin-trigger">অ্যাডমিন প্যানেল (মেন্টর লগইন)</button>
         </div>
 
-        <!-- অ্যাডমিন প্যানেল -->
+        <!-- অ্যাডমিন প্যানেল (Neha123 / Master2002 এর জন্য) -->
         <div id="adminDashboard">
-            <div class="admin-grid">
-                <!-- ফোল্ডার লিস্ট -->
-                <div class="folder-list">
-                    <div class="folder-item active" onclick="setFolder('ভয়েস')"><i class="fas fa-microphone"></i> ভয়েস</div>
-                    <div class="folder-item" onclick="setFolder('থাম্বনেল')"><i class="fas fa-image"></i> থাম্বনেল</div>
-                    <div class="folder-item" onclick="setFolder('অডিও এডিট')"><i class="fas fa-headphones"></i> অডিও এডিট</div>
-                    <div class="folder-item" onclick="setFolder('স্ক্রিপ্টিং')"><i class="fas fa-file-alt"></i> স্ক্রিপ্টিং</div>
-                    <div class="folder-item" onclick="setFolder('গল্প')"><i class="fas fa-book"></i> গল্পের ঝুলি</div>
-                    <div class="folder-item" onclick="setFolder('রেকর্ড')"><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</div>
+            <h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 25px;">অ্যাডমিন কন্ট্রোল সেন্টার</h2>
+
+            <!-- অ্যাডমিন টুলস: প্রজেক্ট ও ফোল্ডার তৈরি -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                <div class="admin-box">
+                    <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px;"><i class="fas fa-plus-circle"></i> প্রজেক্ট তৈরি</p>
+                    <input type="text" id="newProjectName" placeholder="নতুন প্রজেক্টের নাম">
+                    <button onclick="addProject()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%;">তৈরি করুন</button>
+                </div>
+                <div class="admin-box">
+                    <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px;"><i class="fas fa-folder-plus"></i> নতুন ফোল্ডার</p>
+                    <input type="text" id="newFolderName" placeholder="ফোল্ডারের নাম (যেমন: ভয়েস)">
+                    <button onclick="addFolder()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%;">তৈরি করুন</button>
+                </div>
+            </div>
+
+            <div class="admin-layout">
+                <!-- সাইডবার: ফোল্ডার লিস্ট -->
+                <div class="sidebar" id="folderSidebar">
+                    <p style="font-weight: bold; margin-bottom: 15px; color: var(--primary-pink); text-align: center; border-bottom: 1px solid var(--border-pink); padding-bottom: 5px;">ফোল্ডারসমূহ</p>
+                    <div id="folderListUI">লোড হচ্ছে...</div>
+                    
+                    <div class="folder-item" style="margin-top: 20px; border-style: dashed;" onclick="setSpecialView('record')">
+                        <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
+                    </div>
+                    <div class="folder-item" onclick="setSpecialView('story')">
+                        <span><i class="fas fa-book"></i> গল্পের ঝুলি</span>
+                    </div>
                 </div>
 
                 <!-- কন্টেন্ট এরিয়া -->
-                <div class="content-area">
-                    <div id="folderTitle" style="margin-bottom:20px; font-size:22px; font-weight:bold; color:var(--primary-pink);">ভয়েস ইনবক্স</div>
+                <div class="content">
+                    <h3 id="currentViewTitle" style="margin-bottom:20px; color:var(--primary-pink); font-size: 24px;">ইনবক্স</h3>
                     
-                    <!-- কাস্টিং রেকর্ড সেকশন -->
-                    <div id="recordPanel" style="display:none;">
-                        <div style="margin-bottom:25px; background:#fdf2f8; padding:20px; border-radius:15px; border: 1px dashed var(--primary-pink);">
-                            <input type="text" id="noteTitle" placeholder="রেকর্ডের শিরোনাম (যেমন: কাস্টিং লিস্ট)">
-                            <textarea id="noteContent" placeholder="বিস্তারিত লিখুন (কার কাজ জমা পড়ল, কার বাকি ইত্যাদি)"></textarea>
-                            <button class="btn-main" style="width:100%; margin-top:15px;" onclick="saveNote()">সেভ করুন</button>
+                    <!-- কাস্টিং/ম্যানুয়াল রেকর্ড বুক (Admin Only) -->
+                    <div id="recordView" style="display:none;">
+                        <div class="admin-box" style="background: white;">
+                            <input type="text" id="noteTitle" placeholder="রেকর্ডের নাম">
+                            <textarea id="noteContent" placeholder="ডিটেইলস লিখুন..."></textarea>
+                            <button class="btn-main" style="width: 100%; margin-top: 10px;" onclick="saveNote()">সেভ করুন</button>
                         </div>
-                        <div id="notesList"></div>
+                        <div id="notesListUI"></div>
                     </div>
 
-                    <!-- ইনবক্স লিস্ট -->
-                    <div id="inboxList">ইনবক্স লোড হচ্ছে...</div>
+                    <!-- ফাইল ইনবক্স লিস্ট -->
+                    <div id="inboxListUI">ইনবক্স চেক করা হচ্ছে...</div>
                 </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button onclick="exitAdmin()" style="background:none; border:none; color:grey; cursor:pointer; font-size:13px; text-decoration: underline;">অ্যাডমিন প্যানেল থেকে বের হন</button>
             </div>
         </div>
     </div>
@@ -206,53 +227,46 @@
 
     const CLOUD_NAME = 'dy9bujsit'; 
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
-    const currentChannel = "প্রেম কুটির";
+    const channel = "প্রেম কুটির";
 
-    let activeFolder = "ভয়েস";
-    let isAdmin = false;
-    let roleName = "";
+    let activeFolderName = "";
+    let isMentor = false;
 
     window.onload = () => auth.signInAnonymously();
 
+    // প্রবেশ কোড (PKADMIN)
     function checkEntry() {
         const pass = document.getElementById('entryPass').value.trim();
-        // মেন্টর শুধুমাত্র নেহা এবং আপনি মাস্টার অ্যাডমিন
-        const ROLES = { 
-            "Master2002": "Master Admin", 
-            "Neha123": "নেহা (মেন্টর)" 
-        };
-        
-        if(pass === "PKUSER") {
-            isAdmin = false;
-            startPortal();
-        } else if(ROLES[pass]) {
-            isAdmin = true;
-            roleName = ROLES[pass];
-            document.getElementById('adminTabLink').style.display = "block";
-            startPortal();
+        if(pass === "PKADMIN") {
+            document.getElementById('loginScreen').style.display = "none";
+            document.getElementById('mainPortal').style.display = "block";
+            loadInitialData();
         } else {
             document.getElementById('loginError').style.display = "block";
         }
     }
 
-    function startPortal() {
-        document.getElementById('loginScreen').style.display = "none";
-        document.getElementById('mainPortal').style.display = "block";
-        loadProjects();
-    }
-
-    function switchMainTab(tab) {
-        document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
-        if(tab === 'user') {
-            document.getElementById('userPortal').style.display = "block";
-            document.getElementById('adminDashboard').style.display = "none";
-            document.querySelector('#mainTabs .tab:nth-child(1)').classList.add('active');
-        } else {
+    // অ্যাডমিন লগইন (Neha123 / Master2002)
+    function showAdminLogin() {
+        const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+        const ROLES = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" };
+        if(ROLES[pass]) {
+            isMentor = true;
             document.getElementById('userPortal').style.display = "none";
             document.getElementById('adminDashboard').style.display = "block";
-            document.querySelector('#mainTabs .tab:nth-child(2)').classList.add('active');
-            setFolder(activeFolder);
-        }
+            loadAdminData();
+        } else if(pass !== null) { alert("ভুল পাসওয়ার্ড!"); }
+    }
+
+    function exitAdmin() {
+        isMentor = false;
+        document.getElementById('adminDashboard').style.display = "none";
+        document.getElementById('userPortal').style.display = "block";
+    }
+
+    function loadInitialData() {
+        loadProjects();
+        loadFoldersForUser();
     }
 
     function switchUserTab(tab) {
@@ -262,33 +276,80 @@
         document.getElementById('tabStory').className = 'tab' + (tab==='story'?' active':'');
     }
 
-    function setFolder(folder) {
-        activeFolder = folder;
-        document.querySelectorAll('.folder-item').forEach(i => {
-            i.classList.remove('active');
-            if(i.innerText.includes(folder)) i.classList.add('active');
-        });
-        document.getElementById('folderTitle').innerText = folder + (folder === 'রেকর্ড' ? '' : ' ইনবক্স');
-        
-        if(folder === 'রেকর্ড') {
-            document.getElementById('recordPanel').style.display = "block";
-            document.getElementById('inboxList').style.display = "none";
-            loadNotes();
-        } else {
-            document.getElementById('recordPanel').style.display = "none";
-            document.getElementById('inboxList').style.display = "block";
-            loadInbox();
-        }
-    }
-
+    // প্রজেক্ট ও ফোল্ডার লোড
     function loadProjects() {
-        dbRef.collection('projects').where('channel', '==', currentChannel).onSnapshot(snap => {
+        dbRef.collection('projects').where('channel', '==', channel).onSnapshot(snap => {
             let html = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
             snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
             document.getElementById('uProject').innerHTML = html;
         });
     }
 
+    // মেম্বারদের জন্য কাজের ধরণ (অ্যাডমিনের তৈরি ফোল্ডার) লোড
+    function loadFoldersForUser() {
+        dbRef.collection('folders').where('channel', '==', channel).onSnapshot(snap => {
+            let html = '<option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>';
+            snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+            document.getElementById('uCategory').innerHTML = html;
+        });
+    }
+
+    // অ্যাডমিন: নতুন প্রজেক্ট তৈরি
+    async function addProject() {
+        const name = document.getElementById('newProjectName').value.trim();
+        if(!name) return;
+        await dbRef.collection('projects').add({ name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        document.getElementById('newProjectName').value = "";
+    }
+
+    // অ্যাডমিন: নতুন ফোল্ডার তৈরি
+    async function addFolder() {
+        const name = document.getElementById('newFolderName').value.trim();
+        if(!name) return;
+        await dbRef.collection('folders').add({ name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        document.getElementById('newFolderName').value = "";
+    }
+
+    // অ্যাডমিন সাইডবার লোড
+    function loadAdminData() {
+        dbRef.collection('folders').where('channel', '==', channel).onSnapshot(snap => {
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                html += `
+                    <div class="folder-item ${activeFolderName === d.name ? 'active' : ''}" onclick="selectFolder('${d.name}')">
+                        <span><i class="fas fa-folder"></i> ${d.name}</span>
+                        <i class="fas fa-trash del-folder" onclick="deleteDoc('folders', '${doc.id}')"></i>
+                    </div>
+                `;
+            });
+            document.getElementById('folderListUI').innerHTML = html || "<p style='text-align:center; color:#bbb; font-size:12px;'>কোনো ফোল্ডার নেই</p>";
+        });
+    }
+
+    function selectFolder(name) {
+        activeFolderName = name;
+        document.getElementById('currentViewTitle').innerText = name + " ইনবক্স";
+        document.getElementById('recordView').style.display = "none";
+        document.getElementById('inboxListUI').style.display = "block";
+        loadInbox(name);
+    }
+
+    function setSpecialView(type) {
+        if(type === 'record') {
+            document.getElementById('currentViewTitle').innerText = "কাস্টিং ও রেকর্ড বুক";
+            document.getElementById('recordView').style.display = "block";
+            document.getElementById('inboxListUI').style.display = "none";
+            loadNotes();
+        } else {
+            document.getElementById('currentViewTitle').innerText = "গল্পের ঝুলি";
+            document.getElementById('recordView').style.display = "none";
+            document.getElementById('inboxListUI').style.display = "block";
+            loadStories();
+        }
+    }
+
+    // মেম্বার: কাজ জমা দেওয়া
     async function submitWork() {
         const name = document.getElementById('uName').value.trim();
         const project = document.getElementById('uProject').value;
@@ -296,10 +357,10 @@
         const file = document.getElementById('uFile').files[0];
         const status = document.getElementById('statusMsg');
 
-        if(!name || !project || !file) return alert("সব তথ্য দিন!");
+        if(!name || !project || !cat || !file) return alert("সব তথ্য দিন!");
 
         status.style.color = "var(--primary-pink)";
-        status.innerText = "⏳ ফাইল আপলোড হচ্ছে...";
+        status.innerText = "⏳ ফাইল পাঠানো হচ্ছে...";
         const fd = new FormData();
         fd.append('file', file);
         fd.append('upload_preset', UPLOAD_PRESET);
@@ -309,8 +370,8 @@
             const data = await res.json();
             if(data.secure_url) {
                 await dbRef.collection('tasks').add({
-                    sender: name, project: project, category: cat,
-                    fileUrl: data.secure_url, channel: currentChannel,
+                    sender: name, project, category: cat,
+                    fileUrl: data.secure_url, channel,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 status.style.color = "green";
@@ -321,66 +382,78 @@
         } catch(e) { status.style.color = "red"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    async function submitStory() {
-        const author = document.getElementById('sAuthor').value.trim();
-        const title = document.getElementById('sTitle').value.trim();
-        const text = document.getElementById('sText').value.trim();
-        const msg = document.getElementById('storyStatusMsg');
-
-        if(!author || !title || !text) return alert("সব ঘর পূরণ করুন!");
-        
-        try {
-            await dbRef.collection('tasks').add({
-                sender: author, project: "গল্প সংগ্রহ", category: "গল্প",
-                title: title, storyText: text, channel: currentChannel,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            msg.style.color = "green";
-            msg.innerText = "✅ গল্প জমা হয়েছে!";
-            document.getElementById('sAuthor').value = "";
-            document.getElementById('sTitle').value = "";
-            document.getElementById('sText').value = "";
-        } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
-    }
-
-    function loadInbox() {
-        dbRef.collection('tasks').where('channel', '==', currentChannel).where('category', '==', activeFolder).orderBy('timestamp', 'desc').onSnapshot(snap => {
+    // অ্যাডমিন: ইনবক্স লোড
+    function loadInbox(folderName) {
+        dbRef.collection('tasks')
+            .where('channel', '==', channel)
+            .where('category', '==', folderName)
+            .orderBy('timestamp', 'desc').onSnapshot(snap => {
             let html = "";
             snap.forEach(doc => {
                 const d = doc.data();
                 const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg)$/i);
                 html += `
                     <div class="list-card">
-                        <b>👤 প্রেরক: ${d.sender}</b>
-                        <p style="font-size:14px; color:#666;">📦 প্রজেক্ট: ${d.project}</p>
-                        ${d.storyText ? `<div style="margin:10px 0; background:#f9f9f9; padding:12px; border-radius:12px; border:1px solid #eee;"><p style="font-weight:bold; color:var(--primary-pink); margin-bottom:5px;">${d.title}</p><p style="font-size:14px; color:#444; line-height:1.6;">${d.storyText.substring(0,300)}...</p></div>` : ''}
+                        <b>👤 ${d.sender}</b>
+                        <div class="card-meta">📦 প্রজেক্ট: ${d.project}</div>
                         ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : ''}
                         <div class="card-actions">
-                            ${d.fileUrl ? `<a href="${d.fileUrl}" target="_blank" class="btn-sm btn-view"><i class="fas fa-eye"></i> ফাইল দেখুন</a>` : ''}
+                            <a href="${d.fileUrl}" target="_blank" class="btn-sm btn-view"><i class="fas fa-eye"></i> ফাইল দেখুন</a>
                             <button onclick="deleteDoc('tasks', '${doc.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
                         </div>
                     </div>
                 `;
             });
-            document.getElementById('inboxList').innerHTML = html || `<p style='text-align:center; padding:30px; color:#999;'>${activeFolder} ফোল্ডারটি খালি।</p>`;
+            document.getElementById('inboxListUI').innerHTML = html || "<p style='text-align:center; padding:30px; color:#999;'>এই ফোল্ডারটি খালি।</p>";
         });
     }
 
+    // মেম্বার: গল্প পাঠানো
+    async function submitStory() {
+        const author = document.getElementById('sAuthor').value.trim();
+        const title = document.getElementById('sTitle').value.trim();
+        const text = document.getElementById('sText').value.trim();
+        if(!author || !title || !text) return alert("ঘর পূরণ করুন!");
+        
+        await dbRef.collection('channel_stories').add({
+            author, title, storyText: text, channel,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("গল্প জমা হয়েছে!");
+        document.getElementById('sAuthor').value = ""; document.getElementById('sTitle').value = ""; document.getElementById('sText').value = "";
+    }
+
+    // অ্যাডমিন: গল্প দেখা
+    function loadStories() {
+        dbRef.collection('channel_stories').where('channel', '==', channel).orderBy('timestamp', 'desc').onSnapshot(snap => {
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                html += `
+                    <div class="list-card">
+                        <b>📖 ${d.title} (লেখক: ${d.author})</b>
+                        <p style="font-size:14px; margin-top:10px; color:#444; line-height:1.6;">${d.storyText.substring(0, 400)}...</p>
+                        <div class="card-actions">
+                            <button onclick="deleteDoc('channel_stories', '${doc.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('inboxListUI').innerHTML = html || "<p style='text-align:center;'>কোনো গল্প জমা পড়েনি।</p>";
+        });
+    }
+
+    // রেকর্ড বুক (Notes)
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
         const content = document.getElementById('noteContent').value.trim();
-        if(!title || !content) return alert("সব ঘর পূরণ করুন!");
-        
-        await dbRef.collection('channel_notes').add({
-            title, content, channel: currentChannel,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        document.getElementById('noteTitle').value = "";
-        document.getElementById('noteContent').value = "";
+        if(!title || !content) return alert("তথ্য দিন!");
+        await dbRef.collection('channel_notes').add({ title, content, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').value = "";
     }
 
     function loadNotes() {
-        dbRef.collection('channel_notes').where('channel', '==', currentChannel).orderBy('timestamp', 'desc').onSnapshot(snap => {
+        dbRef.collection('channel_notes').where('channel', '==', channel).orderBy('timestamp', 'desc').onSnapshot(snap => {
             let html = "";
             snap.forEach(doc => {
                 const d = doc.data();
@@ -388,13 +461,13 @@
                     <div class="note-card">
                         <div class="note-header">
                             <span>📌 ${d.title}</span>
-                            <button onclick="deleteDoc('channel_notes', '${doc.id}')" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">&times;</button>
+                            <i class="fas fa-trash" style="cursor:pointer; color:#ff80ab;" onclick="deleteDoc('channel_notes', '${doc.id}')"></i>
                         </div>
-                        <p style="white-space:pre-wrap; font-size:15px; line-height:1.6; color:#444;">${d.content}</p>
+                        <p style="white-space:pre-wrap; font-size:14px; color:#444;">${d.content}</p>
                     </div>
                 `;
             });
-            document.getElementById('notesList').innerHTML = html || "<p style='text-align:center; color:#999; padding:20px;'>কোনো রেকর্ড পাওয়া যায়নি।</p>";
+            document.getElementById('notesListUI').innerHTML = html || "<p style='text-align:center; color:#999;'>কোনো রেকর্ড নেই।</p>";
         });
     }
 
