@@ -97,6 +97,8 @@
             z-index: 10;
         }
 
+        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; }
+
         h1.logo-title { 
             font-family: 'EkushRegular', sans-serif; 
             color: #fff; 
@@ -256,19 +258,9 @@
             border-radius: 50%; 
         }
 
-        .dot-online { 
-            background: var(--success-green); 
-            box-shadow: 0 0 8px var(--success-green); 
-        }
-
-        .dot-busy { 
-            background: #ffcc00; 
-            box-shadow: 0 0 8px #ffcc00; 
-        }
-
-        .dot-offline { 
-            background: #777; 
-        }
+        .dot-online { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
+        .dot-busy { background: #ffcc00; box-shadow: 0 0 8px #ffcc00; }
+        .dot-offline { background: #777; }
 
         /* Scanner Area */
         .scan-container { 
@@ -364,19 +356,10 @@
             font-size: 14px; 
         }
 
-        .no-reply-msg { 
-            font-size: 13px; 
-            color: #888; 
-            font-style: italic; 
-            margin-top: 10px; 
-        }
+        .no-reply-msg { font-size: 13px; color: #888; font-style: italic; margin-top: 10px; }
 
         /* Mentor Dashboard Elements */
-        .dashboard-container { 
-            display: none; 
-            width: 100%; 
-            max-width: 800px; 
-        }
+        .dashboard-container { display: none; width: 100%; max-width: 800px; }
 
         .navbar { 
             display: flex; 
@@ -399,10 +382,7 @@
             font-size: 13px; 
         }
 
-        .logout-btn:hover { 
-            background: var(--error-red); 
-            color: white; 
-        }
+        .logout-btn:hover { background: var(--error-red); color: white; }
 
         .master-panel { 
             background: rgba(255, 215, 0, 0.1); 
@@ -415,50 +395,12 @@
             justify-content: space-between; 
         }
 
-        .switch { 
-            position: relative; 
-            display: inline-block; 
-            width: 50px; 
-            height: 26px; 
-        }
-
-        .switch input { 
-            opacity: 0; 
-            width: 0; 
-            height: 0; 
-        }
-
-        .slider { 
-            position: absolute; 
-            cursor: pointer; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            background-color: #333; 
-            transition: .4s; 
-            border-radius: 34px; 
-        }
-
-        .slider:before { 
-            position: absolute; 
-            content: ""; 
-            height: 18px; 
-            width: 18px; 
-            left: 4px; 
-            bottom: 4px; 
-            background-color: white; 
-            transition: .4s; 
-            border-radius: 50%; 
-        }
-
-        input:checked + .slider { 
-            background-color: var(--gold-text); 
-        }
-
-        input:checked + .slider:before { 
-            transform: translateX(24px); 
-        }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--gold-text); }
+        input:checked + .slider:before { transform: translateX(24px); }
 
         .request-card { 
             background: rgba(25, 25, 25, 0.95); 
@@ -470,105 +412,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
-        .card-time { 
-            position: absolute; 
-            top: 15px; 
-            right: 20px; 
-            font-size: 11px; 
-            color: #aaa; 
-        }
+        .card-time { position: absolute; top: 15px; right: 20px; font-size: 11px; color: #aaa; }
+        .badge-audition { background: var(--gold-text); color: #000; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; margin-left: 8px; text-transform: uppercase; }
 
-        .badge-audition { 
-            background: var(--gold-text); 
-            color: #000; 
-            padding: 3px 8px; 
-            border-radius: 5px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            margin-left: 8px; 
-            text-transform: uppercase; 
-        }
+        audio { width: 100%; margin-top: 15px; filter: invert(100%) hue-rotate(180deg) brightness(1.5); }
 
-        audio { 
-            width: 100%; 
-            margin-top: 15px; 
-            filter: invert(100%) hue-rotate(180deg) brightness(1.5); 
-        }
-
-        .reply-box { 
-            background: rgba(255, 255, 255, 0.05); 
-            border-radius: 15px; 
-            padding: 15px; 
-            margin-top: 20px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-        }
-
-        .reply-type-tabs { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 15px; 
-        }
-
-        .type-tab { 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            font-size: 13px; 
-            cursor: pointer; 
-            background: rgba(255, 255, 255, 0.1); 
-            color: #bbb; 
-        }
-
-        .type-tab.active { 
-            background: rgba(0, 210, 255, 0.2); 
-            color: var(--primary-glow); 
-            border: 1px solid var(--primary-glow); 
-        }
+        .reply-box { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .reply-type-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .type-tab { padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; background: rgba(255, 255, 255, 0.1); color: #bbb; }
+        .type-tab.active { background: rgba(0, 210, 255, 0.2); color: var(--primary-glow); border: 1px solid var(--primary-glow); }
         
-        .voice-btn { 
-            background: #ff3d00; 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 12px; 
-            width: 100%; 
-            cursor: pointer; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-        }
+        .voice-btn { background: #ff3d00; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .voice-btn.recording { animation: pulse-red 1s infinite; background: #b20000; }
+        @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 61, 0, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0); } }
 
-        .voice-btn.recording { 
-            animation: pulse-red 1s infinite; 
-            background: #b20000; 
-        }
+        .btn-claim { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold-text), #ff8c00); color: #000; border: none; border-radius: 12px; font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4); margin-top: 15px; }
+        .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6); }
 
-        .btn-claim { 
-            width: 100%; 
-            padding: 15px; 
-            background: linear-gradient(45deg, var(--gold-text), #ff8c00); 
-            color: #000; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: 900; 
-            font-size: 15px; 
-            cursor: pointer; 
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4); 
-            margin-top: 15px; 
-        }
-
-        .btn-claim:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6); 
-        }
-
-        #upload-status { 
-            text-align: center; 
-            margin-top: 15px; 
-            font-weight: bold; 
-            font-size: 14px; 
-        }
+        #upload-status { text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -583,10 +444,12 @@
 
 <!-- 1. USER INTERFACE -->
 <div class="main-container" id="userPanel">
-    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
+    
+    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
     
     <h1 class="logo-title">🎙️ প্রথম কথা</h1>
-    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
+    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
 
     <!-- User Toggle Tabs -->
     <div class="user-tabs">
@@ -597,7 +460,7 @@
     <!-- Upload Section -->
     <div id="uploadSection">
         <div class="info-card">
-            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
+            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
             ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
             ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
             ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
@@ -617,7 +480,7 @@
             </div>
 
             <label class="input-label">যাকে পাঠাতে চান:</label>
-            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
+            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
             <div class="mentor-grid">
                 <label class="mentor-row">
                     <div class="mentor-info">
@@ -737,13 +600,15 @@
 <script>
     /* CORE LOGIC V9.0 - Device Isolated Feedback & Claim System */
 
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+    const firebaseConfig = {
         apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", 
         projectId: "prothomkotha-2002"
     };
-    const appId = typeof __app_id !== 'undefined' ? __app_id : "prothom-kotha2002";
+    const appId = "prothom-kotha2002";
     
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
     const db = firebase.firestore();
     const auth = firebase.auth();
 
@@ -759,20 +624,16 @@
     let isFirstLoad = true;
     let audioRecorder;
     let audioChunks = [];
-    let currentAuditionSession = "default_session"; // নতুন অডিশন সেশন ট্র্যাক করার জন্য
-    let currentAuditionMentors = []; // অডিশনের মেন্টরদের ট্র্যাক করার জন্য
-    let isAuditionLiveGlobal = false; // গ্লোবাল লাইভ স্ট্যাটাস ট্র্যাক করার জন্য
+    let currentAuditionSession = "default_session"; 
+    let currentAuditionMentors = []; 
+    let isAuditionLiveGlobal = false; 
 
     // Local Storage for User Privacy
     let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
 
     window.onload = async function() {
         try {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await auth.signInWithCustomToken(__initial_auth_token);
-            } else {
-                await auth.signInAnonymously();
-            }
+            await auth.signInAnonymously();
         } catch (err) {
             console.error("Auth Fail:", err);
             document.getElementById('upload-status').innerHTML = "<b style='color:red;'>সার্ভার কানেকশন এরর!</b>";
@@ -782,7 +643,7 @@
             if (user) {
                 listenAuditionGlobal();
                 listenMentorStatusGlobal();
-                loadMyFeedback(); // Load user specific data
+                loadMyFeedback(); 
             }
         });
     };
@@ -801,7 +662,7 @@
             document.querySelector('.u-tab:nth-child(2)').classList.add('active');
             document.getElementById('uploadSection').style.display = 'none';
             document.getElementById('feedbackSection').style.display = 'block';
-            loadMyFeedback(); // Refresh data when opening tab
+            loadMyFeedback(); 
         }
     }
 
@@ -810,18 +671,15 @@
         getRef('settings').doc('auditionControl').onSnapshot(doc => {
             const data = doc.exists ? doc.data() : null;
             const live = data ? data.isLive : false;
-            isAuditionLiveGlobal = live; // গ্লোবাল ভেরিয়েবলে সেভ করে রাখা হলো
+            isAuditionLiveGlobal = live; 
             
-            // নতুন সেশন আইডি ট্র্যাক করা
             currentAuditionSession = (data && data.sessionId) ? data.sessionId : "default_session";
             currentAuditionMentors = (data && data.auditionMentors) ? data.auditionMentors : [];
             
             document.getElementById('bannerAudition').style.display = live ? 'block' : 'none';
             
-            // Check if user already submitted an audition for THIS CURRENT SESSION
             const hasSubmittedAudition = localStorage.getItem('pk_audition_session') === currentAuditionSession;
             
-            // Only show audition checkbox if it is LIVE and User HAS NOT submitted yet for this session
             if (document.getElementById('auditionCheckWrapper')) {
                 document.getElementById('auditionCheckWrapper').style.display = (live && !hasSubmittedAudition) ? 'block' : 'none';
             }
@@ -833,7 +691,6 @@
                 document.getElementById('audStatusLabel').innerText = live ? "লাইভ 🔥" : "বন্ধ";
             }
 
-            // Update Admin Audition Mentors UI
             if (isMaster) {
                 const mentorDiv = document.getElementById('adminAuditionMentors');
                 if (mentorDiv) mentorDiv.style.display = live ? 'block' : 'none';
@@ -843,7 +700,6 @@
                 });
             }
 
-            // Sync User UI just in case they have it checked
             if (document.getElementById('userIsAudition')) {
                 handleUserAuditionCheckboxChange();
             }
@@ -861,7 +717,7 @@
         if (isAud) {
             mentorCbs.forEach(cb => {
                 cb.checked = currentAuditionMentors.includes(cb.value);
-                cb.disabled = true; // অডিশনের সময় ইউজারের থেকে অপশন লক করে দেওয়া হলো
+                cb.disabled = true; 
             });
             if (warningMsg) warningMsg.style.display = 'block';
         } else {
@@ -916,7 +772,6 @@
         const auditionCheckbox = document.getElementById('userIsAudition');
         const isAudition = auditionCheckbox ? auditionCheckbox.checked : false;
         
-        // --- NEW LOGIC: ONE AUDITION PER SESSION ---
         if (isAudition && localStorage.getItem('pk_audition_session') === currentAuditionSession) {
             return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
         }
@@ -924,7 +779,7 @@
         let mentors = [];
         if (isAudition) {
             mentors = currentAuditionMentors;
-            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
+            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
         } else {
             mentors = Array.from(document.querySelectorAll('.mentor-cb:checked')).map(c => c.value);
         }
@@ -963,11 +818,9 @@
                     replies: []
                 });
 
-                // Save Document ID to User's Local Storage for Privacy
                 myAudioIds.push(docRef.id);
                 localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
 
-                // --- NEW LOGIC: LOCK AUDITION FOR THIS CURRENT SESSION ---
                 if (isAudition) {
                     localStorage.setItem('pk_audition_session', currentAuditionSession);
                     document.getElementById('auditionCheckWrapper').style.display = 'none';
@@ -976,7 +829,7 @@
                 statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ সফল! 'আমার ফিডব্যাক' ট্যাবে চেক করুন।</b>";
                 this.reset();
                 scanBox.style.display = 'none';
-                loadMyFeedback(); // Update feedback list
+                loadMyFeedback(); 
             }
         } catch (err) { 
             statusDiv.innerHTML = "<b style='color:red;'>❌ ব্যর্থ!</b>"; 
@@ -992,7 +845,6 @@
             return;
         }
 
-        // We only listen to the documents that belong to this device
         getRef('requests').onSnapshot(snap => {
             let html = "";
             let foundCount = 0;
@@ -1021,8 +873,7 @@
             });
 
             if (foundCount === 0) {
-                // Documents might have been deleted (after 24 hours)
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো অডিওগুলো ডিলিট হয়ে গেছে।</p>";
+                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো অডিওগুলো ডিলিট হয়ে গেছে।</p>";
             } else {
                 listDiv.innerHTML = html;
             }
@@ -1031,7 +882,7 @@
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
-        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
+        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
         const map = { 
             "Neha123": "শুচিস্মিতা দাস নেহা", 
             "Bidisha123": "বিদিশা মুখার্জি", 
@@ -1051,7 +902,6 @@
                 document.getElementById('adminControls').style.display = 'flex';
                 document.getElementById('statusSetter').style.display = 'none';
                 
-                // FORCE UI SYNC FOR ADMIN PANEL (এই লাইনের জন্যই আগে প্যানেল খুলছিল না)
                 const mentorDiv = document.getElementById('adminAuditionMentors');
                 if (mentorDiv) mentorDiv.style.display = isAuditionLiveGlobal ? 'block' : 'none';
                 document.querySelectorAll('.admin-aud-mentor-cb').forEach(cb => {
@@ -1064,7 +914,7 @@
             }
             startInboxListener();
         } else { 
-            alert("ভুল পাসওয়ার্ড!"); 
+            alert("ভুল পাসওয়ার্ড!"); 
         }
     };
 
@@ -1080,9 +930,7 @@
         if (!isMaster) return;
         const data = { isLive: val };
         if (val) {
-            // যখনই মাস্টার সুইচ অন হবে, একটি নতুন সেশন তৈরি হবে
             data.sessionId = Date.now().toString(); 
-            // Save currently checked admin mentors
             data.auditionMentors = Array.from(document.querySelectorAll('.admin-aud-mentor-cb:checked')).map(c => c.value);
         }
         await getRef('settings').doc('auditionControl').set(data, { merge: true });
@@ -1107,7 +955,6 @@
                 
                 if (ts >= dayAgo.getTime()) {
                     if (isMaster || (d.mentors && d.mentors.includes(activeMentor))) {
-                        // যদি অন্য কোনো মেন্টর এটি ক্লেইম করে থাকে, তাহলে লিস্ট থেকে বাদ দিয়ে দাও
                         if (!isMaster && d.claimedBy && d.claimedBy !== activeMentor) return;
                         dataArr.push({ id: doc.id, ...d, ts: ts });
                     }
@@ -1131,10 +978,8 @@
 
                 let actionHTML = "";
                 if (!item.claimedBy && !isMaster) {
-                    // কেউ ক্লেইম করেনি, তাই ক্লেইম বাটন দেখাও
                     actionHTML = `<button class="btn-claim" onclick="claimAudio('${item.id}')">✋ আমি এই অডিওটি চেক করব</button>`;
                 } else {
-                    // ক্লেইম হয়ে গেলে রিপ্লাই বক্স দেখাও (মাস্টার অ্যাডমিন সব দেখতে পাবে)
                     actionHTML = `
                         <div class="reply-box">
                             ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এই অডিওটি চেক করছেন</div>` : ''}
