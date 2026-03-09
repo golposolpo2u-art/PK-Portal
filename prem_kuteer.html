@@ -17,83 +17,85 @@
             --border-pink: #f8bbd0;
         }
 
-        /* All elements set to Kalpurush font */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            transition: all 0.3s ease; 
-            font-family: 'Kalpurush', Arial, sans-serif; 
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; font-family: 'Kalpurush', Arial, sans-serif; }
 
         body { 
             background: linear-gradient(135deg, var(--baby-pink) 0%, #ffffff 100%);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            color: #333; min-height: 100vh; padding: 20px; display: flex; justify-content: center;
         }
 
         .container { 
-            width: 100%; max-width: 1000px; 
-            background: var(--pure-white);
-            padding: 30px; border-radius: 35px; 
-            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.1); 
-            border: 2px solid var(--border-pink);
-            position: relative; align-self: flex-start;
+            width: 100%; max-width: 1000px; background: var(--pure-white); padding: 30px; 
+            border-radius: 35px; box-shadow: 0 20px 60px rgba(233, 30, 99, 0.1); 
+            border: 2px solid var(--border-pink); position: relative; align-self: flex-start;
         }
 
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
-        .ch-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid var(--primary-pink); }
+        .logo-box-fix { width: 100px !important; height: 100px !important; border-radius: 50%; border: 4px solid var(--primary-pink); overflow: hidden; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; }
+        .ch-logo { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
         .ch-title { font-size: 40px; color: var(--primary-pink); font-weight: bold; }
         .btn-home { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 14px; }
 
-        /* Login Screen */
+        /* Login Screen & Passwords */
         #loginScreen { text-align: center; padding: 50px 0; }
-        .pass-input { width: 100%; max-width: 320px; padding: 15px; border: 2px solid var(--baby-pink); border-radius: 15px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; background: var(--baby-pink); font-weight: bold; }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 15px 35px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); }
+        .pass-wrapper { position: relative; width: 100%; max-width: 320px; margin: 0 auto 20px; }
+        .pass-input { width: 100%; padding: 15px 40px 15px 15px; border: 2px solid var(--baby-pink); border-radius: 15px; font-size: 18px; text-align: center; outline: none; background: var(--baby-pink); font-weight: bold; }
+        .eye-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--primary-pink); font-size: 18px; }
+        
+        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 15px 35px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); width: 100%; max-width: 320px; }
 
-        /* Tabs Control */
         .tabs { display: flex; background: var(--baby-pink); border-radius: 15px; margin-bottom: 25px; overflow: hidden; padding: 5px; }
-        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; color: #666; border-radius: 10px; font-size: 14px; }
+        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; color: #666; border-radius: 10px; font-size: 16px; }
         .tab.active { background: var(--primary-pink); color: white; }
 
-        /* Sidebar & Folder List */
+        /* Admin Fixed Button */
+        .admin-trigger { background: var(--baby-pink); border: 1px solid var(--border-pink); color: var(--primary-pink); font-size: 16px; padding: 15px; border-radius: 12px; margin-top: 40px; cursor: pointer; width: 100%; text-align: center; font-weight: bold; display: block; }
+        .admin-trigger:hover { background: var(--primary-pink); color: white; }
+
+        /* Forms */
+        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 15px 0 5px; font-size: 15px;}
+        input, select, textarea { width: 100%; padding: 14px; border: 1px solid var(--border-pink); border-radius: 12px; font-size: 15px; outline: none; background: #fff; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-pink); }
+        textarea { min-height: 120px; }
+
+        /* Rich Text Editor for Records */
+        .rte-toolbar { display: flex; gap: 10px; background: #f9f9f9; padding: 10px; border-radius: 12px 12px 0 0; border: 1px solid var(--border-pink); border-bottom: none; align-items: center; }
+        .rte-toolbar button, .rte-toolbar .color-picker-wrap { border: 1px solid #ddd; background: white; cursor: pointer; padding: 5px 10px; border-radius: 5px; font-size: 16px; color: #333; display: flex; align-items: center; gap: 5px; }
+        .rte-toolbar button:hover { background: #eee; }
+        .color-picker-wrap input[type="color"] { width: 25px; height: 25px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
+        .rte-editor { background: white; min-height: 150px; padding: 15px; border: 1px solid var(--border-pink); border-radius: 0 0 12px 12px; outline: none; color: #333; font-size: 15px; line-height: 1.6; }
+        .rte-editor:empty:before { content: attr(placeholder); color: #aaa; pointer-events: none; display: block; }
+
+        /* Admin Layout & Cards */
         .admin-layout { display: grid; grid-template-columns: 260px 1fr; gap: 25px; margin-top: 20px; }
         @media (max-width: 850px) { .admin-layout { grid-template-columns: 1fr; } }
-        
         .sidebar { background: #fdf2f8; padding: 20px; border-radius: 25px; border: 1px solid var(--border-pink); }
         .folder-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; margin-bottom: 8px; font-weight: bold; color: #555; display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #eee; }
         .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: white; border-color: var(--primary-pink); }
         .folder-item i { margin-right: 10px; }
-        .del-folder { color: #ff80ab; font-size: 14px; cursor: pointer; padding: 5px; }
-        .del-folder:hover { color: white; }
 
-        /* Form Controls */
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 15px 0 5px; }
-        input, select, textarea { width: 100%; padding: 14px; border: 1px solid var(--border-pink); border-radius: 12px; font-size: 15px; outline: none; background: #fff; }
-        textarea { min-height: 120px; }
-
-        /* Work Cards Design */
         .list-card { background: white; border: 1px solid var(--border-pink); padding: 20px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .list-card b { color: var(--primary-pink); font-size: 19px; display: block; margin-bottom: 5px; }
-        .card-meta { font-size: 13px; color: #777; margin-bottom: 10px; }
         .card-actions { display: flex; gap: 10px; margin-top: 15px; }
         .btn-sm { padding: 8px 15px; border-radius: 10px; border: none; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 5px; }
         .btn-del { background: #ffebee; color: #c62828; }
         .btn-view { background: #e3f2fd; color: #1976d2; }
 
-        /* Admin Boxes */
         .admin-box { background: #fdf2f8; padding: 20px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--primary-pink); }
-        .note-card { background: #fffde7; border: 1px solid #fbc02d; padding: 18px; border-radius: 18px; margin-bottom: 15px; position: relative; }
-        .note-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; color: #f57f17; border-bottom: 1px solid #fff59d; padding-bottom: 5px; }
+        
+        /* Specific Override for Record View (White Theme) */
+        #recordView { background: #ffffff; padding: 25px; border-radius: 25px; border: 2px solid var(--primary-pink); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .note-card { background: #ffffff; border: 1px solid #e0e0e0; border-left: 5px solid var(--primary-pink); padding: 20px; border-radius: 15px; margin-bottom: 15px; color: #333; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .note-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; color: var(--primary-pink); border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 18px; }
         
         audio { width: 100%; height: 35px; margin-top: 10px; }
-        .admin-trigger { background:none; border:none; color:#ddd; font-size:11px; margin-top:60px; cursor:pointer; width:100%; text-align: center; }
+        .media-preview { max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px; border: 1px solid #eee; }
         
+        /* Modal for Admin Login */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-box { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 40px rgba(233,30,99,0.3); }
+
         #adminDashboard { display: none; }
-        #userPortal { display: block; }
     </style>
 </head>
 <body>
@@ -102,23 +104,25 @@
     <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোম</a>
     
     <div class="header">
-        <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo">
+        <div class="logo-box-fix">
+            <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Prem Kuteer">
+        </div>
         <h1 class="ch-title">প্রেম কুটির</h1>
     </div>
 
-    <!-- ১. লগইন স্ক্রিন (সবাই PKADMIN দিয়ে প্রবেশ করবে) -->
+    <!-- Login Screen -->
     <div id="loginScreen">
         <p style="margin-bottom: 20px; font-weight: bold; color: #888;">পোর্টাল অ্যাক্সেস কোড দিন</p>
-        <input type="password" id="entryPass" class="pass-input" placeholder="কোড">
-        <br>
+        <div class="pass-wrapper">
+            <input type="password" id="entryPass" class="pass-input" placeholder="কোড">
+            <i class="fas fa-eye eye-icon" onclick="togglePass('entryPass', this)"></i>
+        </div>
         <button class="btn-main" onclick="checkEntry()">প্রবেশ করুন</button>
-        <p id="loginError" style="color:red; margin-top:10px; display:none;">ভুল পাসওয়ার্ড!</p>
+        <p id="loginError" style="color:red; margin-top:15px; display:none;">ভুল পাসওয়ার্ড!</p>
     </div>
 
-    <!-- মেইন পোর্টাল এরিয়া -->
+    <!-- Main Portal -->
     <div id="mainPortal" style="display:none;">
-        
-        <!-- ইউজার প্যানেল (মেম্বাররা কাজ জমা দিবে) -->
         <div id="userPortal">
             <div class="tabs">
                 <div class="tab active" id="tabWork" onclick="switchUserTab('work')">কাজ জমা দিন</div>
@@ -132,13 +136,19 @@
                 <label>প্রজেক্ট সিলেক্ট করুন:</label>
                 <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
 
-                <label>কাজের ধরণ (ফোল্ডার):</label>
-                <select id="uCategory"><option value="">ফোল্ডার লোড হচ্ছে...</option></select>
+                <label>কাজের ধরণ:</label>
+                <select id="uCategory" onchange="updateFileAccept()">
+                    <option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>
+                    <option value="ভয়েস">🎙️ ১. ভয়েস</option>
+                    <option value="থাম্বনেল">🖼️ ২. থাম্বনেল</option>
+                    <option value="অডিও এডিট">🎧 ৩. অডিও এডিট</option>
+                    <option value="স্ক্রিপ্টিং">✍️ ৪. স্ক্রিপ্টিং</option>
+                </select>
 
                 <label>ফাইল সিলেক্ট করুন:</label>
                 <input type="file" id="uFile">
 
-                <button class="btn-main" style="width:100%; margin-top:20px;" onclick="submitWork()">জমা দিন</button>
+                <button class="btn-main" style="width:100%; max-width:100%; margin-top:20px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
                 <div id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></div>
             </div>
 
@@ -147,69 +157,91 @@
                 <input type="text" id="sAuthor" placeholder="নাম">
                 <label>গল্পের শিরোনাম:</label>
                 <input type="text" id="sTitle" placeholder="শিরোনাম">
-                <textarea id="sText" placeholder="গল্পটি এখানে লিখুন..."></textarea>
-                <button class="btn-main" style="width:100%; margin-top:20px;" onclick="submitStory()">গল্প পাঠান</button>
+                <label>গল্পটি লিখুন:</label>
+                <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে লিখুন..."></textarea>
+                <button class="btn-main" style="width:100%; max-width:100%; margin-top:20px;" onclick="submitStory()">গল্প পাঠান <i class="fas fa-book"></i></button>
                 <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
             </div>
 
-            <button onclick="showAdminLogin()" class="admin-trigger">অ্যাডমিন প্যানেল (মেন্টর লগইন)</button>
+            <button onclick="document.getElementById('adminAuthModal').style.display='flex'" class="admin-trigger"><i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন প্যানেল</button>
         </div>
 
-        <!-- অ্যাডমিন প্যানেল (Neha123 / Master2002 এর জন্য) -->
+        <!-- Admin Dashboard -->
         <div id="adminDashboard">
             <h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 25px;">অ্যাডমিন কন্ট্রোল সেন্টার</h2>
 
-            <!-- অ্যাডমিন টুলস: প্রজেক্ট ও ফোল্ডার তৈরি -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
                 <div class="admin-box">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px;"><i class="fas fa-plus-circle"></i> প্রজেক্ট তৈরি</p>
-                    <input type="text" id="newProjectName" placeholder="নতুন প্রজেক্টের নাম">
-                    <button onclick="addProject()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%;">তৈরি করুন</button>
+                    <input type="text" id="newProjectName" placeholder="নতুন প্রজেক্ট">
+                    <button onclick="addProject()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%; max-width:100%;">তৈরি করুন</button>
                 </div>
                 <div class="admin-box">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px;"><i class="fas fa-folder-plus"></i> নতুন ফোল্ডার</p>
-                    <input type="text" id="newFolderName" placeholder="ফোল্ডারের নাম (যেমন: ভয়েস)">
-                    <button onclick="addFolder()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%;">তৈরি করুন</button>
+                    <input type="text" id="newFolderName" placeholder="ফোল্ডারের নাম">
+                    <button onclick="addFolder()" class="btn-main" style="padding: 10px; font-size: 14px; margin-top: 10px; width: 100%; max-width:100%;">তৈরি করুন</button>
                 </div>
             </div>
 
             <div class="admin-layout">
-                <!-- সাইডবার: ফোল্ডার লিস্ট -->
                 <div class="sidebar" id="folderSidebar">
                     <p style="font-weight: bold; margin-bottom: 15px; color: var(--primary-pink); text-align: center; border-bottom: 1px solid var(--border-pink); padding-bottom: 5px;">ফোল্ডারসমূহ</p>
                     <div id="folderListUI">লোড হচ্ছে...</div>
-                    
-                    <div class="folder-item" style="margin-top: 20px; border-style: dashed;" onclick="setSpecialView('record')">
+                    <div class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
                         <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
                     </div>
                     <div class="folder-item" onclick="setSpecialView('story')">
-                        <span><i class="fas fa-book"></i> গল্পের ঝুলি</span>
+                        <span><i class="fas fa-book-open"></i> গল্পের ঝুলি</span>
                     </div>
                 </div>
 
-                <!-- কন্টেন্ট এরিয়া -->
                 <div class="content">
-                    <h3 id="currentViewTitle" style="margin-bottom:20px; color:var(--primary-pink); font-size: 24px;">ইনবক্স</h3>
+                    <h3 id="currentViewTitle" style="margin-bottom:20px; color:var(--primary-pink); font-size: 24px;">নেহা'র ইনবক্স</h3>
                     
-                    <!-- কাস্টিং/ম্যানুয়াল রেকর্ড বুক (Admin Only) -->
+                    <!-- Casting Record Book (White Theme & Rich Text) -->
                     <div id="recordView" style="display:none;">
-                        <div class="admin-box" style="background: white;">
-                            <input type="text" id="noteTitle" placeholder="রেকর্ডের নাম">
-                            <textarea id="noteContent" placeholder="ডিটেইলস লিখুন..."></textarea>
-                            <button class="btn-main" style="width: 100%; margin-top: 10px;" onclick="saveNote()">সেভ করুন</button>
+                        <input type="text" id="noteTitle" placeholder="রেকর্ডের নাম (যেমন: মেঘবালিকা কাস্টিং)" style="margin-bottom: 15px;">
+                        
+                        <!-- Rich Text Editor -->
+                        <div class="rte-toolbar">
+                            <button type="button" title="Bold" onclick="document.execCommand('bold', false, null)"><i class="fas fa-bold"></i></button>
+                            <button type="button" title="Italic" onclick="document.execCommand('italic', false, null)"><i class="fas fa-italic"></i></button>
+                            <button type="button" title="Underline" onclick="document.execCommand('underline', false, null)"><i class="fas fa-underline"></i></button>
+                            <div class="color-picker-wrap" title="Text Color">
+                                <i class="fas fa-font"></i> <input type="color" id="fgColor" onchange="document.execCommand('foreColor', false, this.value)">
+                            </div>
+                            <div class="color-picker-wrap" title="Highlight Color">
+                                <i class="fas fa-highlighter"></i> <input type="color" id="bgColor" onchange="document.execCommand('hiliteColor', false, this.value)">
+                            </div>
                         </div>
-                        <div id="notesListUI"></div>
+                        <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত তথ্য লিখুন..."></div>
+                        
+                        <button class="btn-main" style="width: 100%; max-width:100%; margin-top: 15px;" onclick="saveNote()">সেভ করুন</button>
+                        
+                        <div id="notesListUI" style="margin-top: 30px;"></div>
                     </div>
-
-                    <!-- ফাইল ইনবক্স লিস্ট -->
-                    <div id="inboxListUI">ইনবক্স চেক করা হচ্ছে...</div>
+                    
+                    <div id="inboxListUI">চেক করা হচ্ছে...</div>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
-                <button onclick="exitAdmin()" style="background:none; border:none; color:grey; cursor:pointer; font-size:13px; text-decoration: underline;">অ্যাডমিন প্যানেল থেকে বের হন</button>
+                <button onclick="exitAdmin()" style="background:none; border:none; color:grey; cursor:pointer; font-size:14px; text-decoration: underline; font-weight:bold;">অ্যাডমিন প্যানেল বন্ধ করুন</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div id="adminAuthModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="color:var(--primary-pink); margin-bottom:20px; font-size:22px;">মেন্টর লগইন</h3>
+        <div class="pass-wrapper">
+            <input type="password" id="modalAdminPass" class="pass-input" placeholder="পাসওয়ার্ড দিন" style="margin:0;">
+            <i class="fas fa-eye eye-icon" onclick="togglePass('modalAdminPass', this)"></i>
+        </div>
+        <button class="btn-main" style="width:100%; max-width:100%; margin-top:15px;" onclick="checkAdminPass()">লগইন করুন</button>
+        <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer; font-weight:bold;">বাতিল</button>
     </div>
 </div>
 
@@ -234,39 +266,56 @@
 
     window.onload = () => auth.signInAnonymously();
 
-    // প্রবেশ কোড (PKADMIN)
+    // Eye Icon Logic
+    function togglePass(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    function updateFileAccept() {
+        const cat = document.getElementById('uCategory').value;
+        const fileInput = document.getElementById('uFile');
+        if(cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
+        else if(cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
+        else if(cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
+        else if(cat === 'স্ক্রিপ্টিং') fileInput.accept = ".doc, .docx, .pdf, .txt";
+        else fileInput.accept = "*/*";
+    }
+
     function checkEntry() {
         const pass = document.getElementById('entryPass').value.trim();
         if(pass === "PKADMIN") {
             document.getElementById('loginScreen').style.display = "none";
             document.getElementById('mainPortal').style.display = "block";
             loadInitialData();
-        } else {
-            document.getElementById('loginError').style.display = "block";
-        }
+        } else { document.getElementById('loginError').style.display = "block"; }
     }
 
-    // অ্যাডমিন লগইন (Neha123 / Master2002)
-    function showAdminLogin() {
-        const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+    function checkAdminPass() {
+        const pass = document.getElementById('modalAdminPass').value.trim();
         const ROLES = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" };
         if(ROLES[pass]) {
             isMentor = true;
+            document.getElementById('adminAuthModal').style.display = "none";
             document.getElementById('userPortal').style.display = "none";
             document.getElementById('adminDashboard').style.display = "block";
+            document.getElementById('modalAdminPass').value = "";
             loadAdminData();
-        } else if(pass !== null) { alert("ভুল পাসওয়ার্ড!"); }
+        } else { alert("ভুল পাসওয়ার্ড!"); }
     }
 
     function exitAdmin() {
         isMentor = false;
         document.getElementById('adminDashboard').style.display = "none";
         document.getElementById('userPortal').style.display = "block";
-    }
-
-    function loadInitialData() {
-        loadProjects();
-        loadFoldersForUser();
     }
 
     function switchUserTab(tab) {
@@ -276,25 +325,34 @@
         document.getElementById('tabStory').className = 'tab' + (tab==='story'?' active':'');
     }
 
-    // প্রজেক্ট ও ফোল্ডার লোড
-    function loadProjects() {
-        dbRef.collection('projects').where('channel', '==', channel).onSnapshot(snap => {
+    // FIX: Client-side filtering to avoid Firebase Index issues
+    function loadInitialData() {
+        dbRef.collection('projects').onSnapshot(snap => {
+            let items = [];
+            snap.forEach(doc => { let d = doc.data(); if(d.channel === channel) items.push(d); });
             let html = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
-            snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+            items.forEach(d => html += `<option value="${d.name}">${d.name}</option>`);
             document.getElementById('uProject').innerHTML = html;
         });
-    }
 
-    // মেম্বারদের জন্য কাজের ধরণ (অ্যাডমিনের তৈরি ফোল্ডার) লোড
-    function loadFoldersForUser() {
-        dbRef.collection('folders').where('channel', '==', channel).onSnapshot(snap => {
-            let html = '<option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>';
-            snap.forEach(doc => html += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+        dbRef.collection('folders').onSnapshot(snap => {
+            let html = `
+                <option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>
+                <option value="ভয়েস">🎙️ ১. ভয়েস</option>
+                <option value="থাম্বনেল">🖼️ ২. থাম্বনেল</option>
+                <option value="অডিও এডিট">🎧 ৩. অডিও এডিট</option>
+                <option value="স্ক্রিপ্টিং">✍️ ৪. স্ক্রিপ্টিং</option>
+            `;
+            snap.forEach(doc => {
+                const d = doc.data();
+                if(d.channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(d.name)) {
+                    html += `<option value="${d.name}">📁 ${d.name}</option>`;
+                }
+            });
             document.getElementById('uCategory').innerHTML = html;
         });
     }
 
-    // অ্যাডমিন: নতুন প্রজেক্ট তৈরি
     async function addProject() {
         const name = document.getElementById('newProjectName').value.trim();
         if(!name) return;
@@ -302,7 +360,6 @@
         document.getElementById('newProjectName').value = "";
     }
 
-    // অ্যাডমিন: নতুন ফোল্ডার তৈরি
     async function addFolder() {
         const name = document.getElementById('newFolderName').value.trim();
         if(!name) return;
@@ -310,20 +367,22 @@
         document.getElementById('newFolderName').value = "";
     }
 
-    // অ্যাডমিন সাইডবার লোড
     function loadAdminData() {
-        dbRef.collection('folders').where('channel', '==', channel).onSnapshot(snap => {
-            let html = "";
+        dbRef.collection('folders').onSnapshot(snap => {
+            let html = `
+                <div class="folder-item ${activeFolderName === 'ভয়েস' ? 'active' : ''}" onclick="selectFolder('ভয়েস')"><span><i class="fas fa-microphone"></i> ভয়েস</span></div>
+                <div class="folder-item ${activeFolderName === 'থাম্বনেল' ? 'active' : ''}" onclick="selectFolder('থাম্বনেল')"><span><i class="fas fa-image"></i> থাম্বনেল</span></div>
+                <div class="folder-item ${activeFolderName === 'অডিও এডিট' ? 'active' : ''}" onclick="selectFolder('অডিও এডিট')"><span><i class="fas fa-headphones"></i> অডিও এডিট</span></div>
+                <div class="folder-item ${activeFolderName === 'স্ক্রিপ্টিং' ? 'active' : ''}" onclick="selectFolder('স্ক্রিপ্টিং')"><span><i class="fas fa-file-alt"></i> স্ক্রিপ্টিং</span></div>
+            `;
             snap.forEach(doc => {
                 const d = doc.data();
-                html += `
-                    <div class="folder-item ${activeFolderName === d.name ? 'active' : ''}" onclick="selectFolder('${d.name}')">
-                        <span><i class="fas fa-folder"></i> ${d.name}</span>
-                        <i class="fas fa-trash del-folder" onclick="deleteDoc('folders', '${doc.id}')"></i>
-                    </div>
-                `;
+                if(d.channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(d.name)) {
+                    html += `<div class="folder-item ${activeFolderName === d.name ? 'active' : ''}" onclick="selectFolder('${d.name}')"><span><i class="fas fa-folder"></i> ${d.name}</span><i class="fas fa-trash del-folder" onclick="deleteDoc('folders', '${doc.id}')"></i></div>`;
+                }
             });
-            document.getElementById('folderListUI').innerHTML = html || "<p style='text-align:center; color:#bbb; font-size:12px;'>কোনো ফোল্ডার নেই</p>";
+            document.getElementById('folderListUI').innerHTML = html;
+            if(!activeFolderName || activeFolderName === 'record' || activeFolderName === 'story') selectFolder('ভয়েস');
         });
     }
 
@@ -332,10 +391,12 @@
         document.getElementById('currentViewTitle').innerText = name + " ইনবক্স";
         document.getElementById('recordView').style.display = "none";
         document.getElementById('inboxListUI').style.display = "block";
+        loadAdminData(); // Refresh sidebar active state
         loadInbox(name);
     }
 
     function setSpecialView(type) {
+        activeFolderName = type;
         if(type === 'record') {
             document.getElementById('currentViewTitle').innerText = "কাস্টিং ও রেকর্ড বুক";
             document.getElementById('recordView').style.display = "block";
@@ -347,9 +408,9 @@
             document.getElementById('inboxListUI').style.display = "block";
             loadStories();
         }
+        loadAdminData(); // Refresh sidebar active state
     }
 
-    // মেম্বার: কাজ জমা দেওয়া
     async function submitWork() {
         const name = document.getElementById('uName').value.trim();
         const project = document.getElementById('uProject').value;
@@ -358,9 +419,9 @@
         const status = document.getElementById('statusMsg');
 
         if(!name || !project || !cat || !file) return alert("সব তথ্য দিন!");
-
         status.style.color = "var(--primary-pink)";
         status.innerText = "⏳ ফাইল পাঠানো হচ্ছে...";
+        
         const fd = new FormData();
         fd.append('file', file);
         fd.append('upload_preset', UPLOAD_PRESET);
@@ -369,103 +430,90 @@
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
             if(data.secure_url) {
-                await dbRef.collection('tasks').add({
-                    sender: name, project, category: cat,
-                    fileUrl: data.secure_url, channel,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                await dbRef.collection('tasks').add({ sender: name, project, category: cat, fileUrl: data.secure_url, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
                 status.style.color = "green";
                 status.innerText = "✅ সফলভাবে জমা হয়েছে!";
-                document.getElementById('uName').value = "";
-                document.getElementById('uFile').value = "";
+                document.getElementById('uName').value = ""; document.getElementById('uFile').value = "";
             }
         } catch(e) { status.style.color = "red"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // অ্যাডমিন: ইনবক্স লোড
+    // FIX: Filtering in memory for index issue
     function loadInbox(folderName) {
-        dbRef.collection('tasks')
-            .where('channel', '==', channel)
-            .where('category', '==', folderName)
-            .orderBy('timestamp', 'desc').onSnapshot(snap => {
-            let html = "";
+        dbRef.collection('tasks').onSnapshot(snap => {
+            let items = [];
             snap.forEach(doc => {
-                const d = doc.data();
-                const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg)$/i);
-                html += `
-                    <div class="list-card">
-                        <b>👤 ${d.sender}</b>
-                        <div class="card-meta">📦 প্রজেক্ট: ${d.project}</div>
-                        ${isAudio ? `<audio controls src="${d.fileUrl}"></audio>` : ''}
-                        <div class="card-actions">
-                            <a href="${d.fileUrl}" target="_blank" class="btn-sm btn-view"><i class="fas fa-eye"></i> ফাইল দেখুন</a>
-                            <button onclick="deleteDoc('tasks', '${doc.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
-                        </div>
-                    </div>
-                `;
+                let d = doc.data();
+                if(d.channel === channel && d.category === folderName) items.push({ id: doc.id, ...d });
+            });
+            items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+            let html = "";
+            items.forEach(d => {
+                const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
+                const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+                let mediaHtml = '';
+                if(isAudio) mediaHtml = `<audio controls src="${d.fileUrl}"></audio>`;
+                else if(isImg) mediaHtml = `<img src="${d.fileUrl}" class="media-preview">`;
+
+                html += `<div class="list-card"><b>👤 ${d.sender}</b><div class="card-meta">📦 প্রজেক্ট: ${d.project}</div>${mediaHtml}<div class="card-actions"><a href="${d.fileUrl}" target="_blank" class="btn-sm btn-view"><i class="fas fa-eye"></i> ফাইল দেখুন</a><button onclick="deleteDoc('tasks', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button></div></div>`;
             });
             document.getElementById('inboxListUI').innerHTML = html || "<p style='text-align:center; padding:30px; color:#999;'>এই ফোল্ডারটি খালি।</p>";
         });
     }
 
-    // মেম্বার: গল্প পাঠানো
     async function submitStory() {
         const author = document.getElementById('sAuthor').value.trim();
         const title = document.getElementById('sTitle').value.trim();
         const text = document.getElementById('sText').value.trim();
-        if(!author || !title || !text) return alert("ঘর পূরণ করুন!");
+        const msg = document.getElementById('storyStatusMsg');
+        if(!author || !title || !text) return alert("ঘরগুলো পূরণ করুন!");
         
-        await dbRef.collection('channel_stories').add({
-            author, title, storyText: text, channel,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        alert("গল্প জমা হয়েছে!");
-        document.getElementById('sAuthor').value = ""; document.getElementById('sTitle').value = ""; document.getElementById('sText').value = "";
+        msg.innerText = "⏳ পাঠানো হচ্ছে...";
+        try {
+            await dbRef.collection('channel_stories').add({ author, title, storyText: text, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            msg.style.color = "green"; msg.innerText = "✅ গল্প জমা হয়েছে!";
+            document.getElementById('sAuthor').value = ""; document.getElementById('sTitle').value = ""; document.getElementById('sText').value = "";
+        } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // অ্যাডমিন: গল্প দেখা
     function loadStories() {
-        dbRef.collection('channel_stories').where('channel', '==', channel).orderBy('timestamp', 'desc').onSnapshot(snap => {
-            let html = "";
+        dbRef.collection('channel_stories').onSnapshot(snap => {
+            let items = [];
             snap.forEach(doc => {
-                const d = doc.data();
-                html += `
-                    <div class="list-card">
-                        <b>📖 ${d.title} (লেখক: ${d.author})</b>
-                        <p style="font-size:14px; margin-top:10px; color:#444; line-height:1.6;">${d.storyText.substring(0, 400)}...</p>
-                        <div class="card-actions">
-                            <button onclick="deleteDoc('channel_stories', '${doc.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
-                        </div>
-                    </div>
-                `;
+                let d = doc.data();
+                if(d.channel === channel) items.push({ id: doc.id, ...d });
             });
-            document.getElementById('inboxListUI').innerHTML = html || "<p style='text-align:center;'>কোনো গল্প জমা পড়েনি।</p>";
+            items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+            let html = "";
+            items.forEach(d => {
+                html += `<div class="list-card"><b>📖 ${d.title} (লেখক: ${d.author})</b><p style="font-size:14px; margin-top:10px; color:#444; line-height:1.6; white-space:pre-wrap;">${d.storyText}</p><div class="card-actions"><button onclick="deleteDoc('channel_stories', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button></div></div>`;
+            });
+            document.getElementById('inboxListUI').innerHTML = html || "<p style='text-align:center; color:#999;'>কোনো গল্প জমা পড়েনি।</p>";
         });
     }
 
-    // রেকর্ড বুক (Notes)
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
-        const content = document.getElementById('noteContent').value.trim();
-        if(!title || !content) return alert("তথ্য দিন!");
+        const content = document.getElementById('noteContent').innerHTML.trim(); // Rich Text from innerHTML
+        if(!title || !content) return alert("তথ্য প্রদান করুন!");
         await dbRef.collection('channel_notes').add({ title, content, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').value = "";
+        document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').innerHTML = "";
     }
 
     function loadNotes() {
-        dbRef.collection('channel_notes').where('channel', '==', channel).orderBy('timestamp', 'desc').onSnapshot(snap => {
-            let html = "";
+        dbRef.collection('channel_notes').onSnapshot(snap => {
+            let items = [];
             snap.forEach(doc => {
-                const d = doc.data();
-                html += `
-                    <div class="note-card">
-                        <div class="note-header">
-                            <span>📌 ${d.title}</span>
-                            <i class="fas fa-trash" style="cursor:pointer; color:#ff80ab;" onclick="deleteDoc('channel_notes', '${doc.id}')"></i>
-                        </div>
-                        <p style="white-space:pre-wrap; font-size:14px; color:#444;">${d.content}</p>
-                    </div>
-                `;
+                let d = doc.data();
+                if(d.channel === channel) items.push({ id: doc.id, ...d });
+            });
+            items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+            let html = "";
+            items.forEach(d => {
+                html += `<div class="note-card"><div class="note-header"><span>📌 ${d.title}</span><i class="fas fa-trash" style="cursor:pointer; color:red;" onclick="deleteDoc('channel_notes', '${d.id}')"></i></div><div style="font-size:15px; color:#333; line-height:1.6; margin-top:10px; word-wrap: break-word;">${d.content}</div></div>`;
             });
             document.getElementById('notesListUI').innerHTML = html || "<p style='text-align:center; color:#999;'>কোনো রেকর্ড নেই।</p>";
         });
