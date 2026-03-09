@@ -323,6 +323,34 @@
             box-shadow: none; 
         }
 
+        /* Updated Mentor Login Button (Medium Solid Box) */
+        .btn-admin {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Kalpurush', sans-serif;
+            margin-top: 30px;
+            opacity: 1; /* 100% Opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .btn-admin:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-glow);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
         .audition-toggle-user { 
             background: rgba(255, 215, 0, 0.1); 
             border: 2px dashed var(--gold-text); 
@@ -484,10 +512,10 @@
             <div class="mentor-grid">
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="শুচিস্মিতা দাস নেহা" class="mentor-cb">
-                        <span>শুচিস্মিতা দাস নেহা</span>
+                        <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="mentor-cb">
+                        <span>সুচিস্মিতা দাস নেহা</span>
                     </div>
-                    <div class="status-pill" id="stat_শুচিস্মিতা দাস নেহা">
+                    <div class="status-pill" id="stat_সুচিস্মিতা দাস নেহা">
                         <span class="dot dot-offline"></span> Offline
                     </div>
                 </label>
@@ -539,9 +567,9 @@
         </div>
     </div>
 
-    <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
-    <button id="btnMentorLogin" class="btn-action" style="background: transparent; color: #777; border: 1px solid #333; font-size: 14px; padding: 12px;">
-        <i class="fas fa-lock"></i> মেন্টর লগইন
+    <!-- Updated Admin Portal Trigger -->
+    <button id="btnMentorLogin" class="btn-admin">
+        <i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন প্যানেল
     </button>
 </div>
 
@@ -570,7 +598,7 @@
         <div id="adminAuditionMentors" style="display: none; margin-top: 15px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 15px;">
             <p style="font-size: 13px; color: var(--gold-text); margin-bottom: 10px;">অডিশনের বিচারক প্যানেল সিলেক্ট করুন:</p>
             <div style="display: flex; gap: 15px; flex-wrap: wrap; font-size: 14px; color: #fff;">
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="শুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> নেহা</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> নেহা</label>
                 <label><input type="checkbox" class="admin-aud-mentor-cb" value="বিদিশা মুখার্জি" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> বিদিশা</label>
                 <label><input type="checkbox" class="admin-aud-mentor-cb" value="সঞ্জিত মল্লিক" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> সঞ্জিত</label>
             </div>
@@ -884,7 +912,7 @@
     document.getElementById('btnMentorLogin').onclick = function() {
         const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
         const map = { 
-            "Neha123": "শুচিস্মিতা দাস নেহা", 
+            "Neha123": "সুচিস্মিতা দাস নেহা", 
             "Bidisha123": "বিদিশা মুখার্জি", 
             "Sanjit123": "সঞ্জিত মল্লিক", 
             "Master2002": "All" 
