@@ -373,6 +373,7 @@
             margin-bottom: 20px; 
             border-left: 5px solid var(--success-green); 
             box-shadow: 0 10px 20px rgba(0,0,0,0.4); 
+            position: relative;
         }
 
         .reply-item { 
@@ -385,6 +386,49 @@
         }
 
         .no-reply-msg { font-size: 13px; color: #888; font-style: italic; margin-top: 10px; }
+
+        /* Delete Button for User */
+        .btn-delete-user {
+            background: rgba(255, 82, 82, 0.1);
+            color: var(--error-red);
+            border: 1px solid var(--error-red);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: fit-content;
+        }
+
+        .btn-delete-user:hover {
+            background: var(--error-red);
+            color: white;
+        }
+
+        /* Clear All Area */
+        .clear-all-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .btn-clear-all {
+            background: transparent;
+            color: #aaa;
+            border: 1px dashed #aaa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-clear-all:hover {
+            color: var(--error-red);
+            border-color: var(--error-red);
+        }
 
         /* Mentor Dashboard Elements */
         .dashboard-container { display: none; width: 100%; max-width: 800px; }
@@ -492,7 +536,7 @@
             ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
             ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
             ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
-            ৪. ফাইলগুলি ২৪ ঘণ্টা পর অটোমেটিক মুছে যাবে।<br>
+            ৪. ফাইলগুলি ২৪ ঘণ্টা পর অটোমেটিক মুছে যাবে অথবা আপনি চাইলে নিজে ডিলিট করতে পারেন।<br>
             ৫. আপনার পাঠানো অডিওর ফিডব্যাক শুধুমাত্র আপনিই দেখতে পাবেন 'আমার ফিডব্যাক' ট্যাবে।
         </div>
 
@@ -562,6 +606,10 @@
         <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">আপনার পাঠানো অডিও ও রিপ্লাই</h3>
         <p style="font-size: 13px; color: #aaa; text-align: center; margin-bottom: 20px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে না)</p>
         
+        <div class="clear-all-area" id="clearAllContainer" style="display: none;">
+            <button class="btn-clear-all" onclick="clearMyHistory()"><i class="fas fa-trash-alt"></i> সব হিস্ট্রি মুছুন</button>
+        </div>
+
         <div id="myAudioList">
             <!-- User specific audios will load here -->
         </div>
@@ -662,6 +710,10 @@
     window.onload = async function() {
         try {
             await auth.signInAnonymously();
+            
+            // Clean up old entries logic (runs on load)
+            cleanUpOldMyAudios();
+
         } catch (err) {
             console.error("Auth Fail:", err);
             document.getElementById('upload-status').innerHTML = "<b style='color:red;'>সার্ভার কানেকশন এরর!</b>";
@@ -675,6 +727,13 @@
             }
         });
     };
+
+    // Auto cleanup old local IDs (Optional: currently keeping it simple, 
+    // relying on DB deletion to hide them, but this function can clean localStorage if needed)
+    function cleanUpOldMyAudios() {
+        // This is a placeholder for future complex cleanup if localStorage gets too big.
+        // For now, if the document doesn't exist in DB, it just won't render.
+    }
 
     // --- USER UI TABS ---
     window.switchUserTab = function(tabName) {
@@ -868,19 +927,36 @@
     // --- USER SPECIFIC FEEDBACK (PRIVATE TO DEVICE) ---
     function loadMyFeedback() {
         const listDiv = document.getElementById('myAudioList');
+        const clearAllContainer = document.getElementById('clearAllContainer');
+
         if(myAudioIds.length === 0) {
             listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনি এখনো কোনো অডিও পাঠাননি।</p>";
+            clearAllContainer.style.display = 'none';
             return;
         }
 
         getRef('requests').onSnapshot(snap => {
             let html = "";
             let foundCount = 0;
+            const currentTime = Date.now();
 
             snap.forEach(doc => {
                 if (myAudioIds.includes(doc.id)) {
-                    foundCount++;
                     const data = doc.data();
+                    
+                    // Check if 24 hours have passed for automatic deletion
+                    const docTime = data.timestamp ? data.timestamp.toMillis() : currentTime;
+                    const hoursPassed = (currentTime - docTime) / (1000 * 60 * 60);
+
+                    if (hoursPassed >= 24) {
+                        // Automatically delete document from DB if 24 hours passed
+                        getRef('requests').doc(doc.id).delete().catch(console.error);
+                        // Remove from local array
+                        removeLocalAudioId(doc.id);
+                        return; // Skip rendering
+                    }
+
+                    foundCount++;
                     const reps = (data.replies || []).map(r => `
                         <div class="reply-item">
                             <b>${r.mentor}:</b> ${r.type === 'text' ? r.content : `<audio controls src="${r.content}" style="height:30px; margin-top:5px;"></audio>`}
@@ -888,25 +964,76 @@
                     `).join('');
 
                     html += `
-                        <div class="user-feedback-card">
+                        <div class="user-feedback-card" id="userCard_${doc.id}">
                             <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:10px;">ফাইলের নাম: ${data.fileName || 'Audio'}</p>
                             <audio controls src="${data.audioUrl}"></audio>
                             <div style="margin-top:15px; border-top:1px dashed #444; padding-top:10px;">
                                 <p style="font-size:13px; font-weight:bold; color:#bbb; margin-bottom:5px;">মেন্টরদের রিপ্লাই:</p>
                                 ${reps || '<p class="no-reply-msg">এখনো কোনো রিপ্লাই আসেনি...</p>'}
                             </div>
+                            <button class="btn-delete-user" onclick="deleteMyAudio('${doc.id}')">
+                                <i class="fas fa-trash"></i> মুছে ফেলুন
+                            </button>
                         </div>
                     `;
                 }
             });
 
             if (foundCount === 0) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো অডিওগুলো ডিলিট হয়ে গেছে।</p>";
+                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো অডিওগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
+                clearAllContainer.style.display = 'none';
+                
+                // Clean up local storage if nothing found but we had IDs
+                if(myAudioIds.length > 0) {
+                     myAudioIds = [];
+                     localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
+                }
+
             } else {
                 listDiv.innerHTML = html;
+                clearAllContainer.style.display = 'flex';
             }
         });
     }
+
+    // Individual Delete Function for User
+    window.deleteMyAudio = async function(docId) {
+        if(confirm("আপনি কি নিশ্চিত এই রেকর্ড এবং রিমার্কটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
+            try {
+                await getRef('requests').doc(docId).delete();
+                removeLocalAudioId(docId);
+                // The onSnapshot listener will automatically update the UI
+            } catch(e) {
+                alert("মুছে ফেলতে সমস্যা হচ্ছে!");
+            }
+        }
+    };
+
+    // Clear All Function for User
+    window.clearMyHistory = async function() {
+        if(myAudioIds.length === 0) return;
+        if(confirm("আপনার সমস্ত পাঠানো অডিও এবং রিমার্কস মুছে ফেলা হবে। আপনি কি নিশ্চিত?")) {
+            try {
+                // Delete all from database
+                const deletePromises = myAudioIds.map(id => getRef('requests').doc(id).delete());
+                await Promise.all(deletePromises);
+                
+                // Clear local storage
+                myAudioIds = [];
+                localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
+                
+                // UI will update via snapshot
+            } catch(e) {
+                alert("সব মুছতে সমস্যা হচ্ছে!");
+            }
+        }
+    }
+
+    function removeLocalAudioId(idToRemove) {
+        myAudioIds = myAudioIds.filter(id => id !== idToRemove);
+        localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
+    }
+
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
@@ -971,6 +1098,7 @@
     }
 
     function startInboxListener() {
+        // We still keep the 24h logic for mentors view just in case
         const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
         
         getRef('requests').onSnapshot(snap => {
