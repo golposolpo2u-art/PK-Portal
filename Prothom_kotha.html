@@ -52,60 +52,32 @@
             overflow-x: hidden;
         }
 
-        /* Background Circles */
-        .bg-circle { 
-            position: fixed; 
-            border-radius: 50%; 
-            z-index: -1; 
-            filter: blur(80px); 
-            opacity: 0.4; 
-            animation: moveCircles 15s infinite alternate; 
-        }
+        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; z-index: 10; }
 
-        .c1 { 
-            width: 300px; 
-            height: 300px; 
-            background: var(--primary-glow); 
-            top: -50px; 
-            left: -50px; 
+        /* Responsive Title Layout Update */
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 5px;
         }
-
-        .c2 { 
-            width: 400px; 
-            height: 400px; 
-            background: var(--accent-pink); 
-            bottom: -100px; 
-            right: -50px; 
-        }
-
-        @keyframes moveCircles { 
-            from { transform: translate(0, 0); } 
-            to { transform: translate(50px, 50px); } 
-        }
-
-        /* Main Container */
-        .main-container { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(25px);
-            padding: 50px 40px; 
-            border-radius: 30px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.7); 
-            width: 100%;
-            max-width: 650px; 
-            border: 1px solid var(--glass-border);
-            position: relative;
-            z-index: 10;
-        }
-
-        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; }
 
         h1.logo-title { 
             font-family: 'EkushRegular', sans-serif; 
             color: #fff; 
-            font-size: 50px; 
-            margin-bottom: 5px; 
+            font-size: clamp(35px, 6vw, 50px); /* Dynamically resize based on screen */
+            margin: 0; 
             text-align: center; 
-            text-shadow: 0 0 20px rgba(255,255,255,0.2); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title-icon {
+            font-size: clamp(28px, 5vw, 40px); /* Resize icon with text */
+            color: var(--primary-glow);
+            margin-right: 10px;
         }
 
         .subtitle { 
@@ -511,16 +483,15 @@
 </head>
 <body>
 
-<div class="bg-circle c1"></div>
-<div class="bg-circle c2"></div>
-
 <!-- 1. USER INTERFACE -->
 <div class="main-container" id="userPanel">
     <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
     
     <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
     
-    <h1 class="logo-title">🎙️ প্রথম কথা</h1>
+    <div class="title-wrapper">
+        <h1 class="logo-title"><i class="fas fa-microphone-alt title-icon"></i> প্রথম কথা</h1>
+    </div>
     <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
 
     <!-- User Toggle Tabs -->
