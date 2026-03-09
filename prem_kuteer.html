@@ -405,7 +405,7 @@
     let isDocAllowed = false;
     let currentNotes = {};
     let editingNoteId = null;
-    let currentInboxFiles = []; // To hold current loaded files for ZIP
+    let currentInboxFiles = []; 
 
     window.onload = () => {
         document.getElementById('sText').addEventListener('input', function() {
@@ -548,7 +548,6 @@
             document.getElementById('adminDashboard').style.display = "block";
             document.getElementById('modalAdminPass').value = "";
             
-            // অ্যাডমিন লগইন করলে ক্লাউড ব্যাজটি শো করবে
             document.getElementById('cloudSyncBadge').style.display = "inline-flex";
             
             document.getElementById('masterConfigPanel').style.display = ROLES[pass] === "Master Admin" ? "block" : "none";
@@ -564,8 +563,6 @@
     function exitAdmin() {
         isMentor = false;
         document.getElementById('adminDashboard').style.display = "none";
-        
-        // অ্যাডমিন প্যানেল থেকে বের হলে ক্লাউড ব্যাজটি আবার হাইড হয়ে যাবে
         document.getElementById('cloudSyncBadge').style.display = "none";
         
         if(currentUser) {
@@ -659,7 +656,7 @@
             if (p.isDeleted) return; 
             const itemHtml = `
                 <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
-                    <span onclick="selectAdminProject('${p.name}')" style="flex:1;"><i class="fas fa-folder"></i> ${p.name}</span>
+                    <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
                     <div style="display:flex; gap:8px; align-items:center;">
                         <i class="fas ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}" style="color:${p.isHidden ? '#888' : 'var(--primary-pink)'}; cursor:pointer;" onclick="toggleProjectHide('${p.id}', ${p.isHidden || false})"></i>
                         <i class="fas fa-trash del-folder" onclick="trashProject('${p.id}', '${p.name}')"></i>
@@ -782,7 +779,6 @@
         } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // Load Admin Inbox & Smart Buttons
     function loadAdminInbox() {
         if(!activeAdminProj) return;
         dbRef.collection('tasks').onSnapshot(snap => {
@@ -791,7 +787,7 @@
                 let d = doc.data();
                 if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat) {
                     items.push({ id: doc.id, ...d });
-                    currentInboxFiles.push({ id: doc.id, ...d }); // Cache for ZIP
+                    currentInboxFiles.push({ id: doc.id, ...d });
                 }
             });
             items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
@@ -810,13 +806,13 @@
                 
                 let remarkSection = d.isAdmin ? "" : `
                     <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #eee;">
-                        <div class="remark-input-box">
+                        <div class="remark-input-box" style="display:flex; gap:5px;">
                             <select id="status_${d.id}" style="width:100px; padding:6px; font-size:11px;">
                                 <option value="Pending" ${d.status==='Pending'?'selected':''}>Pending</option>
                                 <option value="Approved" ${d.status==='Approved'?'selected':''}>Approved</option>
                                 <option value="Rejected" ${d.status==='Rejected'?'selected':''}>Rejected</option>
                             </select>
-                            <input type="text" id="remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}">
+                            <input type="text" id="remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}" style="flex:1; padding:6px; font-size:12px;">
                             <button onclick="updateTaskRemark('${d.id}', document.getElementById('status_${d.id}').value, document.getElementById('remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>`;
@@ -846,12 +842,10 @@
         });
     }
 
-    // Toggle Select All
     window.toggleSelectAll = (section, isChecked) => {
         document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked);
     };
 
-    // Download ZIP Logic (Using JSZip)
     async function downloadSelectedZIP(section) {
         const checkboxes = document.querySelectorAll('.chk-' + section + ':checked');
         if(checkboxes.length === 0) return alert("অন্তত একটি ফাইল সিলেক্ট করুন!");
@@ -860,25 +854,21 @@
         const folderName = `${activeAdminProj}_${activeAdminCat}_${section}`;
         const folder = zip.folder(folderName);
 
-        alert(`ZIP তৈরি হচ্ছে। দয়া করে অপেক্ষা করুন... (ফাইলের সাইজ অনুযায়ী সময় লাগতে পারে)`);
+        alert(`ZIP তৈরি হচ্ছে। দয়া করে অপেক্ষা করুন...`);
 
         for(let i=0; i<checkboxes.length; i++) {
             let url = checkboxes[i].value;
             let name = checkboxes[i].getAttribute('data-name');
             try {
-                // Cloudinary URLs usually allow fetching blob directly
                 const response = await fetch(url);
                 const blob = await response.blob();
                 folder.file(name, blob);
             } catch(e) { console.error("Fetch failed for", name); }
         }
 
-        zip.generateAsync({type:"blob"}).then(content => {
-            saveAs(content, `${folderName}.zip`);
-        });
+        zip.generateAsync({type:"blob"}).then(content => { saveAs(content, `${folderName}.zip`); });
     }
 
-    // Download Entire Project as ZIP
     async function downloadProjectZIP() {
         if(!activeAdminProj) return;
         if(!confirm(`'${activeAdminProj}' প্রজেক্টের সব ফাইল ZIP হিসেবে ডাউনলোড করবেন?`)) return;
@@ -911,7 +901,6 @@
         await dbRef.collection('tasks').doc(taskId).update({ status: status, adminRemark: remark });
     }
 
-    // Stories Logic
     async function updateStoryRemark(id, status, remark) {
         await dbRef.collection('channel_stories').doc(id).update({ status: status, adminRemark: remark });
     }
@@ -930,13 +919,13 @@
                     <div style="max-height:100px; overflow-y:auto; font-size:12px; color:#555; background:#f9f9f9; padding:8px; border-radius:6px; margin:8px 0; border:1px solid #eee;">${d.storyText}</div>
                     
                     <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #eee;">
-                        <div class="remark-input-box">
+                        <div class="remark-input-box" style="display:flex; gap:5px;">
                             <select id="s_status_${d.id}" style="width:90px; padding:6px; font-size:11px;">
                                 <option value="Pending" ${d.status==='Pending'?'selected':''}>Pending</option>
                                 <option value="Approved" ${d.status==='Approved'?'selected':''}>Approved</option>
                                 <option value="Rejected" ${d.status==='Rejected'?'selected':''}>Rejected</option>
                             </select>
-                            <input type="text" id="s_remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}">
+                            <input type="text" id="s_remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}" style="flex:1; padding:6px; font-size:12px;">
                             <button onclick="updateStoryRemark('${d.id}', document.getElementById('s_status_${d.id}').value, document.getElementById('s_remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
@@ -947,7 +936,6 @@
         });
     }
 
-    // Notes Logic
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
         const content = document.getElementById('noteContent').innerHTML.trim(); 
