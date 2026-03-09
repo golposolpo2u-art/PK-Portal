@@ -633,7 +633,10 @@
         </select>
     </div>
 
-    <h3 style="text-align:center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px;">📥 ইনবক্স</h3>
+    <h3 style="text-align:center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <span>📥 ইনবক্স</span>
+        <span id="totalAudioCount" style="font-size: 14px; color: var(--primary-glow); background: rgba(0,210,255,0.1); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--primary-glow);">মোট জমা: ০</span>
+    </h3>
     <div id="inboxList"></div>
 </div>
 
@@ -1074,6 +1077,7 @@
         
         getRef('requests').onSnapshot(snap => {
             const list = document.getElementById('inboxList');
+            const countLabel = document.getElementById('totalAudioCount');
             let dataArr = [];
 
             snap.forEach(doc => {
@@ -1089,6 +1093,11 @@
             });
 
             dataArr.sort((a, b) => b.ts - a.ts);
+            
+            // Update total count
+            if (countLabel) {
+                countLabel.innerText = `মোট জমা: ${dataArr.length}`;
+            }
 
             if (!isFirstLoad && dataArr.length > 0) {
                 document.getElementById('notifBell').play().catch(()=>{});
