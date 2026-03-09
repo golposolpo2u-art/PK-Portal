@@ -84,6 +84,14 @@
         .admin-upload-wrapper { background: #fff; border: 2px dashed var(--primary-pink); padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
         .admin-upload-wrapper input[type="file"] { flex: 1; border: 1px solid #ddd; padding: 8px; margin: 0; min-width: 200px; }
         
+        /* Split Inbox View for Raw and Admin Files */
+        .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        @media (max-width: 768px) { .split-inbox { grid-template-columns: 1fr; } }
+        .inbox-column { background: #fdf2f8; border: 1px solid var(--border-pink); border-radius: 15px; padding: 15px; }
+        .inbox-column h4 { text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px dashed #f8bbd0; font-size: 18px; }
+        .col-raw h4 { color: var(--primary-pink); }
+        .col-admin h4 { color: #2e7d32; }
+
         /* Record View (White Theme) */
         #recordView { background: #ffffff; padding: 25px; border-radius: 25px; border: 2px solid var(--primary-pink); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .note-card { background: #ffffff; border: 1px solid #e0e0e0; border-left: 5px solid var(--primary-pink); padding: 20px; border-radius: 15px; margin-bottom: 15px; color: #333; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
@@ -223,8 +231,17 @@
                             <span id="aUploadMsg" style="font-size:12px; font-weight:bold; color:green; width:100%;"></span>
                         </div>
 
-                        <!-- Files List -->
-                        <div id="projectInboxListUI"></div>
+                        <!-- Split Files List -->
+                        <div class="split-inbox">
+                            <div class="inbox-column col-raw">
+                                <h4><i class="fas fa-inbox"></i> ইউজারদের পাঠানো ফাইল</h4>
+                                <div id="rawInboxUI"></div>
+                            </div>
+                            <div class="inbox-column col-admin">
+                                <h4><i class="fas fa-check-circle"></i> ফাইনাল / সেভ করা ফাইল</h4>
+                                <div id="adminInboxUI"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Casting Record Book (White Theme & Rich Text) -->
@@ -327,13 +344,23 @@
         return url;
     }
 
+    // FIX FOR CRASH: Checked if select element actually exists!
     function updateFileAccept(selectId, fileInputId) {
-        const cat = document.getElementById(selectId).value;
+        let cat = "";
+        if (selectId === 'dummy') {
+            cat = activeAdminCat;
+        } else {
+            const selectEl = document.getElementById(selectId);
+            if (selectEl) cat = selectEl.value;
+        }
+        
         const fileInput = document.getElementById(fileInputId);
-        if(cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
-        else if(cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
-        else if(cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
-        else if(cat === 'স্ক্রিপ্টিং') fileInput.accept = ".doc, .docx, .pdf, .txt";
+        if (!fileInput || !cat) return;
+
+        if (cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
+        else if (cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
+        else if (cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
+        else if (cat === 'স্ক্রিপ্টিং') fileInput.accept = ".doc, .docx, .pdf, .txt";
         else fileInput.accept = "*/*";
     }
 
@@ -359,6 +386,9 @@
             // First time load, auto-select first project
             if(allProjects.length > 0 && !activeAdminProj) {
                 selectAdminProject(allProjects[0].name);
+            } else if (allProjects.length === 0) {
+                document.getElementById('projectInboxListUI').innerHTML = "<p style='text-align:center; padding:30px; color:#999;'>কোনো প্রজেক্ট নেই। আগে প্রজেক্ট তৈরি করুন।</p>";
+                document.getElementById('projectView').style.display = "block";
             }
         } else { alert("ভুল পাসওয়ার্ড!"); }
     }
@@ -448,7 +478,7 @@
             html += `<div class="tab ${activeAdminCat === cat ? 'active' : ''}" onclick="selectAdminCategory('${cat}')">${cat}</div>`;
         });
         document.getElementById('adminCatTabs').innerHTML = html;
-        updateFileAccept('dummy', 'aFile'); // Setup accept type for admin upload based on current cat
+        updateFileAccept('dummy', 'aFile'); 
     }
 
     // Selections
@@ -540,8 +570,9 @@
         } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // Filter & Load Files for current Project & Category
     function loadAdminInbox() {
+        if(!activeAdminProj) return;
+        
         dbRef.collection('tasks').onSnapshot(snap => {
             let items = [];
             snap.forEach(doc => {
@@ -550,7 +581,9 @@
             });
             items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
 
-            let html = "";
+            let rawHtml = "";
+            let adminHtml = "";
+
             items.forEach(d => {
                 const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
@@ -558,10 +591,9 @@
                 if(isAudio) mediaHtml = `<audio controls src="${d.fileUrl}"></audio>`;
                 else if(isImg) mediaHtml = `<img src="${d.fileUrl}" class="media-preview">`;
 
-                // Distinct style if uploaded by Admin
-                const cardStyle = d.isAdmin ? 'border-left: 5px solid green; background:#f0fdf4;' : 'border-left: 4px solid var(--primary-pink);';
+                const cardStyle = d.isAdmin ? 'border-left: 4px solid green; background:#f0fdf4;' : 'border-left: 4px solid var(--primary-pink);';
                 
-                html += `
+                const card = `
                 <div class="list-card" style="${cardStyle}">
                     <b>${d.isAdmin ? '<i class="fas fa-check-circle" style="color:green;"></i> ' : '👤 '}${d.sender}</b>
                     <div class="card-meta">📂 ফোল্ডার: ${d.category}</div>
@@ -571,8 +603,15 @@
                         <button onclick="deleteDoc('tasks', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
                     </div>
                 </div>`;
+
+                if(d.isAdmin) {
+                    adminHtml += card;
+                } else {
+                    rawHtml += card;
+                }
             });
-            document.getElementById('projectInboxListUI').innerHTML = html || "<p style='text-align:center; padding:30px; color:#999;'>এই ফোল্ডারে কোনো ফাইল নেই।</p>";
+            document.getElementById('rawInboxUI').innerHTML = rawHtml || "<p style='text-align:center; padding:20px; color:#999;'>কোনো নতুন ফাইল নেই।</p>";
+            document.getElementById('adminInboxUI').innerHTML = adminHtml || "<p style='text-align:center; padding:20px; color:#999;'>কোনো ফাইনাল ফাইল নেই।</p>";
         });
     }
 
