@@ -8,6 +8,10 @@
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- JSZip & FileSaver for Zip Conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
     <style>
         :root {
             --primary-pink: #e91e63;
@@ -36,32 +40,31 @@
         .ch-title { font-size: 30px; color: var(--primary-pink); font-weight: bold; }
         .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; }
 
-        /* Auth Screen (Login/Register) */
+        /* Auth Screen */
         #authScreen { text-align: center; padding: 20px 0; }
         .auth-wrapper { max-width: 320px; margin: 0 auto; background: #fdf2f8; padding: 25px; border-radius: 15px; border: 1px solid var(--border-pink); }
         .auth-input { width: 100%; padding: 12px; border: 1px solid var(--border-pink); border-radius: 10px; font-size: 14px; margin-bottom: 15px; outline: none; }
         .auth-input:focus { border-color: var(--primary-pink); }
         .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(233, 30, 99, 0.2); width: 100%; }
         .toggle-auth { color: var(--primary-pink); font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
+        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-top: -5px; margin-bottom: 15px; }
+        .forgot-links span { color: #888; cursor: pointer; text-decoration: underline; }
 
         .tabs { display: flex; background: var(--baby-pink); border-radius: 10px; margin-bottom: 20px; overflow: hidden; padding: 4px; flex-wrap: wrap; }
         .tab { flex: 1; padding: 8px; text-align: center; cursor: pointer; font-weight: bold; color: #666; border-radius: 8px; font-size: 14px; min-width: 80px; }
         .tab.active { background: var(--primary-pink); color: white; }
 
-        /* Forms */
         label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 3px; font-size: 13px;}
-        select, textarea, input[type="file"] { width: 100%; padding: 10px; border: 1px solid var(--border-pink); border-radius: 8px; font-size: 14px; outline: none; background: #fff; }
-        select:focus, textarea:focus { border-color: var(--primary-pink); }
+        select, textarea, input[type="file"], input[type="text"] { width: 100%; padding: 10px; border: 1px solid var(--border-pink); border-radius: 8px; font-size: 14px; outline: none; background: #fff; }
+        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); }
         textarea { min-height: 80px; }
 
         /* Rich Text Editor */
         .rte-toolbar { display: flex; gap: 5px; background: #f9f9f9; padding: 8px; border-radius: 8px 8px 0 0; border: 1px solid var(--border-pink); border-bottom: none; align-items: center; flex-wrap: wrap; }
         .rte-toolbar button, .rte-toolbar .color-picker-wrap { border: 1px solid #ddd; background: white; cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; color: #333; display: flex; align-items: center; gap: 3px; }
-        .rte-toolbar button:hover { background: #eee; }
         .rte-toolbar select { border: 1px solid #ddd; background: white; cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: #333; outline: none; }
         .color-picker-wrap input[type="color"] { width: 20px; height: 20px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
         .rte-editor { background: white; min-height: 150px; padding: 10px; border: 1px solid var(--border-pink); border-radius: 0 0 8px 8px; outline: none; color: #333; font-size: 14px; line-height: 1.5; overflow-y: auto; }
-        .rte-editor:empty:before { content: attr(placeholder); color: #aaa; pointer-events: none; display: block; }
 
         /* Admin Layout & Cards */
         .admin-layout { display: grid; grid-template-columns: 220px 1fr; gap: 15px; margin-top: 15px; }
@@ -69,13 +72,13 @@
         .sidebar { background: #fdf2f8; padding: 15px; border-radius: 15px; border: 1px solid var(--border-pink); }
         .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: #555; display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #eee; font-size: 13px;}
         .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: white; border-color: var(--primary-pink); }
-        .folder-item i { margin-right: 8px; }
         .folder-item.hidden-proj { opacity: 0.7; background: #fafafa; border-style: dashed; }
 
-        .list-card { background: white; border: 1px solid var(--border-pink); padding: 12px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .list-card { background: white; border: 1px solid var(--border-pink); padding: 12px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); position: relative;}
         .list-card b { color: var(--primary-pink); font-size: 15px; display: block; margin-bottom: 3px; }
         .card-meta { font-size: 12px; color: #666; margin-bottom: 8px; }
-        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center;}
+        
         .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; }
         .btn-del { background: #ffebee; color: #c62828; }
         .btn-download { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
@@ -83,43 +86,28 @@
         .btn-remark { background: #fff3e0; color: #f57f17; border: 1px solid #ffe082; }
 
         .admin-box { background: #fdf2f8; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-pink); }
-        .admin-upload-wrapper { background: #fff; border: 1px dashed var(--primary-pink); padding: 10px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .admin-upload-wrapper input[type="file"] { flex: 1; border: 1px solid #ddd; padding: 6px; margin: 0; min-width: 180px; font-size: 12px;}
         
         .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         @media (max-width: 600px) { .split-inbox { grid-template-columns: 1fr; } }
         .inbox-column { background: #fdf2f8; border: 1px solid var(--border-pink); border-radius: 10px; padding: 10px; }
-        .inbox-column h4 { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #f8bbd0; font-size: 14px; }
-        .col-raw h4 { color: var(--primary-pink); }
-        .col-admin h4 { color: #2e7d32; }
-
-        .remark-input-box { display: flex; gap: 5px; margin-top: 8px; }
-        .remark-input-box input { flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; outline:none;}
-        .remark-display { background: #fdf2f8; padding: 8px; border-radius: 6px; font-size: 12px; margin-top: 8px; border-left: 3px solid var(--primary-pink); color: #444;}
         
-        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; }
-        .status-pending { background: #ffe082; color: #f57f17; }
-        .status-approved { background: #c8e6c9; color: #2e7d32; }
-        .status-rejected { background: #ffcdd2; color: #c62828; }
+        /* Select Checkbox */
+        .select-check { transform: scale(1.3); margin-right: 8px; cursor: pointer; accent-color: var(--primary-pink); }
+        .cloud-badge { background: #e3f2fd; color: #1565c0; font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: bold; border: 1px solid #90caf9; display: inline-flex; align-items: center; gap: 4px;}
 
+        /* Modals & Previews */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
         .modal-box { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(233,30,99,0.3); }
-        
         #previewModal .modal-box { max-width: 700px; width: 95%; padding: 15px; }
         .preview-container { background: #f9f9f9; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #eee; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 150px; }
         
         .admin-trigger { background: var(--baby-pink); border: 1px solid var(--border-pink); color: var(--primary-pink); font-size: 14px; padding: 12px; border-radius: 10px; margin-top: 30px; cursor: pointer; width: 100%; text-align: center; font-weight: bold; display: block; }
-        .admin-trigger:hover { background: var(--primary-pink); color: white; }
-
+        
         audio { width: 100%; height: 30px; margin-top: 8px; }
         .media-preview { max-width: 100%; max-height: 100px; border-radius: 6px; margin-top: 5px; border: 1px solid #eee; object-fit: contain;}
 
         #adminDashboard, #mainPortal { display: none; }
-        
-        /* User Navbar */
         .user-nav { display: flex; justify-content: space-between; align-items: center; background: #fdf2f8; padding: 10px 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border-pink); }
-        .user-nav-name { font-weight: bold; color: var(--primary-pink); font-size: 14px; }
-        .logout-btn { background: none; border: none; color: #c62828; font-weight: bold; cursor: pointer; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -132,21 +120,35 @@
             <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Prem Kuteer">
         </div>
         <h1 class="ch-title">প্রেম কুটির</h1>
+        <!-- ক্লাউড ব্যাজটি ডিফল্টভাবে হাইড (display: none) করা হলো -->
+        <div id="cloudSyncBadge" class="cloud-badge" style="display: none; margin-top: 5px;"><i class="fas fa-cloud"></i> আনলিমিটেড ক্লাউড সিঙ্ক চালু আছে</div>
     </div>
 
-    <!-- Auth Screen (Login / Register) -->
+    <!-- Auth Screen -->
     <div id="authScreen">
+        <!-- Login Box -->
         <div class="auth-wrapper" id="loginBox">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইউজার লগইন</h3>
             <input type="email" id="loginEmail" class="auth-input" placeholder="আপনার ইমেইল">
-            <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড">
+            
+            <div style="position:relative;">
+                <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom: 5px;">
+                <i class="fas fa-eye eye-icon" style="top:40%;" onclick="togglePass('loginPass', this)"></i>
+            </div>
+            
+            <div class="forgot-links">
+                <span onclick="toggleAuthView('forgotPass')">Forgot Password?</span>
+                <span onclick="toggleAuthView('forgotEmail')">Forgot Email?</span>
+            </div>
+
             <button class="btn-main" onclick="loginUser()">লগইন করুন</button>
-            <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 13px;">
+            <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 13px; align-items:center;">
                 <span class="toggle-auth" style="margin-top: 0;" onclick="toggleAuthView('register')">নতুন অ্যাকাউন্ট খুলুন</span>
-                <span class="toggle-auth" style="margin-top: 0; color: #888;" onclick="toggleAuthView('guest')">অতিথি লগইন (Guest)</span>
+                <span class="toggle-auth" style="margin-top: 0; color: #444; font-weight: 900; opacity: 1;" onclick="toggleAuthView('guest')">Guest Login</span>
             </div>
         </div>
 
+        <!-- Register Box -->
         <div class="auth-wrapper" id="registerBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">নতুন অ্যাকাউন্ট</h3>
             <input type="text" id="regName" class="auth-input" placeholder="আপনার সম্পূর্ণ নাম">
@@ -156,28 +158,44 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">অ্যাকাউন্ট আছে? লগইন করুন</span>
         </div>
 
+        <!-- Guest Box -->
         <div class="auth-wrapper" id="guestBox" style="display:none;">
-            <h3 style="color:var(--primary-pink); margin-bottom:15px;">অতিথি হিসেবে প্রবেশ</h3>
+            <h3 style="color:var(--primary-pink); margin-bottom:15px;">Guest Login</h3>
             <p style="font-size: 12px; color: #666; margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন।</p>
             <input type="text" id="guestName" class="auth-input" placeholder="আপনার সম্পূর্ণ নাম লিখুন">
             <button class="btn-main" onclick="loginGuest()">প্রবেশ করুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
+
+        <!-- Forgot Password Box -->
+        <div class="auth-wrapper" id="forgotPassBox" style="display:none;">
+            <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
+            <p style="font-size: 12px; color: #666; margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
+            <input type="email" id="resetEmail" class="auth-input" placeholder="আপনার ইমেইল">
+            <button class="btn-main" onclick="resetPassword()">রিসেট লিঙ্ক পাঠান</button>
+            <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
+        </div>
+
+        <!-- Forgot Email Box -->
+        <div class="auth-wrapper" id="forgotEmailBox" style="display:none;">
+            <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইমেইল ভুলে গেছেন?</h3>
+            <p style="font-size: 13px; color: #444; margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
+            <p style="font-size: 12px; color: #666; margin-bottom: 15px;">অনুগ্রহ করে একটি <b>নতুন অ্যাকাউন্ট</b> তৈরি করুন অথবা মেন্টরের সাথে যোগাযোগ করুন।</p>
+            <button class="btn-main" onclick="toggleAuthView('register')" style="background: linear-gradient(45deg, #4caf50, #81c784);">নতুন অ্যাকাউন্ট খুলুন</button>
+            <span class="toggle-auth" onclick="toggleAuthView('login')" style="margin-top: 15px;">ফিরে যান (লগইন)</span>
+        </div>
         
         <p id="authErrorMsg" style="color:red; font-size:12px; margin-top:10px; font-weight:bold;"></p>
-        
         <button onclick="document.getElementById('adminAuthModal').style.display='flex'" class="admin-trigger" style="max-width: 320px; margin: 30px auto 0;"><i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন লগইন</button>
     </div>
 
     <!-- Main Portal (For Logged In Users) -->
     <div id="mainPortal">
-        
         <!-- User Area -->
         <div id="userPortal">
-            
             <div class="user-nav">
-                <div class="user-nav-name"><i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span></div>
-                <button class="logout-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+                <div style="font-weight: bold; color: var(--primary-pink); font-size: 14px;"><i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span></div>
+                <button style="background:none; border:none; color:#c62828; font-weight:bold; cursor:pointer;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
             </div>
 
             <div class="tabs">
@@ -186,7 +204,6 @@
                 <div class="tab" onclick="switchUserTab('status')">আমার স্ট্যাটাস</div>
             </div>
 
-            <!-- Work Upload Form -->
             <div id="workUpload">
                 <label>মেইন প্রজেক্ট (ফোল্ডার):</label>
                 <select id="uProject"><option value="">প্রজেক্ট লোড হচ্ছে...</option></select>
@@ -208,25 +225,20 @@
                 <div id="statusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
-            <!-- Story Upload Form -->
             <div id="storyUpload" style="display:none;">
                 <label>গল্পের শিরোনাম:</label>
                 <input type="text" id="sTitle" placeholder="শিরোনাম">
-                
                 <label>গল্পটি লিখুন:</label>
                 <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে লিখুন..."></textarea>
                 <div id="wordCountDisplay" style="font-size:11px; color:#c62828; text-align:right; margin-top:-3px; margin-bottom:8px; font-weight:bold;">শব্দ সংখ্যা: ০ / ৫০০০ (ন্যূনতম)</div>
-                
                 <button class="btn-main" style="margin-top:10px;" onclick="submitStory()">গল্প পাঠান <i class="fas fa-book"></i></button>
                 <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
-            <!-- User Status View -->
             <div id="statusView" style="display:none;">
                 <p style="text-align:center; color:var(--primary-pink); font-size:14px; font-weight:bold; margin-bottom:15px;">আপনার পাঠানো সমস্ত কাজ ও গল্পের স্ট্যাটাস</p>
                 <div id="userStatusListUI">লোড হচ্ছে...</div>
             </div>
-
             <button onclick="document.getElementById('adminAuthModal').style.display='flex'" class="admin-trigger" style="margin-top:40px;"><i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন প্যানেল</button>
         </div>
 
@@ -273,7 +285,11 @@
                     
                     <!-- Project View -->
                     <div id="projectView" style="display:none;">
-                        <h3 id="currentProjTitle" style="margin-bottom:12px; color:var(--primary-pink); font-size: 18px;"></h3>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+                            <h3 id="currentProjTitle" style="color:var(--primary-pink); font-size: 18px; margin:0;"></h3>
+                            <button class="btn-sm btn-main" style="padding:8px 15px; font-size:12px;" onclick="downloadProjectZIP()"><i class="fas fa-file-archive"></i> Download Folder ZIP</button>
+                        </div>
+                        
                         <div class="tabs" id="adminCatTabs" style="margin-bottom:15px;"></div>
 
                         <div class="admin-upload-wrapper">
@@ -285,64 +301,52 @@
 
                         <div class="split-inbox">
                             <div class="inbox-column col-raw">
-                                <h4><i class="fas fa-inbox"></i> ইউজারদের ফাইল</h4>
-                                <div id="rawInboxUI"></div>
+                                <h4 style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span><i class="fas fa-inbox"></i> ইউজারদের ফাইল</span>
+                                    <button class="btn-sm btn-download" style="padding:4px 8px;" onclick="downloadSelectedZIP('raw')">ZIP Selected</button>
+                                </h4>
+                                <label style="font-size:11px; cursor:pointer; color:#666;"><input type="checkbox" onchange="toggleSelectAll('raw', this.checked)"> Select All</label>
+                                <div id="rawInboxUI" style="margin-top:10px;"></div>
                             </div>
                             <div class="inbox-column col-admin">
-                                <h4><i class="fas fa-check-circle"></i> ফাইনাল ফাইল</h4>
-                                <div id="adminInboxUI"></div>
+                                <h4 style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span><i class="fas fa-check-circle"></i> ফাইনাল ফাইল</span>
+                                    <button class="btn-sm btn-download" style="padding:4px 8px;" onclick="downloadSelectedZIP('admin')">ZIP Selected</button>
+                                </h4>
+                                <label style="font-size:11px; cursor:pointer; color:#666;"><input type="checkbox" onchange="toggleSelectAll('admin', this.checked)"> Select All</label>
+                                <div id="adminInboxUI" style="margin-top:10px;"></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Casting Record -->
-                    <div id="recordView" style="display:none; background: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid var(--primary-pink); box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                    <div id="recordView" style="display:none; background: #ffffff; padding: 20px; border-radius: 15px; border: 1px solid var(--primary-pink);">
                         <h3 style="margin-bottom:12px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-clipboard"></i> কাস্টিং ডায়েরি</h3>
-                        <input type="text" id="noteTitle" placeholder="রেকর্ডের শিরোনাম (যেমন: মেঘবালিকা কাস্টিং)" style="margin-bottom: 10px; width: 100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
-                        
+                        <input type="text" id="noteTitle" placeholder="রেকর্ডের শিরোনাম" style="margin-bottom: 10px; width: 100%;">
                         <div class="rte-toolbar">
-                            <select onchange="document.execCommand('fontName', false, this.value)">
-                                <option value="Kalpurush">Kalpurush</option>
-                                <option value="Arial">Arial</option>
-                                <option value="Times New Roman">Times</option>
-                            </select>
-                            <select onchange="document.execCommand('fontSize', false, this.value)">
-                                <option value="3">সাধারণ</option>
-                                <option value="1">খুব ছোট</option>
-                                <option value="5">বড়</option>
-                            </select>
+                            <select onchange="document.execCommand('fontName', false, this.value)"><option value="Kalpurush">Kalpurush</option><option value="Arial">Arial</option></select>
+                            <select onchange="document.execCommand('fontSize', false, this.value)"><option value="3">সাধারণ</option><option value="1">ছোট</option><option value="5">বড়</option></select>
                             <button type="button" onclick="document.execCommand('bold', false, null)"><i class="fas fa-bold"></i></button>
                             <button type="button" onclick="document.execCommand('italic', false, null)"><i class="fas fa-italic"></i></button>
-                            <button type="button" onclick="document.execCommand('underline', false, null)"><i class="fas fa-underline"></i></button>
-                            <div class="color-picker-wrap">
-                                <i class="fas fa-font"></i> <input type="color" id="fgColor" onchange="document.execCommand('foreColor', false, this.value)">
-                            </div>
-                            <div class="color-picker-wrap">
-                                <i class="fas fa-highlighter"></i> <input type="color" id="bgColor" onchange="document.execCommand('hiliteColor', false, this.value)">
-                            </div>
+                            <div class="color-picker-wrap"><i class="fas fa-font"></i> <input type="color" onchange="document.execCommand('foreColor', false, this.value)"></div>
                         </div>
-                        <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত কাস্টিং ও ডেট লিখুন..."></div>
-                        
+                        <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত লিখুন..."></div>
                         <div style="display:flex; gap:8px; margin-top: 10px;">
-                            <button id="saveNoteBtn" class="btn-main" style="width: 100%; margin:0; padding:10px; font-size:14px;" onclick="saveNote()">সেভ করুন</button>
-                            <button id="cancelEditBtn" style="display:none; width: 100%; margin:0; background:#eee; color:#333; border:none; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:14px;" onclick="cancelEdit()">বাতিল</button>
+                            <button id="saveNoteBtn" class="btn-main" onclick="saveNote()">সেভ করুন</button>
+                            <button id="cancelEditBtn" style="display:none; width: 100%; padding:10px; border-radius:10px; font-weight:bold;" onclick="cancelEdit()">বাতিল</button>
                         </div>
                         <div id="notesListUI" style="margin-top: 20px;"></div>
                     </div>
 
-                    <!-- Stories -->
+                    <!-- Stories & Trash -->
                     <div id="storyView" style="display:none;">
                         <h3 style="margin-bottom:12px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-book"></i> জমাকৃত গল্প</h3>
                         <div id="storyListUI"></div>
                     </div>
-
-                    <!-- Trash -->
                     <div id="trashView" style="display:none;">
                         <h3 style="margin-bottom:12px; color:#c62828; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
-                        <p style="color:#666; margin-bottom:15px; font-size:12px;">ডিলিট হওয়া প্রজেক্টগুলো এখানে জমা থাকে।</p>
                         <div id="trashListUI"></div>
                     </div>
-                    
                 </div>
             </div>
             
@@ -353,28 +357,23 @@
     </div>
 </div>
 
-<!-- Admin Login Modal -->
+<!-- Modals -->
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
-        <div class="pass-wrapper" style="margin-bottom:10px; max-width:100%;">
-            <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center; padding-right:12px;">
-        </div>
-        <button class="btn-main" style="margin-top:10px; padding:10px;" onclick="checkAdminPass()">লগইন করুন</button>
+        <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center;">
+        <button class="btn-main" style="margin-top:10px;" onclick="checkAdminPass()">লগইন করুন</button>
         <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer; font-weight:bold; font-size:13px;">বাতিল</button>
     </div>
 </div>
 
-<!-- Preview Modal -->
 <div id="previewModal" class="modal-overlay">
     <div class="modal-box">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <h3 id="previewTitle" style="color:var(--primary-pink); font-size:15px; word-break:break-all;">প্রিভিউ</h3>
             <button onclick="closePreview()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#888;">&times;</button>
         </div>
-        <div class="preview-container">
-            <div id="previewFrame"></div>
-        </div>
+        <div class="preview-container"><div id="previewFrame"></div></div>
         <div style="margin-top:15px;">
             <a id="previewDownloadBtn" href="#" download target="_blank" class="btn-main" style="text-decoration:none; display:inline-block; padding:10px 20px; font-size:13px;"><i class="fas fa-download"></i> ডাউনলোড করুন</a>
         </div>
@@ -406,8 +405,8 @@
     let isDocAllowed = false;
     let currentNotes = {};
     let editingNoteId = null;
+    let currentInboxFiles = []; // To hold current loaded files for ZIP
 
-    // Word Counter
     window.onload = () => {
         document.getElementById('sText').addEventListener('input', function() {
             const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
@@ -417,7 +416,6 @@
         });
     };
 
-    // Firebase Auth State Listener
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
@@ -425,7 +423,7 @@
             if(!isMentor) {
                 document.getElementById('mainPortal').style.display = 'block';
                 document.getElementById('userPortal').style.display = 'block';
-                document.getElementById('uNameDisplay').innerText = user.displayName || user.email;
+                document.getElementById('uNameDisplay').innerText = user.displayName || user.email || "Guest";
                 loadInitialData();
             }
         } else {
@@ -435,20 +433,14 @@
         }
     });
 
-    // Registration & Login
     function toggleAuthView(view) {
         document.getElementById('authErrorMsg').innerText = "";
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('registerBox').style.display = 'none';
-        document.getElementById('guestBox').style.display = 'none';
-
-        if(view === 'register') {
-            document.getElementById('registerBox').style.display = 'block';
-        } else if(view === 'guest') {
-            document.getElementById('guestBox').style.display = 'block';
-        } else {
-            document.getElementById('loginBox').style.display = 'block';
-        }
+        document.querySelectorAll('.auth-wrapper').forEach(el => el.style.display = 'none');
+        if(view === 'register') document.getElementById('registerBox').style.display = 'block';
+        else if(view === 'guest') document.getElementById('guestBox').style.display = 'block';
+        else if(view === 'forgotPass') document.getElementById('forgotPassBox').style.display = 'block';
+        else if(view === 'forgotEmail') document.getElementById('forgotEmailBox').style.display = 'block';
+        else document.getElementById('loginBox').style.display = 'block';
     }
 
     async function registerUser() {
@@ -456,68 +448,53 @@
         const email = document.getElementById('regEmail').value.trim();
         const pass = document.getElementById('regPass').value.trim();
         const err = document.getElementById('authErrorMsg');
-        
         if(!name || !email || !pass) return err.innerText = "সব ঘর পূরণ করুন!";
         if(pass.length < 6) return err.innerText = "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে!";
-        
         err.style.color = "var(--primary-pink)"; err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
         try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
-            await userCredential.user.updateProfile({ displayName: name });
-            // The onAuthStateChanged listener will automatically take them to the portal
-        } catch(error) {
-            err.style.color = "red";
-            if(error.code === 'auth/email-already-in-use') err.innerText = "এই ইমেইল দিয়ে আগে থেকেই অ্যাকাউন্ট আছে!";
-            else err.innerText = error.message;
-        }
+            const cred = await auth.createUserWithEmailAndPassword(email, pass);
+            await cred.user.updateProfile({ displayName: name });
+        } catch(error) { err.style.color = "red"; err.innerText = error.message; }
     }
 
     async function loginUser() {
         const email = document.getElementById('loginEmail').value.trim();
         const pass = document.getElementById('loginPass').value.trim();
         const err = document.getElementById('authErrorMsg');
-        
         if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
-        
         err.style.color = "var(--primary-pink)"; err.innerText = "লগইন হচ্ছে...";
-        try {
-            await auth.signInWithEmailAndPassword(email, pass);
-        } catch(error) {
-            err.style.color = "red";
-            if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') err.innerText = "ইমেইল বা পাসওয়ার্ড ভুল!";
-            else err.innerText = "লগইন ব্যর্থ হয়েছে!";
-        }
+        try { await auth.signInWithEmailAndPassword(email, pass); } 
+        catch(error) { err.style.color = "red"; err.innerText = "লগইন ব্যর্থ হয়েছে!"; }
     }
 
     async function loginGuest() {
         const name = document.getElementById('guestName').value.trim();
         const err = document.getElementById('authErrorMsg');
-        
         if(!name) return err.innerText = "আপনার নাম লিখতে হবে!";
-        
-        err.style.color = "var(--primary-pink)"; err.innerText = "অতিথি হিসেবে প্রবেশ করা হচ্ছে...";
+        err.style.color = "var(--primary-pink)"; err.innerText = "প্রবেশ করা হচ্ছে...";
         try {
-            // Firebase Anonymous Login
-            const userCredential = await auth.signInAnonymously();
-            await userCredential.user.updateProfile({ displayName: name + " (Guest)" });
-        } catch(error) {
-            err.style.color = "red"; err.innerText = "প্রবেশ ব্যর্থ হয়েছে! আবার চেষ্টা করুন।";
-        }
+            const cred = await auth.signInAnonymously();
+            await cred.user.updateProfile({ displayName: name + " (Guest)" });
+        } catch(error) { err.style.color = "red"; err.innerText = "অ্যাডমিন এখনও অতিথি লগইন চালু করেননি!"; }
     }
 
-    function logoutUser() {
-        auth.signOut();
+    async function resetPassword() {
+        const email = document.getElementById('resetEmail').value.trim();
+        const err = document.getElementById('authErrorMsg');
+        if(!email) return err.innerText = "ইমেইল অ্যাড্রেস লিখুন!";
+        err.style.color = "var(--primary-pink)"; err.innerText = "ইমেইল পাঠানো হচ্ছে...";
+        try {
+            await auth.sendPasswordResetEmail(email);
+            err.style.color = "green"; err.innerText = "✅ রিসেট লিঙ্ক পাঠানো হয়েছে। ইমেইল চেক করুন।";
+        } catch(error) { err.style.color = "red"; err.innerText = "ইমেইলটি সঠিক নয়।"; }
     }
+
+    function logoutUser() { auth.signOut(); }
 
     function togglePass(inputId, icon) {
         const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.replace('fa-eye', 'fa-eye-slash');
-        } else {
-            input.type = "password";
-            icon.classList.replace('fa-eye-slash', 'fa-eye');
-        }
+        if (input.type === "password") { input.type = "text"; icon.classList.replace('fa-eye', 'fa-eye-slash'); } 
+        else { input.type = "password"; icon.classList.replace('fa-eye-slash', 'fa-eye'); }
     }
 
     function getDownloadUrl(url) {
@@ -533,37 +510,30 @@
         document.getElementById('previewTitle').innerText = fileName || "ফাইল প্রিভিউ";
         const frameContainer = document.querySelector('.preview-container');
         
-        let contentHtml = "";
-        if (isImg) contentHtml = `<img src="${url}" style="max-width:100%; max-height:50vh; object-fit:contain; border-radius:6px;">`;
-        else if (isAudio) contentHtml = `<audio controls src="${url}" style="width:100%; outline:none;" autoplay></audio>`;
-        else if (isDocOrPdf) contentHtml = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%; height:50vh; border:none; border-radius:6px;"></iframe>`;
-        else contentHtml = `<p style="color:#666; font-size:13px;">এই ফাইলের প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
+        if (isImg) frameContainer.innerHTML = `<img src="${url}" style="max-width:100%; max-height:50vh; object-fit:contain; border-radius:6px;">`;
+        else if (isAudio) frameContainer.innerHTML = `<audio controls src="${url}" style="width:100%; outline:none;" autoplay></audio>`;
+        else if (isDocOrPdf) frameContainer.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%; height:50vh; border:none;"></iframe>`;
+        else frameContainer.innerHTML = `<p style="color:#666;">প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
 
-        frameContainer.innerHTML = `<div id="previewFrame">${contentHtml}</div>`;
         document.getElementById('previewDownloadBtn').href = getDownloadUrl(url);
         document.getElementById('previewModal').style.display = 'flex';
     }
-
-    function closePreview() {
-        document.getElementById('previewModal').style.display = 'none';
-        document.querySelector('.preview-container').innerHTML = '<div id="previewFrame"></div>'; 
-    }
+    function closePreview() { document.getElementById('previewModal').style.display = 'none'; document.querySelector('.preview-container').innerHTML = ''; }
 
     function updateFileAccept(selectId, fileInputId) {
         let cat = selectId === 'dummy' ? activeAdminCat : document.getElementById(selectId)?.value;
         const fileInput = document.getElementById(fileInputId);
         const hint = document.getElementById('fileHint');
         if (!fileInput || !cat) return;
-
         if(hint) hint.style.display = "none";
+
         if (cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
         else if (cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
         else if (cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
         else if (cat === 'স্ক্রিপ্টিং') {
             if(isDocAllowed) fileInput.accept = ".doc, .docx, .pdf, .txt";
             else { fileInput.accept = ".txt"; if(hint) { hint.innerText = "শুধুমাত্র .txt ফাইল দেওয়া যাবে।"; hint.style.display = "block"; } }
-        }
-        else fileInput.accept = "*/*";
+        } else fileInput.accept = "*/*";
     }
 
     function checkAdminPass() {
@@ -571,16 +541,17 @@
         const ROLES = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" };
         if(ROLES[pass]) {
             isMentor = true;
-            document.getElementById('adminAuthModal').style.display = "none";
+            document.querySelectorAll('.modal-overlay').forEach(m=>m.style.display='none');
             document.getElementById('authScreen').style.display = "none";
             document.getElementById('userPortal').style.display = "none";
             document.getElementById('mainPortal').style.display = "block";
             document.getElementById('adminDashboard').style.display = "block";
             document.getElementById('modalAdminPass').value = "";
             
-            if(ROLES[pass] === "Master Admin") document.getElementById('masterConfigPanel').style.display = "block";
-            else document.getElementById('masterConfigPanel').style.display = "none";
-
+            // অ্যাডমিন লগইন করলে ক্লাউড ব্যাজটি শো করবে
+            document.getElementById('cloudSyncBadge').style.display = "inline-flex";
+            
+            document.getElementById('masterConfigPanel').style.display = ROLES[pass] === "Master Admin" ? "block" : "none";
             loadInitialData();
             setTimeout(() => {
                 const activeProj = allProjects.find(p => !p.isHidden && !p.isDeleted);
@@ -594,7 +565,9 @@
         isMentor = false;
         document.getElementById('adminDashboard').style.display = "none";
         
-        // If user is logged in, show user portal, else show auth screen
+        // অ্যাডমিন প্যানেল থেকে বের হলে ক্লাউড ব্যাজটি আবার হাইড হয়ে যাবে
+        document.getElementById('cloudSyncBadge').style.display = "none";
+        
         if(currentUser) {
             document.getElementById('userPortal').style.display = "block";
         } else {
@@ -638,14 +611,14 @@
                 { id: 'def1', name: "ভয়েস", isDefault: true }, { id: 'def2', name: "থাম্বনেল", isDefault: true },
                 { id: 'def3', name: "অডিও এডিট", isDefault: true }, { id: 'def4', name: "স্ক্রিপ্টিং", isDefault: true }
             ];
-            let html = '<option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option><option value="ভয়েস">🎙️ ১. ভয়েস</option><option value="থাম্বনেল">🖼️ ২. থাম্বনেল</option><option value="অডিও এডিট">🎧 ৩. অডিও এডিট</option><option value="স্ক্রিপ্টিং">✍️ ৪. স্ক্রিপ্টিং</option>';
             snap.forEach(doc => {
                 const d = doc.data();
                 if(d.channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(d.name)) {
                     allCategories.push({ id: doc.id, name: d.name, isDefault: false });
-                    html += `<option value="${d.name}">📁 ${d.name}</option>`;
                 }
             });
+            let html = '<option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>';
+            allCategories.forEach(cat => html += `<option value="${cat.name}">📁 ${cat.name}</option>`);
             document.getElementById('uCategory').innerHTML = html;
             if(isMentor && activeAdminProj) renderAdminCategoryTabs();
         });
@@ -653,15 +626,13 @@
 
     async function addProject() {
         const name = document.getElementById('newProjectName').value.trim();
-        if(!name) return;
-        await dbRef.collection('projects').add({ name, channel, isHidden: false, isDeleted: false, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        if(name) await dbRef.collection('projects').add({ name, channel, isHidden: false, isDeleted: false, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
         document.getElementById('newProjectName').value = "";
     }
 
     async function addCategory() {
         const name = document.getElementById('newCategoryName').value.trim();
-        if(!name) return;
-        await dbRef.collection('folders').add({ name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        if(name) await dbRef.collection('folders').add({ name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
         document.getElementById('newCategoryName').value = "";
     }
 
@@ -669,8 +640,8 @@
     function updateDocToggleUI() {
         const btn = document.getElementById('docToggleBtn');
         if(!btn) return;
-        if(isDocAllowed) { btn.innerText = "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)"; btn.style.background = "linear-gradient(45deg, #4caf50, #81c784)"; } 
-        else { btn.innerText = "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)"; btn.style.background = "linear-gradient(45deg, #f57f17, #ffb300)"; }
+        btn.innerText = isDocAllowed ? "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)" : "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
+        btn.style.background = isDocAllowed ? "linear-gradient(45deg, #4caf50, #81c784)" : "linear-gradient(45deg, #f57f17, #ffb300)";
     }
 
     async function toggleProjectHide(id, currentStatus) { await dbRef.collection('projects').doc(id).update({ isHidden: !currentStatus }); }
@@ -688,7 +659,7 @@
             if (p.isDeleted) return; 
             const itemHtml = `
                 <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
-                    <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
+                    <span onclick="selectAdminProject('${p.name}')" style="flex:1;"><i class="fas fa-folder"></i> ${p.name}</span>
                     <div style="display:flex; gap:8px; align-items:center;">
                         <i class="fas ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}" style="color:${p.isHidden ? '#888' : 'var(--primary-pink)'}; cursor:pointer;" onclick="toggleProjectHide('${p.id}', ${p.isHidden || false})"></i>
                         <i class="fas fa-trash del-folder" onclick="trashProject('${p.id}', '${p.name}')"></i>
@@ -696,17 +667,14 @@
                 </div>`;
             if(p.isHidden) hiddenHtml += itemHtml; else activeHtml += itemHtml;
         });
-
-        let finalHtml = activeHtml;
-        if(hiddenHtml) finalHtml += `<div style="margin-top:15px; padding-top:10px; border-top:1px dashed #ccc;"><p style="font-size:11px; color:#888; text-align:center; margin-bottom:8px; font-weight:bold;">আর্কাইভ</p>${hiddenHtml}</div>`;
+        let finalHtml = activeHtml + (hiddenHtml ? `<div style="margin-top:15px; padding-top:10px; border-top:1px dashed #ccc;"><p style="font-size:11px; text-align:center; color:#888;">আর্কাইভ</p>${hiddenHtml}</div>` : "");
         document.getElementById('adminProjectListUI').innerHTML = finalHtml || "<p style='text-align:center; color:#888; font-size:11px;'>কোনো প্রজেক্ট নেই</p>";
     }
 
     function renderTrashList() {
         let html = "";
-        const trashed = allProjects.filter(p => p.isDeleted);
-        trashed.forEach(p => {
-            html += `<div class="list-card" style="border-left: 3px solid #888; background:#fafafa; padding:10px;"><b style="color:#666; font-size:14px;"><i class="fas fa-folder"></i> ${p.name}</b><div class="card-actions" style="margin-top:8px;"><button onclick="restoreProject('${p.id}')" class="btn-sm btn-download"><i class="fas fa-undo"></i> রিস্টোর</button><button onclick="deleteDoc('projects', '${p.id}')" class="btn-sm btn-del"><i class="fas fa-trash-alt"></i> মুছুন</button></div></div>`;
+        allProjects.filter(p => p.isDeleted).forEach(p => {
+            html += `<div class="list-card" style="border-left: 3px solid #888; background:#fafafa;"><b style="color:#666; font-size:14px;"><i class="fas fa-folder"></i> ${p.name}</b><div class="card-actions"><button onclick="restoreProject('${p.id}')" class="btn-sm btn-download"><i class="fas fa-undo"></i> রিস্টোর</button><button onclick="deleteDoc('projects', '${p.id}')" class="btn-sm btn-del"><i class="fas fa-trash-alt"></i> মুছুন</button></div></div>`;
         });
         document.getElementById('trashListUI').innerHTML = html || "<p style='text-align:center; color:#999; font-size:12px;'>রিসাইকেল বিন খালি।</p>";
     }
@@ -714,8 +682,8 @@
     function renderAdminCategoryTabs() {
         let html = "";
         allCategories.forEach(cat => {
-            let delBtn = !cat.isDefault ? `<i class="fas fa-times-circle" style="margin-left:5px; opacity:0.7; cursor:pointer; font-size:12px;" onclick="event.stopPropagation(); deleteCategory('${cat.id}', '${cat.name}')"></i>` : "";
-            html += `<div class="tab ${activeAdminCat === cat.name ? 'active' : ''}" onclick="selectAdminCategory('${cat.name}')" style="display:flex; align-items:center; justify-content:center;">${cat.name} ${delBtn}</div>`;
+            let delBtn = !cat.isDefault ? `<i class="fas fa-times-circle" style="margin-left:5px; opacity:0.7; cursor:pointer;" onclick="event.stopPropagation(); deleteCategory('${cat.id}', '${cat.name}')"></i>` : "";
+            html += `<div class="tab ${activeAdminCat === cat.name ? 'active' : ''}" onclick="selectAdminCategory('${cat.name}')">${cat.name} ${delBtn}</div>`;
         });
         document.getElementById('adminCatTabs').innerHTML = html;
         updateFileAccept('dummy', 'aFile'); 
@@ -730,10 +698,8 @@
 
     function selectAdminProject(projName) {
         activeAdminProj = projName;
+        document.querySelectorAll('.content > div').forEach(d => d.style.display='none');
         document.getElementById('projectView').style.display = "block";
-        document.getElementById('recordView').style.display = "none";
-        document.getElementById('storyView').style.display = "none";
-        document.getElementById('trashView').style.display = "none";
         document.getElementById('currentProjTitle').innerHTML = `<i class="fas fa-folder-open"></i> ${projName}`;
         renderAdminSidebar(); renderAdminCategoryTabs(); loadAdminInbox();
     }
@@ -741,20 +707,13 @@
 
     function setSpecialView(type) {
         activeAdminProj = ""; renderAdminSidebar();
-        document.getElementById('projectView').style.display = "none";
-        document.getElementById('recordView').style.display = "none";
-        document.getElementById('storyView').style.display = "none";
-        document.getElementById('trashView').style.display = "none";
-
-        if(type === 'record') { document.getElementById('recordView').style.display = "block"; loadNotes(); }
-        else if(type === 'story') { document.getElementById('storyView').style.display = "block"; loadStories(); }
-        else if(type === 'trash') { document.getElementById('trashView').style.display = "block"; renderTrashList(); }
+        document.querySelectorAll('.content > div').forEach(d => d.style.display='none');
+        document.getElementById(type + 'View').style.display = "block";
+        if(type === 'record') loadNotes(); else if(type === 'story') loadStories(); else if(type === 'trash') renderTrashList();
     }
 
-    // User Upload Work
     async function submitWork() {
-        if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
-        
+        if(!currentUser) return alert("লগইন করুন!");
         const project = document.getElementById('uProject').value;
         const cat = document.getElementById('uCategory').value;
         const file = document.getElementById('uFile').files[0];
@@ -769,97 +728,47 @@
             const data = await res.json();
             if(data.secure_url) {
                 await dbRef.collection('tasks').add({ 
-                    sender: currentUser.displayName || currentUser.email,
-                    userId: currentUser.uid, // Save UID for user dashboard
+                    sender: currentUser.displayName || currentUser.email || "Guest", userId: currentUser.uid, 
                     project, category: cat, fileUrl: data.secure_url, fileName: file.name, 
-                    channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: false,
-                    status: "Pending", adminRemark: "" 
+                    channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: false, status: "Pending", adminRemark: "" 
                 });
-                status.style.color = "green"; status.innerText = "✅ সফলভাবে জমা হয়েছে!";
-                document.getElementById('uFile').value = "";
+                status.style.color = "green"; status.innerText = "✅ জমা হয়েছে!"; document.getElementById('uFile').value = "";
             }
         } catch(e) { status.style.color = "red"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // User Upload Story
-    async function submitStory() {
-        if(!currentUser) return alert("লগইন প্রয়োজন!");
-        
-        const title = document.getElementById('sTitle').value.trim();
-        const text = document.getElementById('sText').value.trim();
-        const msg = document.getElementById('storyStatusMsg');
-        if(!title || !text) return alert("শিরোনাম ও গল্প লিখুন!");
-        
-        const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
-        if(wordCount < 5000) return alert(`আপনার গল্পের শব্দ সংখ্যা মাত্র ${wordCount}। গল্পটি ন্যূনতম ৫০০০ শব্দের হতে হবে!`);
-        
-        msg.innerText = "⏳ পাঠানো হচ্ছে...";
-        try {
-            await dbRef.collection('channel_stories').add({ 
-                author: currentUser.displayName || currentUser.email, 
-                userId: currentUser.uid, // Save UID
-                title, storyText: text, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), status: "Pending", adminRemark: "" 
-            });
-            msg.style.color = "green"; msg.innerText = "✅ গল্প জমা হয়েছে!";
-            document.getElementById('sTitle').value = ""; document.getElementById('sText').value = "";
-            document.getElementById('wordCountDisplay').innerText = "শব্দ সংখ্যা: ০ / ৫০০০ (ন্যূনতম)";
-        } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
-    }
-
-    // NEW: Load User Status (Personal Dashboard)
     function loadUserStatus() {
         if(!currentUser) return;
         const listUI = document.getElementById('userStatusListUI');
-        listUI.innerHTML = "<p style='text-align:center; color:#666; font-size:13px;'>খোঁজা হচ্ছে...</p>";
-
+        listUI.innerHTML = "<p style='text-align:center;'>খোঁজা হচ্ছে...</p>";
         let combinedHtml = "";
         
-        // Fetch Tasks by UID
         dbRef.collection('tasks').where('userId', '==', currentUser.uid).get().then(snap => {
             snap.forEach(doc => {
                 let d = doc.data();
                 if(d.channel === channel && !d.isAdmin) {
-                    let badgeClass = "status-pending";
-                    if(d.status === "Approved") badgeClass = "status-approved";
-                    if(d.status === "Rejected") badgeClass = "status-rejected";
-
-                    combinedHtml += `
-                    <div class="list-card" style="border-left:3px solid #ffb300;">
-                        <b>📦 প্রজেক্ট: ${d.project}</b>
-                        <p style="font-size:12px; color:#666; margin-bottom:5px;">ফোল্ডার: ${d.category} | ফাইল: ${d.fileName || 'অজানা'}</p>
-                        <span class="status-badge ${badgeClass}">${d.status || 'Pending'}</span>
-                        ${d.adminRemark ? `<div class="remark-display"><b>মেন্টর বলেছেন:</b> ${d.adminRemark}</div>` : ''}
-                    </div>`;
+                    let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
+                    combinedHtml += `<div class="list-card" style="border-left:3px solid #ffb300;"><b>📦 ${d.project}</b><p style="font-size:12px; color:#666;">ফোল্ডার: ${d.category} | ফাইল: ${d.fileName || 'অজানা'}</p><span class="status-badge ${badgeClass}">${d.status || 'Pending'}</span>${d.adminRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark}</div>` : ''}</div>`;
                 }
             });
-            
-            // Fetch Stories by UID
             dbRef.collection('channel_stories').where('userId', '==', currentUser.uid).get().then(storySnap => {
                 storySnap.forEach(doc => {
                     let d = doc.data();
                     if(d.channel === channel) {
-                        let badgeClass = "status-pending";
-                        if(d.status === "Approved") badgeClass = "status-approved";
-                        if(d.status === "Rejected") badgeClass = "status-rejected";
-                        combinedHtml += `
-                        <div class="list-card" style="border-left:3px solid #ffb300;">
-                            <b>📖 গল্প: ${d.title}</b>
-                            <br><span class="status-badge ${badgeClass}" style="margin-top:5px;">${d.status || 'Pending'}</span>
-                            ${d.adminRemark ? `<div class="remark-display"><b>মেন্টর বলেছেন:</b> ${d.adminRemark}</div>` : ''}
-                        </div>`;
+                        let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
+                        combinedHtml += `<div class="list-card" style="border-left:3px solid #ffb300;"><b>📖 ${d.title}</b><br><span class="status-badge ${badgeClass}">${d.status || 'Pending'}</span>${d.adminRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark}</div>` : ''}</div>`;
                     }
                 });
-                listUI.innerHTML = combinedHtml || "<p style='text-align:center; color:#888; font-size:13px;'>আপনি এখনো কোনো কাজ বা গল্প জমা দেননি।</p>";
+                listUI.innerHTML = combinedHtml || "<p style='text-align:center;'>কাজ বা গল্প জমা দেননি।</p>";
             });
         });
     }
 
-    // Admin Upload Final File
     async function adminUploadFile() {
         if(!activeAdminProj || !activeAdminCat) return alert("প্রজেক্ট ও ক্যাটাগরি সিলেক্ট করুন!");
         const file = document.getElementById('aFile').files[0];
         const msg = document.getElementById('aUploadMsg');
-        if(!file) return alert("ফাইল সিলেক্ট করুন!");
+        if(!file) return;
 
         msg.style.color = "var(--primary-pink)"; msg.innerText = "⏳ আপলোড হচ্ছে...";
         const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
@@ -867,67 +776,63 @@
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
             if(data.secure_url) {
-                await dbRef.collection('tasks').add({ 
-                    sender: "অ্যাডমিন", project: activeAdminProj, category: activeAdminCat, 
-                    fileUrl: data.secure_url, fileName: file.name, channel, 
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: true 
-                });
-                msg.style.color = "green"; msg.innerText = "✅ সেভ হয়েছে!";
-                document.getElementById('aFile').value = ""; setTimeout(()=> msg.innerText="", 3000);
+                await dbRef.collection('tasks').add({ sender: "অ্যাডমিন", project: activeAdminProj, category: activeAdminCat, fileUrl: data.secure_url, fileName: file.name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: true });
+                msg.style.color = "green"; msg.innerText = "✅ সেভ হয়েছে!"; document.getElementById('aFile').value = ""; setTimeout(()=> msg.innerText="", 3000);
             }
         } catch(e) { msg.style.color = "red"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
-    // Admin Update Remark
-    async function updateTaskRemark(taskId, status, remark) {
-        await dbRef.collection('tasks').doc(taskId).update({ status: status, adminRemark: remark });
-        alert("রিমার্কস সেভ হয়েছে!");
-    }
-
-    // Admin Load Inbox
+    // Load Admin Inbox & Smart Buttons
     function loadAdminInbox() {
         if(!activeAdminProj) return;
         dbRef.collection('tasks').onSnapshot(snap => {
-            let items = [];
+            let items = []; currentInboxFiles = [];
             snap.forEach(doc => {
                 let d = doc.data();
-                if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat) items.push({ id: doc.id, ...d });
+                if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat) {
+                    items.push({ id: doc.id, ...d });
+                    currentInboxFiles.push({ id: doc.id, ...d }); // Cache for ZIP
+                }
             });
             items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
 
             let rawHtml = ""; let adminHtml = "";
 
             items.forEach(d => {
+                const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+                const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx)$/i);
+                
+                let btnAction = isAudio ? `<i class="fas fa-play"></i> Play` : (isImg ? `<i class="fas fa-eye"></i> Preview` : `<i class="fas fa-folder-open"></i> Open`);
+                
                 const displayFileName = d.fileName || "অজানা ফাইল";
                 const cardStyle = d.isAdmin ? 'border-left: 3px solid green; background:#f0fdf4;' : 'border-left: 3px solid var(--primary-pink);';
                 
-                let remarkSection = "";
-                if(!d.isAdmin) {
-                    remarkSection = `
-                        <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #eee;">
-                            <div class="remark-input-box">
-                                <select id="status_${d.id}" style="width:100px; padding:6px; font-size:11px;">
-                                    <option value="Pending" ${d.status==='Pending'?'selected':''}>Pending</option>
-                                    <option value="Approved" ${d.status==='Approved'?'selected':''}>Approved</option>
-                                    <option value="Rejected" ${d.status==='Rejected'?'selected':''}>Rejected</option>
-                                </select>
-                                <input type="text" id="remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}">
-                                <button onclick="updateTaskRemark('${d.id}', document.getElementById('status_${d.id}').value, document.getElementById('remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
-                            </div>
+                let remarkSection = d.isAdmin ? "" : `
+                    <div style="margin-top:10px; padding-top:8px; border-top:1px dashed #eee;">
+                        <div class="remark-input-box">
+                            <select id="status_${d.id}" style="width:100px; padding:6px; font-size:11px;">
+                                <option value="Pending" ${d.status==='Pending'?'selected':''}>Pending</option>
+                                <option value="Approved" ${d.status==='Approved'?'selected':''}>Approved</option>
+                                <option value="Rejected" ${d.status==='Rejected'?'selected':''}>Rejected</option>
+                            </select>
+                            <input type="text" id="remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}">
+                            <button onclick="updateTaskRemark('${d.id}', document.getElementById('status_${d.id}').value, document.getElementById('remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
                         </div>
-                    `;
-                }
+                    </div>`;
 
+                const checkboxClass = d.isAdmin ? 'chk-admin' : 'chk-raw';
                 const card = `
                 <div class="list-card" style="${cardStyle}">
-                    <b>${d.isAdmin ? '<i class="fas fa-check-circle" style="color:green;"></i> ' : '👤 '}${d.sender}</b>
-                    <div class="card-meta">
+                    <div style="display:flex; align-items:center;">
+                        <input type="checkbox" class="select-check ${checkboxClass}" value="${d.fileUrl}" data-name="${displayFileName}">
+                        <b style="margin-left:5px;">${d.isAdmin ? '<i class="fas fa-check-circle" style="color:green;"></i> ' : '👤 '}${d.sender}</b>
+                    </div>
+                    <div class="card-meta" style="margin-left:25px;">
                         <span style="display:block; font-size:11px; word-break:break-all;">📄 ${displayFileName}</span>
                     </div>
-                    ${isImg ? `<img src="${d.fileUrl}" class="media-preview">` : ''}
-                    <div class="card-actions">
-                        <button onclick="openPreview('${d.fileUrl}', '${displayFileName}')" class="btn-sm btn-view"><i class="fas fa-eye"></i></button>
+                    <div class="card-actions" style="margin-left:25px;">
+                        <button onclick="openPreview('${d.fileUrl}', '${displayFileName}')" class="btn-sm btn-view">${btnAction}</button>
                         <a href="${getDownloadUrl(d.fileUrl)}" download target="_blank" class="btn-sm btn-download"><i class="fas fa-download"></i></a>
                         <button onclick="deleteDoc('tasks', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i></button>
                     </div>
@@ -941,9 +846,74 @@
         });
     }
 
+    // Toggle Select All
+    window.toggleSelectAll = (section, isChecked) => {
+        document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked);
+    };
+
+    // Download ZIP Logic (Using JSZip)
+    async function downloadSelectedZIP(section) {
+        const checkboxes = document.querySelectorAll('.chk-' + section + ':checked');
+        if(checkboxes.length === 0) return alert("অন্তত একটি ফাইল সিলেক্ট করুন!");
+        
+        const zip = new JSZip();
+        const folderName = `${activeAdminProj}_${activeAdminCat}_${section}`;
+        const folder = zip.folder(folderName);
+
+        alert(`ZIP তৈরি হচ্ছে। দয়া করে অপেক্ষা করুন... (ফাইলের সাইজ অনুযায়ী সময় লাগতে পারে)`);
+
+        for(let i=0; i<checkboxes.length; i++) {
+            let url = checkboxes[i].value;
+            let name = checkboxes[i].getAttribute('data-name');
+            try {
+                // Cloudinary URLs usually allow fetching blob directly
+                const response = await fetch(url);
+                const blob = await response.blob();
+                folder.file(name, blob);
+            } catch(e) { console.error("Fetch failed for", name); }
+        }
+
+        zip.generateAsync({type:"blob"}).then(content => {
+            saveAs(content, `${folderName}.zip`);
+        });
+    }
+
+    // Download Entire Project as ZIP
+    async function downloadProjectZIP() {
+        if(!activeAdminProj) return;
+        if(!confirm(`'${activeAdminProj}' প্রজেক্টের সব ফাইল ZIP হিসেবে ডাউনলোড করবেন?`)) return;
+
+        alert("পুরো প্রজেক্টের ZIP তৈরি হচ্ছে। ব্রাউজার বন্ধ করবেন না...");
+        const zip = new JSZip();
+        const rootFolder = zip.folder(activeAdminProj);
+
+        try {
+            const snap = await dbRef.collection('tasks').where('channel', '==', channel).where('project', '==', activeAdminProj).get();
+            const fetchPromises = [];
+
+            snap.forEach(doc => {
+                const d = doc.data();
+                const catFolder = rootFolder.folder(d.category);
+                const p = fetch(d.fileUrl).then(res => res.blob()).then(blob => {
+                    catFolder.file(d.fileName || "unknown_file", blob);
+                }).catch(e => console.error("Error fetching", d.fileUrl));
+                fetchPromises.push(p);
+            });
+
+            await Promise.all(fetchPromises);
+            const content = await zip.generateAsync({type:"blob"});
+            saveAs(content, `${activeAdminProj}_Full_Backup.zip`);
+            alert("ডাউনলোড সফল হয়েছে!");
+        } catch(e) { alert("ZIP তৈরিতে সমস্যা হয়েছে।"); }
+    }
+
+    async function updateTaskRemark(taskId, status, remark) {
+        await dbRef.collection('tasks').doc(taskId).update({ status: status, adminRemark: remark });
+    }
+
+    // Stories Logic
     async function updateStoryRemark(id, status, remark) {
         await dbRef.collection('channel_stories').doc(id).update({ status: status, adminRemark: remark });
-        alert("গল্পের রিমার্কস আপডেট হয়েছে!");
     }
 
     function loadStories() {
@@ -970,10 +940,7 @@
                             <button onclick="updateStoryRemark('${d.id}', document.getElementById('s_status_${d.id}').value, document.getElementById('s_remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
-                    
-                    <div class="card-actions">
-                        <button onclick="deleteDoc('channel_stories', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button>
-                    </div>
+                    <div class="card-actions"><button onclick="deleteDoc('channel_stories', '${d.id}')" class="btn-sm btn-del"><i class="fas fa-trash"></i> ডিলিট</button></div>
                 </div>`;
             });
             document.getElementById('storyListUI').innerHTML = html || "<p style='text-align:center; font-size:12px; color:#999;'>কোনো গল্প নেই।</p>";
@@ -996,17 +963,8 @@
     }
 
     function cancelEdit() {
-        editingNoteId = null;
-        document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').innerHTML = "";
+        editingNoteId = null; document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').innerHTML = "";
         document.getElementById('saveNoteBtn').innerText = "সেভ করুন"; document.getElementById('cancelEditBtn').style.display = "none";
-    }
-
-    function editNote(id) {
-        const note = currentNotes[id]; if(!note) return;
-        document.getElementById('noteTitle').value = note.title; document.getElementById('noteContent').innerHTML = note.content;
-        editingNoteId = id;
-        document.getElementById('saveNoteBtn').innerText = "আপডেট করুন"; document.getElementById('cancelEditBtn').style.display = "block";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function loadNotes() {
@@ -1018,12 +976,10 @@
             let html = "";
             items.forEach(d => {
                 html += `
-                <div class="note-card">
-                    <div class="note-header"><span>📌 ${d.title}</span>
-                        <div style="display:flex; gap:10px; align-items:center;">
-                            <i class="fas fa-edit" style="cursor:pointer; color:#f57f17; font-size:14px;" onclick="editNote('${d.id}')"></i>
-                            <i class="fas fa-trash" style="cursor:pointer; color:red; font-size:14px;" onclick="deleteDoc('channel_notes', '${d.id}')"></i>
-                        </div>
+                <div class="note-card" style="background:#fff; padding:15px; border-left:4px solid var(--primary-pink); border-radius:10px; margin-bottom:10px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--primary-pink); border-bottom:1px solid #eee; padding-bottom:5px;">
+                        <span>📌 ${d.title}</span>
+                        <div style="display:flex; gap:10px;"><i class="fas fa-trash" style="cursor:pointer; color:red;" onclick="deleteDoc('channel_notes', '${d.id}')"></i></div>
                     </div>
                     <div style="font-size:13px; color:#333; line-height:1.5; margin-top:8px; word-wrap: break-word;">${d.content}</div>
                 </div>`;
@@ -1032,7 +988,7 @@
         });
     }
 
-    async function deleteDoc(col, id) { if(confirm("আপনি কি নিশ্চিত এটি ডিলিট করতে চান?")) await dbRef.collection(col).doc(id).delete(); }
+    async function deleteDoc(col, id) { if(confirm("ডিলিট করতে চান?")) await dbRef.collection(col).doc(id).delete(); }
 </script>
 </body>
 </html>
