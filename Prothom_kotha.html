@@ -832,10 +832,6 @@
         const btn = document.getElementById('qVoiceBtn');
         const status = document.getElementById('qVoiceStatus');
 
-        // ক্লিক করার সাথে সাথেই যেন বাটনের লেখা পরিবর্তন হয় (বোঝার জন্য যে ক্লিক কাজ করেছে)
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '⏳ অপেক্ষা করুন...';
-
         if(qRecorder && qRecorder.state === 'recording') {
             qRecorder.stop();
             btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
@@ -844,41 +840,27 @@
             return;
         } 
         
-        // 브রাউজার চেক: ওয়েবভিউ বা ইন-অ্যাপ ব্রাউজারে থাকলে মাইক্রোফোন ব্লক থাকতে পারে
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            alert("আপনার ফোনের এই ব্রাউজারে ভয়েস রেকর্ড সাপোর্ট করছে না!\n\nআপনি যদি ফেসবুক বা হোয়াটসঅ্যাপ থেকে লিঙ্কে ক্লিক করে থাকেন, তবে দয়া করে ওয়েবসাইটের লিঙ্কটি (URL) কপি করে সরাসরি Google Chrome বা Safari ব্রাউজারে ওপেন করুন।");
-            btn.innerHTML = originalText;
-            status.innerText = "❌ ব্রাউজার সাপোর্ট করছে না!";
-            return;
-        }
-
+        // খুব সাধারণ পদ্ধতিতে অডিও রেকর্ড (যাতে সব ব্রাউজারে কাজ করে)
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             
-            const options = { mimeType: 'audio/webm' };
-            if (!MediaRecorder.isTypeSupported('audio/webm')) {
-                if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                    options.mimeType = 'audio/mp4';
-                } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
-                    options.mimeType = 'audio/ogg';
-                } else {
-                    delete options.mimeType;
-                }
-            }
-            
-            qRecorder = new MediaRecorder(stream, options);
+            qRecorder = new MediaRecorder(stream);
             qChunks = [];
             qVoiceUrl = null; 
 
-            qRecorder.ondataavailable = e => { if(e.data.size > 0) qChunks.push(e.data); };
+            qRecorder.ondataavailable = e => { 
+                if(e.data.size > 0) qChunks.push(e.data); 
+            };
             
             qRecorder.onstop = async () => {
                 stream.getTracks().forEach(t => t.stop());
 
-                const blob = new Blob(qChunks, { type: qRecorder.mimeType || 'audio/webm' }); 
+                // কোনো টাইপ ছাড়াই সাধারণ ব্লব তৈরি করা হচ্ছে
+                const blob = new Blob(qChunks); 
                 const fd = new FormData();
                 
-                fd.append('file', blob, 'user_question_voice.webm'); 
+                // ক্লাউডিনারি নিজে থেকেই ফরম্যাট ধরে নেবে
+                fd.append('file', blob, 'user_question_voice.mp4'); 
                 fd.append('upload_preset', UPLOAD_PRESET);
                 
                 try {
@@ -888,7 +870,7 @@
                         qVoiceUrl = data.secure_url;
                         status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
                     } else {
-                        status.innerHTML = "❌ আপলোডে সমস্যা: " + (data.error ? data.error.message : "Unknown error");
+                        status.innerHTML = "❌ আপলোডে সমস্যা!";
                     }
                 } catch(e) {
                     status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
@@ -900,11 +882,9 @@
             btn.classList.add('recording');
             status.innerText = "🔴 রেকর্ডিং চলছে...";
         } catch(e) {
-            // ডিবাগিং এর জন্য বিশেষ অ্যালার্ট
-            let details = "Error: " + e.name + "\nMessage: " + e.message;
-            alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।");
-            btn.innerHTML = originalText;
-            status.innerText = "❌ পারমিশন এরর!";
+            alert("মাইক্রোফোন কাজ করছে না!\n\nদয়া করে লিংটি কপি করে Chrome ব্রাউজারে গিয়ে ওপেন করুন এবং সাইটটিকে মাইক্রোফোন পারমিশন দিন।");
+            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
+            status.innerText = "❌ পারমিশন দেওয়া হয়নি!";
         }
     }
 
@@ -1450,18 +1430,7 @@
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 
-                const options = { mimeType: 'audio/webm' };
-                if (!MediaRecorder.isTypeSupported('audio/webm')) {
-                    if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                        options.mimeType = 'audio/mp4';
-                    } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
-                        options.mimeType = 'audio/ogg';
-                    } else {
-                        delete options.mimeType;
-                    }
-                }
-                
-                audioRecorder = new MediaRecorder(stream, options);
+                audioRecorder = new MediaRecorder(stream);
                 audioChunks = [];
                 
                 audioRecorder.ondataavailable = e => { if(e.data.size > 0) audioChunks.push(e.data); };
@@ -1472,8 +1441,8 @@
                     log.innerText = "⏳ ক্লাউডে যাচ্ছে...";
                     const fd = new FormData();
                     
-                    const blob = new Blob(audioChunks, { type: audioRecorder.mimeType || 'audio/webm' }); 
-                    fd.append('file', blob, 'admin_voice.webm'); 
+                    const blob = new Blob(audioChunks); 
+                    fd.append('file', blob, 'admin_voice.mp4'); 
                     fd.append('upload_preset', UPLOAD_PRESET);
                     
                     try {
@@ -1498,8 +1467,7 @@
                 btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                let details = "Error: " + err.name + "\nMessage: " + err.message;
-                alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।"); 
+                alert("মাইক্রোফোন কাজ করছে না!\n\nদয়া করে লিংটি কপি করে Chrome ব্রাউজারে গিয়ে ওপেন করুন এবং সাইটটিকে মাইক্রোফোন পারমিশন দিন।"); 
                 btn.innerHTML = originalText;
             }
         } else {
