@@ -783,6 +783,70 @@
     let qRecorder = null;
     let qChunks = [];
 
+    // --- App Fallback Variables for Voice ---
+    let fallbackQInput = document.createElement('input');
+    fallbackQInput.type = 'file';
+    fallbackQInput.accept = 'audio/*';
+    fallbackQInput.setAttribute('capture', 'microphone');
+    fallbackQInput.style.display = 'none';
+    document.body.appendChild(fallbackQInput);
+
+    fallbackQInput.onchange = async function(e) {
+        const file = e.target.files[0];
+        if(!file) return;
+        const status = document.getElementById('qVoiceStatus');
+        status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            if(data.secure_url) {
+                qVoiceUrl = data.secure_url;
+                status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+            } else {
+                status.innerHTML = "❌ আপলোডে সমস্যা!";
+            }
+        } catch(err) {
+            status.innerHTML = "❌ আপলোড ব্যর্থ!";
+        }
+        e.target.value = ""; 
+    };
+
+    let currentMentorDocId = null;
+    let fallbackMInput = document.createElement('input');
+    fallbackMInput.type = 'file';
+    fallbackMInput.accept = 'audio/*';
+    fallbackMInput.setAttribute('capture', 'microphone');
+    fallbackMInput.style.display = 'none';
+    document.body.appendChild(fallbackMInput);
+
+    fallbackMInput.onchange = async function(e) {
+        const file = e.target.files[0];
+        if(!file || !currentMentorDocId) return;
+        const log = document.getElementById(`vLog_${currentMentorDocId}`);
+        log.innerText = "⏳ ক্লাউডে যাচ্ছে...";
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            if(data.secure_url) {
+                await sendMentorReply(currentMentorDocId, 'voice', data.secure_url);
+                log.innerText = "✅ সম্পন্ন!";
+            } else {
+                log.innerText = "❌ আপলোড এরর!";
+            }
+        } catch(err) {
+            log.innerText = "❌ আপলোড ব্যর্থ!";
+        }
+        e.target.value = ""; 
+        currentMentorDocId = null;
+    };
+    // ----------------------------------------
+
     // Local Storage for User Privacy
     let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
 
@@ -882,9 +946,10 @@
             btn.classList.add('recording');
             status.innerText = "🔴 রেকর্ডিং চলছে...";
         } catch(e) {
-            alert("মাইক্রোফোন কাজ করছে না!\n\nদয়া করে লিংটি কপি করে Chrome ব্রাউজারে গিয়ে ওপেন করুন এবং সাইটটিকে মাইক্রোফোন পারমিশন দিন।");
+            alert("App-এর ভেতরে সরাসরি লাইভ রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে বা আগে থেকে রেকর্ড করা অডিও সিলেক্ট করে দিন।");
             btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
-            status.innerText = "❌ পারমিশন দেওয়া হয়নি!";
+            status.innerText = "রেকর্ডার ওপেন করা হয়েছে...";
+            fallbackQInput.click();
         }
     }
 
@@ -1467,8 +1532,10 @@
                 btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                alert("মাইক্রোফোন কাজ করছে না!\n\nদয়া করে লিংটি কপি করে Chrome ব্রাউজারে গিয়ে ওপেন করুন এবং সাইটটিকে মাইক্রোফোন পারমিশন দিন।"); 
-                btn.innerHTML = originalText;
+                alert("App-এর ভেতরে সরাসরি লাইভ রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে বা আগে থেকে রেকর্ড করা অডিও সিলেক্ট করে দিন।"); 
+                btn.innerHTML = "<i class='fas fa-microphone'></i> রেকর্ড"; 
+                currentMentorDocId = docId;
+                fallbackMInput.click();
             }
         } else {
             audioRecorder.stop();
