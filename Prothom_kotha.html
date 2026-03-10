@@ -830,7 +830,7 @@
 
         if(qRecorder && qRecorder.state === 'recording') {
             qRecorder.stop();
-            qRecorder.stream.getTracks().forEach(t => t.stop());
+            // মোবাইল ফ্রেন্ডলি: এখানে সাথে সাথে ট্র্যাক অফ করা বাদ দেওয়া হয়েছে, যাতে অডিও ফাইলটি ঠিকমতো তৈরি হয়
             btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
             btn.classList.remove('recording');
             status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
@@ -843,16 +843,22 @@
 
                 qRecorder.ondataavailable = e => { if(e.data.size > 0) qChunks.push(e.data); };
                 qRecorder.onstop = async () => {
-                    const blob = new Blob(qChunks, { type: 'audio/wav' });
+                    // অডিও তৈরি হয়ে গেলে মাইক্রোফোন পারমিশন বন্ধ করা হচ্ছে
+                    stream.getTracks().forEach(t => t.stop());
+
+                    const blob = new Blob(qChunks); // ফাইল টাইপ অটোমেটিক রাখা হয়েছে যাতে মোবাইল সাপোর্ট করে
                     const fd = new FormData();
-                    fd.append('file', blob);
+                    fd.append('file', blob, 'question_voice.mp4'); // এক্সটেনশন যুক্ত করা হয়েছে যাতে ক্লাউডিনারি চিনতে পারে
                     fd.append('upload_preset', UPLOAD_PRESET);
+                    
                     try {
                         const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
                         const data = await res.json();
                         if(data.secure_url) {
                             qVoiceUrl = data.secure_url;
                             status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+                        } else {
+                            status.innerHTML = "❌ আপলোডে সমস্যা: " + (data.error ? data.error.message : "");
                         }
                     } catch(e) {
                         status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
@@ -864,7 +870,7 @@
                 btn.classList.add('recording');
                 status.innerText = "🔴 রেকর্ডিং চলছে...";
             } catch(e) {
-                alert("মাইক্রোফোন পারমিশন দিন!");
+                alert("মাইক্রোফোন পারমিশন দিন! (Error: " + e.message + ")");
             }
         }
     }
@@ -1410,12 +1416,15 @@
                 audioRecorder = new MediaRecorder(stream);
                 audioChunks = [];
                 
-                audioRecorder.ondataavailable = e => audioChunks.push(e.data);
+                audioRecorder.ondataavailable = e => { if(e.data.size > 0) audioChunks.push(e.data); };
                 
                 audioRecorder.onstop = async () => {
+                    // অডিও তৈরি হয়ে গেলে মাইক্রোফোন পারমিশন বন্ধ করা হচ্ছে
+                    stream.getTracks().forEach(t => t.stop());
+                    
                     log.innerText = "⏳ ক্লাউডে যাচ্ছে...";
                     const fd = new FormData();
-                    fd.append('file', new Blob(audioChunks, { type: 'audio/wav' }));
+                    fd.append('file', new Blob(audioChunks), 'admin_voice.mp4'); // এক্সটেনশন যুক্ত করা হয়েছে
                     fd.append('upload_preset', UPLOAD_PRESET);
                     
                     const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { 
@@ -1427,6 +1436,8 @@
                     if (d.secure_url) {
                         await sendMentorReply(docId, 'voice', d.secure_url);
                         log.innerText = "✅ সম্পন্ন!";
+                    } else {
+                        log.innerText = "❌ আপলোড এরর!";
                     }
                 };
                 
@@ -1434,7 +1445,7 @@
                 btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                alert("মাইক্রোফোন এরর!"); 
+                alert("মাইক্রোফোন এরর! " + err.message); 
             }
         } else {
             audioRecorder.stop();
