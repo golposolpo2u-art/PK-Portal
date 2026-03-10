@@ -993,6 +993,46 @@
         } catch(e) { status.style.color = "#ff5252"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
+    // --- Added back submitStory function ---
+    async function submitStory() {
+        if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
+        
+        const title = document.getElementById('sTitle').value.trim();
+        const text = document.getElementById('sText').value.trim();
+        const msg = document.getElementById('storyStatusMsg');
+        
+        if(!title || !text) return alert("শিরোনাম ও গল্প লিখুন!");
+        
+        const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+        if(wordCount < 5000) return alert(`আপনার গল্পের শব্দ সংখ্যা মাত্র ${wordCount}। গল্পটি ন্যূনতম ৫০০০ শব্দের হতে হবে!`);
+        
+        msg.style.color = "var(--primary-pink)";
+        msg.innerText = "⏳ পাঠানো হচ্ছে...";
+        
+        try {
+            await dbRef.collection('channel_stories').add({ 
+                author: currentUser.displayName || currentUser.email || "Guest", 
+                userId: currentUser.uid,
+                title: title, 
+                storyText: text, 
+                channel: channel, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
+                status: "Pending", 
+                adminRemark: "",
+                isDeleted: false
+            });
+            msg.style.color = "#4caf50"; 
+            msg.innerText = "✅ গল্প সফলভাবে জমা হয়েছে!";
+            document.getElementById('sTitle').value = ""; 
+            document.getElementById('sText').value = "";
+            document.getElementById('wordCountDisplay').innerText = "শব্দ সংখ্যা: ০ / ৫০০০ (ন্যূনতম)";
+            document.getElementById('wordCountDisplay').style.color = "#ff5252";
+        } catch(e) { 
+            msg.style.color = "#ff5252"; 
+            msg.innerText = "❌ ব্যর্থ হয়েছে!"; 
+        }
+    }
+
     function loadUserStatus() {
         if(!currentUser) return;
         const listUI = document.getElementById('userStatusListUI');
