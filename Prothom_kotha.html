@@ -54,64 +54,89 @@
 
         .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; z-index: 10; }
 
-        /* Responsive Title Layout Update */
+        /* টাইটেল যাতে মোবাইলে না ভাঙে তার জন্য রেস্পন্সিভ লেআউট */
         .title-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
             margin-bottom: 5px;
+            width: 100%;
         }
 
         h1.logo-title { 
             font-family: 'EkushRegular', sans-serif; 
             color: #fff; 
-            font-size: clamp(35px, 6vw, 50px); /* Dynamically resize based on screen */
+            font-size: clamp(32px, 8vw, 50px); /* মোবাইলে ছোট হবে, পিসিতে বড় থাকবে */
             margin: 0; 
             text-align: center; 
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .title-icon {
-            font-size: clamp(28px, 5vw, 40px); /* Resize icon with text */
-            color: var(--primary-glow);
-            margin-right: 10px;
+            gap: 10px; /* আইকন এবং লেখার মাঝে ফাঁকা জায়গা */
+            white-space: nowrap; /* লেখা এক লাইনে রাখার জন্য */
         }
 
         .subtitle { 
             color: #b0c4de; 
             font-size: 18px; 
-            margin-bottom: 35px; 
+            margin-bottom: 15px; 
             text-align: center; 
             font-weight: 300; 
+        }
+
+        .yt-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #fff;
+            padding: 10px 25px; /* প্যাডিং একটু কমানো হলো */
+            border-radius: 12px;
+            text-decoration: none;
+            margin: 0 auto 25px auto; /* বক্সটিকে মাঝখানে আনার জন্য */
+            font-weight: bold;
+            font-size: 13px;
+            width: fit-content; /* সাইজ ছোট করে টেক্সট অনুযায়ী করা হলো */
+            max-width: 95%;
+        }
+
+        .yt-banner:hover {
+            background: rgba(255, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         /* Tabs for User Interface */
         .user-tabs {
             display: flex;
             background: rgba(0,0,0,0.3);
-            border-radius: 15px;
-            margin-bottom: 25px;
+            border-radius: 10px; /* ১৫px থেকে কমিয়ে ১০px করা হলো */
+            margin-bottom: 20px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
         }
 
         .u-tab {
             flex: 1;
-            padding: 15px;
+            padding: 10px; /* ১৫px থেকে কমিয়ে ১০px করা হলো */
             text-align: center;
             cursor: pointer;
             font-weight: bold;
             color: #aaa;
             transition: 0.3s;
+            font-size: 13px; /* একটু ছোট করা হলো */
         }
 
         .u-tab.active {
             background: rgba(0, 210, 255, 0.2);
             color: var(--primary-glow);
             border-bottom: 3px solid var(--primary-glow);
+        }
+
+        @media (max-width: 500px) {
+            .u-tab { padding: 8px 5px; font-size: 11px; } /* মোবাইলের জন্য আরও মানানসই করা হলো */
         }
 
         /* Audition Banner */
@@ -205,7 +230,7 @@
             gap: 12px; 
         }
 
-        .mentor-row input[type="checkbox"] { 
+        .mentor-row input[type="checkbox"], .mentor-row input[type="radio"] { 
             width: 20px; 
             height: 20px; 
             accent-color: var(--primary-glow); 
@@ -295,7 +320,21 @@
             box-shadow: none; 
         }
 
-        /* Updated Mentor Login Button (Medium Solid Box) */
+        /* ছোট বক্স করার জন্য নতুন ক্লাস */
+        .compact-box {
+            width: fit-content !important;
+            min-width: 250px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding: 12px 25px !important;
+            font-size: 15px !important;
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Kalpurush', sans-serif; /* ফন্ট যোগ করা হলো */
+        }
+
         .btn-admin {
             width: 100%;
             padding: 15px;
@@ -308,7 +347,7 @@
             cursor: pointer;
             font-family: 'Kalpurush', sans-serif;
             margin-top: 30px;
-            opacity: 1; /* 100% Opacity */
+            opacity: 1; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -466,7 +505,7 @@
         .type-tab { padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; background: rgba(255, 255, 255, 0.1); color: #bbb; }
         .type-tab.active { background: rgba(0, 210, 255, 0.2); color: var(--primary-glow); border: 1px solid var(--primary-glow); }
         
-        .voice-btn { background: #ff3d00; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .voice-btn { background: #ff3d00; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Kalpurush', sans-serif; /* ফন্ট যোগ করা হলো */ }
         .voice-btn.recording { animation: pulse-red 1s infinite; background: #b20000; }
         @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 61, 0, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0); } }
 
@@ -490,17 +529,24 @@
     <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
     
     <div class="title-wrapper">
-        <h1 class="logo-title"><i class="fas fa-microphone-alt title-icon"></i> প্রথম কথা</h1>
+        <h1 class="logo-title">🎙️ প্রথম কথা</h1>
     </div>
     <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
+
+    <!-- YouTube Link Notice -->
+    <a href="https://www.youtube.com/@prothonkotha1" target="_blank" class="yt-banner">
+        <i class="fab fa-youtube" style="color: #ff5252; font-size: 20px;"></i>
+        <span>কোনো ক্লাস মিস করলে আমাদের ইউটিউব চ্যানেল থেকে দেখে নিন!</span>
+    </a>
 
     <!-- User Toggle Tabs -->
     <div class="user-tabs">
         <div class="u-tab active" onclick="switchUserTab('upload')">অডিও পাঠান</div>
+        <div class="u-tab" onclick="switchUserTab('question')">প্রশ্ন করুন</div>
         <div class="u-tab" onclick="switchUserTab('feedback')">আমার ফিডব্যাক</div>
     </div>
 
-    <!-- Upload Section -->
+    <!-- Upload Audio Section -->
     <div id="uploadSection">
         <div class="info-card">
             <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
@@ -572,9 +618,59 @@
         <div id="upload-status"></div>
     </div>
 
+    <!-- Ask Question Section -->
+    <div id="questionSection" style="display:none;">
+        <div class="info-card" style="border-left-color: #ff9800; color: #ffca28;">
+            <i class="fas fa-question-circle"></i> <b>ক্লাস সম্পর্কিত প্রশ্ন:</b><br>
+            ক্লাস শেষে আপনার কোনো প্রশ্ন থাকলে তা এখানে লিখে অথবা ভয়েস রেকর্ড করে আপনার মেন্টরকে পাঠাতে পারেন।
+        </div>
+
+        <form id="questionForm">
+            <label class="input-label">আপনার নাম:</label>
+            <input type="text" id="qName" placeholder="আপনার নাম লিখুন">
+
+            <label class="input-label">কাকে প্রশ্ন করতে চান?</label>
+            <div class="mentor-grid">
+                <label class="mentor-row">
+                    <div class="mentor-info">
+                        <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="q-mentor-cb">
+                        <span>সুচিস্মিতা দাস নেহা</span>
+                    </div>
+                </label>
+                <label class="mentor-row">
+                    <div class="mentor-info">
+                        <input type="checkbox" value="বিদিশা মুখার্জি" class="q-mentor-cb">
+                        <span>বিদিশা মুখার্জি</span>
+                    </div>
+                </label>
+                <label class="mentor-row">
+                    <div class="mentor-info">
+                        <input type="checkbox" value="সঞ্জিত মল্লিক" class="q-mentor-cb">
+                        <span>সঞ্জিত মল্লিক</span>
+                    </div>
+                </label>
+            </div>
+
+            <label class="input-label">প্রশ্ন লিখে পাঠান:</label>
+            <textarea id="qText" placeholder="আপনার প্রশ্নটি এখানে লিখুন..."></textarea>
+
+            <p style="text-align: center; color: var(--text-muted); margin: 10px 0; font-size: 13px;">অথবা</p>
+
+            <!-- এখানে compact-box ক্লাস যোগ করা হয়েছে -->
+            <button type="button" id="qVoiceBtn" class="voice-btn compact-box" style="margin-bottom: 10px; background: #3a7bd5;" onclick="toggleUserQuestionRecord()">
+                <i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন
+            </button>
+            <div id="qVoiceStatus" style="text-align:center; font-size:12px; color:var(--success-green); margin-bottom: 20px; font-weight: bold;"></div>
+
+            <!-- এখানেও compact-box ক্লাস যোগ করা হয়েছে -->
+            <button type="submit" class="btn-action compact-box" id="btnQSubmit">প্রশ্ন পাঠান <i class="fas fa-paper-plane"></i></button>
+        </form>
+        <div id="qSubmitStatus" style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px;"></div>
+    </div>
+
     <!-- User Feedback Section -->
     <div id="feedbackSection" style="display:none;">
-        <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">আপনার পাঠানো অডিও ও রিপ্লাই</h3>
+        <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">আপনার পাঠানো অডিও ও প্রশ্নের রিপ্লাই</h3>
         <p style="font-size: 13px; color: #aaa; text-align: center; margin-bottom: 20px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে না)</p>
         
         <div class="clear-all-area" id="clearAllContainer" style="display: none;">
@@ -678,16 +774,18 @@
     let currentAuditionMentors = []; 
     let isAuditionLiveGlobal = false; 
 
+    // Question Voice Recorder Globals
+    let qVoiceUrl = null;
+    let qRecorder = null;
+    let qChunks = [];
+
     // Local Storage for User Privacy
     let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
 
     window.onload = async function() {
         try {
             await auth.signInAnonymously();
-            
-            // Clean up old entries logic (runs on load)
             cleanUpOldMyAudios();
-
         } catch (err) {
             console.error("Auth Fail:", err);
             document.getElementById('upload-status').innerHTML = "<b style='color:red;'>সার্ভার কানেকশন এরর!</b>";
@@ -702,30 +800,116 @@
         });
     };
 
-    // Auto cleanup old local IDs (Optional: currently keeping it simple, 
-    // relying on DB deletion to hide them, but this function can clean localStorage if needed)
-    function cleanUpOldMyAudios() {
-        // This is a placeholder for future complex cleanup if localStorage gets too big.
-        // For now, if the document doesn't exist in DB, it just won't render.
-    }
+    function cleanUpOldMyAudios() {}
 
     // --- USER UI TABS ---
     window.switchUserTab = function(tabName) {
-        document.querySelectorAll('.u-tab').forEach(t => {
-            t.classList.remove('active');
-        });
+        document.querySelectorAll('.u-tab').forEach(t => t.classList.remove('active'));
         
+        document.getElementById('uploadSection').style.display = 'none';
+        document.getElementById('questionSection').style.display = 'none';
+        document.getElementById('feedbackSection').style.display = 'none';
+
         if(tabName === 'upload') {
             document.querySelector('.u-tab:nth-child(1)').classList.add('active');
             document.getElementById('uploadSection').style.display = 'block';
-            document.getElementById('feedbackSection').style.display = 'none';
-        } else {
+        } else if(tabName === 'question') {
             document.querySelector('.u-tab:nth-child(2)').classList.add('active');
-            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+        } else {
+            document.querySelector('.u-tab:nth-child(3)').classList.add('active');
             document.getElementById('feedbackSection').style.display = 'block';
             loadMyFeedback(); 
         }
     }
+
+    // --- USER QUESTION SUBMISSION ---
+    async function toggleUserQuestionRecord() {
+        const btn = document.getElementById('qVoiceBtn');
+        const status = document.getElementById('qVoiceStatus');
+
+        if(qRecorder && qRecorder.state === 'recording') {
+            qRecorder.stop();
+            qRecorder.stream.getTracks().forEach(t => t.stop());
+            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
+            btn.classList.remove('recording');
+            status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
+        } else {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                qRecorder = new MediaRecorder(stream);
+                qChunks = [];
+                qVoiceUrl = null; 
+
+                qRecorder.ondataavailable = e => { if(e.data.size > 0) qChunks.push(e.data); };
+                qRecorder.onstop = async () => {
+                    const blob = new Blob(qChunks, { type: 'audio/wav' });
+                    const fd = new FormData();
+                    fd.append('file', blob);
+                    fd.append('upload_preset', UPLOAD_PRESET);
+                    try {
+                        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+                        const data = await res.json();
+                        if(data.secure_url) {
+                            qVoiceUrl = data.secure_url;
+                            status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+                        }
+                    } catch(e) {
+                        status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
+                    }
+                };
+
+                qRecorder.start();
+                btn.innerHTML = '<i class="fas fa-stop"></i> রেকর্ড বন্ধ করুন';
+                btn.classList.add('recording');
+                status.innerText = "🔴 রেকর্ডিং চলছে...";
+            } catch(e) {
+                alert("মাইক্রোফোন পারমিশন দিন!");
+            }
+        }
+    }
+
+    document.getElementById('questionForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('qName').value.trim();
+        const text = document.getElementById('qText').value.trim();
+        const mentors = Array.from(document.querySelectorAll('.q-mentor-cb:checked')).map(c => c.value);
+        const statusDiv = document.getElementById('qSubmitStatus');
+
+        if(!name) return alert("আপনার নাম লিখুন!");
+        if(mentors.length === 0) return alert("যাকে প্রশ্ন করবেন তাকে সিলেক্ট করুন!");
+        if(!text && !qVoiceUrl) return alert("প্রশ্ন লিখে বা ভয়েস রেকর্ড করে জমা দিন!");
+
+        statusDiv.innerHTML = "⏳ পাঠানো হচ্ছে...";
+        document.getElementById('btnQSubmit').disabled = true;
+
+        try {
+            const docRef = await getRef('requests').add({
+                uploaderName: name,
+                mentors: mentors,
+                isQuestion: true,
+                questionText: text,
+                audioUrl: qVoiceUrl || "",
+                fileName: "আপনার প্রশ্ন",
+                claimedBy: "",
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                replies: []
+            });
+
+            myAudioIds.push(docRef.id);
+            localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
+
+            statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ সফল! 'আমার ফিডব্যাক' ট্যাবে চেক করুন।</b>";
+            document.getElementById('questionForm').reset();
+            qVoiceUrl = null;
+            document.getElementById('qVoiceStatus').innerText = "";
+            loadMyFeedback();
+        } catch(err) {
+            statusDiv.innerHTML = "<b style='color:red;'>❌ ব্যর্থ!</b>";
+        }
+        document.getElementById('btnQSubmit').disabled = false;
+    };
+
 
     // --- GLOBAL LISTENERS ---
     function listenAuditionGlobal() {
@@ -904,7 +1088,7 @@
         const clearAllContainer = document.getElementById('clearAllContainer');
 
         if(myAudioIds.length === 0) {
-            listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনি এখনো কোনো অডিও পাঠাননি।</p>";
+            listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনি এখনো কোনো অডিও বা প্রশ্ন পাঠাননি।</p>";
             clearAllContainer.style.display = 'none';
             return;
         }
@@ -918,16 +1102,13 @@
                 if (myAudioIds.includes(doc.id)) {
                     const data = doc.data();
                     
-                    // Check if 24 hours have passed for automatic deletion
                     const docTime = data.timestamp ? data.timestamp.toMillis() : currentTime;
                     const hoursPassed = (currentTime - docTime) / (1000 * 60 * 60);
 
                     if (hoursPassed >= 24) {
-                        // Automatically delete document from DB if 24 hours passed
                         getRef('requests').doc(doc.id).delete().catch(console.error);
-                        // Remove from local array
                         removeLocalAudioId(doc.id);
-                        return; // Skip rendering
+                        return; 
                     }
 
                     foundCount++;
@@ -937,10 +1118,20 @@
                         </div>
                     `).join('');
 
+                    let contentHtml = "";
+                    let headerTitle = data.isQuestion ? "❓ আপনার প্রশ্ন" : `ফাইলের নাম: ${data.fileName || 'Audio'}`;
+                    
+                    if(data.isQuestion) {
+                        if(data.questionText) contentHtml += `<div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; margin-bottom:10px; font-size:14px;">${data.questionText}</div>`;
+                        if(data.audioUrl) contentHtml += `<audio controls src="${data.audioUrl}"></audio>`;
+                    } else {
+                        contentHtml += `<audio controls src="${data.audioUrl}"></audio>`;
+                    }
+
                     html += `
                         <div class="user-feedback-card" id="userCard_${doc.id}">
-                            <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:10px;">ফাইলের নাম: ${data.fileName || 'Audio'}</p>
-                            <audio controls src="${data.audioUrl}"></audio>
+                            <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:10px;">${headerTitle}</p>
+                            ${contentHtml}
                             <div style="margin-top:15px; border-top:1px dashed #444; padding-top:10px;">
                                 <p style="font-size:13px; font-weight:bold; color:#bbb; margin-bottom:5px;">মেন্টরদের রিপ্লাই:</p>
                                 ${reps || '<p class="no-reply-msg">এখনো কোনো রিপ্লাই আসেনি...</p>'}
@@ -954,10 +1145,9 @@
             });
 
             if (foundCount === 0) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো অডিওগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
+                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো তথ্যগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
                 clearAllContainer.style.display = 'none';
                 
-                // Clean up local storage if nothing found but we had IDs
                 if(myAudioIds.length > 0) {
                      myAudioIds = [];
                      localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
@@ -972,11 +1162,10 @@
 
     // Individual Delete Function for User
     window.deleteMyAudio = async function(docId) {
-        if(confirm("আপনি কি নিশ্চিত এই রেকর্ড এবং রিমার্কটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
+        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
             try {
                 await getRef('requests').doc(docId).delete();
                 removeLocalAudioId(docId);
-                // The onSnapshot listener will automatically update the UI
             } catch(e) {
                 alert("মুছে ফেলতে সমস্যা হচ্ছে!");
             }
@@ -986,17 +1175,13 @@
     // Clear All Function for User
     window.clearMyHistory = async function() {
         if(myAudioIds.length === 0) return;
-        if(confirm("আপনার সমস্ত পাঠানো অডিও এবং রিমার্কস মুছে ফেলা হবে। আপনি কি নিশ্চিত?")) {
+        if(confirm("আপনার সমস্ত হিস্ট্রি মুছে ফেলা হবে। আপনি কি নিশ্চিত?")) {
             try {
-                // Delete all from database
                 const deletePromises = myAudioIds.map(id => getRef('requests').doc(id).delete());
                 await Promise.all(deletePromises);
                 
-                // Clear local storage
                 myAudioIds = [];
                 localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
-                
-                // UI will update via snapshot
             } catch(e) {
                 alert("সব মুছতে সমস্যা হচ্ছে!");
             }
@@ -1007,7 +1192,6 @@
         myAudioIds = myAudioIds.filter(id => id !== idToRemove);
         localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
     }
-
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
@@ -1072,7 +1256,6 @@
     }
 
     function startInboxListener() {
-        // We still keep the 24h logic for mentors view just in case
         const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
         
         getRef('requests').onSnapshot(snap => {
@@ -1094,7 +1277,6 @@
 
             dataArr.sort((a, b) => b.ts - a.ts);
             
-            // Update total count
             if (countLabel) {
                 countLabel.innerText = `মোট জমা: ${dataArr.length}`;
             }
@@ -1114,11 +1296,11 @@
 
                 let actionHTML = "";
                 if (!item.claimedBy && !isMaster) {
-                    actionHTML = `<button class="btn-claim" onclick="claimAudio('${item.id}')">✋ আমি এই অডিওটি চেক করব</button>`;
+                    actionHTML = `<button class="btn-claim" onclick="claimAudio('${item.id}')">✋ আমি এটি চেক করব</button>`;
                 } else {
                     actionHTML = `
                         <div class="reply-box">
-                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এই অডিওটি চেক করছেন</div>` : ''}
+                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এটি চেক করছেন</div>` : ''}
                             <div class="reply-type-tabs">
                                 <div class="type-tab active" onclick="changeReplyType('${item.id}', 'text')">টেক্সট</div>
                                 <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
@@ -1143,15 +1325,25 @@
                     `;
                 }
 
+                let itemContent = "";
+                if(item.isQuestion) {
+                    if(item.questionText) itemContent += `<div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 14px;">${item.questionText}</div>`;
+                    if(item.audioUrl) itemContent += `<audio controls src="${item.audioUrl}"></audio>`;
+                } else {
+                    itemContent += `<audio controls src="${item.audioUrl}"></audio>`;
+                }
+
+                let badgeHtml = item.isAudition ? '<span class="badge-audition">Audition</span>' : (item.isQuestion ? '<span class="badge-audition" style="background:#ff9800;">❓ প্রশ্ন</span>' : '');
+
                 list.innerHTML += `
                     <div class="request-card">
                         <span class="card-time">${new Date(item.ts).toLocaleTimeString()}</span>
-                        <p style="font-size: 18px; font-weight: bold;">
+                        <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
                             <i class="fas fa-user-circle"></i> ${item.uploaderName} 
-                            ${item.isAudition ? '<span class="badge-audition">Audition</span>' : ''}
+                            ${badgeHtml}
                         </p>
                         
-                        <audio controls src="${item.audioUrl}"></audio>
+                        ${itemContent}
                         
                         ${actionHTML}
 
@@ -1161,7 +1353,7 @@
             });
 
             if (dataArr.length === 0) {
-                list.innerHTML = "<p style='text-align:center; color:#555;'>কোনো অডিও নেই।</p>";
+                list.innerHTML = "<p style='text-align:center; color:#555;'>কোনো ডাটা নেই।</p>";
             }
             isFirstLoad = false;
         });
@@ -1204,7 +1396,7 @@
         try {
             await getRef('requests').doc(docId).update({ claimedBy: activeMentor });
         } catch (e) { 
-            alert("অডিওটি রিসিভ করতে সমস্যা হয়েছে!"); 
+            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
         }
     };
 
