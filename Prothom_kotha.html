@@ -72,14 +72,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px; 
+            gap: 0px; /* আইকন এবং লেখার মাঝের স্পেস একদম মুছে দেওয়া হলো */
             white-space: nowrap; 
         }
 
         .title-icon {
             font-size: clamp(28px, 5vw, 40px); 
             color: var(--primary-glow);
-            margin-right: 0px; 
+            margin-right: 0px; /* মার্জিন জিরো করে দেওয়া হলো */
         }
 
         .subtitle { 
@@ -126,13 +126,13 @@
 
         .u-tab {
             flex: 1;
-            padding: 12px 10px; 
+            padding: 15px 10px; 
             text-align: center;
             cursor: pointer;
             font-weight: bold;
             color: #aaa;
             transition: 0.3s;
-            font-size: 14px; /* 14px করে দেওয়া হলো */
+            font-size: 16px; /* ফন্ট সাইজ বড় করে নরমাল করা হলো */
         }
 
         .u-tab.active {
@@ -142,7 +142,7 @@
         }
 
         @media (max-width: 500px) {
-            .u-tab { padding: 10px 5px; font-size: 12px; } /* মোবাইলে একটু ছোট থাকবে যাতে না ভাঙে */
+            .u-tab { padding: 12px 5px; font-size: 14px; } /* মোবাইলের জন্য পারফেক্ট সাইজ */
         }
 
         /* Audition Banner */
@@ -532,12 +532,12 @@
 <div class="main-container" id="userPanel">
     <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
     
-    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
+    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
     
     <div class="title-wrapper">
-        <h1 class="logo-title">🎙️ প্রথম কথা</h1>
+        <h1 class="logo-title"><span class="title-icon">🎙️</span>প্রথম কথা</h1>
     </div>
-    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
+    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
 
     <!-- YouTube Link Notice -->
     <a href="https://www.youtube.com/@prothomkotha1" target="_blank" rel="noopener noreferrer" class="yt-banner">
@@ -555,7 +555,7 @@
     <!-- Upload Audio Section -->
     <div id="uploadSection">
         <div class="info-card">
-            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
+            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
             ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
             ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
             ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
@@ -575,7 +575,7 @@
             </div>
 
             <label class="input-label">যাকে পাঠাতে চান:</label>
-            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
+            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
             <div class="mentor-grid">
                 <label class="mentor-row">
                     <div class="mentor-info">
@@ -832,65 +832,79 @@
         const btn = document.getElementById('qVoiceBtn');
         const status = document.getElementById('qVoiceStatus');
 
+        // ক্লিক করার সাথে সাথেই যেন বাটনের লেখা পরিবর্তন হয় (বোঝার জন্য যে ক্লিক কাজ করেছে)
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '⏳ অপেক্ষা করুন...';
+
         if(qRecorder && qRecorder.state === 'recording') {
             qRecorder.stop();
             btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
             btn.classList.remove('recording');
             status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
-        } else {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                
-                const options = { mimeType: 'audio/webm' };
-                if (!MediaRecorder.isTypeSupported('audio/webm')) {
-                    if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                        options.mimeType = 'audio/mp4';
-                    } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
-                        options.mimeType = 'audio/ogg';
-                    } else {
-                        delete options.mimeType;
-                    }
+            return;
+        } 
+        
+        // 브রাউজার চেক: ওয়েবভিউ বা ইন-অ্যাপ ব্রাউজারে থাকলে মাইক্রোফোন ব্লক থাকতে পারে
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("আপনার ফোনের এই ব্রাউজারে ভয়েস রেকর্ড সাপোর্ট করছে না!\n\nআপনি যদি ফেসবুক বা হোয়াটসঅ্যাপ থেকে লিঙ্কে ক্লিক করে থাকেন, তবে দয়া করে ওয়েবসাইটের লিঙ্কটি (URL) কপি করে সরাসরি Google Chrome বা Safari ব্রাউজারে ওপেন করুন।");
+            btn.innerHTML = originalText;
+            status.innerText = "❌ ব্রাউজার সাপোর্ট করছে না!";
+            return;
+        }
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            
+            const options = { mimeType: 'audio/webm' };
+            if (!MediaRecorder.isTypeSupported('audio/webm')) {
+                if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    options.mimeType = 'audio/mp4';
+                } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+                    options.mimeType = 'audio/ogg';
+                } else {
+                    delete options.mimeType;
                 }
-                
-                qRecorder = new MediaRecorder(stream, options);
-                qChunks = [];
-                qVoiceUrl = null; 
-
-                qRecorder.ondataavailable = e => { if(e.data.size > 0) qChunks.push(e.data); };
-                
-                qRecorder.onstop = async () => {
-                    stream.getTracks().forEach(t => t.stop());
-
-                    const blob = new Blob(qChunks, { type: qRecorder.mimeType || 'audio/webm' }); 
-                    const fd = new FormData();
-                    
-                    fd.append('file', blob, 'user_question_voice.webm'); 
-                    fd.append('upload_preset', UPLOAD_PRESET);
-                    
-                    try {
-                        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
-                        const data = await res.json();
-                        if(data.secure_url) {
-                            qVoiceUrl = data.secure_url;
-                            status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
-                        } else {
-                            status.innerHTML = "❌ আপলোডে সমস্যা: " + (data.error ? data.error.message : "Unknown error");
-                        }
-                    } catch(e) {
-                        status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
-                    }
-                };
-
-                qRecorder.start();
-                btn.innerHTML = '<i class="fas fa-stop"></i> রেকর্ড বন্ধ করুন';
-                btn.classList.add('recording');
-                status.innerText = "🔴 রেকর্ডিং চলছে...";
-            } catch(e) {
-                // ডিবাগিং এর জন্য বিশেষ অ্যালার্ট
-                let details = "Error: " + e.name + "\nMessage: " + e.message;
-                alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।");
-                status.innerText = "❌ পারমিশন এরর!";
             }
+            
+            qRecorder = new MediaRecorder(stream, options);
+            qChunks = [];
+            qVoiceUrl = null; 
+
+            qRecorder.ondataavailable = e => { if(e.data.size > 0) qChunks.push(e.data); };
+            
+            qRecorder.onstop = async () => {
+                stream.getTracks().forEach(t => t.stop());
+
+                const blob = new Blob(qChunks, { type: qRecorder.mimeType || 'audio/webm' }); 
+                const fd = new FormData();
+                
+                fd.append('file', blob, 'user_question_voice.webm'); 
+                fd.append('upload_preset', UPLOAD_PRESET);
+                
+                try {
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+                    const data = await res.json();
+                    if(data.secure_url) {
+                        qVoiceUrl = data.secure_url;
+                        status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+                    } else {
+                        status.innerHTML = "❌ আপলোডে সমস্যা: " + (data.error ? data.error.message : "Unknown error");
+                    }
+                } catch(e) {
+                    status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
+                }
+            };
+
+            qRecorder.start();
+            btn.innerHTML = '<i class="fas fa-stop"></i> রেকর্ড বন্ধ করুন';
+            btn.classList.add('recording');
+            status.innerText = "🔴 রেকর্ডিং চলছে...";
+        } catch(e) {
+            // ডিবাগিং এর জন্য বিশেষ অ্যালার্ট
+            let details = "Error: " + e.name + "\nMessage: " + e.message;
+            alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।");
+            btn.innerHTML = originalText;
+            status.innerText = "❌ পারমিশন এরর!";
         }
     }
 
@@ -1043,13 +1057,13 @@
         const isAudition = auditionCheckbox ? auditionCheckbox.checked : false;
         
         if (isAudition && localStorage.getItem('pk_audition_session') === currentAuditionSession) {
-            return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
+            return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
         }
 
         let mentors = [];
         if (isAudition) {
             mentors = currentAuditionMentors;
-            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
+            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
         } else {
             mentors = Array.from(document.querySelectorAll('.mentor-cb:checked')).map(c => c.value);
         }
@@ -1170,7 +1184,7 @@
             });
 
             if (foundCount === 0) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো তথ্যগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
+                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো তথ্যগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
                 clearAllContainer.style.display = 'none';
                 
                 if(myAudioIds.length > 0) {
@@ -1187,7 +1201,7 @@
 
     // Individual Delete Function for User
     window.deleteMyAudio = async function(docId) {
-        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
+        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
             try {
                 await getRef('requests').doc(docId).delete();
                 removeLocalAudioId(docId);
@@ -1220,7 +1234,7 @@
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
-        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
+        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
         const map = { 
             "Neha123": "সুচিস্মিতা দাস নেহা", 
             "Bidisha123": "বিদিশা মুখার্জি", 
@@ -1252,7 +1266,7 @@
             }
             startInboxListener();
         } else { 
-            alert("ভুল পাসওয়ার্ড!"); 
+            alert("ভুল পাসওয়ার্ড!"); 
         }
     };
 
@@ -1421,7 +1435,7 @@
         try {
             await getRef('requests').doc(docId).update({ claimedBy: activeMentor });
         } catch (e) { 
-            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
+            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
         }
     };
 
@@ -1429,8 +1443,10 @@
     window.toggleMentorVoiceRecord = async function(docId) {
         const btn = document.getElementById(`vRecBtn_${docId}`);
         const log = document.getElementById(`vLog_${docId}`);
+        const originalText = btn.innerHTML;
         
         if (!audioRecorder || audioRecorder.state === "inactive") {
+            btn.innerHTML = '⏳ অপেক্ষা করুন...';
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 
@@ -1484,6 +1500,7 @@
             } catch (err) { 
                 let details = "Error: " + err.name + "\nMessage: " + err.message;
                 alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।"); 
+                btn.innerHTML = originalText;
             }
         } else {
             audioRecorder.stop();
