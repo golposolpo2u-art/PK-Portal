@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prothom Kotha - Smart Audio Portal (Ultra V9.0)</title>
+    <title>প্রথম কথা - স্মার্ট অডিও পোর্টাল (Ultra V9.0)</title>
     
     <!-- SEO Optimization Tags -->
     <meta name="title" content="Prothom Kotha - Smart Audio & Audition Portal">
     <meta name="description" content="Prothom Kotha is a premium audio quality checking and audition portal with AI scanning, mentor feedback, and voice recording features.">
-    <meta name="keywords" content="Prothom Kotha, Prothom Kotha, Audio Audition, Voice Quality Check, AI Audio Scanner, Mentor Feedback, Voice Recording Portal">
+    <meta name="keywords" content="Prothom Kotha, প্রথম কথা, Audio Audition, Voice Quality Check, AI Audio Scanner, Mentor Feedback, Voice Recording Portal">
     
     <!-- External Resources -->
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
@@ -66,20 +66,20 @@
         h1.logo-title { 
             font-family: 'EkushRegular', sans-serif; 
             color: #fff; 
-            font-size: clamp(32px, 8vw, 50px); /* Mobail-e choto hobe, pc te boro thakbe */
+            font-size: clamp(32px, 8vw, 50px); 
             margin: 0; 
             text-align: center; 
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px; /* Space reduced significantly */
-            white-space: nowrap; /* Ek line-e rakhar jonno */
+            gap: 2px; 
+            white-space: nowrap; 
         }
 
         .title-icon {
-            font-size: clamp(28px, 5vw, 40px); /* Resize icon with text */
+            font-size: clamp(28px, 5vw, 40px); 
             color: var(--primary-glow);
-            margin-right: 0px; /* Removed right margin */
+            margin-right: 0px; 
         }
 
         .subtitle { 
@@ -118,7 +118,7 @@
         .user-tabs {
             display: flex;
             background: rgba(0,0,0,0.3);
-            border-radius: 12px; /* Adjusted slightly */
+            border-radius: 12px; 
             margin-bottom: 20px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
@@ -126,13 +126,13 @@
 
         .u-tab {
             flex: 1;
-            padding: 12px 10px; /* Increased padding */
+            padding: 12px 10px; 
             text-align: center;
             cursor: pointer;
             font-weight: bold;
             color: #aaa;
             transition: 0.3s;
-            font-size: 15px; /* Restored normal size */
+            font-size: 14px; /* 14px করে দেওয়া হলো */
         }
 
         .u-tab.active {
@@ -142,7 +142,7 @@
         }
 
         @media (max-width: 500px) {
-            .u-tab { padding: 10px 5px; font-size: 13px; } /* Adjusted for mobile */
+            .u-tab { padding: 10px 5px; font-size: 12px; } /* মোবাইলে একটু ছোট থাকবে যাতে না ভাঙে */
         }
 
         /* Audition Banner */
@@ -326,7 +326,7 @@
             box-shadow: none; 
         }
 
-        /* Choto box korar jonno notun class */
+        /* ছোট বক্স করার জন্য ক্লাস */
         .compact-box {
             width: fit-content !important;
             min-width: 250px;
@@ -530,86 +530,86 @@
 
 <!-- 1. USER INTERFACE -->
 <div class="main-container" id="userPanel">
-    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Homepage</a>
+    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
     
-    <div class="audition-banner" id="bannerAudition">✨ Audition is going on! Send your audio file ✨</div>
+    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
     
     <div class="title-wrapper">
-        <h1 class="logo-title">🎙️ Prothom Kotha</h1>
+        <h1 class="logo-title">🎙️ প্রথম কথা</h1>
     </div>
-    <p class="subtitle">Smart Audio Quality Portal</p>
+    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
 
     <!-- YouTube Link Notice -->
     <a href="https://www.youtube.com/@prothomkotha1" target="_blank" rel="noopener noreferrer" class="yt-banner">
         <i class="fab fa-youtube" style="color: #ff5252; font-size: 20px;"></i>
-        <span>Jodi kono class miss koren, amader YouTube channel theke dekhe nin!</span>
+        <span>কোনো ক্লাস মিস করলে আমাদের ইউটিউব চ্যানেল থেকে দেখে নিন!</span>
     </a>
 
     <!-- User Toggle Tabs -->
     <div class="user-tabs">
-        <div class="u-tab active" onclick="switchUserTab('upload')">Audio Pathan</div>
-        <div class="u-tab" onclick="switchUserTab('question')">Prosno Korun</div>
-        <div class="u-tab" onclick="switchUserTab('feedback')">Amar Feedback</div>
+        <div class="u-tab active" onclick="switchUserTab('upload')">অডিও পাঠান</div>
+        <div class="u-tab" onclick="switchUserTab('question')">প্রশ্ন করুন</div>
+        <div class="u-tab" onclick="switchUserTab('feedback')">আমার ফিডব্যাক</div>
     </div>
 
     <!-- Upload Audio Section -->
     <div id="uploadSection">
         <div class="info-card">
-            <i class="fas fa-shield-alt"></i> <b>Niyomaboli:</b><br>
-            1. File size sorboccho <b>100 MB</b> hote hobe.<br>
-            2. Format: <b>MP3, WAV, M4A, AAC</b><br>
-            3. Edit kora file dile system seti detect korbe.<br>
-            4. Fileguli 24 ghonta por automatic muche jabe othoba apni chaile nije delete korte paren.<br>
-            5. Apnar pathano audior feedback shudhumatro apnii dekhte paben 'Amar Feedback' tab-e.
+            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
+            ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
+            ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
+            ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
+            ৪. ফাইলগুলি ২৪ ঘণ্টা পর অটোমেটিক মুছে যাবে অথবা আপনি চাইলে নিজে ডিলিট করতে পারেন।<br>
+            ৫. আপনার পাঠানো অডিওর ফিডব্যাক শুধুমাত্র আপনিই দেখতে পাবেন 'আমার ফিডব্যাক' ট্যাবে।
         </div>
 
         <form id="requestForm">
-            <label class="input-label">Apnar Naam:</label>
-            <input type="text" id="userName" placeholder="Apnar naam likhun" required>
+            <label class="input-label">আপনার নাম:</label>
+            <input type="text" id="userName" placeholder="আপনার নাম লিখুন" required>
 
             <div id="auditionCheckWrapper" style="display: none;">
                 <label class="audition-toggle-user">
                     <input type="checkbox" id="userIsAudition" style="width: 20px; height: 20px;" onchange="handleUserAuditionCheckboxChange()">
-                    <span>Eti ki ekti audition file?</span>
+                    <span>এটি কি একটি অডিশন ফাইল?</span>
                 </label>
             </div>
 
-            <label class="input-label">Jake pathate chan:</label>
-            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* Auditioner jonno nirdharito bicharokra automatic select hoye geche.</div>
+            <label class="input-label">যাকে পাঠাতে চান:</label>
+            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
             <div class="mentor-grid">
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Suchismita Das Neha" class="mentor-cb">
-                        <span>Suchismita Das Neha</span>
+                        <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="mentor-cb">
+                        <span>সুচিস্মিতা দাস নেহা</span>
                     </div>
-                    <div class="status-pill" id="stat_Suchismita Das Neha">
+                    <div class="status-pill" id="stat_সুচিস্মিতা দাস নেহা">
                         <span class="dot dot-offline"></span> Offline
                     </div>
                 </label>
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Bidisha Mukherjee" class="mentor-cb">
-                        <span>Bidisha Mukherjee</span>
+                        <input type="checkbox" value="বিদিশা মুখার্জি" class="mentor-cb">
+                        <span>বিদিশা মুখার্জি</span>
                     </div>
-                    <div class="status-pill" id="stat_Bidisha Mukherjee">
+                    <div class="status-pill" id="stat_বিদিশা মুখার্জি">
                         <span class="dot dot-offline"></span> Offline
                     </div>
                 </label>
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Sanjit Mallick" class="mentor-cb">
-                        <span>Sanjit Mallick</span>
+                        <input type="checkbox" value="সঞ্জিত মল্লিক" class="mentor-cb">
+                        <span>সঞ্জিত মল্লিক</span>
                     </div>
-                    <div class="status-pill" id="stat_Sanjit Mallick">
+                    <div class="status-pill" id="stat_সঞ্জিত মল্লিক">
                         <span class="dot dot-offline"></span> Offline
                     </div>
                 </label>
             </div>
 
-            <label class="input-label">Audio File (MP3/WAV):</label>
+            <label class="input-label">অডিও ফাইল (MP3/WAV):</label>
             <input type="file" id="audioFile" accept="audio/*" required style="display:none;">
             <button type="button" class="btn-action" style="background: #1a1a1a; color: #fff; margin-bottom: 20px; font-size: 16px; padding: 15px;" onclick="document.getElementById('audioFile').click()">
-                <i class="fas fa-file-audio"></i> Audio Select Korun
+                <i class="fas fa-file-audio"></i> অডিও সিলেক্ট করুন
             </button>
             
             <div id="scanBox" class="scan-container">
@@ -619,7 +619,7 @@
                 <div class="progress-rail"><div id="pBar" class="progress-bar"></div></div>
             </div>
 
-            <button type="submit" class="btn-action" id="btnUpload" disabled>Prothome File Select Korun</button>
+            <button type="submit" class="btn-action" id="btnUpload" disabled>প্রথমে ফাইল সিলেক্ট করুন</button>
         </form>
         <div id="upload-status"></div>
     </div>
@@ -627,58 +627,58 @@
     <!-- Ask Question Section -->
     <div id="questionSection" style="display:none;">
         <div class="info-card" style="border-left-color: #ff9800; color: #ffca28;">
-            <i class="fas fa-question-circle"></i> <b>Class somporkito prosno:</b><br>
-            Class sheshe apnar kono prosno thakle ta ekhane likhe othoba voice record kore apnar mentor-ke pathate paren.
+            <i class="fas fa-question-circle"></i> <b>ক্লাস সম্পর্কিত প্রশ্ন:</b><br>
+            ক্লাস শেষে আপনার কোনো প্রশ্ন থাকলে তা এখানে লিখে অথবা ভয়েস রেকর্ড করে আপনার মেন্টরকে পাঠাতে পারেন।
         </div>
 
         <form id="questionForm">
-            <label class="input-label">Apnar Naam:</label>
-            <input type="text" id="qName" placeholder="Apnar naam likhun">
+            <label class="input-label">আপনার নাম:</label>
+            <input type="text" id="qName" placeholder="আপনার নাম লিখুন">
 
-            <label class="input-label">Kake prosno korte chan?</label>
+            <label class="input-label">কাকে প্রশ্ন করতে চান?</label>
             <div class="mentor-grid">
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Suchismita Das Neha" class="q-mentor-cb">
-                        <span>Suchismita Das Neha</span>
+                        <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="q-mentor-cb">
+                        <span>সুচিস্মিতা দাস নেহা</span>
                     </div>
                 </label>
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Bidisha Mukherjee" class="q-mentor-cb">
-                        <span>Bidisha Mukherjee</span>
+                        <input type="checkbox" value="বিদিশা মুখার্জি" class="q-mentor-cb">
+                        <span>বিদিশা মুখার্জি</span>
                     </div>
                 </label>
                 <label class="mentor-row">
                     <div class="mentor-info">
-                        <input type="checkbox" value="Sanjit Mallick" class="q-mentor-cb">
-                        <span>Sanjit Mallick</span>
+                        <input type="checkbox" value="সঞ্জিত মল্লিক" class="q-mentor-cb">
+                        <span>সঞ্জিত মল্লিক</span>
                     </div>
                 </label>
             </div>
 
-            <label class="input-label">Prosno likhe pathan:</label>
-            <textarea id="qText" placeholder="Apnar prosnoti ekhane likhun..."></textarea>
+            <label class="input-label">প্রশ্ন লিখে পাঠান:</label>
+            <textarea id="qText" placeholder="আপনার প্রশ্নটি এখানে লিখুন..."></textarea>
 
-            <p style="text-align: center; color: var(--text-muted); margin: 10px 0; font-size: 13px;">Othoba</p>
+            <p style="text-align: center; color: var(--text-muted); margin: 10px 0; font-size: 13px;">অথবা</p>
 
             <button type="button" id="qVoiceBtn" class="voice-btn compact-box" style="margin-bottom: 10px; background: #3a7bd5;" onclick="toggleUserQuestionRecord()">
-                <i class="fas fa-microphone"></i> Voice record kore prosno korun
+                <i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন
             </button>
             <div id="qVoiceStatus" style="text-align:center; font-size:12px; color:var(--success-green); margin-bottom: 20px; font-weight: bold;"></div>
 
-            <button type="submit" class="btn-action compact-box" id="btnQSubmit">Prosno Pathan <i class="fas fa-paper-plane"></i></button>
+            <button type="submit" class="btn-action compact-box" id="btnQSubmit">প্রশ্ন পাঠান <i class="fas fa-paper-plane"></i></button>
         </form>
         <div id="qSubmitStatus" style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px;"></div>
     </div>
 
     <!-- User Feedback Section -->
     <div id="feedbackSection" style="display:none;">
-        <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">Apnar pathano audio o prosnor reply</h3>
-        <p style="font-size: 13px; color: #aaa; text-align: center; margin-bottom: 20px;">(Ei tothyo shudhu apnar browser-ei save thake. Onyo keu dekhte pabe na)</p>
+        <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">আপনার পাঠানো অডিও ও প্রশ্নের রিপ্লাই</h3>
+        <p style="font-size: 13px; color: #aaa; text-align: center; margin-bottom: 20px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে না)</p>
         
         <div class="clear-all-area" id="clearAllContainer" style="display: none;">
-            <button class="btn-clear-all" onclick="clearMyHistory()"><i class="fas fa-trash-alt"></i> Sob History Muchun</button>
+            <button class="btn-clear-all" onclick="clearMyHistory()"><i class="fas fa-trash-alt"></i> সব হিস্ট্রি মুছুন</button>
         </div>
 
         <div id="myAudioList">
@@ -688,7 +688,7 @@
 
     <!-- Updated Admin Portal Trigger -->
     <button id="btnMentorLogin" class="btn-admin">
-        <i class="fas fa-user-shield"></i> Mentor / Admin Panel
+        <i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন প্যানেল
     </button>
 </div>
 
@@ -696,7 +696,7 @@
 <div class="main-container dashboard-container" id="mentorPanel">
     <div class="navbar">
         <span id="nameTag" style="color: var(--primary-glow); font-weight: bold; font-size: 16px;"></span>
-        <button onclick="exitDashboard()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+        <button onclick="exitDashboard()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
     </div>
 
     <div class="master-panel" id="adminControls" style="display: none; flex-direction: column; align-items: stretch;">
@@ -704,8 +704,8 @@
             <div style="display:flex; align-items:center; gap:10px;">
                 <i class="fas fa-fire-alt" style="font-size: 24px; color: var(--gold-text);"></i>
                 <div>
-                    <b style="color:var(--gold-text); display:block; font-size: 16px;">Audition Mode</b>
-                    <span style="font-size:11px; color:#aaa;" id="audStatusLabel">Bondho</span>
+                    <b style="color:var(--gold-text); display:block; font-size: 16px;">অডিশন মোড</b>
+                    <span style="font-size:11px; color:#aaa;" id="audStatusLabel">বন্ধ</span>
                 </div>
             </div>
             <label class="switch">
@@ -715,17 +715,17 @@
         </div>
         
         <div id="adminAuditionMentors" style="display: none; margin-top: 15px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 15px;">
-            <p style="font-size: 13px; color: var(--gold-text); margin-bottom: 10px;">Auditioner bicharok panel select korun:</p>
+            <p style="font-size: 13px; color: var(--gold-text); margin-bottom: 10px;">অডিশনের বিচারক প্যানেল সিলেক্ট করুন:</p>
             <div style="display: flex; gap: 15px; flex-wrap: wrap; font-size: 14px; color: #fff;">
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="Suchismita Das Neha" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> Neha</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="Bidisha Mukherjee" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> Bidisha</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="Sanjit Mallick" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> Sanjit</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> নেহা</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="বিদিশা মুখার্জি" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> বিদিশা</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সঞ্জিত মল্লিক" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> সঞ্জিত</label>
             </div>
         </div>
     </div>
 
     <div class="info-card" id="statusSetter" style="display: none; background: rgba(255,255,255,0.05); border-color: var(--glass-border);">
-        <label style="font-size: 13px; font-weight: bold; color: var(--primary-glow); display: block; margin-bottom: 8px;">Status:</label>
+        <label style="font-size: 13px; font-weight: bold; color: var(--primary-glow); display: block; margin-bottom: 8px;">স্ট্যাটাস:</label>
         <select id="myStatus" style="margin:0; padding: 8px; font-size: 13px;" onchange="setMyOnlineStatus(this.value)">
             <option value="Online">Online ✅</option>
             <option value="Busy">Busy ⛔</option>
@@ -734,8 +734,8 @@
     </div>
 
     <h3 style="text-align:center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-        <span>📥 Inbox</span>
-        <span id="totalAudioCount" style="font-size: 14px; color: var(--primary-glow); background: rgba(0,210,255,0.1); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--primary-glow);">Mot Joma: 0</span>
+        <span>📥 ইনবক্স</span>
+        <span id="totalAudioCount" style="font-size: 14px; color: var(--primary-glow); background: rgba(0,210,255,0.1); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--primary-glow);">মোট জমা: ০</span>
     </h3>
     <div id="inboxList"></div>
 </div>
@@ -792,7 +792,7 @@
             cleanUpOldMyAudios();
         } catch (err) {
             console.error("Auth Fail:", err);
-            document.getElementById('upload-status').innerHTML = "<b style='color:red;'>Server Connection Error!</b>";
+            document.getElementById('upload-status').innerHTML = "<b style='color:red;'>সার্ভার কানেকশন এরর!</b>";
         }
 
         auth.onAuthStateChanged(user => {
@@ -828,22 +828,19 @@
     }
 
     // --- USER QUESTION SUBMISSION ---
-    // Update to record logic for mobile compatibility
     async function toggleUserQuestionRecord() {
         const btn = document.getElementById('qVoiceBtn');
         const status = document.getElementById('qVoiceStatus');
 
         if(qRecorder && qRecorder.state === 'recording') {
             qRecorder.stop();
-            btn.innerHTML = '<i class="fas fa-microphone"></i> Voice record kore prosno korun';
+            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
             btn.classList.remove('recording');
-            status.innerText = "⏳ Cloud-e save hocche...";
+            status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
         } else {
             try {
-                // Requesting both audio and specifying MIME type if possible can help on mobile
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 
-                // Fallback mime types for better cross-browser compatibility
                 const options = { mimeType: 'audio/webm' };
                 if (!MediaRecorder.isTypeSupported('audio/webm')) {
                     if (MediaRecorder.isTypeSupported('audio/mp4')) {
@@ -851,7 +848,6 @@
                     } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
                         options.mimeType = 'audio/ogg';
                     } else {
-                        // Let browser choose default
                         delete options.mimeType;
                     }
                 }
@@ -865,11 +861,9 @@
                 qRecorder.onstop = async () => {
                     stream.getTracks().forEach(t => t.stop());
 
-                    // Use the default blob type generated by the recorder
                     const blob = new Blob(qChunks, { type: qRecorder.mimeType || 'audio/webm' }); 
                     const fd = new FormData();
                     
-                    // Provide a generic filename, Cloudinary will process it
                     fd.append('file', blob, 'user_question_voice.webm'); 
                     fd.append('upload_preset', UPLOAD_PRESET);
                     
@@ -878,21 +872,24 @@
                         const data = await res.json();
                         if(data.secure_url) {
                             qVoiceUrl = data.secure_url;
-                            status.innerHTML = "✅ Voice record jukto hoyeche!";
+                            status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
                         } else {
-                            status.innerHTML = "❌ Upload problem: " + (data.error ? data.error.message : "Unknown error");
+                            status.innerHTML = "❌ আপলোডে সমস্যা: " + (data.error ? data.error.message : "Unknown error");
                         }
                     } catch(e) {
-                        status.innerHTML = "❌ Voice upload byartho hoyeche!";
+                        status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
                     }
                 };
 
                 qRecorder.start();
-                btn.innerHTML = '<i class="fas fa-stop"></i> Record bondho korun';
+                btn.innerHTML = '<i class="fas fa-stop"></i> রেকর্ড বন্ধ করুন';
                 btn.classList.add('recording');
-                status.innerText = "🔴 Recording cholche...";
+                status.innerText = "🔴 রেকর্ডিং চলছে...";
             } catch(e) {
-                alert("Microphone permission din! (Error: " + e.message + ")");
+                // ডিবাগিং এর জন্য বিশেষ অ্যালার্ট
+                let details = "Error: " + e.name + "\nMessage: " + e.message;
+                alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।");
+                status.innerText = "❌ পারমিশন এরর!";
             }
         }
     }
@@ -904,11 +901,11 @@
         const mentors = Array.from(document.querySelectorAll('.q-mentor-cb:checked')).map(c => c.value);
         const statusDiv = document.getElementById('qSubmitStatus');
 
-        if(!name) return alert("Apnar naam likhun!");
-        if(mentors.length === 0) return alert("Jake prosno korben take select korun!");
-        if(!text && !qVoiceUrl) return alert("Prosno likhe ba voice record kore joma din!");
+        if(!name) return alert("আপনার নাম লিখুন!");
+        if(mentors.length === 0) return alert("যাকে প্রশ্ন করবেন তাকে সিলেক্ট করুন!");
+        if(!text && !qVoiceUrl) return alert("প্রশ্ন লিখে বা ভয়েস রেকর্ড করে জমা দিন!");
 
-        statusDiv.innerHTML = "⏳ Pathano hocche...";
+        statusDiv.innerHTML = "⏳ পাঠানো হচ্ছে...";
         document.getElementById('btnQSubmit').disabled = true;
 
         try {
@@ -918,7 +915,7 @@
                 isQuestion: true,
                 questionText: text,
                 audioUrl: qVoiceUrl || "",
-                fileName: "Apnar Prosno",
+                fileName: "আপনার প্রশ্ন",
                 claimedBy: "",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 replies: []
@@ -927,13 +924,13 @@
             myAudioIds.push(docRef.id);
             localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
 
-            statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ Safol! 'Amar Feedback' tab-e check korun.</b>";
+            statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ সফল! 'আমার ফিডব্যাক' ট্যাবে চেক করুন।</b>";
             document.getElementById('questionForm').reset();
             qVoiceUrl = null;
             document.getElementById('qVoiceStatus').innerText = "";
             loadMyFeedback();
         } catch(err) {
-            statusDiv.innerHTML = "<b style='color:red;'>❌ Byartho!</b>";
+            statusDiv.innerHTML = "<b style='color:red;'>❌ ব্যর্থ!</b>";
         }
         document.getElementById('btnQSubmit').disabled = false;
     };
@@ -961,7 +958,7 @@
                 document.getElementById('masterAuditionSwitch').checked = live;
             }
             if (document.getElementById('audStatusLabel')) {
-                document.getElementById('audStatusLabel').innerText = live ? "Live 🔥" : "Bondho";
+                document.getElementById('audStatusLabel').innerText = live ? "লাইভ 🔥" : "বন্ধ";
             }
 
             if (isMaster) {
@@ -1025,7 +1022,7 @@
         
         scanBox.style.display = 'block';
         uploadBtn.disabled = true;
-        uploadBtn.innerHTML = "Scan hocche...";
+        uploadBtn.innerHTML = "স্ক্যান হচ্ছে...";
         
         setTimeout(() => {
             document.getElementById('scan1').innerText = "🔍 Scanning...";
@@ -1034,7 +1031,7 @@
                 document.getElementById('scan3').innerText = "✅ Verified.";
                 document.getElementById('pBar').style.width = "100%";
                 uploadBtn.disabled = false;
-                uploadBtn.innerHTML = "File Pathan";
+                uploadBtn.innerHTML = "ফাইল পাঠান";
             }, 1000);
         }, 800);
     };
@@ -1046,26 +1043,26 @@
         const isAudition = auditionCheckbox ? auditionCheckbox.checked : false;
         
         if (isAudition && localStorage.getItem('pk_audition_session') === currentAuditionSession) {
-            return alert("Dukkhoito! Apni ei bortoman audition-e itimodhye ekti file joma diyechen. Poroborti audition-er jonno opekha korun.");
+            return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
         }
 
         let mentors = [];
         if (isAudition) {
             mentors = currentAuditionMentors;
-            if (mentors.length === 0) return alert("Audition-er jonno ekhono kono bicharok thik kora hoyni! Doya kore opekha korun.");
+            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
         } else {
             mentors = Array.from(document.querySelectorAll('.mentor-cb:checked')).map(c => c.value);
         }
 
         if (mentors.length === 0) {
-            return alert("Mentor select korun!");
+            return alert("মেন্টর সিলেক্ট করুন!");
         }
 
         const name = document.getElementById('userName').value;
         const file = fileInput.files[0];
         const statusDiv = document.getElementById('upload-status');
 
-        statusDiv.innerHTML = "⏳ Upload hocche...";
+        statusDiv.innerHTML = "⏳ আপলোড হচ্ছে...";
         uploadBtn.disabled = true;
 
         const fd = new FormData();
@@ -1099,15 +1096,15 @@
                     document.getElementById('auditionCheckWrapper').style.display = 'none';
                 }
 
-                statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ Safol! 'Amar Feedback' tab-e check korun.</b>";
+                statusDiv.innerHTML = "<b style='color:#00ffcc;'>✅ সফল! 'আমার ফিডব্যাক' ট্যাবে চেক করুন।</b>";
                 this.reset();
                 scanBox.style.display = 'none';
                 loadMyFeedback(); 
             }
         } catch (err) { 
-            statusDiv.innerHTML = "<b style='color:red;'>❌ Byartho!</b>"; 
+            statusDiv.innerHTML = "<b style='color:red;'>❌ ব্যর্থ!</b>"; 
         }
-        uploadBtn.innerHTML = "File Select Korun";
+        uploadBtn.innerHTML = "ফাইল সিলেক্ট করুন";
     };
 
     // --- USER SPECIFIC FEEDBACK (PRIVATE TO DEVICE) ---
@@ -1116,7 +1113,7 @@
         const clearAllContainer = document.getElementById('clearAllContainer');
 
         if(myAudioIds.length === 0) {
-            listDiv.innerHTML = "<p style='text-align:center; color:#777;'>Apni ekhono kono audio ba prosno pathanni.</p>";
+            listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনি এখনো কোনো অডিও বা প্রশ্ন পাঠাননি।</p>";
             clearAllContainer.style.display = 'none';
             return;
         }
@@ -1147,7 +1144,7 @@
                     `).join('');
 
                     let contentHtml = "";
-                    let headerTitle = data.isQuestion ? "❓ Apnar Prosno" : `File-er naam: ${data.fileName || 'Audio'}`;
+                    let headerTitle = data.isQuestion ? "❓ আপনার প্রশ্ন" : `ফাইলের নাম: ${data.fileName || 'Audio'}`;
                     
                     if(data.isQuestion) {
                         if(data.questionText) contentHtml += `<div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; margin-bottom:10px; font-size:14px;">${data.questionText}</div>`;
@@ -1161,11 +1158,11 @@
                             <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:10px;">${headerTitle}</p>
                             ${contentHtml}
                             <div style="margin-top:15px; border-top:1px dashed #444; padding-top:10px;">
-                                <p style="font-size:13px; font-weight:bold; color:#bbb; margin-bottom:5px;">Mentorder Reply:</p>
-                                ${reps || '<p class="no-reply-msg">Ekhono kono reply asheni...</p>'}
+                                <p style="font-size:13px; font-weight:bold; color:#bbb; margin-bottom:5px;">মেন্টরদের রিপ্লাই:</p>
+                                ${reps || '<p class="no-reply-msg">এখনো কোনো রিপ্লাই আসেনি...</p>'}
                             </div>
                             <button class="btn-delete-user" onclick="deleteMyAudio('${doc.id}')">
-                                <i class="fas fa-trash"></i> Muche Felun
+                                <i class="fas fa-trash"></i> মুছে ফেলুন
                             </button>
                         </div>
                     `;
@@ -1173,7 +1170,7 @@
             });
 
             if (foundCount === 0) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>Apnar purono tothyogulo delete hoye geche ba 24 ghonta par hoye geche.</p>";
+                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো তথ্যগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
                 clearAllContainer.style.display = 'none';
                 
                 if(myAudioIds.length > 0) {
@@ -1190,12 +1187,12 @@
 
     // Individual Delete Function for User
     window.deleteMyAudio = async function(docId) {
-        if(confirm("Apni ki nischit eti muche felte chan? Eti ar fire paowa jabe na.")) {
+        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
             try {
                 await getRef('requests').doc(docId).delete();
                 removeLocalAudioId(docId);
             } catch(e) {
-                alert("Muche felte somosya hocche!");
+                alert("মুছে ফেলতে সমস্যা হচ্ছে!");
             }
         }
     };
@@ -1203,7 +1200,7 @@
     // Clear All Function for User
     window.clearMyHistory = async function() {
         if(myAudioIds.length === 0) return;
-        if(confirm("Apnar somosto history muche fela hobe. Apni ki nischit?")) {
+        if(confirm("আপনার সমস্ত হিস্ট্রি মুছে ফেলা হবে। আপনি কি নিশ্চিত?")) {
             try {
                 const deletePromises = myAudioIds.map(id => getRef('requests').doc(id).delete());
                 await Promise.all(deletePromises);
@@ -1211,7 +1208,7 @@
                 myAudioIds = [];
                 localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
             } catch(e) {
-                alert("Sob muchte somosya hocche!");
+                alert("সব মুছতে সমস্যা হচ্ছে!");
             }
         }
     }
@@ -1223,11 +1220,11 @@
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
-        const pass = prompt("Mentor password din:");
+        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
         const map = { 
-            "Neha123": "Suchismita Das Neha", 
-            "Bidisha123": "Bidisha Mukherjee", 
-            "Sanjit123": "Sanjit Mallick", 
+            "Neha123": "সুচিস্মিতা দাস নেহা", 
+            "Bidisha123": "বিদিশা মুখার্জি", 
+            "Sanjit123": "সঞ্জিত মল্লিক", 
             "Master2002": "All" 
         };
 
@@ -1237,7 +1234,7 @@
 
             document.getElementById('userPanel').style.display = 'none';
             document.getElementById('mentorPanel').style.display = 'block';
-            document.getElementById('nameTag').innerText = isMaster ? "👤 Admin" : `👤 ${activeMentor}`;
+            document.getElementById('nameTag').innerText = isMaster ? "👤 অ্যাডমিন" : `👤 ${activeMentor}`;
             
             if (isMaster) {
                 document.getElementById('adminControls').style.display = 'flex';
@@ -1255,7 +1252,7 @@
             }
             startInboxListener();
         } else { 
-            alert("Vul password!"); 
+            alert("ভুল পাসওয়ার্ড!"); 
         }
     };
 
@@ -1306,7 +1303,7 @@
             dataArr.sort((a, b) => b.ts - a.ts);
             
             if (countLabel) {
-                countLabel.innerText = `Mot Joma: ${dataArr.length}`;
+                countLabel.innerText = `মোট জমা: ${dataArr.length}`;
             }
 
             if (!isFirstLoad && dataArr.length > 0) {
@@ -1324,24 +1321,24 @@
 
                 let actionHTML = "";
                 if (!item.claimedBy && !isMaster) {
-                    actionHTML = `<button class="btn-claim" onclick="claimAudio('${item.id}')">✋ Ami eti check korbo</button>`;
+                    actionHTML = `<button class="btn-claim" onclick="claimAudio('${item.id}')">✋ আমি এটি চেক করব</button>`;
                 } else {
                     actionHTML = `
                         <div class="reply-box">
-                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'Apni' : item.claimedBy} eti check korchen</div>` : ''}
+                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এটি চেক করছেন</div>` : ''}
                             <div class="reply-type-tabs">
-                                <div class="type-tab active" onclick="changeReplyType('${item.id}', 'text')">Text</div>
-                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">Voice Record</div>
+                                <div class="type-tab active" onclick="changeReplyType('${item.id}', 'text')">টেক্সট</div>
+                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
                             </div>
 
                             <div id="textWrap_${item.id}">
-                                <textarea id="txt_${item.id}" placeholder="Feedback likhun..."></textarea>
-                                <button class="btn-action" style="padding:12px; font-size:14px;" onclick="sendMentorReply('${item.id}', 'text')">Pathan</button>
+                                <textarea id="txt_${item.id}" placeholder="ফিডব্যাক লিখুন..."></textarea>
+                                <button class="btn-action" style="padding:12px; font-size:14px;" onclick="sendMentorReply('${item.id}', 'text')">পাঠান</button>
                             </div>
 
                             <div id="voiceWrap_${item.id}" style="display:none;">
                                 <button id="vRecBtn_${item.id}" class="voice-btn" onclick="toggleMentorVoiceRecord('${item.id}')">
-                                    <i class="fas fa-microphone"></i> Record
+                                    <i class="fas fa-microphone"></i> রেকর্ড
                                 </button>
                                 <div id="vLog_${item.id}" style="text-align:center; font-size:12px; margin-top:10px; color:var(--success-green);"></div>
                             </div>
@@ -1361,7 +1358,7 @@
                     itemContent += `<audio controls src="${item.audioUrl}"></audio>`;
                 }
 
-                let badgeHtml = item.isAudition ? '<span class="badge-audition">Audition</span>' : (item.isQuestion ? '<span class="badge-audition" style="background:#ff9800;">❓ Prosno</span>' : '');
+                let badgeHtml = item.isAudition ? '<span class="badge-audition">Audition</span>' : (item.isQuestion ? '<span class="badge-audition" style="background:#ff9800;">❓ প্রশ্ন</span>' : '');
 
                 list.innerHTML += `
                     <div class="request-card">
@@ -1375,13 +1372,13 @@
                         
                         ${actionHTML}
 
-                        <button class="logout-btn" style="width:100%; margin-top:20px; padding: 12px;" onclick="deleteDoc('${item.id}')">🗑️ Muchun</button>
+                        <button class="logout-btn" style="width:100%; margin-top:20px; padding: 12px;" onclick="deleteDoc('${item.id}')">🗑️ মুছুন</button>
                     </div>
                 `;
             });
 
             if (dataArr.length === 0) {
-                list.innerHTML = "<p style='text-align:center; color:#555;'>Kono data nei.</p>";
+                list.innerHTML = "<p style='text-align:center; color:#555;'>কোনো ডাটা নেই।</p>";
             }
             isFirstLoad = false;
         });
@@ -1415,7 +1412,7 @@
                 document.getElementById(`txt_${docId}`).value = "";
             }
         } catch (e) { 
-            alert("Truti!"); 
+            alert("ত্রুটি!"); 
         }
     };
 
@@ -1424,7 +1421,7 @@
         try {
             await getRef('requests').doc(docId).update({ claimedBy: activeMentor });
         } catch (e) { 
-            alert("Receive korte somosya hoyeche!"); 
+            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
         }
     };
 
@@ -1456,7 +1453,7 @@
                 audioRecorder.onstop = async () => {
                     stream.getTracks().forEach(t => t.stop());
                     
-                    log.innerText = "⏳ Cloud-e jacche...";
+                    log.innerText = "⏳ ক্লাউডে যাচ্ছে...";
                     const fd = new FormData();
                     
                     const blob = new Blob(audioChunks, { type: audioRecorder.mimeType || 'audio/webm' }); 
@@ -1472,30 +1469,31 @@
                         
                         if (d.secure_url) {
                             await sendMentorReply(docId, 'voice', d.secure_url);
-                            log.innerText = "✅ Somponno!";
+                            log.innerText = "✅ সম্পন্ন!";
                         } else {
-                            log.innerText = "❌ Upload error: " + (d.error ? d.error.message : "");
+                            log.innerText = "❌ আপলোড এরর: " + (d.error ? d.error.message : "");
                         }
                     } catch(e) {
-                         log.innerText = "❌ Upload byartho!";
+                         log.innerText = "❌ আপলোড ব্যর্থ!";
                     }
                 };
                 
                 audioRecorder.start();
-                btn.innerHTML = "<i class='fas fa-stop'></i> Bondho korun"; 
+                btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                alert("Microphone error! " + err.message); 
+                let details = "Error: " + err.name + "\nMessage: " + err.message;
+                alert("মাইক্রোফোন চালু করা যাচ্ছে না!\n\nকারণ: " + details + "\n\n১. দয়া করে ব্রাউজারের সেটিংসে গিয়ে সাইটটিকে মাইক্রোফোন পারমিশন (Allow) দিন।\n২. আইফোন হলে Safari ব্রাউজার ব্যবহার করুন।"); 
             }
         } else {
             audioRecorder.stop();
-            btn.innerHTML = "<i class='fas fa-microphone'></i> Record"; 
+            btn.innerHTML = "<i class='fas fa-microphone'></i> রেকর্ড"; 
             btn.classList.remove('recording');
         }
     };
 
     window.deleteDoc = async (id) => { 
-        if (confirm("Muchen?")) {
+        if (confirm("মুছবেন?")) {
             await getRef('requests').doc(id).delete(); 
         }
     };
