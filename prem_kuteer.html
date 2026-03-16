@@ -302,9 +302,9 @@
             </div>
 
             <div class="tabs">
-                <div class="tab active" onclick="switchUserTab('work')">কাজ জমা দিন</div>
-                <div class="tab" onclick="switchUserTab('story')">গল্প পাঠান</div>
-                <div class="tab" onclick="switchUserTab('status')">আমার স্ট্যাটাস</div>
+                <div class="tab active" onclick="switchUserTab('work', this)">কাজ জমা দিন</div>
+                <div class="tab" onclick="switchUserTab('story', this)">গল্প পাঠান</div>
+                <div class="tab" onclick="switchUserTab('status', this)">আমার স্ট্যাটাস</div>
             </div>
 
             <div id="workUpload">
@@ -833,12 +833,21 @@
         }
     }
 
-    function switchUserTab(tab) {
+    function switchUserTab(tab, tabElement = null) {
         document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
         document.getElementById('workUpload').style.display = tab === 'work' ? 'block' : 'none';
         document.getElementById('storyUpload').style.display = tab === 'story' ? 'block' : 'none';
         document.getElementById('statusView').style.display = tab === 'status' ? 'block' : 'none';
-        event.target.classList.add('active');
+        
+        if(tabElement) {
+            tabElement.classList.add('active');
+        } else {
+            const tabs = document.querySelectorAll('.tabs .tab');
+            if(tab === 'work' && tabs[0]) tabs[0].classList.add('active');
+            else if(tab === 'story' && tabs[1]) tabs[1].classList.add('active');
+            else if(tab === 'status' && tabs[2]) tabs[2].classList.add('active');
+        }
+        
         if(tab === 'status') loadUserStatus();
     }
 
