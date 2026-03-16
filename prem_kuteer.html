@@ -12,9 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-    <!-- Google AdSense Script (আপনার Publisher ID এখানে দিন) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-
     <style>
         /* Theme Variables (Default Dark Mode: Black & Pink) */
         :root {
@@ -56,7 +53,7 @@
 
         body { 
             background: var(--bg-gradient); color: var(--text-main); 
-            min-height: 100vh; padding: 15px 15px 80px 15px; display: flex; justify-content: center;
+            min-height: 100vh; padding: 15px; display: flex; justify-content: center;
         }
 
         .container { 
@@ -141,6 +138,20 @@
         @keyframes pulseRec { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } }
         .recording-pulse { animation: pulseRec 1.5s infinite; background: rgba(244,67,54,0.1) !important; color: #f44336 !important; border-color: #f44336 !important; }
 
+        /* Tutorial Focus Animation */
+        @keyframes tutPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 152, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+        }
+        .btn-tut-focus {
+            background: linear-gradient(45deg, #ff9800, #f57c00) !important;
+            color: #ffffff !important;
+            border: none !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: tutPulse 2s infinite;
+        }
+
         .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
         .status-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; border-color: rgba(245, 127, 23, 0.3); }
         .status-approved { background: rgba(76, 175, 80, 0.1); color: #4caf50; border-color: rgba(76, 175, 80, 0.3); }
@@ -166,40 +177,27 @@
         #adminDashboard, #mainPortal { display: none; }
         .user-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border-color); }
 
-        /* GOOGLE ADSENSE BANNER STYLE */
-        .google-ad-banner {
-            background: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-        /* No-Blur Tutorial Box */
-        .tutorial-box {
-            display: none; 
-            position: absolute; 
-            background: var(--card-bg); 
-            border: 2px solid var(--primary-pink); 
-            padding: 15px; 
-            border-radius: 10px; 
-            z-index: 9999; 
-            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); 
-            max-width: 250px;
-            font-size: 13px;
-            color: var(--text-main);
-            transition: all 0.3s ease;
-        }
-        .tutorial-box::after {
-            content: ''; position: absolute; top: -10px; left: 20px; 
-            border-width: 0 10px 10px 10px; border-style: solid; 
-            border-color: transparent transparent var(--primary-pink) transparent;
-        }
-        .tut-target-active {
-            box-shadow: 0 0 15px var(--primary-pink) !important;
-            border-color: var(--primary-pink) !important;
-            position: relative;
-            z-index: 9998;
-        }
         .mentor-list-item {
             display: flex; justify-content: space-between; align-items: center;
             background: var(--input-bg); padding: 8px; border-radius: 6px; margin-top: 5px;
             font-size: 12px; border: 1px solid var(--border-color);
+        }
+
+        /* Video Tutorial Modal Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -291,10 +289,13 @@
             <div class="user-nav">
                 <div style="font-weight: bold; color: var(--primary-pink); font-size: 14px; display:flex; align-items:center; gap:10px;">
                     <i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span> 
-                    <!-- Tutorial Button -->
-                    <button onclick="startTutorial()" style="background:none; border:none; color:var(--primary-pink); font-size:18px; cursor:pointer;" title="ব্যবহার বিধি (টিউটোরিয়াল)"><i class="fas fa-question-circle"></i></button>
                 </div>
-                <button style="background:none; border:none; color:#ff5252; font-weight:bold; cursor:pointer;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <!-- User Tutorial Button (Play Button) -->
+                    <button onclick="startTutorial('user')" class="btn-tut-focus" style="padding:6px 12px; border-radius:6px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; gap:5px;" title="কীভাবে কাজ করবেন দেখুন"><i class="fas fa-play-circle"></i> ব্যবহার বিধি</button>
+                    
+                    <button style="background:none; border:none; color:#ff5252; font-weight:bold; cursor:pointer;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+                </div>
             </div>
 
             <div class="tabs">
@@ -384,6 +385,11 @@
                     </div>
                     <div class="folder-item" style="margin-top: 5px; background: rgba(244,67,54,0.1); border-color: rgba(244,67,54,0.3);" onclick="setSpecialView('trash')">
                         <span style="color: #ff5252;"><i class="fas fa-trash-restore"></i> রিসাইকেল বিন</span>
+                    </div>
+                    
+                    <!-- Admin Tutorial Button -->
+                    <div id="adminTutorialBtn" class="folder-item btn-tut-focus" style="margin-top: 20px; display:none; justify-content:center; cursor:pointer;" onclick="startTutorial('admin')">
+                        <span style="color: #fff; font-weight:bold;"><i class="fas fa-play-circle"></i> অ্যাডমিন ব্যবহার বিধি</span>
                     </div>
                 </div>
 
@@ -494,27 +500,25 @@
     </div>
 </div>
 
-<!-- GOOGLE ADSENSE BANNER (Real Ad Integration) -->
-<div class="google-ad-banner" id="adBannerReal">
-    <button class="ad-close-btn" onclick="document.getElementById('adBannerReal').style.display='none';">&times;</button>
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:320px;height:50px"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="YYYYYYYYYY"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
-
-<!-- Live Tutorial Box (No Blur) -->
-<div id="liveTutorialBox" class="tutorial-box">
-    <div id="tutText" style="margin-bottom:10px; font-weight:bold; line-height:1.4;"></div>
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <button id="tutPrevBtn" onclick="tutPrev()" class="btn-sm" style="background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);">আগেরটি</button>
-        <span id="tutStepIndicator" style="font-size:10px; color:var(--text-muted); font-weight:bold;">১/৪</span>
-        <button id="tutNextBtn" onclick="tutNext()" class="btn-sm" style="background:var(--primary-pink); color:#fff;">পরেরটি</button>
+<!-- Video Tutorial Modal -->
+<div id="videoTutorialModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 650px; width: 95%; padding: 15px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 style="color:var(--primary-pink); font-size:18px; margin:0;"><i class="fab fa-youtube"></i> ব্যবহার বিধি</h3>
+            <button onclick="closeVideoTutorial()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#ff5252;">&times;</button>
+        </div>
+        <div class="video-container">
+            <iframe id="tutorialVideoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+        </div>
+        <!-- Skip and Don't Show Again Options -->
+        <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <label style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:5px; cursor:pointer; margin:0;">
+                <input type="checkbox" id="dontShowTutAgain" style="width:16px; height:16px; accent-color:var(--primary-pink); margin:0;"> 
+                আর কখনো দেখাবেন না
+            </label>
+            <button class="btn-sm" style="background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color); padding:8px 15px;" onclick="closeVideoTutorial()">Skip (স্কিপ করুন)</button>
+        </div>
     </div>
-    <button onclick="closeTutorial()" style="position:absolute; top:5px; right:5px; background:none; border:none; color:#ff5252; font-size:16px; cursor:pointer;">&times;</button>
 </div>
 
 <!-- Modals -->
@@ -663,6 +667,9 @@
                 document.getElementById('userPortal').style.display = 'block';
                 document.getElementById('uNameDisplay').innerText = user.displayName || user.email || "Guest";
                 loadInitialData();
+                
+                // Auto Show User Tutorial
+                setTimeout(() => startTutorial('user', true), 500);
             }
         } else {
             currentUser = null;
@@ -786,8 +793,19 @@
             document.getElementById('adminDashboard').style.display = "block";
             
             document.getElementById('cloudSyncBadge').style.display = "inline-flex";
-            document.getElementById('masterConfigPanel').style.display = mentorRoles[pass] === "Master Admin" ? "block" : "none";
-            if(mentorRoles[pass] === "Master Admin") renderMentorList();
+            
+            // Role Based UI Logic
+            if(pass === "Master2002") {
+                document.getElementById('masterConfigPanel').style.display = "block";
+                document.getElementById('adminTutorialBtn').style.display = "none"; // Master der tutorial dorkar nei
+                renderMentorList();
+            } else {
+                document.getElementById('masterConfigPanel').style.display = "none";
+                document.getElementById('adminTutorialBtn').style.display = "flex"; // Mentor der jonno tutorial thakbe
+                
+                // Auto Show Admin Tutorial
+                setTimeout(() => startTutorial('admin', true), 500);
+            }
 
             loadInitialData();
             setTimeout(() => {
@@ -919,7 +937,7 @@
 
     // Permanent Delete
     async function hardDelete(col, id) {
-        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে না। ডিলিট করবেন?")) {
+        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে লাল। ডিলিট করবেন?")) {
             await dbRef.collection(col).doc(id).delete();
         }
     }
@@ -1412,6 +1430,28 @@
         alert("মেন্টর সফলভাবে যোগ করা হয়েছে!");
     }
 
+    async function editMentor(oldPass, oldName) {
+        const newName = prompt("মেন্টরের নতুন নাম দিন:", oldName);
+        if(newName === null) return;
+        const newPass = prompt("নতুন পাসওয়ার্ড দিন:", oldPass);
+        if(newPass === null) return;
+
+        const cleanName = newName.trim();
+        const cleanPass = newPass.trim();
+
+        if(!cleanName || !cleanPass) return alert("নাম এবং পাসওয়ার্ড ফাঁকা রাখা যাবে না!");
+        if(cleanPass === "Master2002") return alert("এই পাসওয়ার্ডটি ব্যবহার করা যাবে না!");
+
+        let updatedRoles = { ...mentorRoles };
+        if(oldPass !== cleanPass) {
+            delete updatedRoles[oldPass];
+        }
+        updatedRoles[cleanPass] = cleanName;
+
+        await dbRef.collection('settings').doc('mentors').update({ roles: updatedRoles });
+        alert("মেন্টরের তথ্য সফলভাবে আপডেট হয়েছে!");
+    }
+
     async function deleteMentor(passCode) {
         if(passCode === "Master2002") return alert("মাস্টার অ্যাডমিন ডিলিট করা যাবে না!");
         if(!confirm("এই মেন্টরকে মুছে ফেলবেন?")) return;
@@ -1432,93 +1472,50 @@
                 <div class="mentor-list-item">
                     <span><i class="fas fa-user-tie" style="color:var(--primary-pink);"></i> ${mentorRoles[pass]}</span>
                     <span style="color:var(--text-muted);">Pass: ${pass}</span>
-                    <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
+                    <div>
+                        <button onclick="editMentor('${pass}', '${mentorRoles[pass]}')" style="background:none; border:none; color:#f57f17; cursor:pointer; margin-right:8px;" title="এডিট করুন"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
+                    </div>
                 </div>`;
             }
         }
         listUI.innerHTML = html || "<p style='font-size:11px; color:var(--text-muted); padding-top:5px;'>কোনো অতিরিক্ত মেন্টর নেই।</p>";
     }
 
-    // --- Live Interactive Tutorial (No Blur) ---
-    const tutSteps = [
-        { id: 'uProject', text: "১. প্রথমে এখানে ক্লিক করে প্রজেক্ট সিলেক্ট করুন।" },
-        { id: 'uCategory', text: "২. এরপর কোন ধরনের কাজ জমা দেবেন তা বাছুন।" },
-        { id: 'uFile', text: "৩. আপনার ফাইলটি সিলেক্ট করুন।" },
-        { id: 'submitWorkBtn', text: "৪. সবশেষে 'জমা দিন' বাটনে ক্লিক করে কাজ পাঠিয়ে দিন!" }
-    ];
-    let currentTutStep = 0;
+    // --- Video Tutorial System ---
+    // এখানে আপনার YouTube ভিডিও এর Embed লিঙ্ক গুলো দিবেন
+    const USER_VIDEO_LINK = "https://www.youtube.com/embed/YOUR_USER_VIDEO_ID"; 
+    const ADMIN_VIDEO_LINK = "https://www.youtube.com/embed/YOUR_ADMIN_VIDEO_ID"; 
+    let currentTutType = '';
 
-    function startTutorial() {
-        switchUserTab('work'); // Ensure work tab is active
-        currentTutStep = 0;
-        document.getElementById('liveTutorialBox').style.display = 'block';
-        showTutStep();
-    }
-
-    function showTutStep() {
-        // Clear previous highlights
-        tutSteps.forEach(s => {
-            const el = document.getElementById(s.id);
-            if(el) el.classList.remove('tut-target-active');
-        });
-
-        const step = tutSteps[currentTutStep];
-        const targetEl = document.getElementById(step.id);
-        const tutBox = document.getElementById('liveTutorialBox');
-
-        if(targetEl) {
-            targetEl.classList.add('tut-target-active');
-            
-            // Position box near target
-            const rect = targetEl.getBoundingClientRect();
-            tutBox.style.top = (window.scrollY + rect.bottom + 15) + 'px';
-            tutBox.style.left = (rect.left > 20 ? rect.left : 20) + 'px';
+    function startTutorial(type, isAuto = false) {
+        // If it's auto-triggered and user has checked 'Don't show again', then skip
+        if (isAuto && localStorage.getItem('prem_tut_skip_' + type) === 'true') {
+            return;
         }
 
-        document.getElementById('tutText').innerText = step.text;
-        document.getElementById('tutStepIndicator').innerText = (currentTutStep + 1) + " / " + tutSteps.length;
+        currentTutType = type;
+        if(type === 'user') switchUserTab('work'); // ইউজার হলে আগে 'কাজ জমা দিন' ট্যাবে নিয়ে যাবে
         
-        document.getElementById('tutPrevBtn').style.visibility = currentTutStep === 0 ? 'hidden' : 'visible';
-        const nextBtn = document.getElementById('tutNextBtn');
-        if(currentTutStep === tutSteps.length - 1) {
-            nextBtn.innerText = "শেষ করুন";
-            nextBtn.style.background = "#4caf50";
-        } else {
-            nextBtn.innerText = "পরেরটি";
-            nextBtn.style.background = "var(--primary-pink)";
-        }
+        const frame = document.getElementById('tutorialVideoFrame');
+        frame.src = type === 'admin' ? ADMIN_VIDEO_LINK : USER_VIDEO_LINK;
+        
+        // Checkbox state check
+        document.getElementById('dontShowTutAgain').checked = localStorage.getItem('prem_tut_skip_' + type) === 'true';
+        
+        document.getElementById('videoTutorialModal').style.display = 'flex';
     }
 
-    function tutNext() {
-        if(currentTutStep < tutSteps.length - 1) {
-            currentTutStep++;
-            showTutStep();
-        } else {
-            closeTutorial();
+    function closeVideoTutorial() {
+        // Save checkbox preference
+        const isChecked = document.getElementById('dontShowTutAgain').checked;
+        if(currentTutType) {
+            localStorage.setItem('prem_tut_skip_' + currentTutType, isChecked ? 'true' : 'false');
         }
-    }
 
-    function tutPrev() {
-        if(currentTutStep > 0) {
-            currentTutStep--;
-            showTutStep();
-        }
+        document.getElementById('videoTutorialModal').style.display = 'none';
+        document.getElementById('tutorialVideoFrame').src = ""; // ভিডিও প্লে বন্ধ করার জন্য
     }
-
-    function closeTutorial() {
-        document.getElementById('liveTutorialBox').style.display = 'none';
-        tutSteps.forEach(s => {
-            const el = document.getElementById(s.id);
-            if(el) el.classList.remove('tut-target-active');
-        });
-    }
-
-    // Window resize adjustment for tutorial
-    window.addEventListener('resize', () => {
-        if(document.getElementById('liveTutorialBox').style.display === 'block') {
-            showTutStep();
-        }
-    });
 </script>
 </body>
 </html>
