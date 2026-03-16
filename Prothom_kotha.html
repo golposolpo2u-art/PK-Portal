@@ -48,11 +48,50 @@
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 40px 15px;
+            padding: 20px 10px 60px 10px; /* Niche 60px padding kora holo jate choto add er theke ektu faka thake */
             overflow-x: hidden;
         }
 
+        /* --- RESPONSIVE MAIN CONTAINER --- */
+        .main-container {
+            width: 100%;
+            max-width: 900px; 
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            margin: 0 auto; 
+            position: relative; 
+        }
+
         .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; z-index: 10; }
+        
+        /* Replay Tutorial Button */
+        .btn-tutorial { position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); border: 1px solid var(--gold-text); color: var(--gold-text); padding: 6px 10px; border-radius: 15px; font-weight: bold; font-size: 11px; z-index: 10; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .btn-tutorial:hover { background: var(--gold-text); color: #000; }
+
+        /* Audition Banner */
+        .audition-banner { 
+            display: none; 
+            background: linear-gradient(90deg, #ffd700, #ff8c00, #ffd700); 
+            background-size: 200% auto; 
+            color: #000; 
+            padding: 12px; 
+            text-align: center; 
+            font-weight: bold; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            margin-top: 35px;
+            font-size: 14px;
+            animation: goldenWave 2s linear infinite; 
+        }
+
+        @keyframes goldenWave { 
+            0% { background-position: 0% center; } 
+            100% { background-position: 200% center; } 
+        }
 
         /* Responsive Title Layout Update */
         .title-wrapper {
@@ -60,6 +99,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 5px;
+            margin-top: 35px; /* Prevents overlapping with absolute top buttons */
             width: 100%;
         }
 
@@ -72,19 +112,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0px; /* আইকন এবং লেখার মাঝের স্পেস একদম মুছে দেওয়া হলো */
+            gap: 0px; 
             white-space: nowrap; 
         }
 
         .title-icon {
             font-size: clamp(28px, 5vw, 40px); 
             color: var(--primary-glow);
-            margin-right: 0px; /* মার্জিন জিরো করে দেওয়া হলো */
+            margin-right: 0px; 
         }
 
         .subtitle { 
             color: #b0c4de; 
-            font-size: 18px; 
+            font-size: 16px; 
             margin-bottom: 15px; 
             text-align: center; 
             font-weight: 300; 
@@ -98,10 +138,10 @@
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid rgba(255, 0, 0, 0.3);
             color: #fff;
-            padding: 10px 25px; 
+            padding: 8px 15px; 
             border-radius: 12px;
             text-decoration: none;
-            margin: 0 auto 25px auto; 
+            margin: 0 auto 20px auto; 
             font-weight: bold;
             font-size: 13px;
             width: fit-content; 
@@ -118,21 +158,25 @@
         .user-tabs {
             display: flex;
             background: rgba(0,0,0,0.3);
-            border-radius: 12px; 
-            margin-bottom: 20px;
+            border-radius: 10px; 
+            margin-bottom: 15px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
         }
 
         .u-tab {
             flex: 1;
-            padding: 15px 10px; 
+            padding: 12px 5px; 
             text-align: center;
             cursor: pointer;
             font-weight: bold;
             color: #aaa;
             transition: 0.3s;
-            font-size: 16px; /* ফন্ট সাইজ বড় করে নরমাল করা হলো */
+            font-size: clamp(13px, 4.5vw, 18px); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
         }
 
         .u-tab.active {
@@ -142,38 +186,19 @@
         }
 
         @media (max-width: 500px) {
-            .u-tab { padding: 12px 5px; font-size: 14px; } /* মোবাইলের জন্য পারফেক্ট সাইজ */
-        }
-
-        /* Audition Banner */
-        .audition-banner { 
-            display: none; 
-            background: linear-gradient(90deg, #ffd700, #ff8c00, #ffd700); 
-            background-size: 200% auto; 
-            color: #000; 
-            padding: 15px; 
-            text-align: center; 
-            font-weight: bold; 
-            border-radius: 15px; 
-            margin-bottom: 25px; 
-            animation: goldenWave 2s linear infinite; 
-        }
-
-        @keyframes goldenWave { 
-            0% { background-position: 0% center; } 
-            100% { background-position: 200% center; } 
+            .u-tab { padding: 10px 2px; } 
         }
 
         /* Info Card */
         .info-card { 
             background: rgba(0, 0, 0, 0.5); 
-            padding: 20px; 
-            border-radius: 15px; 
-            font-size: 14px; 
+            padding: 12px; 
+            border-radius: 10px; 
+            font-size: 13px; 
             color: var(--success-green); 
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
             border-left: 4px solid var(--primary-glow); 
-            line-height: 1.6; 
+            line-height: 1.5; 
         }
 
         /* Form Inputs */
@@ -181,8 +206,8 @@
             font-weight: bold; 
             color: var(--primary-glow); 
             display: block; 
-            margin: 15px 0 8px 0; 
-            font-size: 14px; 
+            margin: 10px 0 5px 0; 
+            font-size: 13px; 
             text-transform: uppercase; 
         }
 
@@ -190,14 +215,14 @@
         select, 
         textarea { 
             width: 100%; 
-            margin-bottom: 15px; 
-            padding: 15px; 
+            margin-bottom: 10px; 
+            padding: 12px; 
             background: rgba(255, 255, 255, 0.95); 
             border: 2px solid transparent; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             color: #121212; 
             font-family: 'Kalpurush', sans-serif; 
-            font-size: 16px; 
+            font-size: 14px; 
             outline: none; 
         }
 
@@ -207,22 +232,24 @@
             box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); 
         }
 
-        /* Mentor Grid */
+        /* Mentor Grid (RESPONSIVE) */
         .mentor-grid { 
             display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
             gap: 10px; 
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
         }
 
         .mentor-row { 
             background: rgba(255, 255, 255, 0.05); 
-            padding: 12px 18px; 
-            border-radius: 15px; 
+            padding: 10px 15px; 
+            border-radius: 10px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
             border: 1px solid var(--glass-border); 
+            font-size: 14px;
         }
 
         .mentor-row:hover { 
@@ -233,31 +260,31 @@
         .mentor-info { 
             display: flex; 
             align-items: center; 
-            gap: 12px; 
+            gap: 10px; 
         }
 
         .mentor-row input[type="checkbox"], .mentor-row input[type="radio"] { 
-            width: 20px; 
-            height: 20px; 
+            width: 16px; 
+            height: 16px; 
             accent-color: var(--primary-glow); 
             cursor: pointer; 
         }
 
         /* Status Badges */
         .status-pill { 
-            font-size: 11px; 
-            padding: 4px 10px; 
-            border-radius: 20px; 
+            font-size: 10px; 
+            padding: 3px 8px; 
+            border-radius: 15px; 
             font-weight: bold; 
             display: flex; 
             align-items: center; 
-            gap: 6px; 
+            gap: 5px; 
             background: rgba(0,0,0,0.4); 
         }
 
         .dot { 
-            width: 8px; 
-            height: 8px; 
+            width: 6px; 
+            height: 6px; 
             border-radius: 50%; 
         }
 
@@ -269,25 +296,25 @@
         .scan-container { 
             display: none; 
             background: rgba(0, 0, 0, 0.8); 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 25px; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
             border: 1px solid var(--accent-pink); 
         }
 
         .scan-line { 
             font-family: monospace; 
-            font-size: 12px; 
+            font-size: 11px; 
             color: var(--success-green); 
-            margin: 6px 0; 
+            margin: 4px 0; 
         }
 
         .progress-rail { 
             width: 100%; 
-            height: 8px; 
+            height: 6px; 
             background: #222; 
             border-radius: 5px; 
-            margin-top: 15px; 
+            margin-top: 10px; 
             overflow: hidden; 
         }
 
@@ -301,13 +328,13 @@
         /* Main Buttons */
         .btn-action { 
             width: 100%; 
-            padding: 16px; 
+            padding: 12px; 
             background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); 
             color: #0f2027; 
             border: none; 
-            border-radius: 15px; 
+            border-radius: 10px; 
             font-weight: bold; 
-            font-size: 18px; 
+            font-size: 15px; 
             cursor: pointer; 
             font-family: 'Kalpurush', sans-serif; 
             text-transform: uppercase; 
@@ -315,7 +342,7 @@
 
         .btn-action:hover:not(:disabled) { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4); 
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4); 
             color: #fff; 
         }
 
@@ -326,14 +353,14 @@
             box-shadow: none; 
         }
 
-        /* ছোট বক্স করার জন্য ক্লাস */
+        /* Compact Box for Buttons */
         .compact-box {
             width: fit-content !important;
-            min-width: 250px;
+            min-width: 200px;
             margin-left: auto !important;
             margin-right: auto !important;
-            padding: 12px 25px !important;
-            font-size: 15px !important;
+            padding: 10px 20px !important;
+            font-size: 14px !important;
             display: flex !important;
             justify-content: center;
             align-items: center;
@@ -343,21 +370,21 @@
 
         .btn-admin {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             font-family: 'Kalpurush', sans-serif;
-            margin-top: 30px;
+            margin-top: 25px;
             opacity: 1; 
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         
@@ -370,50 +397,51 @@
 
         .audition-toggle-user { 
             background: rgba(255, 215, 0, 0.1); 
-            border: 2px dashed var(--gold-text); 
-            padding: 15px; 
-            border-radius: 15px; 
-            margin-bottom: 20px; 
+            border: 1px dashed var(--gold-text); 
+            padding: 10px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
             display: flex; 
             align-items: center; 
-            gap: 12px; 
+            gap: 10px; 
             cursor: pointer; 
             color: var(--gold-text); 
             font-weight: bold; 
+            font-size: 13px;
         }
 
-        /* User Feedback Cards */
+        /* User Feedback Cards (Compact) */
         .user-feedback-card { 
             background: rgba(20, 20, 20, 0.9); 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 20px; 
-            border-left: 5px solid var(--success-green); 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border-left: 4px solid var(--success-green); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
             position: relative;
         }
 
         .reply-item { 
             background: rgba(0, 0, 0, 0.4); 
-            padding: 12px; 
-            border-radius: 10px; 
+            padding: 10px; 
+            border-radius: 8px; 
             margin-top: 10px; 
             border-left: 3px solid #00ffcc; 
-            font-size: 14px; 
+            font-size: 13px; 
         }
 
-        .no-reply-msg { font-size: 13px; color: #888; font-style: italic; margin-top: 10px; }
+        .no-reply-msg { font-size: 12px; color: #888; font-style: italic; margin-top: 8px; }
 
         /* Delete Button for User */
         .btn-delete-user {
             background: rgba(255, 82, 82, 0.1);
             color: var(--error-red);
             border: 1px solid var(--error-red);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -429,7 +457,7 @@
         .clear-all-area {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .btn-clear-all {
@@ -438,7 +466,7 @@
             border: 1px dashed #aaa;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
         }
 
@@ -447,7 +475,7 @@
             border-color: var(--error-red);
         }
 
-        /* Mentor Dashboard Elements */
+        /* Mentor Dashboard Elements (Compact) */
         .dashboard-container { display: none; width: 100%; max-width: 800px; }
 
         .navbar { 
@@ -455,9 +483,9 @@
             justify-content: space-between; 
             align-items: center; 
             background: rgba(0,0,0,0.4); 
-            padding: 15px 20px; 
-            border-radius: 15px; 
-            margin-bottom: 25px; 
+            padding: 12px 15px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
             border: 1px solid var(--glass-border); 
         }
 
@@ -465,75 +493,227 @@
             background: transparent; 
             color: var(--error-red); 
             border: 1px solid var(--error-red); 
-            padding: 8px 15px; 
-            border-radius: 10px; 
+            padding: 6px 12px; 
+            border-radius: 8px; 
             cursor: pointer; 
-            font-size: 13px; 
+            font-size: 12px; 
         }
 
         .logout-btn:hover { background: var(--error-red); color: white; }
 
         .master-panel { 
             background: rgba(255, 215, 0, 0.1); 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 25px; 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
             border: 1px solid var(--gold-text); 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
         }
 
-        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--gold-text); }
-        input:checked + .slider:before { transform: translateX(24px); }
+        input:checked + .slider:before { transform: translateX(22px); }
 
         .request-card { 
             background: rgba(25, 25, 25, 0.95); 
-            padding: 25px; 
-            border-radius: 20px; 
-            margin-bottom: 25px; 
-            border-left: 6px solid var(--primary-glow); 
+            padding: 15px; 
+            border-radius: 15px; 
+            margin-bottom: 15px; 
+            border-left: 4px solid var(--primary-glow); 
             position: relative; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
         }
 
-        .card-time { position: absolute; top: 15px; right: 20px; font-size: 11px; color: #aaa; }
-        .badge-audition { background: var(--gold-text); color: #000; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; margin-left: 8px; text-transform: uppercase; }
+        .card-time { position: absolute; top: 12px; right: 15px; font-size: 10px; color: #aaa; }
+        .badge-audition { background: var(--gold-text); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-left: 6px; text-transform: uppercase; }
 
-        audio { width: 100%; margin-top: 15px; filter: invert(100%) hue-rotate(180deg) brightness(1.5); }
+        audio { width: 100%; margin-top: 10px; height: 35px; filter: invert(100%) hue-rotate(180deg) brightness(1.5); }
 
-        .reply-box { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 15px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .reply-type-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .type-tab { padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; background: rgba(255, 255, 255, 0.1); color: #bbb; }
+        .reply-box { background: rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .reply-type-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+        .type-tab { padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; background: rgba(255, 255, 255, 0.1); color: #bbb; }
         .type-tab.active { background: rgba(0, 210, 255, 0.2); color: var(--primary-glow); border: 1px solid var(--primary-glow); }
         
-        .voice-btn { background: #ff3d00; color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Kalpurush', sans-serif; }
+        .voice-btn { background: #ff3d00; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Kalpurush', sans-serif; font-size: 14px; }
         .voice-btn.recording { animation: pulse-red 1s infinite; background: #b20000; }
         @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 61, 0, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 61, 0, 0); } }
 
-        .btn-claim { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--gold-text), #ff8c00); color: #000; border: none; border-radius: 12px; font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4); margin-top: 15px; }
-        .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6); }
+        .btn-claim { width: 100%; padding: 12px; background: linear-gradient(45deg, var(--gold-text), #ff8c00); color: #000; border: none; border-radius: 10px; font-weight: 900; font-size: 14px; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); margin-top: 12px; }
+        .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5); }
 
-        #upload-status { text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px; }
+        #upload-status { text-align: center; margin-top: 12px; font-weight: bold; font-size: 13px; }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--dark-bg); }
         ::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 10px; }
+
+        /* --- DESKTOP & LAPTOP OPTIMIZATIONS --- */
+        @media (min-width: 768px) {
+            body { 
+                padding: 40px 20px 80px 20px; 
+                align-items: center; 
+            }
+            .main-container { 
+                padding: 40px; 
+            }
+            .logo-title { font-size: 55px; }
+            .subtitle { font-size: 18px; margin-bottom: 25px; }
+            .input-label { font-size: 15px; margin: 15px 0 8px 0; }
+            input[type="text"], select, textarea { padding: 15px; font-size: 16px; margin-bottom: 20px; }
+            .u-tab { padding: 15px 10px; font-size: 18px; } 
+            .btn-action { padding: 18px; font-size: 18px; }
+            .info-card { padding: 20px; font-size: 15px; line-height: 1.6; }
+            .user-feedback-card { padding: 25px; }
+            .yt-banner { padding: 12px 25px; font-size: 15px; }
+        }
+
+        /* --- INTERACTIVE TUTORIAL OVERLAY STYLES --- */
+        .interactive-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 9998; backdrop-filter: blur(3px);
+        }
+        
+        .highlighted-for-tutorial {
+            position: relative !important;
+            z-index: 9999 !important;
+            box-shadow: 0 0 0 5px rgba(0, 210, 255, 0.5), 0 0 30px rgba(0, 210, 255, 1) !important;
+            pointer-events: auto !important; 
+            background: var(--dark-bg) !important; 
+            border-radius: 12px;
+            animation: pulseHighlight 1.5s infinite alternate;
+        }
+        
+        input.highlighted-for-tutorial {
+            background: #fff !important; 
+            color: #000 !important;
+        }
+
+        @keyframes pulseHighlight {
+            0% { box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.4), 0 0 15px rgba(0, 210, 255, 0.6); transform: scale(1); }
+            100% { box-shadow: 0 0 0 6px rgba(0, 210, 255, 0.8), 0 0 30px rgba(0, 210, 255, 1); transform: scale(1.02); }
+        }
+
+        .tutorial-tooltip-fixed {
+            display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 450px; background: var(--dark-bg); padding: 20px;
+            border-radius: 15px; border: 2px solid var(--primary-glow);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9); z-index: 10000;
+            text-align: center;
+        }
+        
+        .tut-text { font-size: 15px; line-height: 1.5; color: #fff; margin-bottom: 15px; }
+        .tut-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
+
+        /* --- GOOGLE AD BANNER DEMO (NEW) --- */
+        .google-ad-banner {
+            position: fixed;
+            bottom: 0; /* Ekdom niche atke dewa holo jate kono extra jayga na khay */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px; /* Google er sobcheye choto standard ad size */
+            height: 50px;
+            background: transparent; 
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            z-index: 9997; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3); /* Chotto shadow */
+            border-top-left-radius: 8px; /* Sudhu oporer konagulo ektu gol thakbe */
+            border-top-right-radius: 8px;
+            overflow: hidden;
+        }
+        .demo-ad-content {
+            width: 100%;
+            height: 100%;
+            background: #fff; 
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-family: sans-serif;
+            font-size: 12px;
+            position: relative;
+            text-decoration: none;
+        }
+        .ad-badge-top {
+            font-size: 9px;
+            background: #f4b400;
+            color: #fff;
+            padding: 2px 5px;
+            border-bottom-right-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .ad-close-btn {
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            font-size: 14px;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .ad-close-btn:hover { color: #333; }
+        .demo-ad-content img {
+            width: 25px; /* Icon ta ektu choto kora holo */
+            height: 25px;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
+<!-- INTERACTIVE TUTORIAL OVERLAY -->
+<div id="interactiveOverlay" class="interactive-overlay"></div>
+<div id="tutorialTooltip" class="tutorial-tooltip-fixed">
+    <div id="tutorialText" class="tut-text"></div>
+    <div class="tut-actions">
+        <button id="tutNextBtn" onclick="nextTStep()" class="btn-action" style="padding:10px 20px; font-size:14px; width:auto; border-radius:25px;">পরের ধাপ <i class="fas fa-arrow-right"></i></button>
+        <button id="tutCloseBtn" onclick="skipTutorial()" class="logout-btn" style="padding:10px 20px; font-size:14px; border-radius:25px;">Skip (বাদ দিন)</button>
+    </div>
+    <div>
+        <label style="font-size:12px; color:#aaa; display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+            <input type="checkbox" id="dontShowCb" onchange="tutDontShow(this.checked)" style="width:16px; height:16px; accent-color:var(--primary-glow); margin:0;">
+            <b>আর কখনো দেখাবেন না</b>
+        </label>
+    </div>
+</div>
+
+<!-- GOOGLE AD BANNER DEMO -->
+<div class="google-ad-banner" id="adBannerDemo">
+    <!-- This is a placeholder that looks exactly like a Google 320x50 Banner Ad -->
+    <a href="#" class="demo-ad-content" onclick="alert('এটি একটি ডেমো অ্যাড! আসল অ্যাড চালু হলে এখানে ক্লিক করলে ইউজার স্পন্সরের পেজে চলে যাবে এবং আপনি ইনকাম করবেন।')">
+        <div class="ad-badge-top">Ad</div>
+        <button class="ad-close-btn" onclick="event.stopPropagation(); document.getElementById('adBannerDemo').style.display='none';">&times;</button>
+        <img src="https://i.ibb.co/0p6wsj3J/image.png" alt="Ad Image">
+        <div style="text-align: left;">
+            <b style="color: #4285f4; display: block; font-size: 13px;">Google Display Ad Demo</b>
+            <span style="font-size: 11px; color: #555;">Learn more about our services.</span>
+        </div>
+    </a>
+</div>
+
 <!-- 1. USER INTERFACE -->
 <div class="main-container" id="userPanel">
     <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
+    <button onclick="startInteractiveTutorial(true)" class="btn-tutorial"><i class="fas fa-play-circle"></i> ব্যবহার বিধি</button>
     
     <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
-    
+
     <div class="title-wrapper">
         <h1 class="logo-title"><span class="title-icon">🎙️</span>প্রথম কথা</h1>
     </div>
@@ -541,7 +721,7 @@
 
     <!-- YouTube Link Notice -->
     <a href="https://www.youtube.com/@prothomkotha1" target="_blank" rel="noopener noreferrer" class="yt-banner">
-        <i class="fab fa-youtube" style="color: #ff5252; font-size: 20px;"></i>
+        <i class="fab fa-youtube" style="color: #ff5252; font-size: 18px;"></i>
         <span>কোনো ক্লাস মিস করলে আমাদের ইউটিউব চ্যানেল থেকে দেখে নিন!</span>
     </a>
 
@@ -559,7 +739,7 @@
             ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
             ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
             ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
-            ৪. ফাইলগুলি ২৪ ঘণ্টা পর অটোমেটিক মুছে যাবে অথবা আপনি চাইলে নিজে ডিলিট করতে পারেন।<br>
+            ৪. আপনার পাঠানো ডাটা আজীবন সেভ থাকবে (ডিফল্ট)। আপনি চাইলে 'আমার ফিডব্যাক' থেকে অটো-ডিলিট সেট বা নিজে ডিলিট করতে পারেন।<br>
             ৫. আপনার পাঠানো অডিওর ফিডব্যাক শুধুমাত্র আপনিই দেখতে পাবেন 'আমার ফিডব্যাক' ট্যাবে।
         </div>
 
@@ -569,14 +749,14 @@
 
             <div id="auditionCheckWrapper" style="display: none;">
                 <label class="audition-toggle-user">
-                    <input type="checkbox" id="userIsAudition" style="width: 20px; height: 20px;" onchange="handleUserAuditionCheckboxChange()">
+                    <input type="checkbox" id="userIsAudition" style="width: 16px; height: 16px;" onchange="handleUserAuditionCheckboxChange()">
                     <span>এটি কি একটি অডিশন ফাইল?</span>
                 </label>
             </div>
 
             <label class="input-label">যাকে পাঠাতে চান:</label>
-            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 12px; margin-bottom: 10px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
-            <div class="mentor-grid">
+            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 11px; margin-bottom: 8px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
+            <div class="mentor-grid" id="mentorGridBox">
                 <label class="mentor-row">
                     <div class="mentor-info">
                         <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="mentor-cb">
@@ -606,11 +786,12 @@
                 </label>
             </div>
 
-            <label class="input-label">অডিও ফাইল (MP3/WAV):</label>
-            <input type="file" id="audioFile" accept="audio/*" required style="display:none;">
-            <button type="button" class="btn-action" style="background: #1a1a1a; color: #fff; margin-bottom: 20px; font-size: 16px; padding: 15px;" onclick="document.getElementById('audioFile').click()">
+            <label class="input-label">অডিও ফাইল (MP3/WAV/M4A):</label>
+            <input type="file" id="audioFile" accept=".mp3, .wav, .m4a, .aac, audio/*" required style="display:none;">
+            <button type="button" class="btn-action" id="btnAudioSelect" style="background: #1a1a1a; color: #fff; margin-bottom: 8px; font-size: 14px; padding: 12px;" onclick="document.getElementById('audioFile').click()">
                 <i class="fas fa-file-audio"></i> অডিও সিলেক্ট করুন
             </button>
+            <p style="font-size:11px; color:#aaa; margin-bottom:20px; text-align:center;">* iPhone ইউজাররা অডিওটি আগে 'Files' অ্যাপে সেভ করে তারপর সিলেক্ট করুন।</p>
             
             <div id="scanBox" class="scan-container">
                 <div id="scan1" class="scan-line"><i class="fas fa-microchip"></i> Initializing Neural Scan...</div>
@@ -660,22 +841,51 @@
             <label class="input-label">প্রশ্ন লিখে পাঠান:</label>
             <textarea id="qText" placeholder="আপনার প্রশ্নটি এখানে লিখুন..."></textarea>
 
-            <p style="text-align: center; color: var(--text-muted); margin: 10px 0; font-size: 13px;">অথবা</p>
+            <p style="text-align: center; color: var(--text-muted); margin: 8px 0; font-size: 12px;">অথবা</p>
 
             <button type="button" id="qVoiceBtn" class="voice-btn compact-box" style="margin-bottom: 10px; background: #3a7bd5;" onclick="toggleUserQuestionRecord()">
                 <i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন
             </button>
-            <div id="qVoiceStatus" style="text-align:center; font-size:12px; color:var(--success-green); margin-bottom: 20px; font-weight: bold;"></div>
+            <div id="qVoiceStatus" style="text-align:center; font-size:11px; color:var(--success-green); margin-bottom: 15px; font-weight: bold;"></div>
 
             <button type="submit" class="btn-action compact-box" id="btnQSubmit">প্রশ্ন পাঠান <i class="fas fa-paper-plane"></i></button>
         </form>
-        <div id="qSubmitStatus" style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 14px;"></div>
+        <div id="qSubmitStatus" style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 13px;"></div>
     </div>
 
     <!-- User Feedback Section -->
     <div id="feedbackSection" style="display:none;">
-        <h3 style="color:var(--primary-glow); margin-bottom: 20px; text-align: center;">আপনার পাঠানো অডিও ও প্রশ্নের রিপ্লাই</h3>
-        <p style="font-size: 13px; color: #aaa; text-align: center; margin-bottom: 20px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে না)</p>
+        <h3 style="color:var(--primary-glow); margin-bottom: 15px; text-align: center; font-size: 18px;">আপনার পাঠানো অডিও ও প্রশ্নের রিপ্লাই</h3>
+        
+        <!-- User Auto Delete Settings with Custom Option -->
+        <div style="background: rgba(255,255,255,0.05); padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="font-size: 14px; font-weight: bold; color: var(--gold-text); display: block;">হিস্ট্রি অটো-ডিলিট সেটিংস</span>
+                    <span style="font-size: 11px; color: #aaa;">ডাটা কতদিন পর ডিলিট হবে তা বেছে নিন</span>
+                </div>
+                <select id="autoDeleteSelect" onchange="handleAutoDeleteChange(this.value)" style="width: auto; margin: 0; padding: 6px 10px; font-size: 12px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--primary-glow); border-radius: 8px; outline: none;">
+                    <option value="never">কখনো না (আজীবন)</option>
+                    <option value="48">২ দিন পর</option>
+                    <option value="168">৭ দিন পর</option>
+                    <option value="720">১ মাস (৩০ দিন) পর</option>
+                    <option value="custom">নিজের মতো সেট করুন (Custom)</option>
+                </select>
+            </div>
+            
+            <!-- Custom Setup Box (Hidden by default) -->
+            <div id="customAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-glow); align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span style="font-size: 12px; color: #fff;">কত সময় পর ডিলিট হবে?</span>
+                <input type="number" id="customDelNum" min="1" placeholder="যেমন: 5" style="width: 80px; padding: 6px; font-size: 12px; margin: 0;">
+                <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 12px; margin: 0;">
+                    <option value="24">দিন (Days)</option>
+                    <option value="720">মাস (Months)</option>
+                </select>
+                <button class="btn-action" style="width: auto; padding: 6px 15px; font-size: 12px;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
+            </div>
+        </div>
+
+        <p style="font-size: 12px; color: #aaa; text-align: center; margin-bottom: 15px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে নিরাপদ।)</p>
         
         <div class="clear-all-area" id="clearAllContainer" style="display: none;">
             <button class="btn-clear-all" onclick="clearMyHistory()"><i class="fas fa-trash-alt"></i> সব হিস্ট্রি মুছুন</button>
@@ -695,17 +905,20 @@
 <!-- 2. MENTOR DASHBOARD -->
 <div class="main-container dashboard-container" id="mentorPanel">
     <div class="navbar">
-        <span id="nameTag" style="color: var(--primary-glow); font-weight: bold; font-size: 16px;"></span>
-        <button onclick="exitDashboard()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+        <span id="nameTag" style="color: var(--primary-glow); font-weight: bold; font-size: 15px;"></span>
+        <div style="display:flex; gap:10px; align-items:center;">
+            <button onclick="startAdminTutorial(true)" class="logout-btn" style="color:var(--gold-text); border-color:var(--gold-text);"><i class="fas fa-play-circle"></i> গাইড</button>
+            <button onclick="exitDashboard()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+        </div>
     </div>
 
     <div class="master-panel" id="adminControls" style="display: none; flex-direction: column; align-items: stretch;">
         <div style="display:flex; align-items:center; justify-content: space-between; width: 100%;">
             <div style="display:flex; align-items:center; gap:10px;">
-                <i class="fas fa-fire-alt" style="font-size: 24px; color: var(--gold-text);"></i>
+                <i class="fas fa-fire-alt" style="font-size: 20px; color: var(--gold-text);"></i>
                 <div>
-                    <b style="color:var(--gold-text); display:block; font-size: 16px;">অডিশন মোড</b>
-                    <span style="font-size:11px; color:#aaa;" id="audStatusLabel">বন্ধ</span>
+                    <b style="color:var(--gold-text); display:block; font-size: 14px;">অডিশন মোড</b>
+                    <span style="font-size:10px; color:#aaa;" id="audStatusLabel">বন্ধ</span>
                 </div>
             </div>
             <label class="switch">
@@ -714,28 +927,28 @@
             </label>
         </div>
         
-        <div id="adminAuditionMentors" style="display: none; margin-top: 15px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 15px;">
-            <p style="font-size: 13px; color: var(--gold-text); margin-bottom: 10px;">অডিশনের বিচারক প্যানেল সিলেক্ট করুন:</p>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; font-size: 14px; color: #fff;">
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> নেহা</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="বিদিশা মুখার্জি" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> বিদিশা</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সঞ্জিত মল্লিক" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 16px; height: 16px;"> সঞ্জিত</label>
+        <div id="adminAuditionMentors" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 12px;">
+            <p style="font-size: 12px; color: var(--gold-text); margin-bottom: 8px;">অডিশনের বিচারক প্যানেল সিলেক্ট করুন:</p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; color: #fff;">
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> নেহা</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="বিদিশা মুখার্জি" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> বিদিশা</label>
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সঞ্জিত মল্লিক" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> সঞ্জিত</label>
             </div>
         </div>
     </div>
 
     <div class="info-card" id="statusSetter" style="display: none; background: rgba(255,255,255,0.05); border-color: var(--glass-border);">
-        <label style="font-size: 13px; font-weight: bold; color: var(--primary-glow); display: block; margin-bottom: 8px;">স্ট্যাটাস:</label>
-        <select id="myStatus" style="margin:0; padding: 8px; font-size: 13px;" onchange="setMyOnlineStatus(this.value)">
+        <label style="font-size: 12px; font-weight: bold; color: var(--primary-glow); display: block; margin-bottom: 6px;">স্ট্যাটাস:</label>
+        <select id="myStatus" style="margin:0; padding: 6px; font-size: 12px;" onchange="setMyOnlineStatus(this.value)">
             <option value="Online">Online ✅</option>
             <option value="Busy">Busy ⛔</option>
             <option value="Offline">Offline 🌑</option>
         </select>
     </div>
 
-    <h3 style="text-align:center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h3 id="adminInboxHeader" style="text-align:center; border-bottom: 1px solid #333; padding-bottom: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; font-size:16px;">
         <span>📥 ইনবক্স</span>
-        <span id="totalAudioCount" style="font-size: 14px; color: var(--primary-glow); background: rgba(0,210,255,0.1); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--primary-glow);">মোট জমা: ০</span>
+        <span id="totalAudioCount" style="font-size: 12px; color: var(--primary-glow); background: rgba(0,210,255,0.1); padding: 4px 8px; border-radius: 8px; border: 1px solid var(--primary-glow);">মোট জমা: ০</span>
     </h3>
     <div id="inboxList"></div>
 </div>
@@ -849,8 +1062,35 @@
 
     // Local Storage for User Privacy
     let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
+    let autoDeletePref = localStorage.getItem('pk_auto_delete_pref') || 'never'; // Default NEVER
+
+    // --- INTERACTIVE TUTORIAL VARIABLES ---
+    let currentTStep = 0;
+    let currentAdminTStep = 0;
 
     window.onload = async function() {
+        // Start Interactive Tutorial if not skipped
+        startInteractiveTutorial(false);
+        
+        initAutoDeleteUI();
+
+        // Tutorial Enter Key Listener for Name Input
+        document.getElementById('userName').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter' && currentTStep === 1) {
+                e.preventDefault();
+                nextTStep();
+            }
+        });
+
+        // Tutorial Checkbox Listener for Mentor Grid
+        document.querySelectorAll('.mentor-cb').forEach(cb => {
+            cb.addEventListener('change', () => {
+                if(currentTStep === 2) {
+                    setTimeout(nextTStep, 300); // 300ms delay to feel smooth
+                }
+            });
+        });
+
         try {
             await auth.signInAnonymously();
             cleanUpOldMyAudios();
@@ -869,6 +1109,151 @@
     };
 
     function cleanUpOldMyAudios() {}
+
+    // --- INTERACTIVE TUTORIAL LOGIC ---
+    function startInteractiveTutorial(forcePlay = false) {
+        // Jodi user manually click na kore ebang aage theke skip kora thake, tahole start hobe na
+        if(!forcePlay && localStorage.getItem('pk_skip_tutorial') === 'true') return;
+        
+        document.getElementById('interactiveOverlay').style.display = 'block';
+        document.getElementById('tutorialTooltip').style.display = 'block';
+        currentTStep = 1;
+        showTStep(1);
+    }
+
+    function showTStep(step) {
+        document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
+        const textDisplay = document.getElementById('tutorialText');
+        const nextBtn = document.getElementById('tutNextBtn');
+        const closeBtn = document.getElementById('tutCloseBtn');
+        
+        nextBtn.innerHTML = "পরের ধাপ <i class='fas fa-arrow-right'></i>"; // Reset text
+        nextBtn.onclick = nextTStep;
+        closeBtn.onclick = skipTutorial;
+        
+        if (step === 1) {
+            switchUserTab('upload'); // নিশ্চিত করা যে প্রথম ট্যাবেই আছে
+            const el = document.getElementById('userName');
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ১: নাম লিখুন</b><br>প্রথমে এখানে ক্লিক করে আপনার নামটি লিখুন।<br><small style='color:var(--gold-text);'>(লেখা হলে কীবোর্ডের <b>Enter</b> চাপুন অথবা নিচের <b>পরের ধাপ</b> বাটনে ক্লিক করুন)</small>";
+            el.focus();
+        } 
+        else if (step === 2) {
+            const el = document.getElementById('mentorGridBox');
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ২: মেন্টর সিলেক্ট</b><br>যাকে অডিও পাঠাবেন, তার নামের পাশে থাকা গোল ঘরে টিক (✔) দিন।<br><small style='color:var(--gold-text);'>(সিলেক্ট করলেই অটোমেটিক পরের ধাপে চলে যাবে)</small>";
+        } 
+        else if (step === 3) {
+            const el = document.getElementById('btnAudioSelect');
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ৩: ফাইল বা রেকর্ড</b><br>এই বাটনে ক্লিক করে আপনার আগে থেকে রেকর্ড করা অডিওটি সিলেক্ট করুন।<br><small style='color:var(--gold-text);'>(টিউটোরিয়ালের জন্য এখন <b>পরের ধাপ</b> বাটনে ক্লিক করুন)</small>";
+        } 
+        else if (step === 4) {
+            const el = document.getElementById('btnUpload');
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ৪: জমা দিন</b><br>সবশেষে নিচের এই বাটনে ক্লিক করলেই আপনার ফাইলটি মেন্টরের কাছে চলে যাবে!";
+        } 
+        else if (step === 5) {
+            switchUserTab('question'); // ২য় ট্যাবে সুইচ করা হলো
+            const el = document.getElementById('questionForm');
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ৫: প্রশ্ন করুন</b><br><b>'প্রশ্ন করুন'</b> ট্যাবে এসে আপনি ক্লাস নিয়ে যেকোনো প্রশ্ন লিখে অথবা <b>ভয়েস রেকর্ড</b> করে মেন্টরকে পাঠাতে পারবেন।";
+        }
+        else if (step === 6) {
+            switchUserTab('feedback'); // ৩য় ট্যাবে সুইচ করা হলো
+            const el = document.getElementById('feedbackSection').children[1]; // অটো-ডিলিট সেটিংস বক্স
+            el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>শেষ ধাপ: ফিডব্যাক ও সেটিংস</b><br><b>'আমার ফিডব্যাক'</b> ট্যাবে আপনি মেন্টরদের রিপ্লাই দেখতে পাবেন। আর এখান থেকেই আপনার ডাটা অটো-ডিলিট হওয়ার সময় সেট করতে পারবেন!<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি শিখে গেছেন!</span>";
+            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
+        } 
+        else {
+            skipTutorial();
+        }
+    }
+
+    function nextTStep() {
+        if(currentTStep >= 6) { // ধাপ ৪ থেকে বাড়িয়ে ৬ করা হলো
+            skipTutorial();
+        } else {
+            currentTStep++;
+            showTStep(currentTStep);
+        }
+    }
+
+    function skipTutorial() {
+        document.getElementById('interactiveOverlay').style.display = 'none';
+        document.getElementById('tutorialTooltip').style.display = 'none';
+        document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
+        switchUserTab('upload'); // টিউটোরিয়াল শেষে আবার মেইন পেজে ফিরিয়ে আনা হলো
+    }
+
+    function tutDontShow(isChecked) {
+        const isMentorMode = document.getElementById('mentorPanel').style.display === 'block';
+        if(isMentorMode) {
+            if(isChecked) localStorage.setItem('pk_skip_admin_tutorial', 'true');
+            else localStorage.removeItem('pk_skip_admin_tutorial');
+        } else {
+            if(isChecked) localStorage.setItem('pk_skip_tutorial', 'true');
+            else localStorage.removeItem('pk_skip_tutorial');
+        }
+    }
+
+    // --- ADMIN INTERACTIVE TUTORIAL LOGIC ---
+    function startAdminTutorial(forcePlay = false) {
+        if(!forcePlay && localStorage.getItem('pk_skip_admin_tutorial') === 'true') return;
+        
+        document.getElementById('interactiveOverlay').style.display = 'block';
+        document.getElementById('tutorialTooltip').style.display = 'block';
+        document.getElementById('dontShowCb').checked = localStorage.getItem('pk_skip_admin_tutorial') === 'true';
+        currentAdminTStep = 1;
+        showAdminTStep(1);
+    }
+
+    function showAdminTStep(step) {
+        document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
+        const textDisplay = document.getElementById('tutorialText');
+        const nextBtn = document.getElementById('tutNextBtn');
+        const closeBtn = document.getElementById('tutCloseBtn');
+        
+        nextBtn.innerHTML = "পরের ধাপ <i class='fas fa-arrow-right'></i>";
+        nextBtn.onclick = nextAdminTStep;
+        closeBtn.onclick = skipAdminTutorial;
+
+        if (step === 1) {
+            const el = isMaster ? document.getElementById('adminControls') : document.getElementById('statusSetter');
+            if(el) el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ১: কন্ট্রোল প্যানেল</b><br>এখান থেকে আপনি আপনার অনলাইন স্ট্যাটাস সেট করতে পারবেন (অথবা মাস্টার হলে অডিশন লাইভ করতে পারবেন)।";
+        } 
+        else if (step === 2) {
+            const el = document.getElementById('adminInboxHeader');
+            if(el) el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ২: ইনবক্স</b><br>ইউজারদের পাঠানো সমস্ত ফাইল এবং প্রশ্ন এখানে এসে জমা হবে। ডানদিকে 'মোট জমা' সংখ্যা দেখতে পাবেন।";
+        } 
+        else if (step === 3) {
+            const el = document.getElementById('inboxList');
+            if(el) el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ৩: ফিডব্যাক দেওয়া</b><br>যেকোনো ফাইলের নিচে <b>টেক্সট</b> বা <b>ভয়েস রেকর্ড</b> ট্যাব সিলেক্ট করে স্টুডেন্টকে ফিডব্যাক দিতে পারবেন। কাজ শেষ হলে 'মুছুন' এ ক্লিক করবেন।<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি তৈরি!</span>";
+            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
+        } 
+        else {
+            skipAdminTutorial();
+        }
+    }
+
+    function nextAdminTStep() {
+        if(currentAdminTStep >= 3) {
+            skipAdminTutorial();
+        } else {
+            currentAdminTStep++;
+            showAdminTStep(currentAdminTStep);
+        }
+    }
+
+    function skipAdminTutorial() {
+        document.getElementById('interactiveOverlay').style.display = 'none';
+        document.getElementById('tutorialTooltip').style.display = 'none';
+        document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
+    }
 
     // --- USER UI TABS ---
     window.switchUserTab = function(tabName) {
@@ -891,6 +1276,63 @@
         }
     }
 
+    // --- AUTO DELETE LOGIC ---
+    function initAutoDeleteUI() {
+        const select = document.getElementById('autoDeleteSelect');
+        const customBox = document.getElementById('customAutoDeleteBox');
+        if (!select) return;
+
+        const standardValues = ['never', '48', '168', '720'];
+        if (standardValues.includes(autoDeletePref)) {
+            select.value = autoDeletePref;
+            customBox.style.display = 'none';
+        } else {
+            select.value = 'custom';
+            customBox.style.display = 'flex';
+            
+            // Populate custom fields based on saved hours
+            let hours = parseInt(autoDeletePref);
+            if (!isNaN(hours)) {
+                if (hours >= 720 && hours % 720 === 0) {
+                    document.getElementById('customDelNum').value = hours / 720;
+                    document.getElementById('customDelUnit').value = '720';
+                } else {
+                    document.getElementById('customDelNum').value = Math.max(1, Math.round(hours / 24));
+                    document.getElementById('customDelUnit').value = '24';
+                }
+            }
+        }
+    }
+
+    function handleAutoDeleteChange(val) {
+        const customBox = document.getElementById('customAutoDeleteBox');
+        if (val === 'custom') {
+            customBox.style.display = 'flex';
+        } else {
+            customBox.style.display = 'none';
+            autoDeletePref = val;
+            localStorage.setItem('pk_auto_delete_pref', val);
+            loadMyFeedback();
+        }
+    }
+
+    function saveCustomAutoDelete() {
+        const num = parseInt(document.getElementById('customDelNum').value);
+        const unit = parseInt(document.getElementById('customDelUnit').value); 
+        
+        if (isNaN(num) || num <= 0) {
+            alert("দয়া করে সঠিক সংখ্যা লিখুন!");
+            return;
+        }
+        
+        const totalHours = num * unit;
+        autoDeletePref = totalHours.toString();
+        localStorage.setItem('pk_auto_delete_pref', autoDeletePref);
+        
+        alert(`✅ আপনার ডাটা ${num} ${unit === 24 ? 'দিন' : 'মাস'} পর অটোমেটিক ডিলিট হবে।`);
+        loadMyFeedback();
+    }
+
     // --- USER QUESTION SUBMISSION ---
     async function toggleUserQuestionRecord() {
         const btn = document.getElementById('qVoiceBtn');
@@ -904,7 +1346,6 @@
             return;
         } 
         
-        // খুব সাধারণ পদ্ধতিতে অডিও রেকর্ড (যাতে সব ব্রাউজারে কাজ করে)
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             
@@ -919,11 +1360,9 @@
             qRecorder.onstop = async () => {
                 stream.getTracks().forEach(t => t.stop());
 
-                // কোনো টাইপ ছাড়াই সাধারণ ব্লব তৈরি করা হচ্ছে
                 const blob = new Blob(qChunks); 
                 const fd = new FormData();
                 
-                // ক্লাউডিনারি নিজে থেকেই ফরম্যাট ধরে নেবে
                 fd.append('file', blob, 'user_question_voice.mp4'); 
                 fd.append('upload_preset', UPLOAD_PRESET);
                 
@@ -946,7 +1385,7 @@
             btn.classList.add('recording');
             status.innerText = "🔴 রেকর্ডিং চলছে...";
         } catch(e) {
-            alert("App-এর ভেতরে সরাসরি লাইভ রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে বা আগে থেকে রেকর্ড করা অডিও সিলেক্ট করে দিন।");
+            alert("App বা iPhone এর ব্রাউজারে সরাসরি রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে সিলেক্ট করে দিন।");
             btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
             status.innerText = "রেকর্ডার ওপেন করা হয়েছে...";
             fallbackQInput.click();
@@ -1005,7 +1444,10 @@
             currentAuditionSession = (data && data.sessionId) ? data.sessionId : "default_session";
             currentAuditionMentors = (data && data.auditionMentors) ? data.auditionMentors : [];
             
-            document.getElementById('bannerAudition').style.display = live ? 'block' : 'none';
+            const bannerAudition = document.getElementById('bannerAudition');
+            if (bannerAudition) {
+                bannerAudition.style.display = live ? 'block' : 'none';
+            }
             
             const hasSubmittedAudition = localStorage.getItem('pk_audition_session') === currentAuditionSession;
             
@@ -1082,6 +1524,9 @@
         scanBox.style.display = 'block';
         uploadBtn.disabled = true;
         uploadBtn.innerHTML = "স্ক্যান হচ্ছে...";
+        
+        // Tutorial advance trigger
+        if(currentTStep === 3) nextTStep();
         
         setTimeout(() => {
             document.getElementById('scan1').innerText = "🔍 Scanning...";
@@ -1167,12 +1612,13 @@
     };
 
     // --- USER SPECIFIC FEEDBACK (PRIVATE TO DEVICE) ---
+    // PERMANENT FOR USERS - Auto delete removed here.
     function loadMyFeedback() {
         const listDiv = document.getElementById('myAudioList');
         const clearAllContainer = document.getElementById('clearAllContainer');
 
         if(myAudioIds.length === 0) {
-            listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনি এখনো কোনো অডিও বা প্রশ্ন পাঠাননি।</p>";
+            listDiv.innerHTML = "<p style='text-align:center; font-size:13px; color:#777;'>আপনি এখনো কোনো অডিও বা প্রশ্ন পাঠাননি।</p>";
             clearAllContainer.style.display = 'none';
             return;
         }
@@ -1189,16 +1635,20 @@
                     const docTime = data.timestamp ? data.timestamp.toMillis() : currentTime;
                     const hoursPassed = (currentTime - docTime) / (1000 * 60 * 60);
 
-                    if (hoursPassed >= 24) {
-                        getRef('requests').doc(doc.id).delete().catch(console.error);
-                        removeLocalAudioId(doc.id);
-                        return; 
+                    // User configured auto delete logic
+                    if (autoDeletePref !== 'never') {
+                        const limitHours = parseInt(autoDeletePref);
+                        if (hoursPassed >= limitHours) {
+                            getRef('requests').doc(doc.id).delete().catch(console.error);
+                            removeLocalAudioId(doc.id);
+                            return; 
+                        }
                     }
 
                     foundCount++;
                     const reps = (data.replies || []).map(r => `
                         <div class="reply-item">
-                            <b>${r.mentor}:</b> ${r.type === 'text' ? r.content : `<audio controls src="${r.content}" style="height:30px; margin-top:5px;"></audio>`}
+                            <b>${r.mentor}:</b> ${r.type === 'text' ? r.content : `<audio controls src="${r.content}"></audio>`}
                         </div>
                     `).join('');
 
@@ -1206,7 +1656,7 @@
                     let headerTitle = data.isQuestion ? "❓ আপনার প্রশ্ন" : `ফাইলের নাম: ${data.fileName || 'Audio'}`;
                     
                     if(data.isQuestion) {
-                        if(data.questionText) contentHtml += `<div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; margin-bottom:10px; font-size:14px;">${data.questionText}</div>`;
+                        if(data.questionText) contentHtml += `<div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; margin-bottom:10px; font-size:13px;">${data.questionText}</div>`;
                         if(data.audioUrl) contentHtml += `<audio controls src="${data.audioUrl}"></audio>`;
                     } else {
                         contentHtml += `<audio controls src="${data.audioUrl}"></audio>`;
@@ -1214,10 +1664,10 @@
 
                     html += `
                         <div class="user-feedback-card" id="userCard_${doc.id}">
-                            <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:10px;">${headerTitle}</p>
+                            <p style="font-weight:bold; color:var(--primary-glow); margin-bottom:8px; font-size:14px;">${headerTitle}</p>
                             ${contentHtml}
-                            <div style="margin-top:15px; border-top:1px dashed #444; padding-top:10px;">
-                                <p style="font-size:13px; font-weight:bold; color:#bbb; margin-bottom:5px;">মেন্টরদের রিপ্লাই:</p>
+                            <div style="margin-top:12px; border-top:1px dashed #444; padding-top:8px;">
+                                <p style="font-size:12px; font-weight:bold; color:#bbb; margin-bottom:5px;">মেন্টরদের রিপ্লাই:</p>
                                 ${reps || '<p class="no-reply-msg">এখনো কোনো রিপ্লাই আসেনি...</p>'}
                             </div>
                             <button class="btn-delete-user" onclick="deleteMyAudio('${doc.id}')">
@@ -1229,9 +1679,10 @@
             });
 
             if (foundCount === 0) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#777;'>আপনার পুরনো তথ্যগুলো ডিলিট হয়ে গেছে বা ২৪ ঘণ্টা পার হয়ে গেছে।</p>";
+                listDiv.innerHTML = "<p style='text-align:center; font-size:13px; color:#777;'>আপনি এখনো কোনো অডিও বা প্রশ্ন পাঠাননি।</p>";
                 clearAllContainer.style.display = 'none';
                 
+                // Clean up local storage if DB is actually empty of these items
                 if(myAudioIds.length > 0) {
                      myAudioIds = [];
                      localStorage.setItem('my_prothom_kotha_audios', JSON.stringify(myAudioIds));
@@ -1310,6 +1761,10 @@
                 setMyOnlineStatus("Online");
             }
             startInboxListener();
+            
+            // মেন্টর লগইন করার পর টিউটোরিয়াল চালু করা
+            setTimeout(() => startAdminTutorial(false), 500);
+
         } else { 
             alert("ভুল পাসওয়ার্ড!"); 
         }
@@ -1340,7 +1795,8 @@
     }
 
     function startInboxListener() {
-        const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        // মেন্টরদের ইনবক্সে ৭ দিনের (৭ * ২৪ ঘণ্টা) ডাটা দেখাবে
+        const timeLimit = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
         
         getRef('requests').onSnapshot(snap => {
             const list = document.getElementById('inboxList');
@@ -1351,7 +1807,8 @@
                 const d = doc.data();
                 const ts = d.timestamp ? d.timestamp.toMillis() : Date.now();
                 
-                if (ts >= dayAgo.getTime()) {
+                // শুধুমাত্র ৭ দিনের পুরনো বা তার চেয়ে নতুন ফাইলগুলো মেন্টর দেখতে পাবে
+                if (ts >= timeLimit.getTime()) {
                     if (isMaster || (d.mentors && d.mentors.includes(activeMentor))) {
                         if (!isMaster && d.claimedBy && d.claimedBy !== activeMentor) return;
                         dataArr.push({ id: doc.id, ...d, ts: ts });
@@ -1374,7 +1831,7 @@
                 const reps = (item.replies || []).map(r => `
                     <div class="reply-item">
                         <b style="color:var(--primary-glow)">${r.mentor}:</b> 
-                        ${r.type === 'text' ? r.content : `<audio controls src="${r.content}" style="height:35px; margin-top:5px;"></audio>`}
+                        ${r.type === 'text' ? r.content : `<audio controls src="${r.content}"></audio>`}
                     </div>
                 `).join('');
 
@@ -1384,25 +1841,25 @@
                 } else {
                     actionHTML = `
                         <div class="reply-box">
-                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:12px; margin-bottom:10px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এটি চেক করছেন</div>` : ''}
+                            ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:11px; margin-bottom:8px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এটি চেক করছেন</div>` : ''}
                             <div class="reply-type-tabs">
                                 <div class="type-tab active" onclick="changeReplyType('${item.id}', 'text')">টেক্সট</div>
-                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
+                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
                             </div>
 
                             <div id="textWrap_${item.id}">
-                                <textarea id="txt_${item.id}" placeholder="ফিডব্যাক লিখুন..."></textarea>
-                                <button class="btn-action" style="padding:12px; font-size:14px;" onclick="sendMentorReply('${item.id}', 'text')">পাঠান</button>
+                                <textarea id="txt_${item.id}" placeholder="ফিডব্যাক লিখুন..." style="margin-bottom:8px; padding:10px; font-size:13px;"></textarea>
+                                <button class="btn-action" style="padding:10px; font-size:13px;" onclick="sendMentorReply('${item.id}', 'text')">পাঠান</button>
                             </div>
 
                             <div id="voiceWrap_${item.id}" style="display:none;">
                                 <button id="vRecBtn_${item.id}" class="voice-btn" onclick="toggleMentorVoiceRecord('${item.id}')">
                                     <i class="fas fa-microphone"></i> রেকর্ড
                                 </button>
-                                <div id="vLog_${item.id}" style="text-align:center; font-size:12px; margin-top:10px; color:var(--success-green);"></div>
+                                <div id="vLog_${item.id}" style="text-align:center; font-size:11px; margin-top:8px; color:var(--success-green);"></div>
                             </div>
 
-                            <div style="margin-top:20px; border-top:1px solid #333; padding-top:15px;">
+                            <div style="margin-top:15px; border-top:1px solid #333; padding-top:10px;">
                                 ${reps}
                             </div>
                         </div>
@@ -1411,7 +1868,7 @@
 
                 let itemContent = "";
                 if(item.isQuestion) {
-                    if(item.questionText) itemContent += `<div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 14px;">${item.questionText}</div>`;
+                    if(item.questionText) itemContent += `<div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px;">${item.questionText}</div>`;
                     if(item.audioUrl) itemContent += `<audio controls src="${item.audioUrl}"></audio>`;
                 } else {
                     itemContent += `<audio controls src="${item.audioUrl}"></audio>`;
@@ -1422,7 +1879,7 @@
                 list.innerHTML += `
                     <div class="request-card">
                         <span class="card-time">${new Date(item.ts).toLocaleTimeString()}</span>
-                        <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+                        <p style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">
                             <i class="fas fa-user-circle"></i> ${item.uploaderName} 
                             ${badgeHtml}
                         </p>
@@ -1431,13 +1888,13 @@
                         
                         ${actionHTML}
 
-                        <button class="logout-btn" style="width:100%; margin-top:20px; padding: 12px;" onclick="deleteDoc('${item.id}')">🗑️ মুছুন</button>
+                        <button class="logout-btn" style="width:100%; margin-top:15px; padding: 10px;" onclick="deleteDoc('${item.id}')">🗑️ মুছুন</button>
                     </div>
                 `;
             });
 
             if (dataArr.length === 0) {
-                list.innerHTML = "<p style='text-align:center; color:#555;'>কোনো ডাটা নেই।</p>";
+                list.innerHTML = "<p style='text-align:center; font-size:13px; color:#555;'>কোনো ডাটা নেই।</p>";
             }
             isFirstLoad = false;
         });
@@ -1521,7 +1978,7 @@
                             await sendMentorReply(docId, 'voice', d.secure_url);
                             log.innerText = "✅ সম্পন্ন!";
                         } else {
-                            log.innerText = "❌ আপলোড এরর: " + (d.error ? d.error.message : "");
+                            log.innerText = "❌ আপলোড এরর!";
                         }
                     } catch(e) {
                          log.innerText = "❌ আপলোড ব্যর্থ!";
@@ -1532,7 +1989,7 @@
                 btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                alert("App-এর ভেতরে সরাসরি লাইভ রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে বা আগে থেকে রেকর্ড করা অডিও সিলেক্ট করে দিন।"); 
+                alert("App বা iPhone এর ব্রাউজারে সরাসরি রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে সিলেক্ট করে দিন।"); 
                 btn.innerHTML = "<i class='fas fa-microphone'></i> রেকর্ড"; 
                 currentMentorDocId = docId;
                 fallbackMInput.click();
