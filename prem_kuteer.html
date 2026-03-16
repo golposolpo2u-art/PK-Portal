@@ -170,38 +170,6 @@
         .google-ad-banner {
             background: var(--card-bg);
             border-top: 1px solid var(--border-color);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            z-index: 1000;
-            padding: 5px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 60px;
-        }
-
-        .ad-close-btn {
-            position: absolute;
-            top: -15px;
-            right: 15px;
-            background: #ff5252;
-            color: white;
-            border: 2px solid var(--card-bg);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
         /* No-Blur Tutorial Box */
         .tutorial-box {
             display: none; 
@@ -951,7 +919,7 @@
 
     // Permanent Delete
     async function hardDelete(col, id) {
-        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে লাল। ডিলিট করবেন?")) {
+        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে না। ডিলিট করবেন?")) {
             await dbRef.collection(col).doc(id).delete();
         }
     }
@@ -1444,28 +1412,6 @@
         alert("মেন্টর সফলভাবে যোগ করা হয়েছে!");
     }
 
-    async function editMentor(oldPass, oldName) {
-        const newName = prompt("মেন্টরের নতুন নাম দিন:", oldName);
-        if(newName === null) return;
-        const newPass = prompt("নতুন পাসওয়ার্ড দিন:", oldPass);
-        if(newPass === null) return;
-
-        const cleanName = newName.trim();
-        const cleanPass = newPass.trim();
-
-        if(!cleanName || !cleanPass) return alert("নাম এবং পাসওয়ার্ড ফাঁকা রাখা যাবে না!");
-        if(cleanPass === "Master2002") return alert("এই পাসওয়ার্ডটি ব্যবহার করা যাবে না!");
-
-        let updatedRoles = { ...mentorRoles };
-        if(oldPass !== cleanPass) {
-            delete updatedRoles[oldPass];
-        }
-        updatedRoles[cleanPass] = cleanName;
-
-        await dbRef.collection('settings').doc('mentors').update({ roles: updatedRoles });
-        alert("মেন্টরের তথ্য সফলভাবে আপডেট হয়েছে!");
-    }
-
     async function deleteMentor(passCode) {
         if(passCode === "Master2002") return alert("মাস্টার অ্যাডমিন ডিলিট করা যাবে না!");
         if(!confirm("এই মেন্টরকে মুছে ফেলবেন?")) return;
@@ -1486,10 +1432,7 @@
                 <div class="mentor-list-item">
                     <span><i class="fas fa-user-tie" style="color:var(--primary-pink);"></i> ${mentorRoles[pass]}</span>
                     <span style="color:var(--text-muted);">Pass: ${pass}</span>
-                    <div>
-                        <button onclick="editMentor('${pass}', '${mentorRoles[pass]}')" style="background:none; border:none; color:#f57f17; cursor:pointer; margin-right:8px;" title="এডিট করুন"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
-                    </div>
+                    <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
                 </div>`;
             }
         }
