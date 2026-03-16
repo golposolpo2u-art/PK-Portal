@@ -12,6 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
+    <!-- Google AdSense Script (আপনার Publisher ID এখানে দিন) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
     <style>
         /* Theme Variables (Default Dark Mode: Black & Pink) */
         :root {
@@ -53,7 +56,7 @@
 
         body { 
             background: var(--bg-gradient); color: var(--text-main); 
-            min-height: 100vh; padding: 15px; display: flex; justify-content: center;
+            min-height: 100vh; padding: 15px 15px 80px 15px; display: flex; justify-content: center;
         }
 
         .container { 
@@ -162,6 +165,42 @@
 
         #adminDashboard, #mainPortal { display: none; }
         .user-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+
+        /* GOOGLE ADSENSE BANNER STYLE */
+        .google-ad-banner {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        /* No-Blur Tutorial Box */
+        .tutorial-box {
+            display: none; 
+            position: absolute; 
+            background: var(--card-bg); 
+            border: 2px solid var(--primary-pink); 
+            padding: 15px; 
+            border-radius: 10px; 
+            z-index: 9999; 
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); 
+            max-width: 250px;
+            font-size: 13px;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+        .tutorial-box::after {
+            content: ''; position: absolute; top: -10px; left: 20px; 
+            border-width: 0 10px 10px 10px; border-style: solid; 
+            border-color: transparent transparent var(--primary-pink) transparent;
+        }
+        .tut-target-active {
+            box-shadow: 0 0 15px var(--primary-pink) !important;
+            border-color: var(--primary-pink) !important;
+            position: relative;
+            z-index: 9998;
+        }
+        .mentor-list-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--input-bg); padding: 8px; border-radius: 6px; margin-top: 5px;
+            font-size: 12px; border: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body class="light-mode">
@@ -188,7 +227,7 @@
             <input type="email" id="loginEmail" class="auth-input" placeholder="আপনার ইমেইল">
             
             <div style="position:relative;">
-                <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom: 5px;">
+                <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom: 5px;">
                 <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:40%; cursor:pointer; color:var(--primary-pink);" onclick="togglePass('loginPass', this)"></i>
             </div>
             
@@ -209,7 +248,7 @@
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">নতুন অ্যাকাউন্ট</h3>
             <input type="text" id="regName" class="auth-input" placeholder="আপনার সম্পূর্ণ নাম">
             <input type="email" id="regEmail" class="auth-input" placeholder="ইমেইল অ্যাড্রেস">
-            <input type="password" id="regPass" class="auth-input" placeholder="নতুন পাসওয়ার্ড দিন">
+            <input type="password" id="regPass" class="auth-input" placeholder="নতুন পাসওয়ার্ড দিন">
             <button class="btn-main" onclick="registerUser()">অ্যাকাউন্ট তৈরি করুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">অ্যাকাউন্ট আছে? লগইন করুন</span>
         </div>
@@ -217,7 +256,7 @@
         <!-- Guest Box -->
         <div class="auth-wrapper" id="guestBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">Guest Login</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন।</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন。</p>
             <input type="text" id="guestName" class="auth-input" placeholder="আপনার সম্পূর্ণ নাম লিখুন">
             <button class="btn-main" onclick="loginGuest()">প্রবেশ করুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
@@ -225,8 +264,8 @@
 
         <!-- Forgot Password Box -->
         <div class="auth-wrapper" id="forgotPassBox" style="display:none;">
-            <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
+            <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
             <input type="email" id="resetEmail" class="auth-input" placeholder="আপনার ইমেইল">
             <button class="btn-main" onclick="resetPassword()">রিসেট লিঙ্ক পাঠান</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
@@ -235,7 +274,7 @@
         <!-- Forgot Email Box -->
         <div class="auth-wrapper" id="forgotEmailBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইমেইল ভুলে গেছেন?</h3>
-            <p style="font-size: 13px; color: var(--text-main); margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
+            <p style="font-size: 13px; color: var(--text-main); margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">অনুগ্রহ করে একটি <b>নতুন অ্যাকাউন্ট</b> তৈরি করুন অথবা মেন্টরের সাথে যোগাযোগ করুন।</p>
             <button class="btn-main" onclick="toggleAuthView('register')">নতুন অ্যাকাউন্ট খুলুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')" style="margin-top: 15px;">ফিরে যান (লগইন)</span>
@@ -250,7 +289,11 @@
         <!-- User Area -->
         <div id="userPortal">
             <div class="user-nav">
-                <div style="font-weight: bold; color: var(--primary-pink); font-size: 14px;"><i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span></div>
+                <div style="font-weight: bold; color: var(--primary-pink); font-size: 14px; display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span> 
+                    <!-- Tutorial Button -->
+                    <button onclick="startTutorial()" style="background:none; border:none; color:var(--primary-pink); font-size:18px; cursor:pointer;" title="ব্যবহার বিধি (টিউটোরিয়াল)"><i class="fas fa-question-circle"></i></button>
+                </div>
                 <button style="background:none; border:none; color:#ff5252; font-weight:bold; cursor:pointer;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
             </div>
 
@@ -267,7 +310,7 @@
                 <label>কাজের ধরণ (সাব-ফোল্ডার):</label>
                 <select id="uCategory" onchange="updateFileAccept('uCategory', 'uFile')">
                     <option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>
-                    <option value="ভয়েস">🎙️ ১. ভয়েস</option>
+                    <option value="ভয়েস">🎙️ ১. ভয়েস</option>
                     <option value="থাম্বনেল">🖼️ ২. থাম্বনেল</option>
                     <option value="অডিও এডিট">🎧 ৩. অডিও এডিট</option>
                     <option value="স্ক্রিপ্টিং">✍️ ৪. স্ক্রিপ্টিং</option>
@@ -277,7 +320,7 @@
                 <input type="file" id="uFile">
                 <div id="fileHint" style="font-size:11px; color:#ff5252; margin-top:4px; display:none; font-weight:bold;"></div>
 
-                <button class="btn-main" style="margin-top:15px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
+                <button id="submitWorkBtn" class="btn-main" style="margin-top:15px;" onclick="submitWork()">জমা দিন <i class="fas fa-paper-plane"></i></button>
                 <div id="statusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
@@ -304,7 +347,15 @@
 
             <div id="masterConfigPanel" class="admin-box" style="display:none; border-color:#ffb300; background:var(--input-bg); padding:12px;">
                 <p style="font-weight: bold; color: #f57f17; margin-bottom: 8px; font-size:13px;"><i class="fas fa-crown"></i> মাস্টার কন্ট্রোল</p>
-                <button id="docToggleBtn" onclick="toggleDocUploads()" class="btn-main" style="padding: 8px; font-size: 13px; width: 100%; background:linear-gradient(45deg, #f57f17, #ffb300); color:#fff;">PDF/DOC আপলোড বন্ধ (চালু করুন)</button>
+                <button id="docToggleBtn" onclick="toggleDocUploads()" class="btn-main" style="padding: 8px; font-size: 13px; width: 100%; background:linear-gradient(45deg, #f57f17, #ffb300); color:#fff; margin-bottom:15px;">PDF/DOC আপলোড বন্ধ (চালু করুন)</button>
+                
+                <div style="border-top:1px dashed var(--border-color); padding-top:10px;">
+                    <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 8px; font-size:12px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
+                    <input type="text" id="newMentorName" placeholder="মেন্টরের নাম" style="font-size:12px; padding:6px; margin-bottom:5px;">
+                    <input type="text" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="font-size:12px; padding:6px; margin-bottom:5px;">
+                    <button onclick="addMentor()" class="btn-main" style="padding: 6px; font-size: 12px; background:linear-gradient(45deg, #2196f3, #4fc3f7); color:#fff;">মেন্টর যোগ করুন</button>
+                    <div id="mentorListUI" style="margin-top:10px;"></div>
+                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
@@ -377,7 +428,7 @@
 
                     <!-- Casting Record -->
                     <div id="recordView" style="display:none; padding: 20px; border-radius: 15px; border: 1px solid var(--primary-pink); background: var(--card-bg);">
-                        <h3 style="margin-bottom:12px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-clipboard"></i> কাস্টিং ডায়েরি</h3>
+                        <h3 style="margin-bottom:12px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-clipboard"></i> কাস্টিং ডায়েরি</h3>
                         <input type="text" id="noteTitle" placeholder="রেকর্ডের শিরোনাম" style="margin-bottom: 10px; width: 100%;">
                         
                         <!-- Updated Rich Text Editor Toolbar -->
@@ -398,7 +449,7 @@
                                 <select onchange="document.execCommand('fontSize', false, this.value)" style="border:none; border-right:1px solid var(--border-color); border-radius:0;">
                                     <option value="3">সাধারণ</option>
                                     <option value="1">ছোট</option>
-                                    <option value="5">বড়</option>
+                                    <option value="5">বড়</option>
                                 </select>
                                 <input type="number" id="manualFontSize" placeholder="Size" style="width: 50px; border: none; padding: 4px; font-size: 12px; border-radius: 0;" onchange="setManualFontSize(this.value)">
                             </div>
@@ -430,7 +481,7 @@
                     </div>
                     <div id="trashView" style="display:none;">
                         <h3 style="margin-bottom:12px; color:#ff5252; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
-                        <p style="color:var(--text-muted); font-size:12px; margin-bottom:15px;">ডিলিট হওয়া যেকোনো আইটেম এখানে জমা থাকে।</p>
+                        <p style="color:var(--text-muted); font-size:12px; margin-bottom:15px;">ডিলিট হওয়া যেকোনো আইটেম এখানে জমা থাকে।</p>
                         <div id="trashListUI"></div>
                     </div>
                 </div>
@@ -443,11 +494,34 @@
     </div>
 </div>
 
+<!-- GOOGLE ADSENSE BANNER (Real Ad Integration) -->
+<div class="google-ad-banner" id="adBannerReal">
+    <button class="ad-close-btn" onclick="document.getElementById('adBannerReal').style.display='none';">&times;</button>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:320px;height:50px"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="YYYYYYYYYY"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+<!-- Live Tutorial Box (No Blur) -->
+<div id="liveTutorialBox" class="tutorial-box">
+    <div id="tutText" style="margin-bottom:10px; font-weight:bold; line-height:1.4;"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <button id="tutPrevBtn" onclick="tutPrev()" class="btn-sm" style="background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);">আগেরটি</button>
+        <span id="tutStepIndicator" style="font-size:10px; color:var(--text-muted); font-weight:bold;">১/৪</span>
+        <button id="tutNextBtn" onclick="tutNext()" class="btn-sm" style="background:var(--primary-pink); color:#fff;">পরেরটি</button>
+    </div>
+    <button onclick="closeTutorial()" style="position:absolute; top:5px; right:5px; background:none; border:none; color:#ff5252; font-size:16px; cursor:pointer;">&times;</button>
+</div>
+
 <!-- Modals -->
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
-        <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center;">
+        <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center;">
         <button class="btn-main" style="margin-top:10px; color:#fff;" onclick="checkAdminPass()">লগইন করুন</button>
         <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; color:var(--text-muted); margin-top:10px; cursor:pointer; font-weight:bold; font-size:13px;">বাতিল</button>
     </div>
@@ -486,11 +560,12 @@
     let allProjects = [];
     let allCategories = []; 
     let activeAdminProj = "";
-    let activeAdminCat = "ভয়েস";
+    let activeAdminCat = "ভয়েস";
     let isMentor = false;
     let isDocAllowed = false;
     let currentNotes = {};
     let editingNoteId = null;
+    let mentorRoles = { "Master2002": "Master Admin" };
     
     // Voice Recorder Globals
     let activeRecorder = null;
@@ -612,7 +687,7 @@
         const pass = document.getElementById('regPass').value.trim();
         const err = document.getElementById('authErrorMsg');
         if(!name || !email || !pass) return err.innerText = "সব ঘর পূরণ করুন!";
-        if(pass.length < 6) return err.innerText = "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে!";
+        if(pass.length < 6) return err.innerText = "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে!";
         err.style.color = "var(--primary-pink)"; err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, pass);
@@ -624,10 +699,10 @@
         const email = document.getElementById('loginEmail').value.trim();
         const pass = document.getElementById('loginPass').value.trim();
         const err = document.getElementById('authErrorMsg');
-        if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
+        if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
         err.style.color = "var(--primary-pink)"; err.innerText = "লগইন হচ্ছে...";
         try { await auth.signInWithEmailAndPassword(email, pass); } 
-        catch(error) { err.style.color = "#ff5252"; err.innerText = "লগইন ব্যর্থ হয়েছে!"; }
+        catch(error) { err.style.color = "#ff5252"; err.innerText = "লগইন ব্যর্থ হয়েছে!"; }
     }
 
     async function loginGuest() {
@@ -648,8 +723,8 @@
         err.style.color = "var(--primary-pink)"; err.innerText = "ইমেইল পাঠানো হচ্ছে...";
         try {
             await auth.sendPasswordResetEmail(email);
-            err.style.color = "#4caf50"; err.innerText = "✅ রিসেট লিঙ্ক পাঠানো হয়েছে। ইমেইল চেক করুন।";
-        } catch(error) { err.style.color = "#ff5252"; err.innerText = "ইমেইলটি সঠিক নয়।"; }
+            err.style.color = "#4caf50"; err.innerText = "✅ রিসেট লিঙ্ক পাঠানো হয়েছে। ইমেইল চেক করুন।";
+        } catch(error) { err.style.color = "#ff5252"; err.innerText = "ইমেইলটি সঠিক নয়।"; }
     }
 
     function logoutUser() { auth.signOut(); }
@@ -676,7 +751,7 @@
         if (isImg) frameContainer.innerHTML = `<img src="${url}" style="max-width:100%; max-height:50vh; object-fit:contain; border-radius:6px;">`;
         else if (isAudio) frameContainer.innerHTML = `<audio controls src="${url}" style="width:100%; outline:none;" autoplay></audio>`;
         else if (isDocOrPdf) frameContainer.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%; height:50vh; border:none;"></iframe>`;
-        else frameContainer.innerHTML = `<p style="color:var(--text-muted);">প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
+        else frameContainer.innerHTML = `<p style="color:var(--text-muted);">প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
 
         document.getElementById('previewDownloadBtn').href = getDownloadUrl(url);
         document.getElementById('previewModal').style.display = 'flex';
@@ -690,38 +765,38 @@
         if (!fileInput || !cat) return;
         if(hint) hint.style.display = "none";
 
-        if (cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
+        if (cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
         else if (cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
         else if (cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
         else if (cat === 'স্ক্রিপ্টিং') {
             if(isDocAllowed) fileInput.accept = ".doc, .docx, .pdf, .txt";
-            else { fileInput.accept = ".txt"; if(hint) { hint.innerText = "শুধুমাত্র .txt ফাইল দেওয়া যাবে।"; hint.style.display = "block"; } }
+            else { fileInput.accept = ".txt"; if(hint) { hint.innerText = "শুধুমাত্র .txt ফাইল দেওয়া যাবে।"; hint.style.display = "block"; } }
         } else fileInput.accept = "*/*";
     }
 
     function checkAdminPass() {
         const pass = document.getElementById('modalAdminPass').value.trim();
-        // Prem Kuteer Mentor Logic
-        const ROLES = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" }; 
         
-        if(ROLES[pass]) {
+        if(mentorRoles[pass]) {
             isMentor = true;
             document.querySelectorAll('.modal-overlay').forEach(m=>m.style.display='none');
             document.getElementById('authScreen').style.display = "none";
             document.getElementById('userPortal').style.display = "none";
             document.getElementById('mainPortal').style.display = "block";
             document.getElementById('adminDashboard').style.display = "block";
-            document.getElementById('modalAdminPass').value = "";
             
             document.getElementById('cloudSyncBadge').style.display = "inline-flex";
-            document.getElementById('masterConfigPanel').style.display = ROLES[pass] === "Master Admin" ? "block" : "none";
+            document.getElementById('masterConfigPanel').style.display = mentorRoles[pass] === "Master Admin" ? "block" : "none";
+            if(mentorRoles[pass] === "Master Admin") renderMentorList();
+
             loadInitialData();
             setTimeout(() => {
                 const activeProj = allProjects.find(p => !p.isHidden && !p.isDeleted);
                 if(activeProj && !activeAdminProj) selectAdminProject(activeProj.name);
                 else renderAdminSidebar();
+                document.getElementById('modalAdminPass').value = ""; // Clear pass
             }, 500);
-        } else { alert("ভুল পাসওয়ার্ড!"); }
+        } else { alert("ভুল পাসওয়ার্ড!"); }
     }
 
     function exitAdmin() {
@@ -753,6 +828,18 @@
             updateDocToggleUI(); updateFileAccept('uCategory', 'uFile'); 
         });
 
+        dbRef.collection('settings').doc('mentors').onSnapshot(doc => {
+            if(doc.exists) {
+                mentorRoles = doc.data().roles || { "Master2002": "Master Admin" };
+            } else {
+                mentorRoles = { "Master2002": "Master Admin" };
+                dbRef.collection('settings').doc('mentors').set({ roles: mentorRoles });
+            }
+            if(isMentor && document.getElementById('masterConfigPanel').style.display === 'block') {
+                renderMentorList();
+            }
+        });
+
         dbRef.collection('projects').onSnapshot(snap => {
             allProjects = [];
             let userHtml = '<option value="" disabled selected>প্রজেক্ট বেছে নিন</option>';
@@ -770,12 +857,12 @@
 
         dbRef.collection('folders').onSnapshot(snap => {
             allCategories = [
-                { id: 'def1', name: "ভয়েস", isDefault: true }, { id: 'def2', name: "থাম্বনেল", isDefault: true },
+                { id: 'def1', name: "ভয়েস", isDefault: true }, { id: 'def2', name: "থাম্বনেল", isDefault: true },
                 { id: 'def3', name: "অডিও এডিট", isDefault: true }, { id: 'def4', name: "স্ক্রিপ্টিং", isDefault: true }
             ];
             snap.forEach(doc => {
                 const d = doc.data();
-                if(d.channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(d.name)) {
+                if(d.channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(d.name)) {
                     allCategories.push({ id: doc.id, name: d.name, isDefault: false });
                 }
             });
@@ -820,7 +907,7 @@
                 activeAdminProj = "";
             }
             if(col === 'folders' && activeAdminCat === additionalName) {
-                selectAdminCategory('ভয়েস');
+                selectAdminCategory('ভয়েস');
             }
         }
     }
@@ -832,7 +919,7 @@
 
     // Permanent Delete
     async function hardDelete(col, id) {
-        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে না। ডিলিট করবেন?")) {
+        if(confirm("এটি চিরতরে মুছে যাবে এবং আর ফিরে পাওয়া যাবে না। ডিলিট করবেন?")) {
             await dbRef.collection(col).doc(id).delete();
         }
     }
@@ -942,9 +1029,9 @@
                 activeRecorder.start();
                 btn.classList.add('recording-pulse');
                 btn.innerHTML = '<i class="fas fa-stop"></i>';
-            } catch(e) { alert("মাইক্রোফোনের পারমিশন দেওয়া নেই!"); }
+            } catch(e) { alert("মাইক্রোফোনের পারমিশন দেওয়া নেই!"); }
         } else {
-            alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
+            alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
         }
     }
 
@@ -958,12 +1045,12 @@
             if(data.secure_url) {
                 await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url });
             }
-        } catch(e) { alert("ভয়েস আপলোডে সমস্যা হয়েছে!"); }
+        } catch(e) { alert("ভয়েস আপলোডে সমস্যা হয়েছে!"); }
         if(upMsg) upMsg.style.display = 'none';
     }
 
     async function deleteVoiceRemark(id, colName) {
-        if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) {
+        if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) {
             await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: firebase.firestore.FieldValue.delete() });
         }
     }
@@ -988,14 +1075,14 @@
                     project, category: cat, fileUrl: data.secure_url, fileName: file.name, 
                     channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: false, status: "Pending", adminRemark: "", isDeleted: false 
                 });
-                status.style.color = "#4caf50"; status.innerText = "✅ জমা হয়েছে!"; document.getElementById('uFile').value = "";
+                status.style.color = "#4caf50"; status.innerText = "✅ জমা হয়েছে!"; document.getElementById('uFile').value = "";
             }
-        } catch(e) { status.style.color = "#ff5252"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
+        } catch(e) { status.style.color = "#ff5252"; status.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
     // --- Added back submitStory function ---
     async function submitStory() {
-        if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
+        if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
         
         const title = document.getElementById('sTitle').value.trim();
         const text = document.getElementById('sText').value.trim();
@@ -1022,14 +1109,14 @@
                 isDeleted: false
             });
             msg.style.color = "#4caf50"; 
-            msg.innerText = "✅ গল্প সফলভাবে জমা হয়েছে!";
+            msg.innerText = "✅ গল্প সফলভাবে জমা হয়েছে!";
             document.getElementById('sTitle').value = ""; 
             document.getElementById('sText').value = "";
             document.getElementById('wordCountDisplay').innerText = "শব্দ সংখ্যা: ০ / ৫০০০ (ন্যূনতম)";
             document.getElementById('wordCountDisplay').style.color = "#ff5252";
         } catch(e) { 
             msg.style.color = "#ff5252"; 
-            msg.innerText = "❌ ব্যর্থ হয়েছে!"; 
+            msg.innerText = "❌ ব্যর্থ হয়েছে!"; 
         }
     }
 
@@ -1044,7 +1131,7 @@
                 let d = doc.data();
                 if(d.channel === channel && !d.isAdmin && !d.isDeleted) {
                     let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
-                    let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
+                    let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
                     combinedHtml += `<div class="list-card" style="border-left:3px solid var(--primary-pink);"><b>📦 ${d.project}</b><p style="font-size:12px; color:var(--text-muted);">ফোল্ডার: ${d.category} | ফাইল: ${d.fileName || 'অজানা'}</p><span class="status-badge ${badgeClass}">${d.status || 'Pending'}</span>${d.adminRemark || d.adminVoiceRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark} ${voiceUi}</div>` : ''}</div>`;
                 }
             });
@@ -1053,7 +1140,7 @@
                     let d = doc.data();
                     if(d.channel === channel && !d.isDeleted) {
                         let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
-                        let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
+                        let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
                         combinedHtml += `<div class="list-card" style="border-left:3px solid var(--primary-pink);"><b>📖 ${d.title}</b><br><span class="status-badge ${badgeClass}">${d.status || 'Pending'}</span>${d.adminRemark || d.adminVoiceRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark} ${voiceUi}</div>` : ''}</div>`;
                     }
                 });
@@ -1075,9 +1162,9 @@
             const data = await res.json();
             if(data.secure_url) {
                 await dbRef.collection('tasks').add({ sender: "অ্যাডমিন", project: activeAdminProj, category: activeAdminCat, fileUrl: data.secure_url, fileName: file.name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: true, isDeleted: false });
-                msg.style.color = "#4caf50"; msg.innerText = "✅ সেভ হয়েছে!"; document.getElementById('aFile').value = ""; setTimeout(()=> msg.innerText="", 3000);
+                msg.style.color = "#4caf50"; msg.innerText = "✅ সেভ হয়েছে!"; document.getElementById('aFile').value = ""; setTimeout(()=> msg.innerText="", 3000);
             }
-        } catch(e) { msg.style.color = "#ff5252"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
+        } catch(e) { msg.style.color = "#ff5252"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
     }
 
     function loadAdminInbox() {
@@ -1121,7 +1208,7 @@
                             </select>
                             <input type="text" id="remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}" style="flex:1; padding:6px; font-size:12px;">
                             <button onclick="updateTaskRemark('${d.id}', document.getElementById('status_${d.id}').value, document.getElementById('remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
-                            <button id="micBtn_${d.id}" onclick="toggleVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="background:var(--input-bg); color:var(--primary-pink); border:1px solid var(--border-color);" title="ভয়েস রিমার্ক দিন"><i class="fas fa-microphone"></i></button>
+                            <button id="micBtn_${d.id}" onclick="toggleVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="background:var(--input-bg); color:var(--primary-pink); border:1px solid var(--border-color);" title="ভয়েস রিমার্ক দিন"><i class="fas fa-microphone"></i></button>
                             <span id="audioUploading_${d.id}" style="display:none; font-size:10px; color:#f57f17;">⏳</span>
                         </div>
                         ${voiceUi}
@@ -1164,7 +1251,7 @@
         const folderName = `${activeAdminProj}_${activeAdminCat}_${section}`;
         const folder = zip.folder(folderName);
 
-        alert(`ZIP তৈরি হচ্ছে। দয়া করে অপেক্ষা করুন...`);
+        alert(`ZIP তৈরি হচ্ছে। দয়া করে অপেক্ষা করুন...`);
 
         for(let i=0; i<checkboxes.length; i++) {
             let url = checkboxes[i].value;
@@ -1205,8 +1292,8 @@
             await Promise.all(fetchPromises);
             const content = await zip.generateAsync({type:"blob"});
             saveAs(content, `${activeAdminProj}_Full_Backup.zip`);
-            alert("ডাউনলোড সফল হয়েছে!");
-        } catch(e) { alert("ZIP তৈরিতে সমস্যা হয়েছে।"); }
+            alert("ডাউনলোড সফল হয়েছে!");
+        } catch(e) { alert("ZIP তৈরিতে সমস্যা হয়েছে।"); }
     }
 
     async function updateTaskRemark(taskId, status, remark) {
@@ -1246,7 +1333,7 @@
                             </select>
                             <input type="text" id="s_remark_${d.id}" placeholder="মতামত লিখুন..." value="${d.adminRemark || ''}" style="flex:1; padding:6px; font-size:12px;">
                             <button onclick="updateStoryRemark('${d.id}', document.getElementById('s_status_${d.id}').value, document.getElementById('s_remark_${d.id}').value)" class="btn-sm btn-remark"><i class="fas fa-paper-plane"></i></button>
-                            <button id="micBtn_${d.id}" onclick="toggleVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="background:var(--input-bg); color:var(--primary-pink); border:1px solid var(--border-color);" title="ভয়েস রিমার্ক দিন"><i class="fas fa-microphone"></i></button>
+                            <button id="micBtn_${d.id}" onclick="toggleVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="background:var(--input-bg); color:var(--primary-pink); border:1px solid var(--border-color);" title="ভয়েস রিমার্ক দিন"><i class="fas fa-microphone"></i></button>
                             <span id="audioUploading_${d.id}" style="display:none; font-size:10px; color:#f57f17;">⏳</span>
                         </div>
                         ${voiceUi}
@@ -1308,6 +1395,130 @@
         document.getElementById('saveNoteBtn').innerText = "আপডেট করুন"; document.getElementById('cancelEditBtn').style.display = "block";
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // --- Mentor Management System ---
+    async function addMentor() {
+        const name = document.getElementById('newMentorName').value.trim();
+        const pass = document.getElementById('newMentorPass').value.trim();
+        if(!name || !pass) return alert("নাম এবং পাসওয়ার্ড দিন!");
+        if(pass === "Master2002") return alert("এই পাসওয়ার্ডটি সংরক্ষিত!");
+        
+        let updatedRoles = { ...mentorRoles };
+        updatedRoles[pass] = name;
+        
+        await dbRef.collection('settings').doc('mentors').update({ roles: updatedRoles });
+        document.getElementById('newMentorName').value = "";
+        document.getElementById('newMentorPass').value = "";
+        alert("মেন্টর সফলভাবে যোগ করা হয়েছে!");
+    }
+
+    async function deleteMentor(passCode) {
+        if(passCode === "Master2002") return alert("মাস্টার অ্যাডমিন ডিলিট করা যাবে না!");
+        if(!confirm("এই মেন্টরকে মুছে ফেলবেন?")) return;
+        
+        let updatedRoles = { ...mentorRoles };
+        delete updatedRoles[passCode];
+        
+        await dbRef.collection('settings').doc('mentors').update({ roles: updatedRoles });
+    }
+
+    function renderMentorList() {
+        const listUI = document.getElementById('mentorListUI');
+        if(!listUI) return;
+        let html = "";
+        for(let pass in mentorRoles) {
+            if(pass !== "Master2002") {
+                html += `
+                <div class="mentor-list-item">
+                    <span><i class="fas fa-user-tie" style="color:var(--primary-pink);"></i> ${mentorRoles[pass]}</span>
+                    <span style="color:var(--text-muted);">Pass: ${pass}</span>
+                    <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
+                </div>`;
+            }
+        }
+        listUI.innerHTML = html || "<p style='font-size:11px; color:var(--text-muted); padding-top:5px;'>কোনো অতিরিক্ত মেন্টর নেই।</p>";
+    }
+
+    // --- Live Interactive Tutorial (No Blur) ---
+    const tutSteps = [
+        { id: 'uProject', text: "১. প্রথমে এখানে ক্লিক করে প্রজেক্ট সিলেক্ট করুন।" },
+        { id: 'uCategory', text: "২. এরপর কোন ধরনের কাজ জমা দেবেন তা বাছুন।" },
+        { id: 'uFile', text: "৩. আপনার ফাইলটি সিলেক্ট করুন।" },
+        { id: 'submitWorkBtn', text: "৪. সবশেষে 'জমা দিন' বাটনে ক্লিক করে কাজ পাঠিয়ে দিন!" }
+    ];
+    let currentTutStep = 0;
+
+    function startTutorial() {
+        switchUserTab('work'); // Ensure work tab is active
+        currentTutStep = 0;
+        document.getElementById('liveTutorialBox').style.display = 'block';
+        showTutStep();
+    }
+
+    function showTutStep() {
+        // Clear previous highlights
+        tutSteps.forEach(s => {
+            const el = document.getElementById(s.id);
+            if(el) el.classList.remove('tut-target-active');
+        });
+
+        const step = tutSteps[currentTutStep];
+        const targetEl = document.getElementById(step.id);
+        const tutBox = document.getElementById('liveTutorialBox');
+
+        if(targetEl) {
+            targetEl.classList.add('tut-target-active');
+            
+            // Position box near target
+            const rect = targetEl.getBoundingClientRect();
+            tutBox.style.top = (window.scrollY + rect.bottom + 15) + 'px';
+            tutBox.style.left = (rect.left > 20 ? rect.left : 20) + 'px';
+        }
+
+        document.getElementById('tutText').innerText = step.text;
+        document.getElementById('tutStepIndicator').innerText = (currentTutStep + 1) + " / " + tutSteps.length;
+        
+        document.getElementById('tutPrevBtn').style.visibility = currentTutStep === 0 ? 'hidden' : 'visible';
+        const nextBtn = document.getElementById('tutNextBtn');
+        if(currentTutStep === tutSteps.length - 1) {
+            nextBtn.innerText = "শেষ করুন";
+            nextBtn.style.background = "#4caf50";
+        } else {
+            nextBtn.innerText = "পরেরটি";
+            nextBtn.style.background = "var(--primary-pink)";
+        }
+    }
+
+    function tutNext() {
+        if(currentTutStep < tutSteps.length - 1) {
+            currentTutStep++;
+            showTutStep();
+        } else {
+            closeTutorial();
+        }
+    }
+
+    function tutPrev() {
+        if(currentTutStep > 0) {
+            currentTutStep--;
+            showTutStep();
+        }
+    }
+
+    function closeTutorial() {
+        document.getElementById('liveTutorialBox').style.display = 'none';
+        tutSteps.forEach(s => {
+            const el = document.getElementById(s.id);
+            if(el) el.classList.remove('tut-target-active');
+        });
+    }
+
+    // Window resize adjustment for tutorial
+    window.addEventListener('resize', () => {
+        if(document.getElementById('liveTutorialBox').style.display === 'block') {
+            showTutStep();
+        }
+    });
 </script>
 </body>
 </html>
