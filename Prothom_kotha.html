@@ -14,6 +14,13 @@
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- JSZip & FileSaver -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
     <style>
         /* PREMIUM STYLING ENGINE (CSS) */
         :root {
@@ -48,7 +55,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 20px 10px 60px 10px; /* Niche 60px padding kora holo jate choto add er theke ektu faka thake */
+            padding: 20px 10px 80px 10px;
             overflow-x: hidden;
         }
 
@@ -68,9 +75,20 @@
 
         .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-glow); font-weight: bold; font-size: 13px; z-index: 10; }
         
-        /* Replay Tutorial Button */
-        .btn-tutorial { position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); border: 1px solid var(--gold-text); color: var(--gold-text); padding: 6px 10px; border-radius: 15px; font-weight: bold; font-size: 11px; z-index: 10; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .btn-tutorial:hover { background: var(--gold-text); color: #000; }
+        /* Tutorial Focus Animation */
+        @keyframes tutPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 152, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+        }
+        .btn-tut-focus {
+            background: linear-gradient(45deg, #ff9800, #f57c00) !important;
+            color: #ffffff !important;
+            border: none !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: tutPulse 2s infinite;
+        }
+        .btn-tutorial { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 15px; font-weight: bold; font-size: 12px; z-index: 10; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
         /* Audition Banner */
         .audition-banner { 
@@ -99,7 +117,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 5px;
-            margin-top: 35px; /* Prevents overlapping with absolute top buttons */
+            margin-top: 35px; 
             width: 100%;
         }
 
@@ -185,10 +203,6 @@
             border-bottom: 3px solid var(--primary-glow);
         }
 
-        @media (max-width: 500px) {
-            .u-tab { padding: 10px 2px; } 
-        }
-
         /* Info Card */
         .info-card { 
             background: rgba(0, 0, 0, 0.5); 
@@ -212,8 +226,10 @@
         }
 
         input[type="text"], 
+        input[type="password"],
         select, 
-        textarea { 
+        textarea,
+        input[type="number"] { 
             width: 100%; 
             margin-bottom: 10px; 
             padding: 12px; 
@@ -227,12 +243,13 @@
         }
 
         input[type="text"]:focus, 
+        input[type="password"]:focus,
         textarea:focus { 
             border-color: var(--primary-glow); 
             box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); 
         }
 
-        /* Mentor Grid (RESPONSIVE) */
+        /* Mentor Grid */
         .mentor-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -257,261 +274,54 @@
             background: rgba(255, 255, 255, 0.1); 
         }
 
-        .mentor-info { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-        }
-
-        .mentor-row input[type="checkbox"], .mentor-row input[type="radio"] { 
-            width: 16px; 
-            height: 16px; 
-            accent-color: var(--primary-glow); 
-            cursor: pointer; 
-        }
+        .mentor-info { display: flex; align-items: center; gap: 10px; }
+        .mentor-row input[type="checkbox"], .mentor-row input[type="radio"] { width: 16px; height: 16px; accent-color: var(--primary-glow); cursor: pointer; }
 
         /* Status Badges */
-        .status-pill { 
-            font-size: 10px; 
-            padding: 3px 8px; 
-            border-radius: 15px; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            background: rgba(0,0,0,0.4); 
-        }
-
-        .dot { 
-            width: 6px; 
-            height: 6px; 
-            border-radius: 50%; 
-        }
-
+        .status-pill { font-size: 10px; padding: 3px 8px; border-radius: 15px; font-weight: bold; display: flex; align-items: center; gap: 5px; background: rgba(0,0,0,0.4); }
+        .dot { width: 6px; height: 6px; border-radius: 50%; }
         .dot-online { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); }
         .dot-busy { background: #ffcc00; box-shadow: 0 0 8px #ffcc00; }
         .dot-offline { background: #777; }
 
         /* Scanner Area */
-        .scan-container { 
-            display: none; 
-            background: rgba(0, 0, 0, 0.8); 
-            padding: 15px; 
-            border-radius: 10px; 
-            margin-bottom: 15px; 
-            border: 1px solid var(--accent-pink); 
-        }
-
-        .scan-line { 
-            font-family: monospace; 
-            font-size: 11px; 
-            color: var(--success-green); 
-            margin: 4px 0; 
-        }
-
-        .progress-rail { 
-            width: 100%; 
-            height: 6px; 
-            background: #222; 
-            border-radius: 5px; 
-            margin-top: 10px; 
-            overflow: hidden; 
-        }
-
-        .progress-bar { 
-            height: 100%; 
-            width: 0%; 
-            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow)); 
-            transition: width 0.4s ease; 
-        }
+        .scan-container { display: none; background: rgba(0, 0, 0, 0.8); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--accent-pink); }
+        .scan-line { font-family: monospace; font-size: 11px; color: var(--success-green); margin: 4px 0; }
+        .progress-rail { width: 100%; height: 6px; background: #222; border-radius: 5px; margin-top: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow)); transition: width 0.4s ease; }
 
         /* Main Buttons */
         .btn-action { 
-            width: 100%; 
-            padding: 12px; 
-            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); 
-            color: #0f2027; 
-            border: none; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            font-size: 15px; 
-            cursor: pointer; 
-            font-family: 'Kalpurush', sans-serif; 
-            text-transform: uppercase; 
+            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); 
+            color: #0f2027; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; 
+            font-family: 'Kalpurush', sans-serif; text-transform: uppercase; 
         }
+        .btn-action:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4); color: #fff; }
+        .btn-action:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; }
 
-        .btn-action:hover:not(:disabled) { 
-            transform: translateY(-2px); 
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4); 
-            color: #fff; 
-        }
+        .compact-box { width: fit-content !important; min-width: 200px; margin-left: auto !important; margin-right: auto !important; padding: 10px 20px !important; font-size: 14px !important; display: flex !important; justify-content: center; align-items: center; gap: 8px; }
 
-        .btn-action:disabled { 
-            background: #444; 
-            color: #888; 
-            cursor: not-allowed; 
-            box-shadow: none; 
-        }
+        .btn-admin { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; font-family: 'Kalpurush', sans-serif; margin-top: 25px; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .btn-admin:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--primary-glow); box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2); transform: translateY(-2px); }
 
-        /* Compact Box for Buttons */
-        .compact-box {
-            width: fit-content !important;
-            min-width: 200px;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            padding: 10px 20px !important;
-            font-size: 14px !important;
-            display: flex !important;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Kalpurush', sans-serif; 
-        }
+        .audition-toggle-user { background: rgba(255, 215, 0, 0.1); border: 1px dashed var(--gold-text); padding: 10px; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--gold-text); font-weight: bold; font-size: 13px; }
 
-        .btn-admin {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            font-family: 'Kalpurush', sans-serif;
-            margin-top: 25px;
-            opacity: 1; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        
-        .btn-admin:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--primary-glow);
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .audition-toggle-user { 
-            background: rgba(255, 215, 0, 0.1); 
-            border: 1px dashed var(--gold-text); 
-            padding: 10px; 
-            border-radius: 10px; 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            cursor: pointer; 
-            color: var(--gold-text); 
-            font-weight: bold; 
-            font-size: 13px;
-        }
-
-        /* User Feedback Cards (Compact) */
-        .user-feedback-card { 
-            background: rgba(20, 20, 20, 0.9); 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            border-left: 4px solid var(--success-green); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-            position: relative;
-        }
-
-        .reply-item { 
-            background: rgba(0, 0, 0, 0.4); 
-            padding: 10px; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            border-left: 3px solid #00ffcc; 
-            font-size: 13px; 
-        }
-
+        /* User Feedback Cards */
+        .user-feedback-card { background: rgba(20, 20, 20, 0.9); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid var(--success-green); box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; }
+        .reply-item { background: rgba(0, 0, 0, 0.4); padding: 10px; border-radius: 8px; margin-top: 10px; border-left: 3px solid #00ffcc; font-size: 13px; }
         .no-reply-msg { font-size: 12px; color: #888; font-style: italic; margin-top: 8px; }
+        .btn-delete-user { background: rgba(255, 82, 82, 0.1); color: var(--error-red); border: 1px solid var(--error-red); padding: 6px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 5px; width: fit-content; }
+        .btn-delete-user:hover { background: var(--error-red); color: white; }
+        .clear-all-area { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+        .btn-clear-all { background: transparent; color: #aaa; border: 1px dashed #aaa; padding: 5px 10px; border-radius: 5px; font-size: 11px; cursor: pointer; }
+        .btn-clear-all:hover { color: var(--error-red); border-color: var(--error-red); }
 
-        /* Delete Button for User */
-        .btn-delete-user {
-            background: rgba(255, 82, 82, 0.1);
-            color: var(--error-red);
-            border: 1px solid var(--error-red);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            width: fit-content;
-        }
-
-        .btn-delete-user:hover {
-            background: var(--error-red);
-            color: white;
-        }
-
-        /* Clear All Area */
-        .clear-all-area {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .btn-clear-all {
-            background: transparent;
-            color: #aaa;
-            border: 1px dashed #aaa;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        .btn-clear-all:hover {
-            color: var(--error-red);
-            border-color: var(--error-red);
-        }
-
-        /* Mentor Dashboard Elements (Compact) */
+        /* Mentor Dashboard Elements */
         .dashboard-container { display: none; width: 100%; max-width: 800px; }
-
-        .navbar { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: rgba(0,0,0,0.4); 
-            padding: 12px 15px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--glass-border); 
-        }
-
-        .logout-btn { 
-            background: transparent; 
-            color: var(--error-red); 
-            border: 1px solid var(--error-red); 
-            padding: 6px 12px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 12px; 
-        }
-
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 12px 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+        .logout-btn { background: transparent; color: var(--error-red); border: 1px solid var(--error-red); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight:bold;}
         .logout-btn:hover { background: var(--error-red); color: white; }
-
-        .master-panel { 
-            background: rgba(255, 215, 0, 0.1); 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--gold-text); 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-        }
-
+        .master-panel { background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--gold-text); display: flex; align-items: center; justify-content: space-between; flex-direction: column; align-items: stretch; gap: 15px;}
         .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -519,16 +329,9 @@
         input:checked + .slider { background-color: var(--gold-text); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        .request-card { 
-            background: rgba(25, 25, 25, 0.95); 
-            padding: 15px; 
-            border-radius: 15px; 
-            margin-bottom: 15px; 
-            border-left: 4px solid var(--primary-glow); 
-            position: relative; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-        }
+        .mentor-list-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-top: 5px; font-size: 12px; border: 1px solid var(--glass-border); }
 
+        .request-card { background: rgba(25, 25, 25, 0.95); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 4px solid var(--primary-glow); position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .card-time { position: absolute; top: 12px; right: 15px; font-size: 10px; color: #aaa; }
         .badge-audition { background: var(--gold-text); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-left: 6px; text-transform: uppercase; }
 
@@ -548,55 +351,25 @@
 
         #upload-status { text-align: center; margin-top: 12px; font-weight: bold; font-size: 13px; }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 10px; }
-
-        /* --- DESKTOP & LAPTOP OPTIMIZATIONS --- */
-        @media (min-width: 768px) {
-            body { 
-                padding: 40px 20px 80px 20px; 
-                align-items: center; 
-            }
-            .main-container { 
-                padding: 40px; 
-            }
-            .logo-title { font-size: 55px; }
-            .subtitle { font-size: 18px; margin-bottom: 25px; }
-            .input-label { font-size: 15px; margin: 15px 0 8px 0; }
-            input[type="text"], select, textarea { padding: 15px; font-size: 16px; margin-bottom: 20px; }
-            .u-tab { padding: 15px 10px; font-size: 18px; } 
-            .btn-action { padding: 18px; font-size: 18px; }
-            .info-card { padding: 20px; font-size: 15px; line-height: 1.6; }
-            .user-feedback-card { padding: 25px; }
-            .yt-banner { padding: 12px 25px; font-size: 15px; }
-        }
-
-        /* --- INTERACTIVE TUTORIAL OVERLAY STYLES --- */
+        /* --- INTERACTIVE TUTORIAL OVERLAY STYLES (NO BLUR, ONLY HIGHLIGHT) --- */
+        
         .interactive-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); z-index: 9998; backdrop-filter: blur(3px);
+            background: transparent; z-index: 9990; 
+            pointer-events: none; /* Allows clicking anywhere on the screen */
         }
         
         .highlighted-for-tutorial {
             position: relative !important;
             z-index: 9999 !important;
-            box-shadow: 0 0 0 5px rgba(0, 210, 255, 0.5), 0 0 30px rgba(0, 210, 255, 1) !important;
-            pointer-events: auto !important; 
-            background: var(--dark-bg) !important; 
-            border-radius: 12px;
+            box-shadow: 0 0 0 4px var(--primary-glow), 0 0 30px rgba(0, 210, 255, 0.9) !important;
             animation: pulseHighlight 1.5s infinite alternate;
-        }
-        
-        input.highlighted-for-tutorial {
-            background: #fff !important; 
-            color: #000 !important;
+            border-radius: 10px !important;
         }
 
         @keyframes pulseHighlight {
-            0% { box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.4), 0 0 15px rgba(0, 210, 255, 0.6); transform: scale(1); }
-            100% { box-shadow: 0 0 0 6px rgba(0, 210, 255, 0.8), 0 0 30px rgba(0, 210, 255, 1); transform: scale(1.02); }
+            0% { box-shadow: 0 0 0 2px var(--primary-glow), 0 0 10px rgba(0, 210, 255, 0.4); }
+            100% { box-shadow: 0 0 0 5px var(--primary-glow), 0 0 25px rgba(0, 210, 255, 1); }
         }
 
         .tutorial-tooltip-fixed {
@@ -605,18 +378,19 @@
             border-radius: 15px; border: 2px solid var(--primary-glow);
             box-shadow: 0 15px 40px rgba(0,0,0,0.9); z-index: 10000;
             text-align: center;
+            pointer-events: auto; /* CRITICAL: Allows clicking the NEXT button */
         }
         
         .tut-text { font-size: 15px; line-height: 1.5; color: #fff; margin-bottom: 15px; }
         .tut-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
 
-        /* --- GOOGLE AD BANNER DEMO (NEW) --- */
+        /* GOOGLE AD BANNER */
         .google-ad-banner {
             position: fixed;
-            bottom: 0; /* Ekdom niche atke dewa holo jate kono extra jayga na khay */
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 320px; /* Google er sobcheye choto standard ad size */
+            width: 320px;
             height: 50px;
             background: transparent; 
             border: none;
@@ -625,8 +399,8 @@
             align-items: center;
             padding: 0;
             z-index: 9997; 
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3); /* Chotto shadow */
-            border-top-left-radius: 8px; /* Sudhu oporer konagulo ektu gol thakbe */
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             overflow: hidden;
         }
@@ -644,40 +418,15 @@
             position: relative;
             text-decoration: none;
         }
-        .ad-badge-top {
-            font-size: 9px;
-            background: #f4b400;
-            color: #fff;
-            padding: 2px 5px;
-            border-bottom-right-radius: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-        .ad-close-btn {
-            position: absolute;
-            top: 2px;
-            right: 5px;
-            font-size: 14px;
-            color: #999;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
+        .ad-badge-top { font-size: 9px; background: #f4b400; color: #fff; padding: 2px 5px; border-bottom-right-radius: 5px; position: absolute; top: 0; left: 0; font-weight: bold; letter-spacing: 0.5px; }
+        .ad-close-btn { position: absolute; top: 2px; right: 5px; font-size: 14px; color: #999; cursor: pointer; background: none; border: none; }
         .ad-close-btn:hover { color: #333; }
-        .demo-ad-content img {
-            width: 25px; /* Icon ta ektu choto kora holo */
-            height: 25px;
-            margin-right: 8px;
-            border-radius: 4px;
-        }
+        .demo-ad-content img { width: 25px; height: 25px; margin-right: 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-<!-- INTERACTIVE TUTORIAL OVERLAY -->
+<!-- INTERACTIVE TUTORIAL TOOLTIP & OVERLAY -->
 <div id="interactiveOverlay" class="interactive-overlay"></div>
 <div id="tutorialTooltip" class="tutorial-tooltip-fixed">
     <div id="tutorialText" class="tut-text"></div>
@@ -695,7 +444,6 @@
 
 <!-- GOOGLE AD BANNER DEMO -->
 <div class="google-ad-banner" id="adBannerDemo">
-    <!-- This is a placeholder that looks exactly like a Google 320x50 Banner Ad -->
     <a href="#" class="demo-ad-content" onclick="alert('এটি একটি ডেমো অ্যাড! আসল অ্যাড চালু হলে এখানে ক্লিক করলে ইউজার স্পন্সরের পেজে চলে যাবে এবং আপনি ইনকাম করবেন।')">
         <div class="ad-badge-top">Ad</div>
         <button class="ad-close-btn" onclick="event.stopPropagation(); document.getElementById('adBannerDemo').style.display='none';">&times;</button>
@@ -709,15 +457,15 @@
 
 <!-- 1. USER INTERFACE -->
 <div class="main-container" id="userPanel">
-    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
-    <button onclick="startInteractiveTutorial(true)" class="btn-tutorial"><i class="fas fa-play-circle"></i> ব্যবহার বিধি</button>
+    <!-- User Tutorial Button (Play Button - Top Right) -->
+    <button onclick="startInteractiveTutorial(true)" class="btn-tutorial btn-tut-focus" title="কীভাবে কাজ করবেন দেখুন"><i class="fas fa-play-circle"></i> ব্যবহার বিধি</button>
     
-    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
+    <div class="audition-banner" id="bannerAudition">✨ অডিশন চলছে! আপনার অডিও ফাইল পাঠিয়ে দিন ✨</div>
 
     <div class="title-wrapper">
         <h1 class="logo-title"><span class="title-icon">🎙️</span>প্রথম কথা</h1>
     </div>
-    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
+    <p class="subtitle">স্মার্ট অডিও কোয়ালিটি পোর্টাল</p>
 
     <!-- YouTube Link Notice -->
     <a href="https://www.youtube.com/@prothomkotha1" target="_blank" rel="noopener noreferrer" class="yt-banner">
@@ -735,7 +483,7 @@
     <!-- Upload Audio Section -->
     <div id="uploadSection">
         <div class="info-card">
-            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
+            <i class="fas fa-shield-alt"></i> <b>নিয়মাবলী:</b><br>
             ১. ফাইল সাইজ সর্বোচ্চ <b>১০০ MB</b> হতে হবে।<br>
             ২. ফরম্যাট: <b>MP3, WAV, M4A, AAC</b><br>
             ৩. এডিট করা ফাইল দিলে সিস্টেম সেটি ডিটেক্ট করবে।<br>
@@ -755,8 +503,9 @@
             </div>
 
             <label class="input-label">যাকে পাঠাতে চান:</label>
-            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 11px; margin-bottom: 8px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
+            <div id="auditionMentorWarning" style="display:none; color: var(--gold-text); font-size: 11px; margin-bottom: 8px;">* অডিশনের জন্য নির্ধারিত বিচারকরা অটোমেটিক সিলেক্ট হয়ে গেছে।</div>
             <div class="mentor-grid" id="mentorGridBox">
+                <!-- Mentors loaded dynamically -->
                 <label class="mentor-row">
                     <div class="mentor-info">
                         <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="mentor-cb">
@@ -788,7 +537,7 @@
 
             <label class="input-label">অডিও ফাইল (MP3/WAV/M4A):</label>
             <input type="file" id="audioFile" accept=".mp3, .wav, .m4a, .aac, audio/*" required style="display:none;">
-            <button type="button" class="btn-action" id="btnAudioSelect" style="background: #1a1a1a; color: #fff; margin-bottom: 8px; font-size: 14px; padding: 12px;" onclick="document.getElementById('audioFile').click()">
+            <button type="button" class="btn-action" id="btnAudioSelect" style="background: rgba(255,255,255,0.1); color: #fff; margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid rgba(255,255,255,0.2);" onclick="document.getElementById('audioFile').click()">
                 <i class="fas fa-file-audio"></i> অডিও সিলেক্ট করুন
             </button>
             <p style="font-size:11px; color:#aaa; margin-bottom:20px; text-align:center;">* iPhone ইউজাররা অডিওটি আগে 'Files' অ্যাপে সেভ করে তারপর সিলেক্ট করুন।</p>
@@ -809,7 +558,7 @@
     <div id="questionSection" style="display:none;">
         <div class="info-card" style="border-left-color: #ff9800; color: #ffca28;">
             <i class="fas fa-question-circle"></i> <b>ক্লাস সম্পর্কিত প্রশ্ন:</b><br>
-            ক্লাস শেষে আপনার কোনো প্রশ্ন থাকলে তা এখানে লিখে অথবা ভয়েস রেকর্ড করে আপনার মেন্টরকে পাঠাতে পারেন।
+            ক্লাস শেষে আপনার কোনো প্রশ্ন থাকলে তা এখানে লিখে অথবা ভয়েস রেকর্ড করে আপনার মেন্টরকে পাঠাতে পারেন।
         </div>
 
         <form id="questionForm">
@@ -817,7 +566,8 @@
             <input type="text" id="qName" placeholder="আপনার নাম লিখুন">
 
             <label class="input-label">কাকে প্রশ্ন করতে চান?</label>
-            <div class="mentor-grid">
+            <div class="mentor-grid" id="questionMentorGridBox">
+                <!-- Same mentors -->
                 <label class="mentor-row">
                     <div class="mentor-info">
                         <input type="checkbox" value="সুচিস্মিতা দাস নেহা" class="q-mentor-cb">
@@ -841,10 +591,10 @@
             <label class="input-label">প্রশ্ন লিখে পাঠান:</label>
             <textarea id="qText" placeholder="আপনার প্রশ্নটি এখানে লিখুন..."></textarea>
 
-            <p style="text-align: center; color: var(--text-muted); margin: 8px 0; font-size: 12px;">অথবা</p>
+            <p style="text-align: center; color: #aaa; margin: 8px 0; font-size: 12px;">অথবা</p>
 
             <button type="button" id="qVoiceBtn" class="voice-btn compact-box" style="margin-bottom: 10px; background: #3a7bd5;" onclick="toggleUserQuestionRecord()">
-                <i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন
+                <i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন
             </button>
             <div id="qVoiceStatus" style="text-align:center; font-size:11px; color:var(--success-green); margin-bottom: 15px; font-weight: bold;"></div>
 
@@ -858,7 +608,7 @@
         <h3 style="color:var(--primary-glow); margin-bottom: 15px; text-align: center; font-size: 18px;">আপনার পাঠানো অডিও ও প্রশ্নের রিপ্লাই</h3>
         
         <!-- User Auto Delete Settings with Custom Option -->
-        <div style="background: rgba(255,255,255,0.05); padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border);">
+        <div id="userDeleteSettings" style="background: rgba(255,255,255,0.05); padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border);">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                 <div>
                     <span style="font-size: 14px; font-weight: bold; color: var(--gold-text); display: block;">হিস্ট্রি অটো-ডিলিট সেটিংস</span>
@@ -875,9 +625,9 @@
             
             <!-- Custom Setup Box (Hidden by default) -->
             <div id="customAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-glow); align-items: center; gap: 10px; flex-wrap: wrap;">
-                <span style="font-size: 12px; color: #fff;">কত সময় পর ডিলিট হবে?</span>
-                <input type="number" id="customDelNum" min="1" placeholder="যেমন: 5" style="width: 80px; padding: 6px; font-size: 12px; margin: 0;">
-                <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 12px; margin: 0;">
+                <span style="font-size: 12px; color: #fff;">কত সময় পর ডিলিট হবে?</span>
+                <input type="number" id="customDelNum" min="1" placeholder="যেমন: 5" style="width: 80px; padding: 6px; font-size: 12px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
+                <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 12px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
                     <option value="24">দিন (Days)</option>
                     <option value="720">মাস (Months)</option>
                 </select>
@@ -885,7 +635,7 @@
             </div>
         </div>
 
-        <p style="font-size: 12px; color: #aaa; text-align: center; margin-bottom: 15px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে নিরাপদ।)</p>
+        <p style="font-size: 12px; color: #aaa; text-align: center; margin-bottom: 15px;">(এই তথ্য শুধু আপনার ব্রাউজারেই সেভ থাকে। অন্য কেউ দেখতে পাবে না, নিরাপদ।)</p>
         
         <div class="clear-all-area" id="clearAllContainer" style="display: none;">
             <button class="btn-clear-all" onclick="clearMyHistory()"><i class="fas fa-trash-alt"></i> সব হিস্ট্রি মুছুন</button>
@@ -896,7 +646,7 @@
         </div>
     </div>
 
-    <!-- Updated Admin Portal Trigger -->
+    <!-- Admin Portal Trigger -->
     <button id="btnMentorLogin" class="btn-admin">
         <i class="fas fa-user-shield"></i> মেন্টর / অ্যাডমিন প্যানেল
     </button>
@@ -907,12 +657,14 @@
     <div class="navbar">
         <span id="nameTag" style="color: var(--primary-glow); font-weight: bold; font-size: 15px;"></span>
         <div style="display:flex; gap:10px; align-items:center;">
-            <button onclick="startAdminTutorial(true)" class="logout-btn" style="color:var(--gold-text); border-color:var(--gold-text);"><i class="fas fa-play-circle"></i> গাইড</button>
+            <!-- Admin Tutorial Button -->
+            <button id="adminTutorialBtn" onclick="startAdminTutorial(true)" class="btn-tut-focus" style="background:none; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; gap:5px; box-shadow:0 2px 5px rgba(255,152,0,0.3);" title="কীভাবে কাজ করবেন দেখুন"><i class="fas fa-play-circle"></i> অ্যাডমিন গাইড</button>
+
             <button onclick="exitDashboard()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
         </div>
     </div>
 
-    <div class="master-panel" id="adminControls" style="display: none; flex-direction: column; align-items: stretch;">
+    <div class="master-panel" id="adminControls" style="display: none;">
         <div style="display:flex; align-items:center; justify-content: space-between; width: 100%;">
             <div style="display:flex; align-items:center; gap:10px;">
                 <i class="fas fa-fire-alt" style="font-size: 20px; color: var(--gold-text);"></i>
@@ -929,11 +681,44 @@
         
         <div id="adminAuditionMentors" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 12px;">
             <p style="font-size: 12px; color: var(--gold-text); margin-bottom: 8px;">অডিশনের বিচারক প্যানেল সিলেক্ট করুন:</p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; color: #fff;">
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সুচিস্মিতা দাস নেহা" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> নেহা</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="বিদিশা মুখার্জি" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> বিদিশা</label>
-                <label><input type="checkbox" class="admin-aud-mentor-cb" value="সঞ্জিত মল্লিক" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> সঞ্জিত</label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; color: #fff;" id="auditionMentorCheckboxes">
+                <!-- Mentors dynamically loaded here for Audition -->
             </div>
+        </div>
+
+        <div style="margin-top: 15px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 15px;">
+            <p style="font-weight: bold; color: var(--primary-glow); margin-bottom: 8px; font-size:12px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
+            <input type="text" id="newMentorName" placeholder="মেন্টরের নাম" style="font-size:12px; padding:6px; margin-bottom:5px; background:rgba(255,255,255,0.9); color:#000;">
+            <input type="text" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="font-size:12px; padding:6px; margin-bottom:5px; background:rgba(255,255,255,0.9); color:#000;">
+            <button onclick="addMentor()" class="btn-action" style="padding: 6px; font-size: 12px; border-radius:6px;">মেন্টর যোগ করুন</button>
+            <div id="mentorListUI" style="margin-top:10px;"></div>
+        </div>
+    </div>
+
+    <!-- Admin History Auto-Hide/Delete Settings -->
+    <div class="info-card" id="adminDeleteSettings" style="display: none; background: rgba(255,255,255,0.05); border-color: var(--secondary-glow); padding: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <b style="font-size: 13px; color: var(--secondary-glow); display: block;"><i class="fas fa-history"></i> ইনবক্স অটো-হাইড সেটিংস</b>
+                <span style="font-size: 10px; color: #aaa;">কতদিন পর ইনবক্স থেকে ফাইল হাইড হবে?</span>
+            </div>
+            <select id="adminAutoDeleteSelect" onchange="handleAdminAutoDeleteChange(this.value)" style="width: auto; margin: 0; padding: 6px 10px; font-size: 12px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--secondary-glow); border-radius: 8px; outline: none;">
+                <option value="168">৭ দিন পর (ডিফল্ট)</option>
+                <option value="48">২ দিন পর</option>
+                <option value="720">১ মাস (৩০ দিন) পর</option>
+                <option value="never">কখনো না (আজীবন)</option>
+                <option value="custom">নিজের মতো সেট করুন (Custom)</option>
+            </select>
+        </div>
+        <!-- Custom Setup Box Admin -->
+        <div id="customAdminAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--secondary-glow); align-items: center; gap: 10px; flex-wrap: wrap; margin-top:10px;">
+            <span style="font-size: 12px; color: #fff;">কত সময় পর হাইড হবে?</span>
+            <input type="number" id="customAdminDelNum" min="1" placeholder="যেমন: 5" style="width: 80px; padding: 6px; font-size: 12px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
+            <select id="customAdminDelUnit" style="width: auto; padding: 6px; font-size: 12px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
+                <option value="24">দিন (Days)</option>
+                <option value="720">মাস (Months)</option>
+            </select>
+            <button class="btn-action" style="width: auto; padding: 6px 15px; font-size: 12px;" onclick="saveCustomAdminAutoDelete()">সেভ করুন</button>
         </div>
     </div>
 
@@ -996,6 +781,17 @@
     let qRecorder = null;
     let qChunks = [];
 
+    // Local Storage for User Privacy
+    let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
+    let autoDeletePref = localStorage.getItem('pk_auto_delete_pref') || 'never'; // Default NEVER for User
+
+    // Admin Auto Delete Pref
+    let adminAutoDeletePref = '168'; // Default 7 days for Admin
+
+    // --- INTERACTIVE TUTORIAL VARIABLES ---
+    let currentTStep = 0;
+    let currentAdminTStep = 0;
+
     // --- App Fallback Variables for Voice ---
     let fallbackQInput = document.createElement('input');
     fallbackQInput.type = 'file';
@@ -1017,7 +813,7 @@
             const data = await res.json();
             if(data.secure_url) {
                 qVoiceUrl = data.secure_url;
-                status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+                status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
             } else {
                 status.innerHTML = "❌ আপলোডে সমস্যা!";
             }
@@ -1060,36 +856,40 @@
     };
     // ----------------------------------------
 
-    // Local Storage for User Privacy
-    let myAudioIds = JSON.parse(localStorage.getItem('my_prothom_kotha_audios')) || [];
-    let autoDeletePref = localStorage.getItem('pk_auto_delete_pref') || 'never'; // Default NEVER
-
-    // --- INTERACTIVE TUTORIAL VARIABLES ---
-    let currentTStep = 0;
-    let currentAdminTStep = 0;
-
     window.onload = async function() {
-        // Start Interactive Tutorial if not skipped
-        startInteractiveTutorial(false);
-        
         initAutoDeleteUI();
 
-        // Tutorial Enter Key Listener for Name Input
-        document.getElementById('userName').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter' && currentTStep === 1) {
-                e.preventDefault();
-                nextTStep();
+        // Check Mentor List
+        getRef('settings').doc('mentors').onSnapshot(doc => {
+            if(doc.exists) {
+                mentorRoles = doc.data().roles || { "Master2002": "Master Admin" };
+                
+                // Initialize default mentors if missing
+                if(!doc.data().defaultInitialized) {
+                    mentorRoles["Neha123"] = "সুচিস্মিতা দাস নেহা";
+                    mentorRoles["Bidisha123"] = "বিদিশা মুখার্জি";
+                    mentorRoles["Sanjit123"] = "সঞ্জিত মল্লিক";
+                    getRef('settings').doc('mentors').set({ 
+                        roles: mentorRoles, 
+                        defaultInitialized: true 
+                    });
+                }
+            } else {
+                mentorRoles = { "Master2002": "Master Admin", "Neha123": "সুচিস্মিতা দাস নেহা", "Bidisha123": "বিদিশা মুখার্জি", "Sanjit123": "সঞ্জিত মল্লিক" };
+                getRef('settings').doc('mentors').set({ roles: mentorRoles, defaultInitialized: true });
+            }
+            updateMentorsUI();
+            if(isMentor && isMaster) {
+                renderMentorList();
             }
         });
 
-        // Tutorial Checkbox Listener for Mentor Grid
-        document.querySelectorAll('.mentor-cb').forEach(cb => {
-            cb.addEventListener('change', () => {
-                if(currentTStep === 2) {
-                    setTimeout(nextTStep, 300); // 300ms delay to feel smooth
-                }
-            });
-        });
+        // Start User Interactive Tutorial automatically
+        setTimeout(() => {
+            if(!isMentor) {
+                startInteractiveTutorial(false);
+            }
+        }, 1000);
 
         try {
             await auth.signInAnonymously();
@@ -1108,13 +908,47 @@
         });
     };
 
+    function updateMentorsUI() {
+        let gridHtml = '';
+        let audGridHtml = '';
+        for(let pass in mentorRoles) {
+            if(pass !== "Master2002") {
+                const mName = mentorRoles[pass];
+                
+                // User normal mentor grid
+                gridHtml += `
+                <label class="mentor-row">
+                    <div class="mentor-info">
+                        <input type="checkbox" value="${mName}" class="mentor-cb q-mentor-cb">
+                        <span>${mName}</span>
+                    </div>
+                    <div class="status-pill" id="stat_${mName}">
+                        <span class="dot dot-offline"></span> Offline
+                    </div>
+                </label>`;
+
+                // Master Admin audition mentor checkboxes
+                audGridHtml += `
+                <label><input type="checkbox" class="admin-aud-mentor-cb" value="${mName}" onchange="saveAuditionMentors()" style="accent-color: var(--gold-text); width: 14px; height: 14px;"> ${mName.split(' ')[0]}</label>`;
+            }
+        }
+        
+        const mgBox = document.getElementById('mentorGridBox');
+        if(mgBox) mgBox.innerHTML = gridHtml;
+        const qmBox = document.getElementById('questionMentorGridBox');
+        if(qmBox) qmBox.innerHTML = gridHtml;
+        
+        const admAudBox = document.getElementById('auditionMentorCheckboxes');
+        if(admAudBox) admAudBox.innerHTML = audGridHtml;
+    }
+
     function cleanUpOldMyAudios() {}
 
-    // --- INTERACTIVE TUTORIAL LOGIC ---
+    // --- INTERACTIVE TUTORIAL LOGIC (UPDATED FOR SUPER CLEAN HIGHLIGHT) ---
     function startInteractiveTutorial(forcePlay = false) {
-        // Jodi user manually click na kore ebang aage theke skip kora thake, tahole start hobe na
         if(!forcePlay && localStorage.getItem('pk_skip_tutorial') === 'true') return;
         
+        document.body.classList.add('tutorial-on'); // This removes background blur from main container
         document.getElementById('interactiveOverlay').style.display = 'block';
         document.getElementById('tutorialTooltip').style.display = 'block';
         currentTStep = 1;
@@ -1127,44 +961,44 @@
         const nextBtn = document.getElementById('tutNextBtn');
         const closeBtn = document.getElementById('tutCloseBtn');
         
-        nextBtn.innerHTML = "পরের ধাপ <i class='fas fa-arrow-right'></i>"; // Reset text
+        nextBtn.innerHTML = "পরের ধাপ <i class='fas fa-arrow-right'></i>"; 
         nextBtn.onclick = nextTStep;
         closeBtn.onclick = skipTutorial;
         
         if (step === 1) {
-            switchUserTab('upload'); // নিশ্চিত করা যে প্রথম ট্যাবেই আছে
+            switchUserTab('upload'); 
             const el = document.getElementById('userName');
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ১: নাম লিখুন</b><br>প্রথমে এখানে ক্লিক করে আপনার নামটি লিখুন।<br><small style='color:var(--gold-text);'>(লেখা হলে কীবোর্ডের <b>Enter</b> চাপুন অথবা নিচের <b>পরের ধাপ</b> বাটনে ক্লিক করুন)</small>";
+            textDisplay.innerHTML = "<b>ধাপ ১: নাম লিখুন</b><br>প্রথমে আপনার নামটি টাইপ করুন।<br><small style='color:var(--gold-text);'>(লেখা হলে <b>পরের ধাপ</b> বাটনে ক্লিক করুন)</small>";
             el.focus();
         } 
         else if (step === 2) {
             const el = document.getElementById('mentorGridBox');
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ২: মেন্টর সিলেক্ট</b><br>যাকে অডিও পাঠাবেন, তার নামের পাশে থাকা গোল ঘরে টিক (✔) দিন।<br><small style='color:var(--gold-text);'>(সিলেক্ট করলেই অটোমেটিক পরের ধাপে চলে যাবে)</small>";
+            textDisplay.innerHTML = "<b>ধাপ ২: মেন্টর সিলেক্ট</b><br>যাকে অডিও পাঠাবেন, তার নামের পাশে থাকা গোল ঘরে টিক (✔) দিন।";
         } 
         else if (step === 3) {
             const el = document.getElementById('btnAudioSelect');
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ৩: ফাইল বা রেকর্ড</b><br>এই বাটনে ক্লিক করে আপনার আগে থেকে রেকর্ড করা অডিওটি সিলেক্ট করুন।<br><small style='color:var(--gold-text);'>(টিউটোরিয়ালের জন্য এখন <b>পরের ধাপ</b> বাটনে ক্লিক করুন)</small>";
+            textDisplay.innerHTML = "<b>ধাপ ৩: ফাইল বা রেকর্ড</b><br>এই বাটনে ক্লিক করে আপনার আগে থেকে রেকর্ড করা অডিওটি সিলেক্ট করুন।";
         } 
         else if (step === 4) {
             const el = document.getElementById('btnUpload');
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ৪: জমা দিন</b><br>সবশেষে নিচের এই বাটনে ক্লিক করলেই আপনার ফাইলটি মেন্টরের কাছে চলে যাবে!";
+            textDisplay.innerHTML = "<b>ধাপ ৪: জমা দিন</b><br>সবশেষে <b>'প্রথমে ফাইল সিলেক্ট করুন'</b> বাটনটি ফাইল সিলেক্ট করার পর <b>'ফাইল পাঠান'</b>-এ পরিণত হবে। ক্লিক করলেই অডিও চলে যাবে!";
         } 
         else if (step === 5) {
-            switchUserTab('question'); // ২য় ট্যাবে সুইচ করা হলো
+            switchUserTab('question'); 
             const el = document.getElementById('questionForm');
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ৫: প্রশ্ন করুন</b><br><b>'প্রশ্ন করুন'</b> ট্যাবে এসে আপনি ক্লাস নিয়ে যেকোনো প্রশ্ন লিখে অথবা <b>ভয়েস রেকর্ড</b> করে মেন্টরকে পাঠাতে পারবেন।";
+            textDisplay.innerHTML = "<b>ধাপ ৫: প্রশ্ন করুন</b><br><b>'প্রশ্ন করুন'</b> ট্যাবে এসে আপনি ক্লাস নিয়ে যেকোনো প্রশ্ন লিখে অথবা <b>ভয়েস রেকর্ড</b> করে মেন্টরকে পাঠাতে পারবেন।";
         }
         else if (step === 6) {
-            switchUserTab('feedback'); // ৩য় ট্যাবে সুইচ করা হলো
-            const el = document.getElementById('feedbackSection').children[1]; // অটো-ডিলিট সেটিংস বক্স
+            switchUserTab('feedback'); 
+            const el = document.getElementById('userDeleteSettings'); 
             el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>শেষ ধাপ: ফিডব্যাক ও সেটিংস</b><br><b>'আমার ফিডব্যাক'</b> ট্যাবে আপনি মেন্টরদের রিপ্লাই দেখতে পাবেন। আর এখান থেকেই আপনার ডাটা অটো-ডিলিট হওয়ার সময় সেট করতে পারবেন!<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি শিখে গেছেন!</span>";
-            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
+            textDisplay.innerHTML = "<b>শেষ ধাপ: ফিডব্যাক ও সেটিংস</b><br><b>'আমার ফিডব্যাক'</b> ট্যাবে আপনি মেন্টরদের রিপ্লাই দেখতে পাবেন। আর এখান থেকেই আপনার ডাটা অটো-ডিলিট হওয়ার সময় সেট করতে পারবেন!<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি শিখে গেছেন!</span>";
+            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
         } 
         else {
             skipTutorial();
@@ -1172,7 +1006,7 @@
     }
 
     function nextTStep() {
-        if(currentTStep >= 6) { // ধাপ ৪ থেকে বাড়িয়ে ৬ করা হলো
+        if(currentTStep >= 6) { 
             skipTutorial();
         } else {
             currentTStep++;
@@ -1181,10 +1015,11 @@
     }
 
     function skipTutorial() {
+        document.body.classList.remove('tutorial-on');
         document.getElementById('interactiveOverlay').style.display = 'none';
         document.getElementById('tutorialTooltip').style.display = 'none';
         document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
-        switchUserTab('upload'); // টিউটোরিয়াল শেষে আবার মেইন পেজে ফিরিয়ে আনা হলো
+        switchUserTab('upload'); 
     }
 
     function tutDontShow(isChecked) {
@@ -1202,6 +1037,7 @@
     function startAdminTutorial(forcePlay = false) {
         if(!forcePlay && localStorage.getItem('pk_skip_admin_tutorial') === 'true') return;
         
+        document.body.classList.add('tutorial-on');
         document.getElementById('interactiveOverlay').style.display = 'block';
         document.getElementById('tutorialTooltip').style.display = 'block';
         document.getElementById('dontShowCb').checked = localStorage.getItem('pk_skip_admin_tutorial') === 'true';
@@ -1225,15 +1061,20 @@
             textDisplay.innerHTML = "<b>ধাপ ১: কন্ট্রোল প্যানেল</b><br>এখান থেকে আপনি আপনার অনলাইন স্ট্যাটাস সেট করতে পারবেন (অথবা মাস্টার হলে অডিশন লাইভ করতে পারবেন)।";
         } 
         else if (step === 2) {
+            const el = document.getElementById('adminDeleteSettings');
+            if(el) el.classList.add('highlighted-for-tutorial');
+            textDisplay.innerHTML = "<b>ধাপ ২: অটো-হাইড সেটিংস</b><br>এখান থেকে আপনি সিলেক্ট করতে পারবেন আপনার ইনবক্স থেকে কতদিন পর ফাইল অটোমেটিক মুছে যাবে বা হাইড হবে।";
+        }
+        else if (step === 3) {
             const el = document.getElementById('adminInboxHeader');
             if(el) el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ২: ইনবক্স</b><br>ইউজারদের পাঠানো সমস্ত ফাইল এবং প্রশ্ন এখানে এসে জমা হবে। ডানদিকে 'মোট জমা' সংখ্যা দেখতে পাবেন।";
+            textDisplay.innerHTML = "<b>ধাপ ৩: ইনবক্স</b><br>ইউজারদের পাঠানো সমস্ত ফাইল এবং প্রশ্ন এখানে এসে জমা হবে। ডানদিকে 'মোট জমা' সংখ্যা দেখতে পাবেন।";
         } 
-        else if (step === 3) {
+        else if (step === 4) {
             const el = document.getElementById('inboxList');
             if(el) el.classList.add('highlighted-for-tutorial');
-            textDisplay.innerHTML = "<b>ধাপ ৩: ফিডব্যাক দেওয়া</b><br>যেকোনো ফাইলের নিচে <b>টেক্সট</b> বা <b>ভয়েস রেকর্ড</b> ট্যাব সিলেক্ট করে স্টুডেন্টকে ফিডব্যাক দিতে পারবেন। কাজ শেষ হলে 'মুছুন' এ ক্লিক করবেন।<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি তৈরি!</span>";
-            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
+            textDisplay.innerHTML = "<b>শেষ ধাপ: ফিডব্যাক দেওয়া</b><br>যেকোনো ফাইলের নিচে <b>টেক্সট</b> বা <b>ভয়েস রেকর্ড</b> ট্যাব সিলেক্ট করে স্টুডেন্টকে ফিডব্যাক দিতে পারবেন। কাজ শেষ হলে 'মুছুন' এ ক্লিক করবেন।<br><br><span style='color:var(--success-green); font-size:18px;'>🎉 আপনি তৈরি!</span>";
+            nextBtn.innerHTML = "টিউটোরিয়াল শেষ করুন <i class='fas fa-check'></i>";
         } 
         else {
             skipAdminTutorial();
@@ -1241,7 +1082,7 @@
     }
 
     function nextAdminTStep() {
-        if(currentAdminTStep >= 3) {
+        if(currentAdminTStep >= 4) {
             skipAdminTutorial();
         } else {
             currentAdminTStep++;
@@ -1250,6 +1091,7 @@
     }
 
     function skipAdminTutorial() {
+        document.body.classList.remove('tutorial-on');
         document.getElementById('interactiveOverlay').style.display = 'none';
         document.getElementById('tutorialTooltip').style.display = 'none';
         document.querySelectorAll('.highlighted-for-tutorial').forEach(el => el.classList.remove('highlighted-for-tutorial'));
@@ -1276,7 +1118,7 @@
         }
     }
 
-    // --- AUTO DELETE LOGIC ---
+    // --- USER AUTO DELETE LOGIC ---
     function initAutoDeleteUI() {
         const select = document.getElementById('autoDeleteSelect');
         const customBox = document.getElementById('customAutoDeleteBox');
@@ -1290,7 +1132,6 @@
             select.value = 'custom';
             customBox.style.display = 'flex';
             
-            // Populate custom fields based on saved hours
             let hours = parseInt(autoDeletePref);
             if (!isNaN(hours)) {
                 if (hours >= 720 && hours % 720 === 0) {
@@ -1321,7 +1162,7 @@
         const unit = parseInt(document.getElementById('customDelUnit').value); 
         
         if (isNaN(num) || num <= 0) {
-            alert("দয়া করে সঠিক সংখ্যা লিখুন!");
+            alert("দয়া করে সঠিক সংখ্যা লিখুন!");
             return;
         }
         
@@ -1333,6 +1174,65 @@
         loadMyFeedback();
     }
 
+    // --- ADMIN AUTO DELETE LOGIC ---
+    function initAdminAutoDeleteUI() {
+        const select = document.getElementById('adminAutoDeleteSelect');
+        const customBox = document.getElementById('customAdminAutoDeleteBox');
+        if (!select) return;
+
+        adminAutoDeletePref = localStorage.getItem('pk_admin_auto_delete_' + activeMentor) || '168'; // Default 7 days
+
+        const standardValues = ['never', '48', '168', '720'];
+        if (standardValues.includes(adminAutoDeletePref)) {
+            select.value = adminAutoDeletePref;
+            customBox.style.display = 'none';
+        } else {
+            select.value = 'custom';
+            customBox.style.display = 'flex';
+            
+            let hours = parseInt(adminAutoDeletePref);
+            if (!isNaN(hours)) {
+                if (hours >= 720 && hours % 720 === 0) {
+                    document.getElementById('customAdminDelNum').value = hours / 720;
+                    document.getElementById('customAdminDelUnit').value = '720';
+                } else {
+                    document.getElementById('customAdminDelNum').value = Math.max(1, Math.round(hours / 24));
+                    document.getElementById('customAdminDelUnit').value = '24';
+                }
+            }
+        }
+    }
+
+    function handleAdminAutoDeleteChange(val) {
+        const customBox = document.getElementById('customAdminAutoDeleteBox');
+        if (val === 'custom') {
+            customBox.style.display = 'flex';
+        } else {
+            customBox.style.display = 'none';
+            adminAutoDeletePref = val;
+            localStorage.setItem('pk_admin_auto_delete_' + activeMentor, val);
+            startInboxListener(); // Refresh the list
+        }
+    }
+
+    function saveCustomAdminAutoDelete() {
+        const num = parseInt(document.getElementById('customAdminDelNum').value);
+        const unit = parseInt(document.getElementById('customAdminDelUnit').value); 
+        
+        if (isNaN(num) || num <= 0) {
+            alert("দয়া করে সঠিক সংখ্যা লিখুন!");
+            return;
+        }
+        
+        const totalHours = num * unit;
+        adminAutoDeletePref = totalHours.toString();
+        localStorage.setItem('pk_admin_auto_delete_' + activeMentor, adminAutoDeletePref);
+        
+        alert(`✅ আপনার ইনবক্স থেকে ${num} ${unit === 24 ? 'দিন' : 'মাস'} পর ডাটা অটোমেটিক হাইড হবে।`);
+        startInboxListener(); // Refresh the list
+    }
+
+
     // --- USER QUESTION SUBMISSION ---
     async function toggleUserQuestionRecord() {
         const btn = document.getElementById('qVoiceBtn');
@@ -1340,7 +1240,7 @@
 
         if(qRecorder && qRecorder.state === 'recording') {
             qRecorder.stop();
-            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
+            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
             btn.classList.remove('recording');
             status.innerText = "⏳ ক্লাউডে সেভ হচ্ছে...";
             return;
@@ -1371,12 +1271,12 @@
                     const data = await res.json();
                     if(data.secure_url) {
                         qVoiceUrl = data.secure_url;
-                        status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
+                        status.innerHTML = "✅ ভয়েস রেকর্ড যুক্ত হয়েছে!";
                     } else {
                         status.innerHTML = "❌ আপলোডে সমস্যা!";
                     }
                 } catch(e) {
-                    status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
+                    status.innerHTML = "❌ ভয়েস আপলোড ব্যর্থ হয়েছে!";
                 }
             };
 
@@ -1386,8 +1286,8 @@
             status.innerText = "🔴 রেকর্ডিং চলছে...";
         } catch(e) {
             alert("App বা iPhone এর ব্রাউজারে সরাসরি রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে সিলেক্ট করে দিন।");
-            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
-            status.innerText = "রেকর্ডার ওপেন করা হয়েছে...";
+            btn.innerHTML = '<i class="fas fa-microphone"></i> ভয়েস রেকর্ড করে প্রশ্ন করুন';
+            status.innerText = "রেকর্ডার ওপেন করা হয়েছে...";
             fallbackQInput.click();
         }
     }
@@ -1401,7 +1301,7 @@
 
         if(!name) return alert("আপনার নাম লিখুন!");
         if(mentors.length === 0) return alert("যাকে প্রশ্ন করবেন তাকে সিলেক্ট করুন!");
-        if(!text && !qVoiceUrl) return alert("প্রশ্ন লিখে বা ভয়েস রেকর্ড করে জমা দিন!");
+        if(!text && !qVoiceUrl) return alert("প্রশ্ন লিখে বা ভয়েস রেকর্ড করে জমা দিন!");
 
         statusDiv.innerHTML = "⏳ পাঠানো হচ্ছে...";
         document.getElementById('btnQSubmit').disabled = true;
@@ -1547,13 +1447,13 @@
         const isAudition = auditionCheckbox ? auditionCheckbox.checked : false;
         
         if (isAudition && localStorage.getItem('pk_audition_session') === currentAuditionSession) {
-            return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
+            return alert("দুঃখিত! আপনি এই বর্তমান অডিশনে ইতিমধ্যে একটি ফাইল জমা দিয়েছেন। পরবর্তী অডিশনের জন্য অপেক্ষা করুন।");
         }
 
         let mentors = [];
         if (isAudition) {
             mentors = currentAuditionMentors;
-            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
+            if (mentors.length === 0) return alert("অডিশনের জন্য এখনো কোনো বিচারক ঠিক করা হয়নি! দয়া করে অপেক্ষা করুন।");
         } else {
             mentors = Array.from(document.querySelectorAll('.mentor-cb:checked')).map(c => c.value);
         }
@@ -1604,6 +1504,9 @@
                 this.reset();
                 scanBox.style.display = 'none';
                 loadMyFeedback(); 
+                
+                // Advance Tutorial to next step
+                if(currentTStep === 4) nextTStep();
             }
         } catch (err) { 
             statusDiv.innerHTML = "<b style='color:red;'>❌ ব্যর্থ!</b>"; 
@@ -1611,8 +1514,7 @@
         uploadBtn.innerHTML = "ফাইল সিলেক্ট করুন";
     };
 
-    // --- USER SPECIFIC FEEDBACK (PRIVATE TO DEVICE) ---
-    // PERMANENT FOR USERS - Auto delete removed here.
+    // --- USER SPECIFIC FEEDBACK ---
     function loadMyFeedback() {
         const listDiv = document.getElementById('myAudioList');
         const clearAllContainer = document.getElementById('clearAllContainer');
@@ -1695,9 +1597,8 @@
         });
     }
 
-    // Individual Delete Function for User
     window.deleteMyAudio = async function(docId) {
-        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
+        if(confirm("আপনি কি নিশ্চিত এটি মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না।")) {
             try {
                 await getRef('requests').doc(docId).delete();
                 removeLocalAudioId(docId);
@@ -1707,7 +1608,6 @@
         }
     };
 
-    // Clear All Function for User
     window.clearMyHistory = async function() {
         if(myAudioIds.length === 0) return;
         if(confirm("আপনার সমস্ত হিস্ট্রি মুছে ফেলা হবে। আপনি কি নিশ্চিত?")) {
@@ -1730,25 +1630,22 @@
 
     // --- MENTOR DASHBOARD LOGIC ---
     document.getElementById('btnMentorLogin').onclick = function() {
-        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
-        const map = { 
-            "Neha123": "সুচিস্মিতা দাস নেহা", 
-            "Bidisha123": "বিদিশা মুখার্জি", 
-            "Sanjit123": "সঞ্জিত মল্লিক", 
-            "Master2002": "All" 
-        };
+        const pass = prompt("মেন্টর পাসওয়ার্ড দিন:");
 
-        if (map[pass]) {
-            activeMentor = map[pass];
-            isMaster = (activeMentor === "All");
+        if (mentorRoles[pass]) {
+            activeMentor = mentorRoles[pass];
+            isMaster = (activeMentor === "Master Admin" || pass === "Master2002");
 
             document.getElementById('userPanel').style.display = 'none';
             document.getElementById('mentorPanel').style.display = 'block';
             document.getElementById('nameTag').innerText = isMaster ? "👤 অ্যাডমিন" : `👤 ${activeMentor}`;
             
+            initAdminAutoDeleteUI(); // Load admin specific auto delete settings
+
             if (isMaster) {
                 document.getElementById('adminControls').style.display = 'flex';
                 document.getElementById('statusSetter').style.display = 'none';
+                document.getElementById('adminTutorialBtn').style.display = 'none'; // Master der dorkar nei
                 
                 const mentorDiv = document.getElementById('adminAuditionMentors');
                 if (mentorDiv) mentorDiv.style.display = isAuditionLiveGlobal ? 'block' : 'none';
@@ -1757,18 +1654,95 @@
                 });
 
             } else {
+                document.getElementById('adminControls').style.display = 'none';
                 document.getElementById('statusSetter').style.display = 'block';
+                document.getElementById('adminDeleteSettings').style.display = 'block';
+                document.getElementById('adminTutorialBtn').style.display = 'flex'; // Mentor pabe
                 setMyOnlineStatus("Online");
             }
+            
             startInboxListener();
             
-            // মেন্টর লগইন করার পর টিউটোরিয়াল চালু করা
-            setTimeout(() => startAdminTutorial(false), 500);
+            // মেন্টর লগইন করার পর টিউটোরিয়াল চালু করা
+            if(!isMaster) {
+                setTimeout(() => startAdminTutorial(false), 500);
+            }
 
         } else { 
-            alert("ভুল পাসওয়ার্ড!"); 
+            alert("ভুল পাসওয়ার্ড!"); 
         }
     };
+
+    // Mentor Management System (Master Only)
+    async function addMentor() {
+        if(!isMaster) return;
+        const name = document.getElementById('newMentorName').value.trim();
+        const pass = document.getElementById('newMentorPass').value.trim();
+        if(!name || !pass) return alert("নাম এবং পাসওয়ার্ড দিন!");
+        if(pass === "Master2002") return alert("এই পাসওয়ার্ডটি সংরক্ষিত!");
+        
+        let updatedRoles = { ...mentorRoles };
+        updatedRoles[pass] = name;
+        
+        await getRef('settings').doc('mentors').update({ roles: updatedRoles });
+        document.getElementById('newMentorName').value = "";
+        document.getElementById('newMentorPass').value = "";
+        alert("মেন্টর সফলভাবে যোগ করা হয়েছে!");
+    }
+
+    async function editMentor(oldPass, oldName) {
+        if(!isMaster) return;
+        const newName = prompt("মেন্টরের নতুন নাম দিন:", oldName);
+        if(newName === null) return;
+        const newPass = prompt("নতুন পাসওয়ার্ড দিন:", oldPass);
+        if(newPass === null) return;
+
+        const cleanName = newName.trim();
+        const cleanPass = newPass.trim();
+
+        if(!cleanName || !cleanPass) return alert("নাম এবং পাসওয়ার্ড ফাঁকা রাখা যাবে না!");
+        if(cleanPass === "Master2002") return alert("এই পাসওয়ার্ডটি ব্যবহার করা যাবে না!");
+
+        let updatedRoles = { ...mentorRoles };
+        if(oldPass !== cleanPass) {
+            delete updatedRoles[oldPass];
+        }
+        updatedRoles[cleanPass] = cleanName;
+
+        await getRef('settings').doc('mentors').update({ roles: updatedRoles });
+        alert("মেন্টরের তথ্য সফলভাবে আপডেট হয়েছে!");
+    }
+
+    async function deleteMentor(passCode) {
+        if(!isMaster) return;
+        if(passCode === "Master2002") return alert("মাস্টার অ্যাডমিন ডিলিট করা যাবে না!");
+        if(!confirm("এই মেন্টরকে মুছে ফেলবেন?")) return;
+        
+        let updatedRoles = { ...mentorRoles };
+        delete updatedRoles[passCode];
+        
+        await getRef('settings').doc('mentors').update({ roles: updatedRoles });
+    }
+
+    function renderMentorList() {
+        const listUI = document.getElementById('mentorListUI');
+        if(!listUI) return;
+        let html = "";
+        for(let pass in mentorRoles) {
+            if(pass !== "Master2002") {
+                html += `
+                <div class="mentor-list-item">
+                    <span><i class="fas fa-user-tie" style="color:var(--primary-glow);"></i> ${mentorRoles[pass]}</span>
+                    <span style="color:var(--text-muted);">Pass: ${pass}</span>
+                    <div>
+                        <button onclick="editMentor('${pass}', '${mentorRoles[pass]}')" style="background:none; border:none; color:var(--primary-glow); cursor:pointer; margin-right:8px;" title="এডিট করুন"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteMentor('${pass}')" style="background:none; border:none; color:#ff5252; cursor:pointer;" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`;
+            }
+        }
+        listUI.innerHTML = html || "<p style='font-size:11px; color:#aaa; padding-top:5px;'>কোনো অতিরিক্ত মেন্টর নেই।</p>";
+    }
 
     async function setMyOnlineStatus(status) {
         if (!activeMentor || isMaster || !auth.currentUser) return;
@@ -1795,8 +1769,12 @@
     }
 
     function startInboxListener() {
-        // মেন্টরদের ইনবক্সে ৭ দিনের (৭ * ২৪ ঘণ্টা) ডাটা দেখাবে
-        const timeLimit = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        // Admin History Time logic
+        let cutoffTime = 0;
+        if (adminAutoDeletePref !== 'never') {
+            const limitHours = parseInt(adminAutoDeletePref);
+            cutoffTime = Date.now() - (limitHours * 60 * 60 * 1000);
+        }
         
         getRef('requests').onSnapshot(snap => {
             const list = document.getElementById('inboxList');
@@ -1807,8 +1785,8 @@
                 const d = doc.data();
                 const ts = d.timestamp ? d.timestamp.toMillis() : Date.now();
                 
-                // শুধুমাত্র ৭ দিনের পুরনো বা তার চেয়ে নতুন ফাইলগুলো মেন্টর দেখতে পাবে
-                if (ts >= timeLimit.getTime()) {
+                // Admin specific time filter
+                if (adminAutoDeletePref === 'never' || ts >= cutoffTime) {
                     if (isMaster || (d.mentors && d.mentors.includes(activeMentor))) {
                         if (!isMaster && d.claimedBy && d.claimedBy !== activeMentor) return;
                         dataArr.push({ id: doc.id, ...d, ts: ts });
@@ -1844,7 +1822,7 @@
                             ${item.claimedBy ? `<div style="color:var(--gold-text); font-size:11px; margin-bottom:8px; font-weight:bold;">✅ ${item.claimedBy === activeMentor ? 'আপনি' : item.claimedBy} এটি চেক করছেন</div>` : ''}
                             <div class="reply-type-tabs">
                                 <div class="type-tab active" onclick="changeReplyType('${item.id}', 'text')">টেক্সট</div>
-                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
+                                <div class="type-tab" onclick="changeReplyType('${item.id}', 'voice')">ভয়েস রেকর্ড</div>
                             </div>
 
                             <div id="textWrap_${item.id}">
@@ -1937,11 +1915,10 @@
         try {
             await getRef('requests').doc(docId).update({ claimedBy: activeMentor });
         } catch (e) { 
-            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
+            alert("রিসিভ করতে সমস্যা হয়েছে!"); 
         }
     };
 
-    // Update mentor voice recording for mobile compatibility
     window.toggleMentorVoiceRecord = async function(docId) {
         const btn = document.getElementById(`vRecBtn_${docId}`);
         const log = document.getElementById(`vLog_${docId}`);
@@ -1989,7 +1966,7 @@
                 btn.innerHTML = "<i class='fas fa-stop'></i> বন্ধ করুন"; 
                 btn.classList.add('recording');
             } catch (err) { 
-                alert("App বা iPhone এর ব্রাউজারে সরাসরি রেকর্ডিং সাপোর্ট করছে না। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে সিলেক্ট করে দিন।"); 
+                alert("App বা iPhone এর ব্রাউজারে সরাসরি রেকর্ডিং সাপোর্ট করছে মাতৃ। এখন আপনার ফোনের রেকর্ডার ওপেন হবে, সেখানে রেকর্ড করে সিলেক্ট করে দিন।"); 
                 btn.innerHTML = "<i class='fas fa-microphone'></i> রেকর্ড"; 
                 currentMentorDocId = docId;
                 fallbackMInput.click();
