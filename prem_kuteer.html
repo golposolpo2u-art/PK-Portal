@@ -12,6 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
+    <!-- Google AdSense Script (আপনার Publisher ID এখানে দিন) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
     <style>
         /* Theme Variables (Default Dark Mode: Black & Pink) */
         :root {
@@ -53,7 +56,7 @@
 
         body { 
             background: var(--bg-gradient); color: var(--text-main); 
-            min-height: 100vh; padding: 15px; display: flex; justify-content: center;
+            min-height: 100vh; padding: 15px 15px 80px 15px; display: flex; justify-content: center;
         }
 
         .container { 
@@ -569,7 +572,7 @@
     let isDocAllowed = false;
     let currentNotes = {};
     let editingNoteId = null;
-    let mentorRoles = { "Master2002": "Master Admin" };
+    let mentorRoles = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" }; // Default mentors added back
     
     // Voice Recorder Globals
     let activeRecorder = null;
@@ -849,9 +852,18 @@
         dbRef.collection('settings').doc('mentors').onSnapshot(doc => {
             if(doc.exists) {
                 mentorRoles = doc.data().roles || { "Master2002": "Master Admin" };
+                
+                // পুরোনো ডেটা রিস্টোর (একবার মাইগ্রেশন)
+                if(!doc.data().defaultInitialized) {
+                    mentorRoles["Neha123"] = "নেহা (মেন্টর)";
+                    dbRef.collection('settings').doc('mentors').update({ 
+                        roles: mentorRoles, 
+                        defaultInitialized: true 
+                    });
+                }
             } else {
-                mentorRoles = { "Master2002": "Master Admin" };
-                dbRef.collection('settings').doc('mentors').set({ roles: mentorRoles });
+                mentorRoles = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" };
+                dbRef.collection('settings').doc('mentors').set({ roles: mentorRoles, defaultInitialized: true });
             }
             if(isMentor && document.getElementById('masterConfigPanel').style.display === 'block') {
                 renderMentorList();
