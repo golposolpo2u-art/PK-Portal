@@ -5,34 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Go - প্রেম কুটির পোর্টাল</title>
     
-    <!-- 
-        ========================================================
-        EXTERNAL RESOURCES & FONTS
-        ========================================================
-        We are importing Kalpurush font and FontAwesome for icons.
-    -->
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- 
-        JSZip & FileSaver for Zip Conversion
-        Used for batch downloading files from the admin panel securely
-    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
-        /* ========================================================
-            CSS VARIABLES & THEME DEFINITIONS
-            ========================================================
-            Defining standard colors for dark mode and light mode.
-        */
         :root {
-            /* Primary Colors */
             --primary-pink: #e91e63;
             --secondary-pink: #f06292;
-            
-            /* Dark Mode Defaults */
             --bg-gradient: linear-gradient(135deg, #111111 0%, #000000 100%);
             --panel-bg: rgba(20, 20, 20, 0.95);
             --card-bg: #1a1a1a;
@@ -42,15 +23,10 @@
             --border-color: #333333;
             --tab-bg: #222222;
             --modal-overlay: rgba(0, 0, 0, 0.85);
-            
-            /* Utility Colors */
             --error-red: #ff5252;
             --success-green: #4caf50;
         }
 
-        /* Light Mode (Day Mode) Variables 
-            These override the default dark mode when the class is added to body
-        */
         body.light-mode {
             --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
             --panel-bg: rgba(255, 255, 255, 0.98);
@@ -63,11 +39,32 @@
             --modal-overlay: rgba(255, 255, 255, 0.8);
         }
 
-        /* ========================================================
-            GLOBAL STYLES & RESETS
-            ========================================================
-            Setting fonts, padding, margins, and transition effects globally.
-        */
+        body.light-mode .ch-title { text-shadow: none; }
+        body.light-mode .main-container { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); border: 1px solid #f8bbd0; }
+        body.light-mode .list-card { background: #ffffff; border: 1px solid #fce4ec; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); }
+        body.light-mode .folder-item { background: #fdfdfd; border-color: #f8bbd0; color: #222222; }
+        body.light-mode select, body.light-mode input, body.light-mode textarea { color: #222222 !important; border-color: #f8bbd0; background: #ffffff !important; }
+
+        /* Mentor Item Mode Fix */
+        .mentor-list-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            margin-top: 10px; 
+            font-size: 14px; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff;
+            font-weight: bold;
+        }
+        body.light-mode .mentor-list-item { 
+            background: #e0e0e0; 
+            border-color: #cccccc; 
+            color: #111111; 
+        }
+
         * { 
             margin: 0; 
             padding: 0; 
@@ -87,69 +84,6 @@
             overflow-x: hidden;
         }
 
-        /* Light Mode Specific Adjustments 
-            Ensuring text and shadows look clean in day mode.
-        */
-        body.light-mode .ch-title { 
-            text-shadow: none; 
-        }
-        
-        body.light-mode .main-container { 
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
-            border: 1px solid #f8bbd0; 
-        }
-        
-        body.light-mode .list-card { 
-            background: #ffffff; 
-            border: 1px solid #fce4ec; 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); 
-        }
-        
-        body.light-mode .folder-item { 
-            background: #fdfdfd; 
-            border-color: #f8bbd0; 
-            color: #222222; 
-        }
-        
-        body.light-mode select, 
-        body.light-mode input, 
-        body.light-mode textarea { 
-            color: #222222 !important; 
-            border-color: #f8bbd0; 
-            background: #ffffff !important; 
-        }
-
-        /* ========================================================
-            MENTOR LIST ITEM THEME ADJUSTMENT (CRITICAL REQUEST)
-            ========================================================
-        */
-        
-        /* Dark Mode Mentor Box (White/Transparent) */
-        .mentor-list-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            font-size: 14px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #ffffff;
-            font-weight: bold;
-        }
-        
-        /* Light Mode Mentor Box (Gray to stand out) */
-        body.light-mode .mentor-list-item { 
-            background: #e0e0e0; 
-            border-color: #cccccc; 
-            color: #111111; 
-        }
-
-        /* ========================================================
-            MAIN CONTAINER & HEADER
-            ========================================================
-        */
         .main-container { 
             width: 100%; 
             max-width: 900px; 
@@ -162,786 +96,133 @@
             margin: 0 auto;
         }
 
-        .header { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            margin-top: 45px; 
-            text-align: center; 
-        }
-        
-        .logo-box-fix { 
-            width: 80px !important; 
-            height: 80px !important; 
-            border-radius: 50%; 
-            border: 3px solid var(--primary-pink); 
-            background: #000000; 
-            overflow: hidden; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        
-        .ch-logo { 
-            width: 100% !important; 
-            height: 100% !important; 
-            object-fit: cover !important; 
-            display: block; 
-        }
-        
-        .ch-title { 
-            font-size: clamp(30px, 8vw, 45px); 
-            color: var(--primary-pink); 
-            font-weight: bold; 
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
-        }
-        
-        .btn-home { 
-            position: absolute; 
-            top: 15px; 
-            left: 15px; 
-            text-decoration: none; 
-            color: var(--primary-pink); 
-            font-weight: bold; 
-            font-size: 13px; 
-            z-index: 10; 
-            display: flex; 
-            align-items: center; 
-            gap: 5px;
-        }
-        
-        .theme-toggle-btn { 
-            position: absolute; 
-            top: 15px; 
-            right: 15px; 
-            background: none; 
-            border: none; 
-            color: var(--primary-pink); 
-            font-size: 22px; 
-            cursor: pointer; 
-            z-index: 10; 
-        }
+        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; margin-top: 45px; text-align: center; }
+        .logo-box-fix { width: 80px !important; height: 80px !important; border-radius: 50%; border: 3px solid var(--primary-pink); background: #000000; overflow: hidden; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+        .ch-logo { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
+        .ch-title { font-size: clamp(30px, 8vw, 45px); color: var(--primary-pink); font-weight: bold; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; z-index: 10; display: flex; align-items: center; gap: 5px; }
+        .theme-toggle-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--primary-pink); font-size: 22px; cursor: pointer; z-index: 10; }
 
-        /* ========================================================
-            AUTHENTICATION SCREENS
-            ========================================================
-        */
-        #authScreen { 
-            text-align: center; 
-            padding: 20px 0; 
-        }
+        /* Auth Styles */
+        #authScreen { text-align: center; padding: 20px 0; }
+        .auth-wrapper { max-width: 320px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .auth-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); }
+        .auth-input:focus { border-color: var(--primary-pink); box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); }
+        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: #ffffff; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 15px; }
+        .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
+        .toggle-auth { color: var(--primary-pink); font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
+        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 15px; margin-top: 5px; }
+        .forgot-links span { color: var(--text-muted); cursor: pointer; text-decoration: underline; }
         
-        .auth-wrapper { 
-            max-width: 320px; 
-            margin: 0 auto; 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 15px; 
-            border: 1px solid var(--border-color); 
-        }
-        
-        .auth-input { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 10px; 
-            font-size: 14px; 
-            outline: none; 
-            background: var(--input-bg); 
-            color: var(--text-main); 
-        }
-        
-        .auth-input:focus { 
-            border-color: var(--primary-pink); 
-            box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); 
-        }
-        
-        .btn-main { 
-            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); 
-            color: #ffffff; 
-            border: none; 
-            padding: 12px 25px; 
-            border-radius: 10px; 
-            font-size: 15px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            width: 100%; 
-            text-transform: uppercase; 
-            margin-top: 15px;
-        }
-        
-        .btn-main:hover { 
-            opacity: 0.9; 
-            transform: scale(1.02); 
-        }
-        
-        .toggle-auth { 
-            color: var(--primary-pink); 
-            font-size: 13px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 15px; 
-            display: inline-block; 
-            text-decoration: underline; 
-        }
-        
-        .forgot-links { 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 13px; 
-            margin-bottom: 15px; 
-            margin-top: 5px;
-        }
-        
-        .forgot-links span { 
-            color: var(--text-muted); 
-            cursor: pointer; 
-            text-decoration: underline; 
-        }
+        .eye-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink); }
+        .input-group { position:relative; margin-bottom:15px; }
+        .input-group input { margin-bottom:0; padding-right:35px; }
 
-        /* ========================================================
-            USER TABS & INPUT FIELDS
-            ========================================================
-        */
-        .tabs { 
-            display: flex; 
-            background: var(--tab-bg); 
-            border-radius: 10px; 
-            margin-bottom: 20px; 
-            overflow: hidden; 
-            padding: 4px; 
-            flex-wrap: wrap; 
-            border: 1px solid var(--border-color); 
-        }
-        
-        .tab { 
-            flex: 1; 
-            padding: 10px 5px; 
-            text-align: center; 
-            cursor: pointer; 
-            font-weight: bold; 
-            color: var(--text-muted); 
-            border-radius: 8px; 
-            font-size: clamp(12px, 4vw, 16px); 
-            min-width: 80px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            line-height: 1.2;
-        }
-        
-        .tab.active { 
-            background: var(--primary-pink); 
-            color: #ffffff; 
-        }
+        /* General Forms & Tabs */
+        .tabs { display: flex; background: var(--tab-bg); border-radius: 10px; margin-bottom: 20px; overflow: hidden; padding: 4px; flex-wrap: wrap; border: 1px solid var(--border-color); }
+        .tab { flex: 1; padding: 10px 5px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-radius: 8px; font-size: clamp(12px, 4vw, 16px); min-width: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.2; }
+        .tab.active { background: var(--primary-pink); color: #ffffff; }
 
-        label { 
-            font-weight: bold; 
-            color: var(--primary-pink); 
-            display: block; 
-            margin: 10px 0 5px 0; 
-            font-size: 13px; 
-            text-transform: uppercase;
-        }
+        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 5px 0; font-size: 13px; text-transform: uppercase; }
+        select, textarea, input[type="file"], input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); margin-bottom: 10px; }
+        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(233, 30, 99, 0.2); }
         
-        select, 
-        textarea, 
-        input[type="file"], 
-        input[type="text"], 
-        input[type="password"], 
-        input[type="number"] { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 10px; 
-            font-size: 14px; 
-            outline: none; 
-            background: var(--input-bg); 
-            color: var(--text-main); 
-            margin-bottom: 10px;
-        }
-        
-        select:focus, 
-        textarea:focus, 
-        input:focus { 
-            border-color: var(--primary-pink); 
-            box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);
-        }
-        
-        textarea { 
-            min-height: 80px; 
-        }
+        #sText { min-height: 350px; resize: vertical; line-height: 1.6; padding-bottom: 30px; }
+        .word-counter-box { position: absolute; bottom: 20px; right: 15px; font-size:11px; font-weight:bold; background: var(--card-bg); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border-color); pointer-events: none; }
 
-        #sText { 
-            min-height: 350px; 
-            resize: vertical; 
-            line-height: 1.6; 
-        }
+        /* Rich Text Editor */
+        .rte-toolbar { display: flex; gap: 5px; background: var(--panel-bg); padding: 8px; border-radius: 8px 8px 0 0; border: 1px solid var(--border-color); border-bottom: none; align-items: center; flex-wrap: wrap; }
+        .rte-toolbar button, .rte-toolbar .color-picker-wrap, .rte-toolbar .custom-font-btn { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 3px; position: relative; }
+        .rte-toolbar button:hover, .rte-toolbar .custom-font-btn:hover { border-color: var(--primary-pink); }
+        .rte-toolbar select, .rte-toolbar input[type="number"] { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: var(--text-main); outline: none; width: auto; max-width: 100px; margin-bottom: 0; }
+        .color-picker-wrap input[type="color"] { width: 20px; height: 20px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
+        .rte-editor { background: var(--input-bg); min-height: 150px; padding: 10px; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; outline: none; color: var(--text-main); font-size: 14px; line-height: 1.5; overflow-y: auto; }
+        .custom-font-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-        /* ========================================================
-            RICH TEXT EDITOR (CASTING DIARY)
-            ========================================================
-        */
-        .rte-toolbar { 
-            display: flex; 
-            gap: 5px; 
-            background: var(--panel-bg); 
-            padding: 8px; 
-            border-radius: 8px 8px 0 0; 
-            border: 1px solid var(--border-color); 
-            border-bottom: none; 
-            align-items: center; 
-            flex-wrap: wrap; 
-        }
-        
-        .rte-toolbar button, 
-        .rte-toolbar .color-picker-wrap, 
-        .rte-toolbar .custom-font-btn { 
-            border: 1px solid var(--border-color); 
-            background: var(--input-bg); 
-            cursor: pointer; 
-            padding: 4px 8px; 
-            border-radius: 4px; 
-            font-size: 14px; 
-            color: var(--text-main); 
-            display: flex; 
-            align-items: center; 
-            gap: 3px; 
-            position: relative; 
-        }
-        
-        .rte-toolbar button:hover, 
-        .rte-toolbar .custom-font-btn:hover { 
-            border-color: var(--primary-pink); 
-        }
-        
-        .rte-toolbar select, 
-        .rte-toolbar input[type="number"] { 
-            border: 1px solid var(--border-color); 
-            background: var(--input-bg); 
-            cursor: pointer; 
-            padding: 4px; 
-            border-radius: 4px; 
-            font-size: 12px; 
-            color: var(--text-main); 
-            outline: none; 
-            width: auto; 
-            max-width: 100px; 
-            margin-bottom: 0;
-        }
-        
-        .color-picker-wrap input[type="color"] { 
-            width: 20px; 
-            height: 20px; 
-            padding: 0; 
-            border: none; 
-            border-radius: 50%; 
-            cursor: pointer; 
-            background: none; 
-        }
-        
-        .rte-editor { 
-            background: var(--input-bg); 
-            min-height: 150px; 
-            padding: 10px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 0 0 8px 8px; 
-            outline: none; 
-            color: var(--text-main); 
-            font-size: 14px; 
-            line-height: 1.5; 
-            overflow-y: auto; 
-        }
-        
-        .rte-editor:empty:before { 
-            content: attr(placeholder); 
-            color: var(--text-muted); 
-            pointer-events: none; 
-            display: block; 
-        }
-        
-        .custom-font-input { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            opacity: 0; 
-            cursor: pointer; 
-        }
+        /* Admin Layout & Components */
+        .admin-layout { display: grid; grid-template-columns: 220px 1fr; gap: 15px; margin-top: 15px; }
+        @media (max-width: 768px) { .admin-layout { grid-template-columns: 1fr; } }
+        .sidebar { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 13px; }
+        .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: #ffffff; border-color: var(--primary-pink); }
+        .folder-item.hidden-proj { opacity: 0.7; border-style: dashed; }
 
-        /* ========================================================
-            ADMIN DASHBOARD & CARDS
-            ========================================================
-        */
-        .admin-layout { 
-            display: grid; 
-            grid-template-columns: 220px 1fr; 
-            gap: 15px; 
-            margin-top: 15px; 
-        }
-        
-        @media (max-width: 768px) { 
-            .admin-layout { 
-                grid-template-columns: 1fr; 
-            } 
-        }
-        
-        .sidebar { 
-            background: var(--card-bg); 
-            padding: 15px; 
-            border-radius: 15px; 
-            border: 1px solid var(--border-color); 
-        }
-        
-        .folder-item { 
-            padding: 10px 12px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-bottom: 6px; 
-            font-weight: bold; 
-            color: var(--text-main); 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            background: var(--input-bg); 
-            border: 1px solid var(--border-color); 
-            font-size: 13px;
-        }
-        
-        .folder-item:hover, 
-        .folder-item.active { 
-            background: var(--primary-pink); 
-            color: #ffffff; 
-            border-color: var(--primary-pink); 
-        }
-        
-        .folder-item i { 
-            margin-right: 8px; 
-        }
-        
-        .folder-item.hidden-proj { 
-            opacity: 0.7; 
-            border-style: dashed; 
-        }
+        .list-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+        .btn-del { background: rgba(244, 67, 54, 0.1); color: #ff5252; border: 1px solid rgba(244, 67, 54, 0.3); }
+        .btn-download { background: rgba(76, 175, 80, 0.1); color: #4caf50; border: 1px solid rgba(76, 175, 80, 0.3); }
+        .btn-view { background: rgba(33, 150, 243, 0.1); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.3); }
+        .btn-remark { background: rgba(245, 127, 23, 0.1); color: #f57f17; border: 1px solid rgba(245, 127, 23, 0.3); }
 
-        .list-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
-            position: relative;
-        }
+        .batch-header { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
+        .admin-box { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-pink); }
         
-        .card-actions { 
-            display: flex; 
-            gap: 8px; 
-            margin-top: 10px; 
-            flex-wrap: wrap; 
-            align-items: center;
-        }
+        .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        @media (max-width: 600px) { .split-inbox { grid-template-columns: 1fr; } }
+        .inbox-column { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; }
+        .inbox-column h4 { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); font-size: 14px; }
         
-        .btn-sm { 
-            padding: 6px 12px; 
-            border-radius: 6px; 
-            border: none; 
-            cursor: pointer; 
-            font-size: 11px; 
-            font-weight: bold; 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: 4px; 
-        }
-        
-        .btn-del { 
-            background: rgba(244, 67, 54, 0.1); 
-            color: #ff5252; 
-            border: 1px solid rgba(244, 67, 54, 0.3); 
-        }
-        
-        .btn-download { 
-            background: rgba(76, 175, 80, 0.1); 
-            color: #4caf50; 
-            border: 1px solid rgba(76, 175, 80, 0.3); 
-        }
-        
-        .btn-view { 
-            background: rgba(33, 150, 243, 0.1); 
-            color: #2196f3; 
-            border: 1px solid rgba(33, 150, 243, 0.3); 
-        }
-        
-        .btn-remark { 
-            background: rgba(245, 127, 23, 0.1); 
-            color: #f57f17; 
-            border: 1px solid rgba(245, 127, 23, 0.3); 
-        }
+        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
+        .status-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; border-color: rgba(245, 127, 23, 0.3); }
+        .status-approved { background: rgba(76, 175, 80, 0.1); color: #4caf50; border-color: rgba(76, 175, 80, 0.3); }
+        .status-rejected { background: rgba(244, 67, 54, 0.1); color: #ff5252; border-color: rgba(244, 67, 54, 0.3); }
+        .cloud-badge { background: rgba(33, 150, 243, 0.1); color: #2196f3; font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: bold; border: 1px solid rgba(33, 150, 243, 0.3); display: inline-flex; align-items: center; gap: 4px;}
 
-        /* Batch Options */
-        .batch-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--input-bg); 
-            padding: 10px; 
-            border-radius: 8px; 
-            border: 1px solid var(--border-color); 
-            margin-bottom: 15px; 
-        }
+        .select-check { transform: scale(1.3); margin-right: 8px; cursor: pointer; accent-color: var(--primary-pink); }
+        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
+        .modal-box { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); border: 2px solid var(--primary-pink); color: var(--text-main); }
+        #previewModal .modal-box { max-width: 700px; width: 95%; padding: 15px; }
+        .preview-container { background: var(--panel-bg); border-radius: 10px; padding: 10px; text-align: center; border: 1px solid var(--border-color); overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 150px; }
+        
+        .admin-trigger { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); color: var(--text-main); font-size: 13px; padding: 12px; border-radius: 10px; margin-top: 30px; cursor: pointer; width: 100%; text-align: center; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .admin-trigger:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--primary-pink); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); transform: translateY(-2px); }
 
-        /* Misc */
-        .admin-box { 
-            background: var(--card-bg); 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            border: 1px solid var(--primary-pink); 
-        }
-        
-        .split-inbox { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin-top: 15px; 
-        }
-        
-        @media (max-width: 600px) { 
-            .split-inbox { 
-                grid-template-columns: 1fr; 
-            } 
-        }
-        
-        .inbox-column { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            border-radius: 10px; 
-            padding: 10px; 
-        }
-        
-        .inbox-column h4 { 
-            text-align: center; 
-            margin-bottom: 10px; 
-            padding-bottom: 8px; 
-            border-bottom: 1px dashed var(--border-color); 
-            font-size: 14px; 
-        }
-        
-        .col-raw h4 { 
-            color: var(--primary-pink); 
-        }
-        
-        .col-admin h4 { 
-            color: #4caf50; 
-        }
+        audio { width: 100%; height: 35px; margin-top: 10px; filter: invert(0.9) hue-rotate(180deg); }
+        body.light-mode audio { filter: none; }
+        .media-preview { max-width: 100%; max-height: 100px; border-radius: 6px; margin-top: 5px; border: 1px solid var(--border-color); object-fit: contain; }
 
-        /* ========================================================
-            STATUS BADGES & CLOUD ICONS
-            ========================================================
-        */
-        .status-badge { 
-            display: inline-block; 
-            padding: 3px 8px; 
-            border-radius: 12px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            margin-bottom: 5px; 
-            background: var(--input-bg); 
-            color: var(--text-muted); 
-            border: 1px solid var(--border-color); 
-        }
+        #adminDashboard, #mainPortal { display: none; }
+        .user-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 10px; }
         
-        .status-pending { 
-            background: rgba(245, 127, 23, 0.1); 
-            color: #f57f17; 
-            border-color: rgba(245, 127, 23, 0.3); 
-        }
-        
-        .status-approved { 
-            background: rgba(76, 175, 80, 0.1); 
-            color: #4caf50; 
-            border-color: rgba(76, 175, 80, 0.3); 
-        }
-        
-        .status-rejected { 
-            background: rgba(244, 67, 54, 0.1); 
-            color: #ff5252; 
-            border-color: rgba(244, 67, 54, 0.3); 
-        }
-        
-        .cloud-badge { 
-            background: rgba(33, 150, 243, 0.1); 
-            color: #2196f3; 
-            font-size: 11px; 
-            padding: 4px 8px; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            border: 1px solid rgba(33, 150, 243, 0.3); 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 4px;
-        }
+        .auto-delete-wrapper { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border); }
+        .auto-delete-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 
-        .select-check { 
-            transform: scale(1.3); 
-            margin-right: 8px; 
-            cursor: pointer; 
-            accent-color: var(--primary-pink); 
-        }
-        
-        /* ========================================================
-            MODALS & PREVIEWS
-            ========================================================
-        */
-        .modal-overlay { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: var(--modal-overlay); 
-            z-index: 999; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 15px; 
-            backdrop-filter: blur(5px); 
-        }
-        
-        .modal-box { 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 15px; 
-            width: 100%; 
-            max-width: 320px; 
-            text-align: center; 
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); 
-            border: 2px solid var(--primary-pink); 
-            color: var(--text-main); 
-        }
-        
-        #previewModal .modal-box { 
-            max-width: 700px; 
-            width: 95%; 
-            padding: 15px; 
-        }
-        
-        .preview-container { 
-            background: var(--panel-bg); 
-            border-radius: 10px; 
-            padding: 10px; 
-            text-align: center; 
-            border: 1px solid var(--border-color); 
-            overflow: hidden; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 150px; 
-        }
-        
-        .admin-trigger { 
-            background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-            color: var(--text-main); 
-            font-size: 13px; 
-            padding: 12px; 
-            border-radius: 10px; 
-            margin-top: 30px; 
-            cursor: pointer; 
-            width: 100%; 
-            text-align: center; 
-            font-weight: bold; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 8px; 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .admin-trigger:hover { 
-            background: rgba(255, 255, 255, 0.2); 
-            border-color: var(--primary-pink); 
-            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); 
-            transform: translateY(-2px); 
-        }
+        @keyframes pulseRec { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } }
+        .recording-pulse { animation: pulseRec 1.5s infinite; background: rgba(244, 67, 54, 0.1) !important; color: #f44336 !important; border-color: #f44336 !important; }
+        .admin-story-container { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 15px; padding: 15px; margin-top: 15px; }
 
-        audio { 
-            width: 100%; 
-            height: 35px; 
-            margin-top: 10px; 
-            filter: invert(0.9) hue-rotate(180deg); 
-        }
-        
-        body.light-mode audio { 
-            filter: none; 
-        }
-        
-        .media-preview { 
-            max-width: 100%; 
-            max-height: 100px; 
-            border-radius: 6px; 
-            margin-top: 5px; 
-            border: 1px solid var(--border-color); 
-            object-fit: contain;
-        }
-
-        #adminDashboard, 
-        #mainPortal { 
-            display: none; 
-        }
-        
-        .user-nav { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--card-bg); 
-            padding: 10px 15px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--border-color); 
-            flex-wrap: wrap; 
-            gap: 10px;
-        }
-        
-        .auto-delete-wrapper { 
-            background: rgba(255, 255, 255, 0.05); 
-            padding: 12px; 
-            border-radius: 10px; 
-            margin-bottom: 15px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            border: 1px solid var(--glass-border); 
-        }
-        
-        .auto-delete-inner { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            flex-wrap: wrap; 
-            gap: 10px; 
-        }
-
-        /* ========================================================
-            ANIMATIONS
-            ========================================================
-        */
-        @keyframes pulseRec { 
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } 
-        }
-        
-        .recording-pulse { 
-            animation: pulseRec 1.5s infinite; 
-            background: rgba(244, 67, 54, 0.1) !important; 
-            color: #f44336 !important; 
-            border-color: #f44336 !important; 
-        }
-
-        /* Grouped Story Status Box for Admin */
-        .admin-story-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        /* ========================================================
-            PC ENHANCEMENTS (RESPONSIVE DESIGN)
-            ========================================================
-        */
         @media (min-width: 768px) {
-            .main-container { 
-                padding: 40px; 
-                max-width: 1000px; 
-            }
-            .btn-home { 
-                top: 25px; 
-                left: 25px; 
-                font-size: 15px; 
-            }
-            .ch-title { 
-                font-size: 55px; 
-            }
-            .header { 
-                margin-top: 20px;
-            }
-            .input-label { 
-                font-size: 15px; 
-                margin: 15px 0 8px 0; 
-            }
-            input[type="text"], 
-            input[type="password"], 
-            select, 
-            textarea { 
-                padding: 15px; 
-                font-size: 16px; 
-                margin-bottom: 20px; 
-                border-radius: 10px;
-            }
-            .u-tab { 
-                padding: 15px 10px; 
-                font-size: 18px; 
-            } 
-            .btn-action { 
-                padding: 16px; 
-                font-size: 16px; 
-                border-radius: 10px;
-            }
-            .info-card { 
-                padding: 20px; 
-                font-size: 15px; 
-                line-height: 1.6; 
-                border-radius: 12px;
-            }
-            .list-card { 
-                padding: 25px; 
-                border-radius: 15px;
-            }
-            .iphone-note { 
-                font-size: 14px; 
-                max-width: 450px; 
-                padding: 15px; 
-            }
+            .main-container { padding: 40px; max-width: 1000px; }
+            .btn-home { top: 25px; left: 25px; font-size: 15px; }
+            .ch-title { font-size: 55px; }
+            .header { margin-top: 20px; }
+            .input-label { font-size: 15px; margin: 15px 0 8px 0; }
+            input[type="text"], input[type="password"], select, textarea { padding: 15px; font-size: 16px; margin-bottom: 20px; border-radius: 10px; }
+            .u-tab { padding: 15px 10px; font-size: 18px; } 
+            .btn-action { padding: 16px; font-size: 16px; border-radius: 10px; }
+            .info-card { padding: 20px; font-size: 15px; line-height: 1.6; border-radius: 12px; }
+            .list-card { padding: 25px; border-radius: 15px; }
+            .iphone-note { font-size: 14px; max-width: 450px; padding: 15px; }
         }
         
-        .iphone-note { 
-            font-size: 12px; 
-            color: var(--primary-pink); 
-            background: rgba(233, 30, 99, 0.1); 
-            border: 1px dashed var(--primary-pink); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin: 10px auto 20px auto; 
-            text-align: center; 
-            font-weight: bold; 
-            width: 100%; 
-            max-width: 350px; 
-        }
+        .iphone-note { font-size: 12px; color: var(--primary-pink); background: rgba(233, 30, 99, 0.1); border: 1px dashed var(--primary-pink); padding: 12px; border-radius: 8px; margin: 10px auto 20px auto; text-align: center; font-weight: bold; width: 100%; max-width: 350px; }
     </style>
 </head>
 <body class="light-mode">
 
-<!-- MAIN CONTAINER -->
 <div class="container main-container">
     
-    <!-- Home Button -->
+    <!-- Top Area -->
     <a href="index.html" class="btn-home">
         <i class="fas fa-arrow-left"></i> হোমপেজ
     </a>
     
-    <!-- Theme Toggle Button -->
     <button class="theme-toggle-btn" onclick="toggleTheme()">
-        <i id="themeIcon" class="fas fa-moon"></i>
+        <i id="themeIcon" class="fas fa-sun"></i>
     </button>
     
-    <!-- Header Section -->
     <div class="header">
         <div class="logo-box-fix">
             <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Logo">
@@ -959,15 +240,15 @@
     -->
     <div id="authScreen">
         
-        <!-- Login Box -->
+        <!-- Login Form -->
         <div class="auth-wrapper" id="loginBox">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইউজার লগইন</h3>
             
             <input type="email" id="loginEmail" class="auth-input" placeholder="আপনার ইমেইল" style="margin-bottom:10px;">
             
-            <div style="position:relative; margin-bottom:5px;">
-                <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom: 0; padding-right: 35px;">
-                <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('loginPass', this)"></i>
+            <div class="input-group">
+                <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড">
+                <i class="fas fa-eye eye-icon" onclick="togglePass('loginPass', this)"></i>
             </div>
             
             <div class="forgot-links">
@@ -983,23 +264,23 @@
             </div>
         </div>
 
-        <!-- Register Box -->
+        <!-- Register Form -->
         <div class="auth-wrapper" id="registerBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">রেজিস্ট্রেশন</h3>
             
             <input type="text" id="regName" class="auth-input" placeholder="সম্পূর্ণ নাম" style="margin-bottom:10px;">
             <input type="email" id="regEmail" class="auth-input" placeholder="ইমেইল" style="margin-bottom:10px;">
             
-            <div style="position:relative; margin-bottom:15px;">
-                <input type="password" id="regPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom:0; padding-right: 35px;">
-                <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('regPass', this)"></i>
+            <div class="input-group">
+                <input type="password" id="regPass" class="auth-input" placeholder="পাসওয়ার্ড">
+                <i class="fas fa-eye eye-icon" onclick="togglePass('regPass', this)"></i>
             </div>
             
             <button class="btn-main" onclick="registerUser()">অ্যাকাউন্ট খুলুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">লগইন করুন</span>
         </div>
 
-        <!-- Guest Box -->
+        <!-- Guest Form -->
         <div class="auth-wrapper" id="guestBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">Guest Login</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন।</p>
@@ -1010,7 +291,7 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
 
-        <!-- Forgot Password Box -->
+        <!-- Forgot Password -->
         <div class="auth-wrapper" id="forgotPassBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
@@ -1021,7 +302,7 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
 
-        <!-- Forgot Email Box -->
+        <!-- Forgot Email -->
         <div class="auth-wrapper" id="forgotEmailBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইমেইল ভুলে গেছেন?</h3>
             <p style="font-size: 13px; color: var(--text-main); margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
@@ -1063,7 +344,7 @@
                 <div class="tab" onclick="switchUserTab('status')">স্ট্যাটাস</div>
             </div>
 
-            <!-- Work Upload Section -->
+            <!-- Work Upload Tab -->
             <div id="workUpload">
                 <label>প্রজেক্ট:</label>
                 <select id="uProject">
@@ -1087,7 +368,7 @@
                 <div id="statusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
-            <!-- Story Upload Section -->
+            <!-- Story Upload Tab -->
             <div id="storyUpload" style="display:none;">
                 <label>শিরোনাম:</label>
                 <input type="text" id="sTitle" placeholder="গল্পের শিরোনাম">
@@ -1098,9 +379,9 @@
                 <label>গল্প (লিখে বা আপলোড করে পাঠান):</label>
                 <div style="position: relative;">
                     <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে বিস্তারিতভাবে লিখুন..."></textarea>
+                    <div id="wordCountDisplay" class="word-counter-box" style="color:#ff5252;">শব্দ: ০</div>
                 </div>
                 
-                <!-- Story File Upload Option (Visible only if Doc Allowed) -->
                 <div id="storyFileWrapper" style="display:none; margin-top:10px;">
                     <label style="color:var(--primary-pink); font-size:12px;">গল্পের ফাইল (PDF/DOC):</label>
                     <input type="file" id="sFile" accept=".txt, .doc, .docx, .pdf" style="display:none;">
@@ -1114,7 +395,7 @@
                 <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
-            <!-- User Status View -->
+            <!-- User Status Tab -->
             <div id="statusView" style="display:none;">
                 <div class="auto-delete-wrapper" style="margin-bottom: 20px;">
                     <div class="auto-delete-inner">
@@ -1162,7 +443,7 @@
                 <button onclick="exitAdmin()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> প্রস্থান</button>
             </div>
             
-            <!-- Master Admin specific controls -->
+            <!-- Master Admin Panel -->
             <div id="masterConfigPanel" class="admin-box" style="display:none; border-color:var(--primary-pink); background:var(--input-bg);">
                 <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 12px; font-size:14px;"><i class="fas fa-crown"></i> মাস্টার কন্ট্রোল</p>
                 <button id="docToggleBtn" onclick="toggleDocUploads()" class="btn-main" style="padding: 10px; font-size: 13px; width: 100%; background:linear-gradient(45deg, #4caf50, #81c784); color:#ffffff; margin-bottom:15px;">PDF/DOC আপলোড চালু আছে (বন্ধ করুন)</button>
@@ -1171,9 +452,9 @@
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
                     <input type="text" id="newMentorName" placeholder="মেন্টরের নাম" style="font-size:13px; padding:10px; margin-bottom:8px;">
                     
-                    <div style="position:relative; margin-bottom:10px;">
-                        <input type="password" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="width:100%; padding:10px; font-size:13px; margin:0; padding-right:35px; border:1px solid var(--border-color); border-radius:10px; background:var(--input-bg); color:var(--text-main); outline:none;">
-                        <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('newMentorPass', this)"></i>
+                    <div class="input-group">
+                        <input type="password" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="width:100%; padding:10px; font-size:13px; border:1px solid var(--border-color); border-radius:10px; background:var(--input-bg); color:var(--text-main); outline:none;">
+                        <i class="fas fa-eye eye-icon" onclick="togglePass('newMentorPass', this)"></i>
                     </div>
                     
                     <button onclick="addMentor()" class="btn-main" style="padding: 10px; font-size: 13px;">মেন্টর যোগ করুন</button>
@@ -1181,7 +462,6 @@
                 </div>
             </div>
 
-            <!-- Project and Category Creation -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
                 <div class="admin-box" style="padding:15px; margin-bottom:0;">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-folder-plus"></i> প্রজেক্ট তৈরি</p>
@@ -1195,6 +475,7 @@
                 </div>
             </div>
 
+            <!-- Admin Layout -->
             <div class="admin-layout">
                 <!-- Sidebar -->
                 <div class="sidebar" id="projectSidebar">
@@ -1217,11 +498,9 @@
 
                 <!-- Content Area -->
                 <div class="content">
-                    
-                    <!-- Project View Content -->
+                    <!-- Project View -->
                     <div id="projectView" style="display:none;">
                         
-                        <!-- Admin Delete Settings -->
                         <div class="info-card" id="adminDeleteSettings" style="background: rgba(255, 255, 255, 0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px;">
                             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                                 <div>
@@ -1246,16 +525,13 @@
                             </div>
                         </div>
 
-                        <!-- Current Project Info -->
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
                             <h3 id="currentProjTitle" style="color:var(--primary-pink); font-size: 18px; margin:0;"></h3>
                             <button class="btn-sm btn-main" style="padding:8px 15px; width:auto; font-size:12px;" onclick="downloadProjectZIP()"><i class="fas fa-file-archive"></i> Folder ZIP</button>
                         </div>
 
-                        <!-- Category Tabs -->
                         <div class="tabs" id="adminCatTabs" style="margin-bottom:15px;"></div>
                         
-                        <!-- Split Inbox (Raw and Admin) -->
                         <div class="split-inbox">
                             <div class="inbox-column col-raw">
                                 <h4 style="color:var(--primary-pink); margin-bottom:10px;"><i class="fas fa-inbox"></i> ইউজারদের ফাইল</h4>
@@ -1304,7 +580,7 @@
                         </div>
                     </div>
 
-                    <!-- Record View Content (Casting Diary) -->
+                    <!-- Record View Content -->
                     <div id="recordView" style="display:none; padding: 15px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
                         <h3 style="color:var(--primary-pink); margin-bottom:10px;">কাস্টিং ডায়েরি</h3>
                         
@@ -1378,16 +654,16 @@
 
 <!-- 
     ========================================================
-    MODALS (Login & Preview)
+    MODALS (Mentor Login & Preview)
     ========================================================
 -->
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
         
-        <div style="position:relative; margin-top:15px; margin-bottom:15px;">
-            <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center; margin-bottom:0; padding-right:35px;">
-            <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('modalAdminPass', this)"></i>
+        <div class="input-group">
+            <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center;">
+            <i class="fas fa-eye eye-icon" onclick="togglePass('modalAdminPass', this)"></i>
         </div>
         
         <button class="btn-main" onclick="checkAdminPass()">প্রবেশ</button>
@@ -1445,7 +721,7 @@
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
     const channel = "প্রেম কুটির"; 
 
-    // Global Variables defined to manage states
+    // Global Variables
     let currentUser = null;
     let allProjects = [];
     let allCategories = []; 
@@ -1532,10 +808,9 @@
 
     /*
         ========================================================
-        RICH TEXT EDITOR LOGIC
+        RICH TEXT EDITOR LOGIC & FONT
         ========================================================
     */
-    // Story File upload handling to show the file name
     document.getElementById('sFile').addEventListener('change', function() {
         if(this.files[0]) {
             document.getElementById('sFileNameDisplay').innerText = "ফাইল: " + this.files[0].name;
@@ -1546,7 +821,6 @@
 
     let savedRange;
     
-    // Save range on blur to keep color picker working on mobile
     document.getElementById('noteContent').addEventListener('blur', () => {
         const sel = window.getSelection();
         if(sel.rangeCount > 0) {
@@ -1585,7 +859,6 @@
         ========================================================
     */
     window.onload = () => {
-        // Load the previously set theme from local storage
         if(localStorage.getItem('prem_theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
@@ -1593,7 +866,6 @@
         
         initAutoDeleteUI();
         
-        // Listen to mentors data from database
         dbRef.collection('settings').doc('mentors_prem').onSnapshot(doc => {
             if(doc.exists) {
                 mentorRoles = doc.data().roles || mentorRoles;
@@ -1605,7 +877,6 @@
             }
         });
 
-        // Listen to file rules (PDF/DOC access)
         dbRef.collection('settings').doc('file_rules').onSnapshot(doc => {
             if(doc.exists) {
                 isDocAllowed = doc.data().docAllowed;
@@ -1616,7 +887,6 @@
             updateDocToggleUI(); 
             updateFileAccept('uCategory', 'uFile');
             
-            // Show or hide story file wrapper based on rules
             if(isDocAllowed) {
                 document.getElementById('storyFileWrapper').style.display = 'block';
             } else {
@@ -1624,19 +894,17 @@
             }
         });
 
-        // Word count functionality for Story Box (Red/Green logic applied)
         document.getElementById('sText').addEventListener('input', function() {
             const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
             const display = document.getElementById('wordCountDisplay');
             display.innerText = `শব্দ: ${words}`;
             if(words >= 5000) {
-                display.style.color = "#4caf50"; // Green
+                display.style.color = "#4caf50"; 
             } else {
-                display.style.color = "#ff5252"; // Red
+                display.style.color = "#ff5252"; 
             }
         });
 
-        // Initially sign in anonymously just to fetch basic public data
         auth.signInAnonymously().catch(console.error);
     };
 
@@ -1649,7 +917,6 @@
                 document.getElementById('mainPortal').style.display = 'block';
                 document.getElementById('userPortal').style.display = 'block';
                 
-                // Show actual name even if guest
                 const dName = user.displayName || user.email || "Guest";
                 document.getElementById('uNameDisplay').innerText = dName;
                 
@@ -1756,10 +1023,12 @@
         const input = document.getElementById(inputId);
         if (input.type === "password") { 
             input.type = "text"; 
-            icon.classList.replace('fa-eye', 'fa-eye-slash'); 
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash'); 
         } else { 
             input.type = "password"; 
-            icon.classList.replace('fa-eye-slash', 'fa-eye'); 
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye'); 
         }
     }
     
@@ -1792,10 +1061,7 @@
         ========================================================
     */
     function getDownloadUrl(url) {
-        if(!url) {
-            return "";
-        }
-        // Force download parameter for Cloudinary links to avoid opening in browser natively
+        if(!url) return "";
         if (url.includes('/upload/')) {
             return url.replace('/upload/', '/upload/fl_attachment/'); 
         }
@@ -1803,7 +1069,7 @@
     }
 
     function openPreview(url, fileName) {
-        const isAudio = url.match(/\.(mp3|wav|ogg|aac)$/i);
+        const isAudio = url.match(/\.(mp3|wav|ogg|aac|m4a)$/i);
         const isImg = url.match(/\.(jpg|jpeg|png|gif|webp)$/i);
         const isDocOrPdf = url.match(/\.(pdf|doc|docx)$/i);
         
@@ -2091,6 +1357,7 @@
             document.getElementById('sText').value = ""; 
             document.getElementById('sFile').value = ""; 
             document.getElementById('sFileNameDisplay').innerText = "";
+            document.getElementById('wordCountDisplay').innerText = "শব্দ: ০";
             loadMyFeedback();
         } catch(e) { 
             msg.style.color = "#ff5252"; 
@@ -2111,7 +1378,7 @@
             activeMentor = mentorRoles[pass]; 
             isMaster = pass === "Master2002";
             
-            // Fix: Clean all modals including overlays explicitly to remove blur
+            // Clean modals
             document.getElementById('adminAuthModal').style.display = 'none';
             const overlays = document.querySelectorAll('.modal-overlay');
             overlays.forEach(function(modal) {
@@ -2197,7 +1464,6 @@
                 return; 
             }
             
-            // Eye icon allows hiding/unhiding project
             const itemHtml = `
                 <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
                     <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
@@ -2339,7 +1605,7 @@
             dataArr.sort((a,b) => b.ts - a.ts);
             
             dataArr.forEach(d => {
-                const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
+                const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac|m4a)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
                 const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx)$/i);
                 
@@ -2519,7 +1785,85 @@
         alert("আপডেট হয়েছে!");
     }
 
-    // --- Master Actions ---
+    async function uploadVoiceRemark(blob, id, colName) {
+        const upMsg = document.getElementById(`audioUploading_${id}`);
+        if(upMsg) { 
+            upMsg.style.display = 'inline-block'; 
+            upMsg.innerText = "⏳ আপলোড হচ্ছে..."; 
+        }
+        
+        const fd = new FormData(); 
+        fd.append('file', blob); 
+        fd.append('upload_preset', UPLOAD_PRESET);
+        
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
+            const data = await res.json();
+            if(data.secure_url) { 
+                await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url }); 
+                if(upMsg) upMsg.innerText = "✅ সম্পন্ন!"; 
+            } else if(upMsg) {
+                upMsg.innerText = "❌ ত্রুটি!";
+            }
+        } catch(e) { 
+            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
+        }
+        
+        setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
+    }
+
+    async function deleteVoiceRemark(id, colName) { 
+        if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) {
+            await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: firebase.firestore.FieldValue.delete() }); 
+        }
+    }
+
+    async function toggleVoiceRemark(id, colName) {
+        const btn = document.getElementById(`micBtn_${id}`);
+        
+        if(activeRecorder && recordDocId === id) {
+            activeRecorder.stop(); 
+            activeRecorder.stream.getTracks().forEach(t => t.stop()); 
+            activeRecorder = null;
+            btn.classList.remove('recording-pulse'); 
+            btn.innerHTML = '<i class="fas fa-microphone"></i>';
+        } else if(!activeRecorder) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                activeRecorder = new MediaRecorder(stream); 
+                audioChunks = []; 
+                recordDocId = id; 
+                recordCol = colName;
+                
+                activeRecorder.ondataavailable = e => { 
+                    if(e.data.size > 0) audioChunks.push(e.data); 
+                };
+                
+                activeRecorder.onstop = async () => {
+                    const blob = new Blob(audioChunks, { type: 'audio/mp3' }); 
+                    uploadVoiceRemark(blob, recordDocId, recordCol);
+                    recordDocId = null; 
+                    recordCol = null;
+                };
+                
+                activeRecorder.start(); 
+                btn.classList.add('recording-pulse'); 
+                btn.innerHTML = '<i class="fas fa-stop"></i>';
+            } catch(e) { 
+                recordDocId = id; 
+                recordCol = colName; 
+                adminVoiceInput.click(); // Fallback for mobile 
+            }
+        } else {
+            alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
+        }
+    }
+
+    /*
+        ========================================================
+        MASTER ADMIN MANAGEMENT
+        ========================================================
+    */
     async function addMentor() {
         if(!isMaster) return;
         const name = document.getElementById('newMentorName').value.trim(); 
