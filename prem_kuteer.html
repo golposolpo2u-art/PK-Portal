@@ -5,19 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Go - প্রেম কুটির পোর্টাল</title>
     
+    <!-- 
+        ========================================================
+        EXTERNAL RESOURCES & FONTS
+        ========================================================
+    -->
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- JSZip & FileSaver for Zip Conversion -->
+    <!-- 
+        JSZip & FileSaver for Zip Conversion
+        Used for batch downloading files from the admin panel
+    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
-        /* Theme Variables (Default Dark Mode: Black & Pink) */
+        /* ========================================================
+            CSS VARIABLES & THEME DEFINITIONS
+            ========================================================
+        */
         :root {
+            /* Primary Colors */
             --primary-pink: #e91e63;
             --secondary-pink: #f06292;
             
+            /* Dark Mode Defaults */
             --bg-gradient: linear-gradient(135deg, #111111 0%, #000000 100%);
             --panel-bg: rgba(20, 20, 20, 0.95);
             --card-bg: #1a1a1a;
@@ -26,12 +39,16 @@
             --text-muted: #aaaaaa;
             --border-color: #333333;
             --tab-bg: #222222;
-            --modal-overlay: rgba(0,0,0,0.85);
+            --modal-overlay: rgba(0, 0, 0, 0.85);
+            
+            /* Utility Colors */
             --error-red: #ff5252;
             --success-green: #4caf50;
         }
 
-        /* Light Mode (Day Mode: White & Pink - Fixed Contrast) */
+        /* Light Mode (Day Mode) Variables 
+            These override the default dark mode when the class is added to body
+        */
         body.light-mode {
             --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
             --panel-bg: rgba(255, 255, 255, 0.98);
@@ -41,46 +58,13 @@
             --text-muted: #555555;
             --border-color: #f48fb1;
             --tab-bg: #fce4ec;
-            --modal-overlay: rgba(255,255,255,0.8);
+            --modal-overlay: rgba(255, 255, 255, 0.8);
         }
 
-        /* Light Mode Adjustments */
-        body.light-mode .ch-title { 
-            text-shadow: none; 
-        }
-        
-        body.light-mode .main-container { 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
-            border: 1px solid #f8bbd0; 
-        }
-        
-        body.light-mode .list-card { 
-            background: #ffffff; 
-            border: 1px solid #fce4ec; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03); 
-        }
-        
-        body.light-mode .mentor-list-item { 
-            background: #f9f9f9; 
-            border-color: #fce4ec; 
-            color: #222222; 
-        }
-        
-        body.light-mode .folder-item { 
-            background: #fdfdfd; 
-            border-color: #f8bbd0; 
-            color: #222222; 
-        }
-        
-        body.light-mode select, 
-        body.light-mode input, 
-        body.light-mode textarea { 
-            color: #222222 !important; 
-            border-color: #f8bbd0; 
-            background: #ffffff !important; 
-        }
-
-        /* Global Reset */
+        /* ========================================================
+            GLOBAL STYLES & RESETS
+            ========================================================
+        */
         * { 
             margin: 0; 
             padding: 0; 
@@ -100,6 +84,67 @@
             overflow-x: hidden;
         }
 
+        /* Light Mode Specific Adjustments */
+        body.light-mode .ch-title { 
+            text-shadow: none; 
+        }
+        
+        body.light-mode .main-container { 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
+            border: 1px solid #f8bbd0; 
+        }
+        
+        body.light-mode .list-card { 
+            background: #ffffff; 
+            border: 1px solid #fce4ec; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); 
+        }
+        
+        body.light-mode .folder-item { 
+            background: #fdfdfd; 
+            border-color: #f8bbd0; 
+            color: #222222; 
+        }
+        
+        body.light-mode select, 
+        body.light-mode input, 
+        body.light-mode textarea { 
+            color: #222222 !important; 
+            border-color: #f8bbd0; 
+            background: #ffffff !important; 
+        }
+
+        /* ========================================================
+            MENTOR LIST ITEM THEME ADJUSTMENT (CRITICAL REQUEST)
+            ========================================================
+        */
+        
+        /* Dark Mode Mentor Box (White/Transparent) */
+        .mentor-list-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            margin-top: 10px; 
+            font-size: 14px; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        /* Light Mode Mentor Box (Gray to stand out) */
+        body.light-mode .mentor-list-item { 
+            background: #e0e0e0; 
+            border-color: #cccccc; 
+            color: #111111; 
+        }
+
+        /* ========================================================
+            MAIN CONTAINER & HEADER
+            ========================================================
+        */
         .main-container { 
             width: 100%; 
             max-width: 900px; 
@@ -145,7 +190,7 @@
             font-size: clamp(30px, 8vw, 45px); 
             color: var(--primary-pink); 
             font-weight: bold; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
         }
         
         .btn-home { 
@@ -174,7 +219,34 @@
             z-index: 10; 
         }
 
-        /* Auth UI */
+        /* ========================================================
+            TUTORIAL FOCUS ANIMATION
+            ========================================================
+        */
+        @keyframes tutPulse {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.6); 
+            }
+            70% { 
+                box-shadow: 0 0 0 12px rgba(233, 30, 99, 0); 
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(233, 30, 99, 0); 
+            }
+        }
+        
+        .btn-tut-focus {
+            background: linear-gradient(45deg, #ff9800, #f57c00) !important;
+            color: #ffffff !important;
+            border: none !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: tutPulse 2s infinite;
+        }
+
+        /* ========================================================
+            AUTHENTICATION SCREENS
+            ========================================================
+        */
         #authScreen { 
             text-align: center; 
             padding: 20px 0; 
@@ -248,7 +320,10 @@
             text-decoration: underline; 
         }
 
-        /* Tabs */
+        /* ========================================================
+            USER TABS & INPUT FIELDS
+            ========================================================
+        */
         .tabs { 
             display: flex; 
             background: var(--tab-bg); 
@@ -281,7 +356,6 @@
             color: #ffffff; 
         }
 
-        /* Inputs and Labels */
         label { 
             font-weight: bold; 
             color: var(--primary-pink); 
@@ -319,14 +393,16 @@
             min-height: 80px; 
         }
 
-        /* Story Height */
         #sText { 
             min-height: 350px; 
             resize: vertical; 
             line-height: 1.6; 
         }
 
-        /* Rich Text Editor */
+        /* ========================================================
+            RICH TEXT EDITOR (CASTING DIARY)
+            ========================================================
+        */
         .rte-toolbar { 
             display: flex; 
             gap: 5px; 
@@ -415,7 +491,10 @@
             cursor: pointer; 
         }
 
-        /* Admin Layout & Cards */
+        /* ========================================================
+            ADMIN DASHBOARD & CARDS
+            ========================================================
+        */
         .admin-layout { 
             display: grid; 
             grid-template-columns: 220px 1fr; 
@@ -473,7 +552,7 @@
             padding: 15px; 
             border-radius: 12px; 
             margin-bottom: 15px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
             position: relative;
         }
         
@@ -522,7 +601,6 @@
             border: 1px solid rgba(245, 127, 23, 0.3); 
         }
 
-        /* Batch Options */
         .batch-header { 
             display: flex; 
             justify-content: space-between; 
@@ -534,7 +612,6 @@
             margin-bottom: 15px; 
         }
 
-        /* Misc */
         .admin-box { 
             background: var(--card-bg); 
             padding: 15px; 
@@ -579,7 +656,10 @@
             color: #4caf50; 
         }
 
-        /* Status Badges */
+        /* ========================================================
+            STATUS BADGES & CLOUD ICONS
+            ========================================================
+        */
         .status-badge { 
             display: inline-block; 
             padding: 3px 8px; 
@@ -623,7 +703,6 @@
             gap: 4px;
         }
 
-        /* Select All Checkbox Styles */
         .select-check { 
             transform: scale(1.3); 
             margin-right: 8px; 
@@ -631,7 +710,10 @@
             accent-color: var(--primary-pink); 
         }
         
-        /* Modals & Previews */
+        /* ========================================================
+            MODALS & PREVIEWS
+            ========================================================
+        */
         .modal-overlay { 
             display: none; 
             position: fixed; 
@@ -654,7 +736,7 @@
             width: 100%; 
             max-width: 320px; 
             text-align: center; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); 
             border: 2px solid var(--primary-pink); 
             color: var(--text-main); 
         }
@@ -679,8 +761,8 @@
         }
         
         .admin-trigger { 
-            background: rgba(255,255,255,0.1); 
-            border: 1px solid rgba(255,255,255,0.25); 
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
             color: var(--text-main); 
             font-size: 13px; 
             padding: 12px; 
@@ -694,11 +776,11 @@
             justify-content: center; 
             align-items: center; 
             gap: 8px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         
         .admin-trigger:hover { 
-            background: rgba(255,255,255,0.2); 
+            background: rgba(255, 255, 255, 0.2); 
             border-color: var(--primary-pink); 
             box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); 
             transform: translateY(-2px); 
@@ -742,21 +824,8 @@
             gap: 10px;
         }
         
-        .mentor-list-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--input-bg); 
-            padding: 8px; 
-            border-radius: 6px; 
-            margin-top: 5px; 
-            font-size: 12px; 
-            border: 1px solid var(--border-color); 
-            color: var(--text-main);
-        }
-        
         .auto-delete-wrapper { 
-            background: rgba(255,255,255,0.05); 
+            background: rgba(255, 255, 255, 0.05); 
             padding: 12px; 
             border-radius: 10px; 
             margin-bottom: 15px; 
@@ -774,6 +843,10 @@
             gap: 10px; 
         }
 
+        /* ========================================================
+            ANIMATIONS
+            ========================================================
+        */
         @keyframes pulseRec { 
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 
             70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 
@@ -782,12 +855,93 @@
         
         .recording-pulse { 
             animation: pulseRec 1.5s infinite; 
-            background: rgba(244,67,54,0.1) !important; 
+            background: rgba(244, 67, 54, 0.1) !important; 
             color: #f44336 !important; 
             border-color: #f44336 !important; 
         }
 
-        /* PC Enhancements */
+        /* ========================================================
+            INTERACTIVE TUTORIAL OVERLAY STYLES 
+            (MODIFIED: REMOVED BLUR, JUST SPOTLIGHT)
+            ========================================================
+        */
+        body.tutorial-on .main-container {
+            backdrop-filter: none !important;
+            background: rgba(0, 0, 0, 0.8) !important;
+        }
+
+        .interactive-overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+            z-index: 9990; 
+            pointer-events: auto;
+        }
+        
+        .highlighted-for-tutorial {
+            position: relative !important;
+            z-index: 9999 !important;
+            box-shadow: 0 0 0 4px var(--primary-pink), 0 0 30px rgba(233, 30, 99, 0.9) !important;
+            animation: pulseHighlight 1.5s infinite alternate;
+            border-radius: 12px !important;
+            pointer-events: auto !important;
+            background-color: var(--card-bg) !important;
+        }
+
+        @keyframes pulseHighlight {
+            0% { box-shadow: 0 0 0 3px var(--primary-pink), 0 0 15px rgba(233, 30, 99, 0.6); }
+            100% { box-shadow: 0 0 0 6px var(--primary-pink), 0 0 35px rgba(233, 30, 99, 1); }
+        }
+
+        .tutorial-tooltip-fixed {
+            display: none; 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: 90%; 
+            max-width: 450px; 
+            background: var(--dark-bg); 
+            padding: 20px;
+            border-radius: 15px; 
+            border: 2px solid var(--primary-pink);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9); 
+            z-index: 10000;
+            text-align: center;
+            pointer-events: auto;
+        }
+        
+        .tut-text { 
+            font-size: 15px; 
+            line-height: 1.5; 
+            color: #ffffff; 
+            margin-bottom: 15px; 
+        }
+        
+        .tut-actions { 
+            display: flex; 
+            gap: 10px; 
+            justify-content: center; 
+            margin-bottom: 15px; 
+            flex-wrap: wrap;
+        }
+
+        .admin-story-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        /* ========================================================
+            PC ENHANCEMENTS (RESPONSIVE DESIGN)
+            ========================================================
+        */
         @media (min-width: 768px) {
             .main-container { 
                 padding: 40px; 
@@ -860,15 +1014,20 @@
 </head>
 <body class="light-mode">
 
+<!-- MAIN CONTAINER -->
 <div class="container main-container">
+    
+    <!-- Home Button -->
     <a href="index.html" class="btn-home">
         <i class="fas fa-arrow-left"></i> হোমপেজ
     </a>
     
+    <!-- Theme Toggle Button -->
     <button class="theme-toggle-btn" onclick="toggleTheme()">
         <i id="themeIcon" class="fas fa-sun"></i>
     </button>
     
+    <!-- Header Section -->
     <div class="header">
         <div class="logo-box-fix">
             <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Logo">
@@ -879,8 +1038,14 @@
         </div>
     </div>
 
-    <!-- Auth -->
+    <!-- 
+        ========================================================
+        AUTHENTICATION SCREEN
+        ========================================================
+    -->
     <div id="authScreen">
+        
+        <!-- Login Box -->
         <div class="auth-wrapper" id="loginBox">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইউজার লগইন</h3>
             
@@ -904,6 +1069,7 @@
             </div>
         </div>
 
+        <!-- Register Box -->
         <div class="auth-wrapper" id="registerBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">রেজিস্ট্রেশন</h3>
             
@@ -919,6 +1085,7 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">লগইন করুন</span>
         </div>
 
+        <!-- Guest Box -->
         <div class="auth-wrapper" id="guestBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">Guest Login</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন।</p>
@@ -929,6 +1096,7 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
 
+        <!-- Forgot Password Box -->
         <div class="auth-wrapper" id="forgotPassBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
@@ -939,6 +1107,7 @@
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
 
+        <!-- Forgot Email Box -->
         <div class="auth-wrapper" id="forgotEmailBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইমেইল ভুলে গেছেন?</h3>
             <p style="font-size: 13px; color: var(--text-main); margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
@@ -955,9 +1124,16 @@
         </button>
     </div>
 
-    <!-- Main Portal -->
+    <!-- 
+        ========================================================
+        MAIN PORTAL AREA (For both User & Admin)
+        ========================================================
+    -->
     <div id="mainPortal">
+        
+        <!-- USER PORTAL -->
         <div id="userPortal">
+            
             <div class="user-nav">
                 <div style="font-weight: bold; color: var(--primary-pink);">
                     <i class="fas fa-user"></i> <span id="uNameDisplay"></span>
@@ -973,6 +1149,7 @@
                 <div class="tab" onclick="switchUserTab('status')">স্ট্যাটাস</div>
             </div>
 
+            <!-- Work Upload Section -->
             <div id="workUpload">
                 <label>প্রজেক্ট:</label>
                 <select id="uProject">
@@ -985,7 +1162,7 @@
                 </select>
                 
                 <label>ফাইল:</label>
-                <button type="button" class="btn-action" style="background: rgba(255,255,255,0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
+                <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
@@ -996,6 +1173,7 @@
                 <div id="statusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
+            <!-- Story Upload Section -->
             <div id="storyUpload" style="display:none;">
                 <label>শিরোনাম:</label>
                 <input type="text" id="sTitle" placeholder="গল্পের শিরোনাম">
@@ -1008,10 +1186,11 @@
                     <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে বিস্তারিতভাবে লিখুন..."></textarea>
                 </div>
                 
+                <!-- Story File Upload Option (Visible only if Doc Allowed) -->
                 <div id="storyFileWrapper" style="display:none; margin-top:10px;">
                     <label style="color:var(--primary-pink); font-size:12px;">গল্পের ফাইল (PDF/DOC):</label>
                     <input type="file" id="sFile" accept=".txt, .doc, .docx, .pdf" style="display:none;">
-                    <button type="button" class="btn-action" style="background: rgba(255,255,255,0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
+                    <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
                         <i class="fas fa-file-pdf"></i> ফাইল সিলেক্ট করুন
                     </button>
                     <div id="sFileNameDisplay" style="font-size:12px; color:var(--success-green); text-align:center; margin-top:5px; font-weight:bold;"></div>
@@ -1021,6 +1200,7 @@
                 <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
+            <!-- User Status View -->
             <div id="statusView" style="display:none;">
                 <div class="auto-delete-wrapper" style="margin-bottom: 20px;">
                     <div class="auto-delete-inner">
@@ -1038,12 +1218,12 @@
                     </div>
                     
                     <div id="customAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-pink); align-items: center; justify-content:center; gap: 8px; flex-wrap: wrap; margin-top:10px;">
-                        <input type="number" id="customDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
-                        <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
+                        <input type="number" id="customDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255, 255, 255, 0.9); color:#000000;">
+                        <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255, 255, 255, 0.9); color:#000000;">
                             <option value="24">দিন (Days)</option>
                             <option value="720">মাস (Months)</option>
                         </select>
-                        <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#fff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
+                        <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
                     </div>
                 </div>
                 
@@ -1056,16 +1236,22 @@
             </div>
         </div>
 
-        <!-- Admin Dashboard -->
+        <!-- 
+            ========================================================
+            ADMIN DASHBOARD
+            ========================================================
+        -->
         <div id="adminDashboard">
+            
             <div class="navbar">
                 <span id="nameTag" style="font-weight:bold; color:var(--primary-pink);"></span>
                 <button onclick="exitAdmin()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> প্রস্থান</button>
             </div>
             
+            <!-- Master Admin specific controls -->
             <div id="masterConfigPanel" class="admin-box" style="display:none; border-color:var(--primary-pink); background:var(--input-bg);">
                 <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 12px; font-size:14px;"><i class="fas fa-crown"></i> মাস্টার কন্ট্রোল</p>
-                <button id="docToggleBtn" onclick="toggleDocUploads()" class="btn-main" style="padding: 10px; font-size: 13px; width: 100%; background:linear-gradient(45deg, #4caf50, #81c784); color:#fff; margin-bottom:15px;">PDF/DOC আপলোড চালু আছে (বন্ধ করুন)</button>
+                <button id="docToggleBtn" onclick="toggleDocUploads()" class="btn-main" style="padding: 10px; font-size: 13px; width: 100%; background:linear-gradient(45deg, #4caf50, #81c784); color:#ffffff; margin-bottom:15px;">PDF/DOC আপলোড চালু আছে (বন্ধ করুন)</button>
                 
                 <div style="border-top:1px dashed var(--border-color); padding-top:15px;">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
@@ -1081,6 +1267,7 @@
                 </div>
             </div>
 
+            <!-- Project and Category Creation -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
                 <div class="admin-box" style="padding:15px; margin-bottom:0;">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-folder-plus"></i> প্রজেক্ট তৈরি</p>
@@ -1095,29 +1282,38 @@
             </div>
 
             <div class="admin-layout">
+                <!-- Sidebar -->
                 <div class="sidebar" id="projectSidebar">
                     <p style="font-weight: bold; margin-bottom: 12px; color: var(--primary-pink); text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; font-size:14px;"><i class="fas fa-folders"></i> প্রজেক্টসমূহ</p>
+                    
                     <div id="adminProjectListUI">লোড হচ্ছে...</div>
                     
                     <div class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
                         <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
                     </div>
+                    
                     <div class="folder-item" onclick="setSpecialView('story')">
                         <span><i class="fas fa-book-open"></i> গল্পের ঝুলি</span>
                     </div>
-                    <div class="folder-item" style="margin-top: 5px; background: rgba(244,67,54,0.1); border-color: rgba(244,67,54,0.3);" onclick="setSpecialView('trash')">
+                    
+                    <div class="folder-item" style="margin-top: 5px; background: rgba(244, 67, 54, 0.1); border-color: rgba(244, 67, 54, 0.3);" onclick="setSpecialView('trash')">
                         <span style="color: #ff5252;"><i class="fas fa-trash-restore"></i> রিসাইকেল বিন</span>
                     </div>
                 </div>
 
+                <!-- Content Area -->
                 <div class="content">
+                    
+                    <!-- Project View Content -->
                     <div id="projectView" style="display:none;">
-                        <div class="info-card" id="adminDeleteSettings" style="background: rgba(255,255,255,0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px;">
+                        
+                        <!-- Admin Delete Settings -->
+                        <div class="info-card" id="adminDeleteSettings" style="background: rgba(255, 255, 255, 0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px;">
                             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                                 <div>
                                     <b style="font-size: 13px; color: var(--primary-pink); display: block;"><i class="fas fa-history"></i> ইনবক্স অটো-হাইড সেটিংস</b>
                                 </div>
-                                <select id="adminAutoDeleteSelect" onchange="handleAdminAutoDeleteChange(this.value)" style="width: auto; margin: 0; padding: 6px 10px; font-size: 11px; background: rgba(0,0,0,0.5); color: var(--text-main); border: 1px solid var(--primary-pink); border-radius: 8px; outline: none;">
+                                <select id="adminAutoDeleteSelect" onchange="handleAdminAutoDeleteChange(this.value)" style="width: auto; margin: 0; padding: 6px 10px; font-size: 11px; background: rgba(0, 0, 0, 0.5); color: var(--text-main); border: 1px solid var(--primary-pink); border-radius: 8px; outline: none;">
                                     <option value="168">৭ দিন পর (ডিফল্ট)</option>
                                     <option value="48">২ দিন পর</option>
                                     <option value="720">১ মাস (৩০ দিন) পর</option>
@@ -1126,23 +1322,26 @@
                                 </select>
                             </div>
                             
-                            <div id="customAdminAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-pink); align-items: center; justify-content:center; gap: 8px; flex-wrap: wrap; margin-top:10px;">
-                                <input type="number" id="customAdminDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
-                                <select id="customAdminDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
+                            <div id="customAdminAutoDeleteBox" style="display:none; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-pink); align-items: center; justify-content:center; gap: 8px; flex-wrap: wrap; margin-top:10px;">
+                                <input type="number" id="customAdminDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255, 255, 255, 0.9); color:#000000;">
+                                <select id="customAdminDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255, 255, 255, 0.9); color:#000000;">
                                     <option value="24">দিন (Days)</option>
                                     <option value="720">মাস (Months)</option>
                                 </select>
-                                <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#fff;" onclick="saveCustomAdminAutoDelete()">সেভ করুন</button>
+                                <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAdminAutoDelete()">সেভ করুন</button>
                             </div>
                         </div>
 
+                        <!-- Current Project Info -->
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
                             <h3 id="currentProjTitle" style="color:var(--primary-pink); font-size: 18px; margin:0;"></h3>
                             <button class="btn-sm btn-main" style="padding:8px 15px; width:auto; font-size:12px;" onclick="downloadProjectZIP()"><i class="fas fa-file-archive"></i> Folder ZIP</button>
                         </div>
 
+                        <!-- Category Tabs -->
                         <div class="tabs" id="adminCatTabs" style="margin-bottom:15px;"></div>
                         
+                        <!-- Split Inbox (Raw and Admin) -->
                         <div class="split-inbox">
                             <div class="inbox-column col-raw">
                                 <h4 style="color:var(--primary-pink); margin-bottom:10px;"><i class="fas fa-inbox"></i> ইউজারদের ফাইল</h4>
@@ -1174,12 +1373,12 @@
                         </div>
                     </div>
 
-                    <!-- Story View -->
+                    <!-- Story View Content -->
                     <div id="storyView" style="display:none;">
                         <div class="admin-story-container">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                                 <h3 style="color:var(--primary-pink);">গল্পসমূহ</h3>
-                                <span id="adminTotalStories" style="background:var(--primary-pink); color:#fff; padding:2px 8px; border-radius:10px; font-size:12px;"></span>
+                                <span id="adminTotalStories" style="background:var(--primary-pink); color:#ffffff; padding:2px 8px; border-radius:10px; font-size:12px;"></span>
                             </div>
                             <div class="batch-header">
                                 <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
@@ -1191,9 +1390,10 @@
                         </div>
                     </div>
 
-                    <!-- Record View -->
+                    <!-- Record View Content (Casting Diary) -->
                     <div id="recordView" style="display:none; padding: 15px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
                         <h3 style="color:var(--primary-pink); margin-bottom:10px;">কাস্টিং ডায়েরি</h3>
+                        
                         <input type="text" id="noteTitle" placeholder="শিরোনাম">
                         
                         <div class="rte-toolbar">
@@ -1226,7 +1426,7 @@
                         <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত লিখুন..."></div>
                         
                         <div style="display:flex; gap:8px; margin-top: 10px;">
-                            <button id="saveNoteBtn" class="btn-main" onclick="saveNote()" style="color:#fff;">সেভ করুন</button>
+                            <button id="saveNoteBtn" class="btn-main" onclick="saveNote()" style="color:#ffffff;">সেভ করুন</button>
                             <button id="cancelEditBtn" style="display:none; width: 100%; padding:10px; border-radius:10px; font-weight:bold; background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);" onclick="cancelEdit()">বাতিল</button>
                         </div>
                         
@@ -1240,9 +1440,10 @@
                         <div id="notesListUI"></div>
                     </div>
 
-                    <!-- Trash View -->
+                    <!-- Trash View Content -->
                     <div id="trashView" style="display:none;">
                         <h3 style="margin-bottom:12px; color:#ff5252; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
+                        
                         <div class="batch-header">
                             <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
                                 <input type="checkbox" onchange="toggleSelectAll('trash', this.checked)"> সব সিলেক্ট
@@ -1252,6 +1453,7 @@
                                 <button class="btn-del" onclick="batchTrashAction('delete')" style="padding:5px 15px;"><i class="fas fa-trash-alt"></i> মুছুন</button>
                             </div>
                         </div>
+                        
                         <div id="trashListUI"></div>
                     </div>
                 </div>
@@ -1260,7 +1462,11 @@
     </div>
 </div>
 
-<!-- Modals -->
+<!-- 
+    ========================================================
+    MODALS (Login & Preview)
+    ========================================================
+-->
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
@@ -1285,26 +1491,38 @@
             <div id="previewFrame"></div>
         </div>
         <div style="margin-top:15px;">
-            <a id="previewDownloadBtn" href="#" download target="_blank" class="btn-main" style="text-decoration:none; display:inline-block; padding:10px 20px; font-size:13px; color:#fff;"><i class="fas fa-download"></i> ডাউনলোড করুন</a>
+            <a id="previewDownloadBtn" href="#" download target="_blank" class="btn-main" style="text-decoration:none; display:inline-block; padding:10px 20px; font-size:13px; color:#ffffff;"><i class="fas fa-download"></i> ডাউনলোড করুন</a>
         </div>
     </div>
 </div>
 
-<!-- Firebase SDKs -->
+<!-- 
+    ========================================================
+    FIREBASE SDKS
+    ========================================================
+-->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 <script>
+    /*
+        ========================================================
+        APPLICATION LOGIC & FIREBASE INITIALIZATION
+        ========================================================
+    */
     const firebaseConfig = { 
         apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", 
         projectId: "prothomkotha-2002" 
     };
+    
     const appId = "golposolpo-premium";
     
+    // Prevent multiple initializations
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
+    
     const db = firebase.firestore();
     const auth = firebase.auth();
     const dbRef = db.collection('artifacts').doc(appId).collection('public').doc('data');
@@ -1313,6 +1531,7 @@
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
     const channel = "প্রেম কুটির"; 
 
+    // Global Variables
     let currentUser = null;
     let allProjects = [];
     let allCategories = []; 
@@ -1329,7 +1548,11 @@
     let currentNotes = {};
     let editingNoteId = null;
 
-    // Mobile Fallback file inputs for Admin Voice
+    /*
+        ========================================================
+        VOICE RECORDING FALLBACK FOR MOBILE
+        ========================================================
+    */
     let adminVoiceInput = document.createElement('input');
     adminVoiceInput.type = 'file'; 
     adminVoiceInput.accept = 'audio/*'; 
@@ -1345,6 +1568,7 @@
     adminVoiceInput.onchange = async function(e) {
         const file = e.target.files[0];
         if(!file || !recordDocId || !recordCol) return;
+        
         const upMsg = document.getElementById(`audioUploading_${recordDocId}`);
         if(upMsg) { 
             upMsg.style.display = 'inline-block'; 
@@ -1354,9 +1578,11 @@
         const fd = new FormData(); 
         fd.append('file', file); 
         fd.append('upload_preset', UPLOAD_PRESET);
+        
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
+            
             if(data.secure_url) {
                 await dbRef.collection(recordCol).doc(recordDocId).update({ adminVoiceRemark: data.secure_url });
                 if(upMsg) upMsg.innerText = "✅ সম্পন্ন!";
@@ -1366,19 +1592,25 @@
         } catch(err) { 
             if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
         }
+        
         e.target.value = ""; 
         recordDocId = null; 
         recordCol = null;
         setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
     };
 
+    /*
+        ========================================================
+        RICH TEXT EDITOR LOGIC
+        ========================================================
+    */
     // Story File upload handling
     document.getElementById('sFile').addEventListener('change', function() {
         document.getElementById('sFileNameDisplay').innerText = this.files[0] ? "ফাইল: " + this.files[0].name : '';
     });
 
-    // Rich Text Editor - Range Saving for Mobile Color Picker
     let savedRange;
+    
     document.getElementById('noteContent').addEventListener('blur', () => {
         const sel = window.getSelection();
         if(sel.rangeCount > 0) savedRange = sel.getRangeAt(0);
@@ -1409,7 +1641,13 @@
         localStorage.setItem('prem_theme', isLight ? 'light' : 'dark');
     }
 
+    /*
+        ========================================================
+        INITIALIZATION & AUTHENTICATION
+        ========================================================
+    */
     window.onload = () => {
+        // Load theme
         if(localStorage.getItem('prem_theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
@@ -1417,6 +1655,7 @@
         
         initAutoDeleteUI();
         
+        // Listen to mentors
         dbRef.collection('settings').doc('mentors_prem').onSnapshot(doc => {
             if(doc.exists) {
                 mentorRoles = doc.data().roles || mentorRoles;
@@ -1426,6 +1665,7 @@
             if(isMentor && isMaster) renderMentorList();
         });
 
+        // Listen to file rules (PDF/DOC access)
         dbRef.collection('settings').doc('file_rules').onSnapshot(doc => {
             if(doc.exists) {
                 isDocAllowed = doc.data().docAllowed;
@@ -1438,6 +1678,14 @@
             document.getElementById('storyFileWrapper').style.display = isDocAllowed ? 'block' : 'none';
         });
 
+        // Word count functionality for Story Box (Red/Green)
+        document.getElementById('sText').addEventListener('input', function() {
+            const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const display = document.getElementById('wordCountDisplay');
+            display.innerText = `শব্দ: ${words}`;
+            display.style.color = words >= 5000 ? "#4caf50" : "#ff5252";
+        });
+
         auth.signInAnonymously().catch(console.error);
     };
 
@@ -1445,9 +1693,15 @@
         if (user) {
             currentUser = user;
             document.getElementById('authScreen').style.display = 'none';
+            
             if(!isMentor) {
                 document.getElementById('mainPortal').style.display = 'block';
-                document.getElementById('uNameDisplay').innerText = user.displayName || user.email || "Guest";
+                document.getElementById('userPortal').style.display = 'block';
+                
+                // Show actual name even if guest
+                const dName = user.displayName || user.email || "Guest";
+                document.getElementById('uNameDisplay').innerText = dName;
+                
                 loadInitialData();
                 loadMyFeedback();
             }
@@ -1458,14 +1712,26 @@
         }
     });
 
+    /*
+        ========================================================
+        AUTH ACTIONS (LOGIN, REGISTER, GUEST, RESET)
+        ========================================================
+    */
     function toggleAuthView(view) {
         document.getElementById('authErrorMsg').innerText = "";
         document.querySelectorAll('.auth-wrapper').forEach(el => el.style.display = 'none');
-        if(view === 'register') document.getElementById('registerBox').style.display = 'block';
-        else if(view === 'guest') document.getElementById('guestBox').style.display = 'block';
-        else if(view === 'forgotPass') document.getElementById('forgotPassBox').style.display = 'block';
-        else if(view === 'forgotEmail') document.getElementById('forgotEmailBox').style.display = 'block';
-        else document.getElementById('loginBox').style.display = 'block';
+        
+        if(view === 'register') {
+            document.getElementById('registerBox').style.display = 'block';
+        } else if(view === 'guest') {
+            document.getElementById('guestBox').style.display = 'block';
+        } else if(view === 'forgotPass') {
+            document.getElementById('forgotPassBox').style.display = 'block';
+        } else if(view === 'forgotEmail') {
+            document.getElementById('forgotEmailBox').style.display = 'block';
+        } else {
+            document.getElementById('loginBox').style.display = 'block';
+        }
     }
 
     async function registerUser() {
@@ -1473,9 +1739,12 @@
         const email = document.getElementById('regEmail').value.trim();
         const pass = document.getElementById('regPass').value.trim();
         const err = document.getElementById('authErrorMsg');
+        
         if(!name || !email || !pass) return err.innerText = "সব ঘর পূরণ করুন!";
+        
         err.style.color = "var(--primary-pink)"; 
         err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
+        
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, pass);
             await cred.user.updateProfile({ displayName: name });
@@ -1489,9 +1758,12 @@
         const email = document.getElementById('loginEmail').value.trim();
         const pass = document.getElementById('loginPass').value.trim();
         const err = document.getElementById('authErrorMsg');
+        
         if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
+        
         err.style.color = "var(--primary-pink)"; 
         err.innerText = "লগইন হচ্ছে...";
+        
         try { 
             await auth.signInWithEmailAndPassword(email, pass); 
         } catch(error) { 
@@ -1503,10 +1775,12 @@
     async function loginGuest() {
         const name = document.getElementById('guestName').value.trim();
         if(!name) return alert("আপনার নাম লিখতে হবে!");
+        
         try {
             const cred = await auth.signInAnonymously();
             const guestName = name + " (Guest)";
             await cred.user.updateProfile({ displayName: guestName });
+            
             document.getElementById('uNameDisplay').innerText = guestName;
             currentUser = auth.currentUser;
         } catch(error) { 
@@ -1528,7 +1802,9 @@
     async function resetPassword() {
         const email = document.getElementById('resetEmail').value.trim();
         const err = document.getElementById('authErrorMsg');
+        
         if(!email) return err.innerText = "ইমেইল লিখুন!";
+        
         try { 
             await auth.sendPasswordResetEmail(email); 
             err.style.color = "#4caf50"; 
@@ -1543,8 +1819,14 @@
         auth.signOut(); 
     }
 
+    /*
+        ========================================================
+        FILE HANDLING & PREVIEWS
+        ========================================================
+    */
     function getDownloadUrl(url) {
         if(!url) return "";
+        // Force download parameter for Cloudinary links to avoid opening in browser
         return url.replace('/upload/', '/upload/fl_attachment/'); 
     }
 
@@ -1597,6 +1879,11 @@
         }
     }
 
+    /*
+        ========================================================
+        USER TAB SWITCHING & UPLOADS
+        ========================================================
+    */
     function switchUserTab(tab) {
         document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
         
@@ -1787,7 +2074,11 @@
         }
     }
 
-    // --- Admin Logic ---
+    /*
+        ========================================================
+        ADMIN LOGIC & DASHBOARD
+        ========================================================
+    */
     async function checkAdminPass() {
         const pass = document.getElementById('modalAdminPass').value.trim();
         
@@ -1795,6 +2086,12 @@
             isMentor = true; 
             activeMentor = mentorRoles[pass]; 
             isMaster = pass === "Master2002";
+            
+            // Hide Modals properly without removing background elements
+            document.getElementById('adminAuthModal').style.display = 'none';
+            document.querySelectorAll('.modal-overlay').forEach(function(modal) {
+                modal.style.display = 'none';
+            });
             
             document.getElementById('authScreen').style.display = "none";
             document.getElementById('userPortal').style.display = "none";
@@ -1860,6 +2157,8 @@
         
         allProjects.forEach(p => {
             if (p.isDeleted) return; 
+            
+            // Eye icon allows hiding/unhiding project
             const itemHtml = `
                 <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
                     <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
@@ -1868,6 +2167,7 @@
                         <i class="fas fa-trash del-folder" onclick="softDelete('projects', '${p.id}', '${p.name}')" style="color:#ff5252; cursor:pointer;"></i>
                     </div>
                 </div>`;
+                
             if(p.isHidden) hiddenHtml += itemHtml; 
             else activeHtml += itemHtml;
         });
@@ -1971,6 +2271,7 @@
                 
                 let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
                 
+                // Status Select explicitly remembers its value
                 let remarkSection = d.isAdmin ? "" : `
                     <div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border-color);">
                         <div class="remark-input-box" style="display:flex; gap:5px; align-items:center;">
@@ -2037,6 +2338,7 @@
 
                 let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
                 
+                // Status Select explicitly remembers its value
                 html += `
                 <div class="list-card" style="border-left:3px solid var(--primary-pink);">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
@@ -2158,7 +2460,11 @@
         }
     }
 
-    // --- Master Actions ---
+    /*
+        ========================================================
+        MASTER ADMIN MANAGEMENT
+        ========================================================
+    */
     async function addMentor() {
         if(!isMaster) return;
         const name = document.getElementById('newMentorName').value.trim(); 
@@ -2230,7 +2536,11 @@
         }
     }
 
-    // --- Batch Actions & Trash ---
+    /*
+        ========================================================
+        BATCH ACTIONS & RECYCLE BIN
+        ========================================================
+    */
     window.toggleSelectAll = (section, isChecked) => { 
         document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked); 
     };
@@ -2311,6 +2621,11 @@
         alert("সম্পন্ন!");
     }
 
+    /*
+        ========================================================
+        DOWNLOAD SYSTEM
+        ========================================================
+    */
     async function downloadSelectedZIP(section) {
         const cbs = document.querySelectorAll('.chk-' + section + ':checked');
         if(cbs.length === 0) return alert("অন্তত একটি ফাইল সিলেক্ট করুন!");
@@ -2359,6 +2674,11 @@
         }
     }
 
+    /*
+        ========================================================
+        ADMIN FILE UPLOAD SYSTEM
+        ========================================================
+    */
     async function adminUploadFile() {
         if(!activeAdminProj || !activeAdminCat) return alert("প্রজেক্ট ও ক্যাটাগরি সিলেক্ট করুন!");
         const file = document.getElementById('aFile').files[0];
@@ -2392,6 +2712,11 @@
         }
     }
 
+    /*
+        ========================================================
+        CASTING DIARY (NOTES) SYSTEM
+        ========================================================
+    */
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
         const content = document.getElementById('noteContent').innerHTML.trim(); 
