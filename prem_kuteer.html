@@ -19,7 +19,7 @@
 
     <style>
         /* ========================================================
-        CSS VARIABLES & THEME DEFINITIONS
+        CSS VARIABLES & THEME DEFINITIONS (PREM KUTEER PINK)
         ========================================================
         */
         :root {
@@ -38,7 +38,6 @@
             
             --error-red: #ff5252;
             --success-green: #4caf50;
-            --gold-color: #ffb300;
         }
 
         /* Light Mode (Day Mode) Variables */
@@ -259,6 +258,10 @@
             margin-top: 15px;
         }
         
+        body.light-mode .btn-main {
+            color: #ffffff;
+        }
+        
         .btn-main:hover { 
             opacity: 0.9; 
             transform: scale(1.02); 
@@ -375,15 +378,12 @@
             border-color: var(--primary-pink); 
             box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);
         }
-
-        /* ========================================================
-        RICH TEXT EDITOR & STORY BOX
-        ========================================================
-        */
+        
         textarea { 
             min-height: 80px; 
         }
-        
+
+        /* Story Height */
         #sText { 
             min-height: 350px; 
             resize: vertical; 
@@ -404,6 +404,10 @@
             pointer-events: none; 
         }
 
+        /* ========================================================
+        RICH TEXT EDITOR (CASTING DIARY)
+        ========================================================
+        */
         .rte-toolbar { 
             display: flex; 
             gap: 5px; 
@@ -481,9 +485,19 @@
             pointer-events: none; 
             display: block; 
         }
+        
+        .custom-font-input { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            opacity: 0; 
+            cursor: pointer; 
+        }
 
         /* ========================================================
-        ADMIN LAYOUT & NAVBAR
+        ADMIN DASHBOARD & CARDS
         ========================================================
         */
         .admin-layout { 
@@ -499,39 +513,6 @@
             } 
         }
         
-        .navbar { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--card-bg); 
-            padding: 12px 20px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--border-color); 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-        }
-
-        .logout-btn { 
-            background: rgba(244, 67, 54, 0.1); 
-            color: var(--error-red); 
-            border: 1px solid var(--error-red); 
-            padding: 8px 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 13px; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-        }
-        
-        .logout-btn:hover { 
-            background: var(--error-red); 
-            color: #ffffff; 
-            transform: translateY(-2px); 
-        }
-
-        /* Sidebar Items */
         .sidebar { 
             background: var(--card-bg); 
             padding: 15px; 
@@ -554,7 +535,6 @@
             font-size: 13px;
         }
         
-        /* HOVER HIGHLIGHT EFFECT ADDED HERE */
         .folder-item:hover { 
             background: rgba(233, 30, 99, 0.15) !important; 
             border-color: var(--primary-pink) !important; 
@@ -565,6 +545,7 @@
         body.light-mode .folder-item:hover {
             background: rgba(233, 30, 99, 0.1) !important; 
             border-color: var(--primary-pink) !important; 
+            color: var(--primary-pink) !important;
         }
         
         .folder-item.active { 
@@ -574,7 +555,15 @@
             transform: translateX(0);
         }
         
+        body.light-mode .folder-item.active {
+            color: #ffffff !important;
+        }
+        
         .folder-item.active:hover {
+            color: #ffffff !important;
+        }
+        
+        body.light-mode .folder-item.active:hover {
             color: #ffffff !important;
         }
         
@@ -587,7 +576,6 @@
             border-style: dashed; 
         }
 
-        /* List Cards */
         .list-card { 
             background: var(--card-bg); 
             border: 1px solid var(--border-color); 
@@ -888,22 +876,108 @@
             gap: 10px; 
         }
 
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--card-bg); 
+            padding: 15px 20px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+
+        .logout-btn { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: var(--error-red); 
+            border: 1px solid var(--error-red); 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
+        
+        .logout-btn:hover { 
+            background: var(--error-red); 
+            color: #ffffff; 
+            transform: translateY(-2px); 
+        }
+
+        @keyframes pulseRec { 
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } 
+        }
+        
+        .recording-pulse { 
+            animation: pulseRec 1.5s infinite; 
+            background: rgba(244, 67, 54, 0.1) !important; 
+            color: #f44336 !important; 
+            border-color: #f44336 !important; 
+        }
+
         /* ========================================================
-        PC SPECIFIC ENHANCEMENTS
+        PC SPECIFIC ENHANCEMENTS (RESPONSIVE DESIGN)
         ========================================================
         */
         @media (min-width: 768px) {
-            .main-container { padding: 40px; max-width: 1000px; }
-            .btn-home { top: 25px; left: 25px; font-size: 15px; }
-            .ch-title { font-size: 55px; }
-            .header { margin-top: 20px; }
-            .input-label { font-size: 15px; margin: 15px 0 8px 0; }
-            input[type="text"], input[type="password"], select, textarea { padding: 15px; font-size: 16px; margin-bottom: 20px; border-radius: 10px; }
-            .u-tab { padding: 15px 10px; font-size: 18px; } 
-            .btn-action { padding: 16px; font-size: 16px; border-radius: 10px; }
-            .info-card { padding: 20px; font-size: 15px; line-height: 1.6; border-radius: 12px; }
-            .list-card { padding: 25px; border-radius: 15px; }
-            .iphone-note { font-size: 14px; max-width: 450px; padding: 15px; }
+            .main-container { 
+                padding: 40px; 
+                max-width: 1000px; 
+            }
+            .btn-home { 
+                top: 25px; 
+                left: 25px; 
+                font-size: 15px; 
+            }
+            .ch-title { 
+                font-size: 55px; 
+            }
+            .header { 
+                margin-top: 20px;
+            }
+            .input-label { 
+                font-size: 15px; 
+                margin: 15px 0 8px 0; 
+            }
+            input[type="text"], 
+            input[type="password"], 
+            select, 
+            textarea { 
+                padding: 15px; 
+                font-size: 16px; 
+                margin-bottom: 20px; 
+                border-radius: 10px;
+            }
+            .u-tab { 
+                padding: 15px 10px; 
+                font-size: 18px; 
+            } 
+            .btn-action { 
+                padding: 16px; 
+                font-size: 16px; 
+                border-radius: 10px;
+            }
+            .info-card { 
+                padding: 20px; 
+                font-size: 15px; 
+                line-height: 1.6; 
+                border-radius: 12px;
+            }
+            .list-card { 
+                padding: 25px; 
+                border-radius: 15px;
+            }
+            .iphone-note { 
+                font-size: 14px; 
+                max-width: 450px; 
+                padding: 15px; 
+            }
         }
         
         .iphone-note { 
@@ -1041,11 +1115,11 @@
         <!-- USER PORTAL -->
         <div id="userPortal">
             
-            <div class="user-nav" style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div class="user-nav">
                 <div style="font-weight: bold; color: var(--primary-pink); font-size: 16px;">
                     <i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span>
                 </div>
-                <button onclick="logoutUser()" class="logout-btn" style="background: rgba(244, 67, 54, 0.1); color: var(--error-red); border: 1px solid var(--error-red); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                <button onclick="logoutUser()" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> লগ আউট
                 </button>
             </div>
@@ -1069,7 +1143,7 @@
                 </select>
                 
                 <label>ফাইল:</label>
-                <button type="button" class="btn-main" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
+                <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color); width:100%; cursor:pointer;" onclick="document.getElementById('uFile').click()">
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
@@ -1091,14 +1165,13 @@
                 <label>গল্প (লিখে বা আপলোড করে পাঠান):</label>
                 <div style="position: relative;">
                     <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে বিস্তারিতভাবে লিখুন..."></textarea>
-                    <div id="wordCountDisplay" class="word-counter-box" style="color:#ff5252;">শব্দ: ০</div>
                 </div>
                 
                 <!-- Story File Upload Option (Visible only if Doc Allowed) -->
                 <div id="storyFileWrapper" style="display:none; margin-top:10px;">
                     <label style="color:var(--primary-pink); font-size:12px;">গল্পের ফাইল (PDF/DOC):</label>
                     <input type="file" id="sFile" accept=".txt, .doc, .docx, .pdf" style="display:none;">
-                    <button type="button" class="btn-main" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
+                    <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color); width:100%; cursor:pointer;" onclick="document.getElementById('sFile').click()">
                         <i class="fas fa-file-pdf"></i> ফাইল সিলেক্ট করুন
                     </button>
                     <div id="sFileNameDisplay" style="font-size:12px; color:var(--success-green); text-align:center; margin-top:5px; font-weight:bold;"></div>
@@ -1131,7 +1204,7 @@
                             <option value="24">দিন (Days)</option>
                             <option value="720">মাস (Months)</option>
                         </select>
-                        <button class="btn-main" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
+                        <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
                     </div>
                 </div>
                 
@@ -1146,15 +1219,15 @@
 
         <!-- 
             ========================================================
-            ADMIN DASHBOARD AREA
+            ADMIN DASHBOARD
             ========================================================
         -->
         <div id="adminDashboard">
             
             <!-- Navbar with Profile and Logout -->
-            <div class="navbar" style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div class="navbar">
                 <span id="nameTag" style="font-weight:bold; color:var(--primary-pink); font-size: 16px;"></span>
-                <button onclick="exitAdmin()" class="logout-btn" style="background: rgba(244, 67, 54, 0.1); color: var(--error-red); border: 1px solid var(--error-red); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                <button onclick="exitAdmin()" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> লগ আউট
                 </button>
             </div>
@@ -1220,7 +1293,7 @@
                     <div id="projectView" style="display:none;">
                         
                         <!-- Admin Delete Settings -->
-                        <div class="info-card" id="adminDeleteSettings" style="background: rgba(255, 255, 255, 0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px;">
+                        <div class="info-card" id="adminDeleteSettings" style="background: rgba(255, 255, 255, 0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px; border-radius:12px; border:1px solid var(--primary-pink);">
                             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                                 <div>
                                     <b style="font-size: 13px; color: var(--primary-pink); display: block;"><i class="fas fa-history"></i> ইনবক্স অটো-হাইড সেটিংস</b>
@@ -1348,7 +1421,7 @@
                         <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="আপনার বিস্তারিত বিবরণ এখানে লিখুন..."></div>
                         
                         <div style="display:flex; gap:10px; margin-top: 15px;">
-                            <button id="saveNoteBtn" class="btn-main" onclick="saveNote()" style="color:#ffffff;">সেভ করুন</button>
+                            <button id="saveNoteBtn" class="btn-main" onclick="saveNote()">সেভ করুন</button>
                             <button id="cancelEditBtn" style="display:none; width: 100%; padding:12px; border-radius:10px; font-weight:bold; background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);" onclick="cancelEdit()">বাতিল</button>
                         </div>
                         
@@ -1630,27 +1703,12 @@
                 document.getElementById('storyFileWrapper').style.display = 'none';
             }
         });
-
-        // Word count functionality for Story Box (Red/Green logic applied)
-        document.getElementById('sText').addEventListener('input', function() {
-            const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-            const display = document.getElementById('wordCountDisplay');
-            display.innerText = `শব্দ: ${words}`;
-            if(words >= 5000) {
-                display.style.color = "#4caf50"; // Green
-            } else {
-                display.style.color = "#ff5252"; // Red
-            }
-        });
-
-        auth.signInAnonymously().catch(console.error);
     };
 
     auth.onAuthStateChanged(user => {
         if (user) {
             // Check if it's an old guest session without name
             if (user.isAnonymous && !user.displayName) {
-                auth.signOut();
                 return;
             }
 
@@ -1718,6 +1776,7 @@
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, pass);
             await cred.user.updateProfile({ displayName: name });
+            // onAuthStateChanged will handle the UI switch natively
         } catch(error) { 
             err.style.color = "#ff5252"; 
             err.innerText = error.message; 
@@ -1757,10 +1816,17 @@
             const guestName = name + " (Guest)";
             await cred.user.updateProfile({ displayName: guestName });
             
-            document.getElementById('uNameDisplay').innerText = guestName;
+            // Force UI update immediately because onAuthStateChanged might ignore if displayName takes time
             currentUser = auth.currentUser;
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainPortal').style.display = 'block';
+            document.getElementById('userPortal').style.display = 'block';
+            document.getElementById('uNameDisplay').innerText = guestName;
+            
+            loadInitialData();
+            loadMyFeedback();
         } catch(error) { 
-            alert("ত্রুটি!"); 
+            alert("ত্রুটি: " + error.message); 
         }
     }
 
@@ -1806,8 +1872,10 @@
         ========================================================
     */
     function getDownloadUrl(url) {
-        if(!url) return "";
-        // Force download parameter for Cloudinary links 
+        if(!url) {
+            return "";
+        }
+        // Force download parameter for Cloudinary links to avoid opening in browser natively
         if (url.includes('/upload/')) {
             return url.replace('/upload/', '/upload/fl_attachment/'); 
         }
@@ -2103,8 +2171,6 @@
             document.getElementById('sText').value = ""; 
             document.getElementById('sFile').value = ""; 
             document.getElementById('sFileNameDisplay').innerText = "";
-            document.getElementById('wordCountDisplay').innerText = "শব্দ: ০";
-            document.getElementById('wordCountDisplay').style.color = "#ff5252";
             loadMyFeedback();
         } catch(e) { 
             msg.style.color = "#ff5252"; 
@@ -2470,8 +2536,6 @@
             let html = "";
             stories.forEach((d, index) => {
                 const serialNum = stories.length - index;
-                const wc = d.storyText ? d.storyText.trim().split(/\s+/).filter(w => w.length > 0).length : 0;
-                const wordColor = wc >= 5000 ? '#4caf50' : '#ff5252';
 
                 let voiceUi = "";
                 if (d.adminVoiceRemark) {
@@ -2494,7 +2558,6 @@
                         </div>
                         <div style="text-align:right;">
                             <span style="font-size:11px; color:var(--text-muted); display:block;">লেখক: ${d.author}</span>
-                            <span style="font-size:11px; color:var(--text-muted); display:block;">শব্দ: <b style="color:${wordColor}">${wc}</b></span>
                         </div>
                     </div>
                     ${d.fileUrl ? `<a href="${getDownloadUrl(d.fileUrl)}" target="_blank" class="btn-sm btn-download" style="width:fit-content; margin: 5px 0 5px 25px;"><i class="fas fa-file-pdf"></i> ফাইলটি ডাউনলোড করুন</a>` : ''}
@@ -2684,8 +2747,8 @@
             btn.style.color = "#ffffff";
         } else {
             btn.innerText = "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
-            btn.style.background = "linear-gradient(45deg, #ffb300, #ffca28)";
-            btn.style.color = "#000000";
+            btn.style.background = "linear-gradient(45deg, var(--primary-pink), var(--secondary-pink))";
+            btn.style.color = "#ffffff";
         }
     }
 
