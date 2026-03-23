@@ -13,14 +13,14 @@
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- JSZip & FileSaver -->
+    <!-- JSZip & FileSaver for Batch Downloads -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
         /* ========================================================
-            CSS VARIABLES & THEME DEFINITIONS
-            ========================================================
+        CSS VARIABLES & THEME DEFINITIONS
+        ========================================================
         */
         :root {
             --primary-pink: #e91e63;
@@ -38,6 +38,7 @@
             
             --error-red: #ff5252;
             --success-green: #4caf50;
+            --gold-color: #ffb300;
         }
 
         /* Light Mode (Day Mode) Variables */
@@ -54,22 +55,22 @@
         }
 
         /* ========================================================
-            GLOBAL STYLES & RESETS
-            ========================================================
+        GLOBAL STYLES & RESETS
+        ========================================================
         */
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
-            transition: background 0.3s, color 0.3s, border-color 0.3s ease; 
+            transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s ease; 
         }
 
-        /* Apply Bengali font to elements, but NOT icons */
+        /* Standardize Font */
         body, input, textarea, button, select, a, span, p, h1, h2, h3, h4, h5, h6, div {
-            font-family: 'Kalpurush', Arial, sans-serif;
+            font-family: 'Kalpurush', Arial, sans-serif !important;
         }
 
-        /* Force icons to keep their font-family */
+        /* Prevent font override for FontAwesome */
         .fas, .fab, .far, i {
             font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
         }
@@ -85,17 +86,33 @@
             overflow-x: hidden;
         }
 
-        /* Light Mode Specific Adjustments */
-        body.light-mode .ch-title { text-shadow: none; }
-        body.light-mode .main-container { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); border: 1px solid #f8bbd0; }
-        body.light-mode .list-card { background: #ffffff; border: 1px solid #fce4ec; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); }
-        body.light-mode .folder-item { background: #fdfdfd; border-color: #f8bbd0; color: #222222; }
-        body.light-mode select, body.light-mode input, body.light-mode textarea { color: #222222 !important; border-color: #f8bbd0; background: #ffffff !important; }
+        /* Light Mode Shadow Fixes */
+        body.light-mode .ch-title { 
+            text-shadow: none; 
+        }
+        body.light-mode .main-container { 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
+            border: 1px solid #f8bbd0; 
+        }
+        body.light-mode .list-card { 
+            background: #ffffff; 
+            border: 1px solid #fce4ec; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); 
+        }
+        body.light-mode .folder-item { 
+            background: #fdfdfd; 
+            border-color: #f8bbd0; 
+            color: #222222; 
+        }
+        body.light-mode select, 
+        body.light-mode input, 
+        body.light-mode textarea { 
+            color: #222222 !important; 
+            border-color: #f8bbd0; 
+            background: #ffffff !important; 
+        }
 
-        /* ========================================================
-            MENTOR LIST ITEM THEME ADJUSTMENT
-            ========================================================
-        */
+        /* Mentor List Item Focus */
         .mentor-list-item { 
             display: flex; 
             justify-content: space-between; 
@@ -117,8 +134,8 @@
         }
 
         /* ========================================================
-            MAIN CONTAINER & HEADER
-            ========================================================
+        MAIN CONTAINER & HEADER
+        ========================================================
         */
         .main-container { 
             width: 100%; 
@@ -132,130 +149,749 @@
             margin: 0 auto;
         }
 
-        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; margin-top: 45px; text-align: center; }
-        .logo-box-fix { width: 80px !important; height: 80px !important; border-radius: 50%; border: 3px solid var(--primary-pink); background: #000000; overflow: hidden; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
-        .ch-logo { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
-        .ch-title { font-size: clamp(30px, 8vw, 45px); color: var(--primary-pink); font-weight: bold; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
-        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; z-index: 10; display: flex; align-items: center; gap: 5px;}
-        .theme-toggle-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--primary-pink); font-size: 22px; cursor: pointer; z-index: 10; }
+        .header { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            margin-top: 45px; 
+            text-align: center; 
+        }
+        
+        .logo-box-fix { 
+            width: 80px !important; 
+            height: 80px !important; 
+            border-radius: 50%; 
+            border: 3px solid var(--primary-pink); 
+            background: #000000; 
+            overflow: hidden; 
+            margin-bottom: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        
+        .ch-logo { 
+            width: 100% !important; 
+            height: 100% !important; 
+            object-fit: cover !important; 
+            display: block; 
+        }
+        
+        .ch-title { 
+            font-size: clamp(30px, 8vw, 45px); 
+            color: var(--primary-pink); 
+            font-weight: bold; 
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
+        }
+        
+        .btn-home { 
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            text-decoration: none; 
+            color: var(--primary-pink); 
+            font-weight: bold; 
+            font-size: 13px; 
+            z-index: 10; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px;
+        }
+        
+        .theme-toggle-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: none; 
+            border: none; 
+            color: var(--primary-pink); 
+            font-size: 22px; 
+            cursor: pointer; 
+            z-index: 10; 
+        }
 
         /* ========================================================
-            AUTHENTICATION SCREENS
-            ========================================================
+        AUTHENTICATION UI
+        ========================================================
         */
-        #authScreen { text-align: center; padding: 20px 0; }
-        .auth-wrapper { max-width: 320px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .auth-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); }
-        .auth-input:focus { border-color: var(--primary-pink); box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: #ffffff; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 15px;}
-        .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
-        .toggle-auth { color: var(--primary-pink); font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
-        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 15px; margin-top: 5px;}
-        .forgot-links span { color: var(--text-muted); cursor: pointer; text-decoration: underline; }
+        #authScreen { 
+            text-align: center; 
+            padding: 20px 0; 
+        }
         
-        .eye-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink); }
-        .input-group { position:relative; margin-bottom:15px; }
-        .input-group input { margin-bottom:0; padding-right:35px; }
+        .auth-wrapper { 
+            max-width: 320px; 
+            margin: 0 auto; 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 15px; 
+            border: 1px solid var(--border-color); 
+        }
+        
+        .auth-input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            font-size: 14px; 
+            outline: none; 
+            background: var(--input-bg); 
+            color: var(--text-main); 
+        }
+        
+        .auth-input:focus { 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); 
+        }
+        
+        .btn-main { 
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); 
+            color: #ffffff; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            width: 100%; 
+            text-transform: uppercase; 
+            margin-top: 15px;
+        }
+        
+        .btn-main:hover { 
+            opacity: 0.9; 
+            transform: scale(1.02); 
+        }
+        
+        .toggle-auth { 
+            color: var(--primary-pink); 
+            font-size: 13px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            display: inline-block; 
+            text-decoration: underline; 
+        }
+        
+        .forgot-links { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            margin-bottom: 15px; 
+            margin-top: 5px;
+        }
+        
+        .forgot-links span { 
+            color: var(--text-muted); 
+            cursor: pointer; 
+            text-decoration: underline; 
+        }
+        
+        .eye-icon { 
+            position: absolute; 
+            right: 12px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            cursor: pointer; 
+            color: var(--primary-pink); 
+        }
+        
+        .input-group { 
+            position: relative; 
+            margin-bottom: 15px; 
+        }
+        
+        .input-group input { 
+            margin-bottom: 0; 
+            padding-right: 35px; 
+        }
 
         /* ========================================================
-            USER TABS & INPUT FIELDS
-            ========================================================
+        TABS & GENERAL INPUTS
+        ========================================================
         */
-        .tabs { display: flex; background: var(--tab-bg); border-radius: 10px; margin-bottom: 20px; overflow: hidden; padding: 4px; flex-wrap: wrap; border: 1px solid var(--border-color); }
-        .tab { flex: 1; padding: 10px 5px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-radius: 8px; font-size: clamp(12px, 4vw, 16px); min-width: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.2;}
-        .tab.active { background: var(--primary-pink); color: #ffffff; }
-
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 5px 0; font-size: 13px; text-transform: uppercase;}
-        select, textarea, input[type="file"], input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); margin-bottom:10px;}
-        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);}
+        .tabs { 
+            display: flex; 
+            background: var(--tab-bg); 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            overflow: hidden; 
+            padding: 4px; 
+            flex-wrap: wrap; 
+            border: 1px solid var(--border-color); 
+        }
         
-        textarea { min-height: 80px; }
-        #sText { min-height: 350px; resize: vertical; line-height: 1.6; padding-bottom: 30px;}
-        .word-counter-box { position: absolute; bottom: 20px; right: 15px; font-size:11px; font-weight:bold; background: var(--card-bg); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border-color); pointer-events: none; }
+        .tab { 
+            flex: 1; 
+            padding: 10px 5px; 
+            text-align: center; 
+            cursor: pointer; 
+            font-weight: bold; 
+            color: var(--text-muted); 
+            border-radius: 8px; 
+            font-size: clamp(12px, 4vw, 16px); 
+            min-width: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            line-height: 1.2;
+        }
+        
+        .tab.active { 
+            background: var(--primary-pink); 
+            color: #ffffff; 
+        }
+
+        label { 
+            font-weight: bold; 
+            color: var(--primary-pink); 
+            display: block; 
+            margin: 10px 0 5px 0; 
+            font-size: 13px; 
+            text-transform: uppercase;
+        }
+        
+        select, 
+        textarea, 
+        input[type="file"], 
+        input[type="text"], 
+        input[type="password"], 
+        input[type="number"] { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            font-size: 14px; 
+            outline: none; 
+            background: var(--input-bg); 
+            color: var(--text-main); 
+            margin-bottom: 10px;
+        }
+        
+        select:focus, 
+        textarea:focus, 
+        input:focus { 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);
+        }
 
         /* ========================================================
-            RICH TEXT EDITOR (CASTING DIARY)
-            ========================================================
+        RICH TEXT EDITOR & STORY BOX
+        ========================================================
         */
-        .rte-toolbar { display: flex; gap: 5px; background: var(--panel-bg); padding: 8px; border-radius: 8px 8px 0 0; border: 1px solid var(--border-color); border-bottom: none; align-items: center; flex-wrap: wrap; }
-        .rte-toolbar button, .rte-toolbar .color-picker-wrap, .rte-toolbar .custom-font-btn { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 3px; position: relative; }
-        .rte-toolbar button:hover, .rte-toolbar .custom-font-btn:hover { border-color: var(--primary-pink); }
-        .rte-toolbar select, .rte-toolbar input[type="number"] { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: var(--text-main); outline: none; width: auto; max-width: 100px; margin-bottom:0;}
-        .color-picker-wrap input[type="color"] { width: 20px; height: 20px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
-        .rte-editor { background: var(--input-bg); min-height: 150px; padding: 10px; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; outline: none; color: var(--text-main); font-size: 14px; line-height: 1.5; overflow-y: auto; }
-        .rte-editor:empty:before { content: attr(placeholder); color: var(--text-muted); pointer-events: none; display: block; }
-        .custom-font-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        textarea { 
+            min-height: 80px; 
+        }
+        
+        #sText { 
+            min-height: 350px; 
+            resize: vertical; 
+            line-height: 1.6; 
+            padding-bottom: 30px;
+        }
+        
+        .word-counter-box { 
+            position: absolute; 
+            bottom: 20px; 
+            right: 15px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            background: var(--card-bg); 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            pointer-events: none; 
+        }
+
+        .rte-toolbar { 
+            display: flex; 
+            gap: 5px; 
+            background: var(--panel-bg); 
+            padding: 8px; 
+            border-radius: 8px 8px 0 0; 
+            border: 1px solid var(--border-color); 
+            border-bottom: none; 
+            align-items: center; 
+            flex-wrap: wrap; 
+        }
+        
+        .rte-toolbar button, 
+        .rte-toolbar .color-picker-wrap, 
+        .rte-toolbar .custom-font-btn { 
+            border: 1px solid var(--border-color); 
+            background: var(--input-bg); 
+            cursor: pointer; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            gap: 3px; 
+            position: relative; 
+        }
+        
+        .rte-toolbar button:hover, 
+        .rte-toolbar .custom-font-btn:hover { 
+            border-color: var(--primary-pink); 
+        }
+        
+        .rte-toolbar select, 
+        .rte-toolbar input[type="number"] { 
+            border: 1px solid var(--border-color); 
+            background: var(--input-bg); 
+            cursor: pointer; 
+            padding: 4px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            color: var(--text-main); 
+            outline: none; 
+            width: auto; 
+            max-width: 100px; 
+            margin-bottom: 0;
+        }
+        
+        .color-picker-wrap input[type="color"] { 
+            width: 20px; 
+            height: 20px; 
+            padding: 0; 
+            border: none; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            background: none; 
+        }
+        
+        .rte-editor { 
+            background: var(--input-bg); 
+            min-height: 150px; 
+            padding: 10px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 0 0 8px 8px; 
+            outline: none; 
+            color: var(--text-main); 
+            font-size: 14px; 
+            line-height: 1.5; 
+            overflow-y: auto; 
+        }
+        
+        .rte-editor:empty:before { 
+            content: attr(placeholder); 
+            color: var(--text-muted); 
+            pointer-events: none; 
+            display: block; 
+        }
 
         /* ========================================================
-            ADMIN DASHBOARD & CARDS
-            ========================================================
+        ADMIN LAYOUT & NAVBAR
+        ========================================================
         */
-        .admin-layout { display: grid; grid-template-columns: 220px 1fr; gap: 15px; margin-top: 15px; }
-        @media (max-width: 768px) { .admin-layout { grid-template-columns: 1fr; } }
-        .sidebar { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .admin-layout { 
+            display: grid; 
+            grid-template-columns: 220px 1fr; 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
         
-        .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 13px;}
+        @media (max-width: 768px) { 
+            .admin-layout { 
+                grid-template-columns: 1fr; 
+            } 
+        }
         
-        /* FIX: Ensure active projects show a bright pink highlight */
-        .folder-item.active { background: var(--primary-pink) !important; color: #ffffff !important; border-color: var(--primary-pink) !important; }
-        .folder-item.active i { color: #ffffff !important; }
-        .folder-item:hover { border-color: var(--primary-pink); }
-        
-        .folder-item.hidden-proj { opacity: 0.7; border-style: dashed; }
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--card-bg); 
+            padding: 12px 20px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        }
 
-        .list-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative;}
-        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center;}
+        .logout-btn { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: var(--error-red); 
+            border: 1px solid var(--error-red); 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
         
-        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-        .btn-del { background: rgba(244, 67, 54, 0.1); color: #ff5252; border: 1px solid rgba(244, 67, 54, 0.3); }
-        .btn-download { background: rgba(76, 175, 80, 0.1); color: #4caf50; border: 1px solid rgba(76, 175, 80, 0.3); }
-        .btn-view { background: rgba(33, 150, 243, 0.1); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.3); }
-        .btn-remark { background: rgba(245, 127, 23, 0.1); color: #f57f17; border: 1px solid rgba(245, 127, 23, 0.3); }
+        .logout-btn:hover { 
+            background: var(--error-red); 
+            color: #ffffff; 
+            transform: translateY(-2px); 
+        }
 
-        .batch-header { display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; }
-
-        .admin-box { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-pink); }
+        /* Sidebar Items */
+        .sidebar { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px solid var(--border-color); 
+        }
         
-        .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        @media (max-width: 600px) { .split-inbox { grid-template-columns: 1fr; } }
-        .inbox-column { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; }
-        .inbox-column h4 { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); font-size: 14px; }
+        .folder-item { 
+            padding: 10px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-bottom: 6px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: var(--input-bg); 
+            border: 1px solid var(--border-color); 
+            font-size: 13px;
+        }
+        
+        /* HOVER HIGHLIGHT EFFECT ADDED HERE */
+        .folder-item:hover { 
+            background: rgba(233, 30, 99, 0.15) !important; 
+            border-color: var(--primary-pink) !important; 
+            color: var(--primary-pink) !important;
+            transform: translateX(4px);
+        }
+
+        body.light-mode .folder-item:hover {
+            background: rgba(233, 30, 99, 0.1) !important; 
+            border-color: var(--primary-pink) !important; 
+        }
+        
+        .folder-item.active { 
+            background: var(--primary-pink) !important; 
+            color: #ffffff !important; 
+            border-color: var(--primary-pink) !important; 
+            transform: translateX(0);
+        }
+        
+        .folder-item.active:hover {
+            color: #ffffff !important;
+        }
+        
+        .folder-item i { 
+            margin-right: 8px; 
+        }
+        
+        .folder-item.hidden-proj { 
+            opacity: 0.7; 
+            border-style: dashed; 
+        }
+
+        /* List Cards */
+        .list-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+            position: relative;
+        }
+        
+        .card-actions { 
+            display: flex; 
+            gap: 8px; 
+            margin-top: 10px; 
+            flex-wrap: wrap; 
+            align-items: center;
+        }
+        
+        .btn-sm { 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 11px; 
+            font-weight: bold; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+        }
+        
+        .btn-del { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: #ff5252; 
+            border: 1px solid rgba(244, 67, 54, 0.3); 
+        }
+        
+        .btn-download { 
+            background: rgba(76, 175, 80, 0.1); 
+            color: #4caf50; 
+            border: 1px solid rgba(76, 175, 80, 0.3); 
+        }
+        
+        .btn-view { 
+            background: rgba(33, 150, 243, 0.1); 
+            color: #2196f3; 
+            border: 1px solid rgba(33, 150, 243, 0.3); 
+        }
+        
+        .btn-remark { 
+            background: rgba(245, 127, 23, 0.1); 
+            color: #f57f17; 
+            border: 1px solid rgba(245, 127, 23, 0.3); 
+        }
+
+        .batch-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--input-bg); 
+            padding: 10px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 15px; 
+        }
+
+        .admin-box { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid var(--primary-pink); 
+        }
+        
+        .split-inbox { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
+        
+        @media (max-width: 600px) { 
+            .split-inbox { 
+                grid-template-columns: 1fr; 
+            } 
+        }
+        
+        .inbox-column { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            padding: 10px; 
+        }
+        
+        .inbox-column h4 { 
+            text-align: center; 
+            margin-bottom: 10px; 
+            padding-bottom: 8px; 
+            border-bottom: 1px dashed var(--border-color); 
+            font-size: 14px; 
+        }
+        
         .col-raw h4 { color: var(--primary-pink); }
         .col-admin h4 { color: #4caf50; }
 
-        /* Status Badges */
-        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .status-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; border-color: rgba(245, 127, 23, 0.3); }
-        .status-approved { background: rgba(76, 175, 80, 0.1); color: #4caf50; border-color: rgba(76, 175, 80, 0.3); }
-        .status-rejected { background: rgba(244, 67, 54, 0.1); color: #ff5252; border-color: rgba(244, 67, 54, 0.3); }
-        .cloud-badge { background: rgba(33, 150, 243, 0.1); color: #2196f3; font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: bold; border: 1px solid rgba(33, 150, 243, 0.3); display: inline-flex; align-items: center; gap: 4px;}
-
-        .select-check { transform: scale(1.3); margin-right: 8px; cursor: pointer; accent-color: var(--primary-pink); }
+        /* ========================================================
+        STATUS BADGES & UI ENHANCEMENTS
+        ========================================================
+        */
+        .status-badge { 
+            display: inline-block; 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            background: var(--input-bg); 
+            color: var(--text-muted); 
+            border: 1px solid var(--border-color); 
+        }
         
-        /* Modals & Previews */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
-        .modal-box { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 2px solid var(--primary-pink); color: var(--text-main); }
-        #previewModal .modal-box { max-width: 700px; width: 95%; padding: 15px; }
-        .preview-container { background: var(--panel-bg); border-radius: 10px; padding: 10px; text-align: center; border: 1px solid var(--border-color); overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 150px; }
+        .status-pending { 
+            background: rgba(245, 127, 23, 0.1); 
+            color: #f57f17; 
+            border-color: rgba(245, 127, 23, 0.3); 
+        }
         
-        .admin-trigger { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25); color: var(--text-main); font-size: 13px; padding: 12px; border-radius: 10px; margin-top: 30px; cursor: pointer; width: 100%; text-align: center; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
-        .admin-trigger:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--primary-pink); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); transform: translateY(-2px); }
-
-        audio { width: 100%; height: 35px; margin-top: 10px; filter: invert(0.9) hue-rotate(180deg); }
-        body.light-mode audio { filter: none; }
-        .media-preview { max-width: 100%; max-height: 100px; border-radius: 6px; margin-top: 5px; border: 1px solid var(--border-color); object-fit: contain; }
-
-        #adminDashboard, #mainPortal { display: none; }
-        .user-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 10px; }
+        .status-approved { 
+            background: rgba(76, 175, 80, 0.1); 
+            color: #4caf50; 
+            border-color: rgba(76, 175, 80, 0.3); 
+        }
         
-        .auto-delete-wrapper { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border); }
-        .auto-delete-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .status-rejected { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: #ff5252; 
+            border-color: rgba(244, 67, 54, 0.3); 
+        }
+        
+        .cloud-badge { 
+            background: rgba(33, 150, 243, 0.1); 
+            color: #2196f3; 
+            font-size: 11px; 
+            padding: 4px 8px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            border: 1px solid rgba(33, 150, 243, 0.3); 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px;
+        }
 
-        @keyframes pulseRec { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } }
-        .recording-pulse { animation: pulseRec 1.5s infinite; background: rgba(244, 67, 54, 0.1) !important; color: #f44336 !important; border-color: #f44336 !important; }
-        .admin-story-container { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 15px; padding: 15px; margin-top: 15px; }
+        .select-check { 
+            transform: scale(1.3); 
+            margin-right: 8px; 
+            cursor: pointer; 
+            accent-color: var(--primary-pink); 
+        }
+        
+        .admin-story-container { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid var(--border-color); 
+            border-radius: 15px; 
+            padding: 15px; 
+            margin-top: 15px; 
+        }
 
-        /* PC Enhancements */
+        /* ========================================================
+        MODALS & PREVIEWS
+        ========================================================
+        */
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--modal-overlay); 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            backdrop-filter: blur(5px); 
+        }
+        
+        .modal-box { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 15px; 
+            width: 100%; 
+            max-width: 320px; 
+            text-align: center; 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); 
+            border: 2px solid var(--primary-pink); 
+            color: var(--text-main); 
+        }
+        
+        #previewModal .modal-box { 
+            max-width: 700px; 
+            width: 95%; 
+            padding: 15px; 
+        }
+        
+        .preview-container { 
+            background: var(--panel-bg); 
+            border-radius: 10px; 
+            padding: 10px; 
+            text-align: center; 
+            border: 1px solid var(--border-color); 
+            overflow: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 150px; 
+        }
+        
+        .admin-trigger { 
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            color: var(--text-main); 
+            font-size: 13px; 
+            padding: 12px; 
+            border-radius: 10px; 
+            margin-top: 30px; 
+            cursor: pointer; 
+            width: 100%; 
+            text-align: center; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 8px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+        }
+        
+        .admin-trigger:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); 
+            transform: translateY(-2px); 
+        }
+
+        audio { 
+            width: 100%; 
+            height: 35px; 
+            margin-top: 10px; 
+            filter: invert(0.9) hue-rotate(180deg); 
+        }
+        
+        body.light-mode audio { 
+            filter: none; 
+        }
+        
+        .media-preview { 
+            max-width: 100%; 
+            max-height: 100px; 
+            border-radius: 6px; 
+            margin-top: 5px; 
+            border: 1px solid var(--border-color); 
+            object-fit: contain; 
+        }
+
+        #adminDashboard, 
+        #mainPortal { 
+            display: none; 
+        }
+        
+        .user-nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--card-bg); 
+            padding: 10px 15px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color); 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+        
+        .auto-delete-wrapper { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 12px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            border: 1px solid var(--glass-border); 
+        }
+        
+        .auto-delete-inner { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+
+        /* ========================================================
+        PC SPECIFIC ENHANCEMENTS
+        ========================================================
+        */
         @media (min-width: 768px) {
             .main-container { padding: 40px; max-width: 1000px; }
             .btn-home { top: 25px; left: 25px; font-size: 15px; }
@@ -270,11 +906,24 @@
             .iphone-note { font-size: 14px; max-width: 450px; padding: 15px; }
         }
         
-        .iphone-note { font-size: 12px; color: var(--primary-pink); background: rgba(233, 30, 99, 0.1); border: 1px dashed var(--primary-pink); padding: 12px; border-radius: 8px; margin: 10px auto 20px auto; text-align: center; font-weight: bold; width: 100%; max-width: 350px; }
+        .iphone-note { 
+            font-size: 12px; 
+            color: var(--primary-pink); 
+            background: rgba(233, 30, 99, 0.1); 
+            border: 1px dashed var(--primary-pink); 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 10px auto 20px auto; 
+            text-align: center; 
+            font-weight: bold; 
+            width: 100%; 
+            max-width: 350px; 
+        }
     </style>
 </head>
 <body class="light-mode">
 
+<!-- MAIN CONTAINER -->
 <div class="container main-container">
     
     <!-- Top Area -->
@@ -384,7 +1033,7 @@
 
     <!-- 
         ========================================================
-        MAIN PORTAL AREA (For both User & Admin)
+        MAIN PORTAL AREA (USER SECTION)
         ========================================================
     -->
     <div id="mainPortal">
@@ -392,11 +1041,11 @@
         <!-- USER PORTAL -->
         <div id="userPortal">
             
-            <div class="user-nav">
-                <div style="font-weight: bold; color: var(--primary-pink);">
-                    <i class="fas fa-user"></i> <span id="uNameDisplay"></span>
+            <div class="user-nav" style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <div style="font-weight: bold; color: var(--primary-pink); font-size: 16px;">
+                    <i class="fas fa-user-circle"></i> <span id="uNameDisplay"></span>
                 </div>
-                <button onclick="logoutUser()" style="background:none; border:none; color:#ff5252; cursor:pointer; font-weight:bold; padding:5px;">
+                <button onclick="logoutUser()" class="logout-btn" style="background: rgba(244, 67, 54, 0.1); color: var(--error-red); border: 1px solid var(--error-red); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
                     <i class="fas fa-sign-out-alt"></i> লগ আউট
                 </button>
             </div>
@@ -420,7 +1069,7 @@
                 </select>
                 
                 <label>ফাইল:</label>
-                <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
+                <button type="button" class="btn-main" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
@@ -445,10 +1094,11 @@
                     <div id="wordCountDisplay" class="word-counter-box" style="color:#ff5252;">শব্দ: ০</div>
                 </div>
                 
+                <!-- Story File Upload Option (Visible only if Doc Allowed) -->
                 <div id="storyFileWrapper" style="display:none; margin-top:10px;">
                     <label style="color:var(--primary-pink); font-size:12px;">গল্পের ফাইল (PDF/DOC):</label>
                     <input type="file" id="sFile" accept=".txt, .doc, .docx, .pdf" style="display:none;">
-                    <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
+                    <button type="button" class="btn-main" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
                         <i class="fas fa-file-pdf"></i> ফাইল সিলেক্ট করুন
                     </button>
                     <div id="sFileNameDisplay" style="font-size:12px; color:var(--success-green); text-align:center; margin-top:5px; font-weight:bold;"></div>
@@ -481,13 +1131,13 @@
                             <option value="24">দিন (Days)</option>
                             <option value="720">মাস (Months)</option>
                         </select>
-                        <button class="btn-action" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
+                        <button class="btn-main" style="width: auto; padding: 6px 12px; font-size: 11px; color:#ffffff;" onclick="saveCustomAutoDelete()">সেভ করুন</button>
                     </div>
                 </div>
                 
                 <div class="batch-header" id="clearAllContainer" style="display:none;">
                     <span style="font-size:12px; font-weight:bold; color:var(--primary-pink);">আপনার পাঠানো তথ্য:</span>
-                    <button class="btn-del" onclick="clearMyHistory()" style="padding:6px 12px;"><i class="fas fa-trash"></i> সব মুছুন</button>
+                    <button class="btn-del" onclick="clearMyHistory()" style="padding:6px 12px; border-radius:8px;"><i class="fas fa-trash"></i> সব মুছুন</button>
                 </div>
 
                 <div id="userStatusListUI">লোড হচ্ছে...</div>
@@ -496,14 +1146,17 @@
 
         <!-- 
             ========================================================
-            ADMIN DASHBOARD
+            ADMIN DASHBOARD AREA
             ========================================================
         -->
         <div id="adminDashboard">
             
-            <div class="navbar">
-                <span id="nameTag" style="font-weight:bold; color:var(--primary-pink);"></span>
-                <button onclick="exitAdmin()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> প্রস্থান</button>
+            <!-- Navbar with Profile and Logout -->
+            <div class="navbar" style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <span id="nameTag" style="font-weight:bold; color:var(--primary-pink); font-size: 16px;"></span>
+                <button onclick="exitAdmin()" class="logout-btn" style="background: rgba(244, 67, 54, 0.1); color: var(--error-red); border: 1px solid var(--error-red); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-sign-out-alt"></i> লগ আউট
+                </button>
             </div>
             
             <!-- Master Admin Panel -->
@@ -515,16 +1168,17 @@
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
                     <input type="text" id="newMentorName" placeholder="মেন্টরের নাম" style="font-size:13px; padding:10px; margin-bottom:8px;">
                     
-                    <div class="input-group">
-                        <input type="password" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="width:100%; padding:10px; font-size:13px; border:1px solid var(--border-color); border-radius:10px; background:var(--input-bg); color:var(--text-main); outline:none;">
+                    <div class="input-group" style="margin-bottom:10px;">
+                        <input type="password" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="width:100%; padding:10px; font-size:13px; margin:0; padding-right:35px; border:1px solid var(--border-color); border-radius:10px; background:var(--input-bg); color:var(--text-main); outline:none;">
                         <i class="fas fa-eye eye-icon" onclick="togglePass('newMentorPass', this)"></i>
                     </div>
                     
-                    <button onclick="addMentor()" class="btn-main" style="padding: 10px; font-size: 13px;">মেন্টর যোগ করুন</button>
+                    <button onclick="addMentor()" class="btn-main" style="padding: 10px; font-size: 13px; margin-top: 5px;">মেন্টর যোগ করুন</button>
                     <div id="mentorListUI" style="margin-top:15px;"></div>
                 </div>
             </div>
 
+            <!-- Project and Category Creation Boxes -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
                 <div class="admin-box" style="padding:15px; margin-bottom:0;">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-folder-plus"></i> প্রজেক্ট তৈরি</p>
@@ -538,7 +1192,7 @@
                 </div>
             </div>
 
-            <!-- Admin Layout -->
+            <!-- Admin Main Layout (Sidebar + Content) -->
             <div class="admin-layout">
                 <!-- Sidebar -->
                 <div class="sidebar" id="projectSidebar">
@@ -547,22 +1201,22 @@
                     <div id="adminProjectListUI">লোড হচ্ছে...</div>
                     
                     <div id="sidebarRecordBtn" class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
-                        <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
+                        <span style="width: 100%;"><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
                     </div>
                     
                     <div id="sidebarStoryBtn" class="folder-item" onclick="setSpecialView('story')">
-                        <span><i class="fas fa-book-open"></i> গল্পের ঝুলি</span>
+                        <span style="width: 100%;"><i class="fas fa-book-open"></i> গল্পের ঝুলি</span>
                     </div>
                     
                     <div id="sidebarTrashBtn" class="folder-item" style="margin-top: 5px; background: rgba(244, 67, 54, 0.1); border-color: rgba(244, 67, 54, 0.3);" onclick="setSpecialView('trash')">
-                        <span style="color: #ff5252;"><i class="fas fa-trash-restore"></i> রিসাইকেল বিন</span>
+                        <span style="color: #ff5252; width: 100%;"><i class="fas fa-trash-restore"></i> রিসাইকেল বিন</span>
                     </div>
                 </div>
 
                 <!-- Content Area -->
                 <div class="content">
                     
-                    <!-- Project View Content -->
+                    <!-- 1. Project View Content -->
                     <div id="projectView" style="display:none;">
                         
                         <!-- Admin Delete Settings -->
@@ -590,14 +1244,24 @@
                             </div>
                         </div>
 
-                        <!-- Current Project Info -->
+                        <!-- Current Project Info & Batch Download -->
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
                             <h3 id="currentProjTitle" style="color:var(--primary-pink); font-size: 18px; margin:0;"></h3>
-                            <button class="btn-sm btn-main" style="padding:8px 15px; width:auto; font-size:12px;" onclick="downloadProjectZIP()"><i class="fas fa-file-archive"></i> Folder ZIP</button>
+                            <button class="btn-sm btn-main" style="padding:8px 15px; width:auto; font-size:12px; margin-top: 0;" onclick="downloadProjectZIP()">
+                                <i class="fas fa-file-archive"></i> Folder ZIP
+                            </button>
                         </div>
 
                         <!-- Category Tabs -->
                         <div class="tabs" id="adminCatTabs" style="margin-bottom:15px;"></div>
+                        
+                        <!-- Admin Final Upload Box -->
+                        <div class="admin-box" style="padding:15px; display:flex; align-items:center; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+                            <span style="font-weight:bold; color:var(--primary-pink); font-size:14px; width: 100%;"><i class="fas fa-file-upload"></i> ফাইনাল ফাইল আপলোড করুন:</span>
+                            <input type="file" id="aFile" style="flex:1; border:1px solid var(--border-color); padding:10px; border-radius: 8px; margin:0; min-width:200px; font-size:13px; background: var(--input-bg); color: var(--text-main);">
+                            <button class="btn-main" style="padding:10px 20px; width:auto; margin-top:0;" onclick="adminUploadFile()">আপলোড</button>
+                            <span id="aUploadMsg" style="font-size:12px; font-weight:bold; color:#4caf50; width:100%;"></span>
+                        </div>
                         
                         <!-- Split Inbox (Raw and Admin) -->
                         <div class="split-inbox">
@@ -608,8 +1272,8 @@
                                         <input type="checkbox" onchange="toggleSelectAll('raw', this.checked)"> সব সিলেক্ট
                                     </label>
                                     <div style="display:flex; gap:5px;">
-                                        <button class="btn-sm btn-download" onclick="downloadSelectedZIP('raw')">ZIP</button>
-                                        <button class="btn-sm btn-del" onclick="batchSoftDelete('raw', 'tasks')">ডিলিট</button>
+                                        <button class="btn-sm btn-download" style="padding: 8px 12px;" onclick="downloadSelectedZIP('raw')">ZIP</button>
+                                        <button class="btn-sm btn-del" style="padding: 8px 12px;" onclick="batchSoftDelete('raw', 'tasks')">ডিলিট</button>
                                     </div>
                                 </div>
                                 <div id="rawInboxUI"></div>
@@ -622,8 +1286,8 @@
                                         <input type="checkbox" onchange="toggleSelectAll('admin', this.checked)"> সব সিলেক্ট
                                     </label>
                                     <div style="display:flex; gap:5px;">
-                                        <button class="btn-sm btn-download" onclick="downloadSelectedZIP('admin')">ZIP</button>
-                                        <button class="btn-sm btn-del" onclick="batchSoftDelete('admin', 'tasks')">ডিলিট</button>
+                                        <button class="btn-sm btn-download" style="padding: 8px 12px;" onclick="downloadSelectedZIP('admin')">ZIP</button>
+                                        <button class="btn-sm btn-del" style="padding: 8px 12px;" onclick="batchSoftDelete('admin', 'tasks')">ডিলিট</button>
                                     </div>
                                 </div>
                                 <div id="adminInboxUI"></div>
@@ -631,28 +1295,28 @@
                         </div>
                     </div>
 
-                    <!-- Story View Content -->
+                    <!-- 2. Story View Content -->
                     <div id="storyView" style="display:none;">
                         <div class="admin-story-container">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                                <h3 style="color:var(--primary-pink);">গল্পসমূহ</h3>
-                                <span id="adminTotalStories" style="background:var(--primary-pink); color:#ffffff; padding:2px 8px; border-radius:10px; font-size:12px;"></span>
+                                <h3 style="color:var(--primary-pink);"><i class="fas fa-book-open"></i> গল্পসমূহ</h3>
+                                <span id="adminTotalStories" style="background:var(--primary-pink); color:#ffffff; padding:4px 12px; border-radius:12px; font-size:13px; font-weight: bold;">মোট গল্প: ০</span>
                             </div>
                             <div class="batch-header">
                                 <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
                                     <input type="checkbox" onchange="toggleSelectAll('story', this.checked)"> সব সিলেক্ট করুন
                                 </label>
-                                <button class="btn-sm btn-del" onclick="batchSoftDelete('story', 'channel_stories')" style="padding:6px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
+                                <button class="btn-sm btn-del" onclick="batchSoftDelete('story', 'channel_stories')" style="padding:8px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
                             </div>
                             <div id="storyListUI"></div>
                         </div>
                     </div>
 
-                    <!-- Record View Content (Casting Diary) -->
-                    <div id="recordView" style="display:none; padding: 15px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
+                    <!-- 3. Record View Content (Casting Diary) -->
+                    <div id="recordView" style="display:none; padding: 20px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
                         <h3 style="margin-bottom:15px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-clipboard"></i> কাস্টিং ডায়েরি</h3>
                         
-                        <input type="text" id="noteTitle" placeholder="শিরোনাম">
+                        <input type="text" id="noteTitle" placeholder="শিরোনাম লিখুন...">
                         
                         <div class="rte-toolbar">
                             <select onchange="applyCommand('fontName', this.value)">
@@ -681,34 +1345,34 @@
                             </div>
                         </div>
                         
-                        <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত লিখুন..."></div>
+                        <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="আপনার বিস্তারিত বিবরণ এখানে লিখুন..."></div>
                         
-                        <div style="display:flex; gap:8px; margin-top: 10px;">
+                        <div style="display:flex; gap:10px; margin-top: 15px;">
                             <button id="saveNoteBtn" class="btn-main" onclick="saveNote()" style="color:#ffffff;">সেভ করুন</button>
-                            <button id="cancelEditBtn" style="display:none; width: 100%; padding:10px; border-radius:10px; font-weight:bold; background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);" onclick="cancelEdit()">বাতিল</button>
+                            <button id="cancelEditBtn" style="display:none; width: 100%; padding:12px; border-radius:10px; font-weight:bold; background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);" onclick="cancelEdit()">বাতিল</button>
                         </div>
                         
-                        <div class="batch-header" style="margin-top:20px;">
+                        <div class="batch-header" style="margin-top:25px;">
                             <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
                                 <input type="checkbox" onchange="toggleSelectAll('note', this.checked)"> সব সিলেক্ট করুন
                             </label>
-                            <button class="btn-sm btn-del" onclick="batchSoftDelete('note', 'channel_notes')" style="padding:6px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
+                            <button class="btn-sm btn-del" onclick="batchSoftDelete('note', 'channel_notes')" style="padding:8px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
                         </div>
                         
                         <div id="notesListUI"></div>
                     </div>
 
-                    <!-- Trash View Content -->
+                    <!-- 4. Trash View Content -->
                     <div id="trashView" style="display:none;">
-                        <h3 style="margin-bottom:12px; color:#ff5252; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
+                        <h3 style="margin-bottom:15px; color:#ff5252; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
                         
                         <div class="batch-header">
                             <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
                                 <input type="checkbox" onchange="toggleSelectAll('trash', this.checked)"> সব সিলেক্ট
                             </label>
-                            <div style="display:flex; gap:8px;">
-                                <button class="btn-main" onclick="batchTrashAction('restore')" style="width:auto; padding:5px 15px;"><i class="fas fa-undo"></i> রিস্টোর</button>
-                                <button class="btn-del" onclick="batchTrashAction('delete')" style="padding:5px 15px;"><i class="fas fa-trash-alt"></i> মুছুন</button>
+                            <div style="display:flex; gap:10px;">
+                                <button class="btn-main" onclick="batchTrashAction('restore')" style="width:auto; padding:8px 15px; margin-top:0;"><i class="fas fa-undo"></i> রিস্টোর</button>
+                                <button class="btn-del" onclick="batchTrashAction('delete')" style="padding:8px 15px;"><i class="fas fa-trash-alt"></i> মুছুন</button>
                             </div>
                         </div>
                         
@@ -735,13 +1399,13 @@
         </div>
         
         <button class="btn-main" onclick="checkAdminPass()">প্রবেশ</button>
-        <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; margin-top:15px; color:var(--text-muted); cursor:pointer; font-weight:bold;">বাতিল</button>
+        <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; margin-top:15px; color:var(--text-muted); cursor:pointer; font-weight:bold; padding: 10px;">বাতিল</button>
     </div>
 </div>
 
 <div id="previewModal" class="modal-overlay">
     <div class="modal-box">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
             <h3 id="previewTitle" style="color:var(--primary-pink); font-size:15px; word-break:break-all;">প্রিভিউ</h3>
             <button onclick="closePreview()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-muted);">&times;</button>
         </div>
@@ -776,6 +1440,7 @@
     
     const appId = "golposolpo-premium";
     
+    // Prevent multiple initializations of Firebase App
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
@@ -788,6 +1453,7 @@
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
     const channel = "প্রেম কুটির"; 
 
+    // Global Variables defined to manage states
     let currentUser = null;
     let allProjects = [];
     let allCategories = []; 
@@ -873,9 +1539,10 @@
 
     /*
         ========================================================
-        RICH TEXT EDITOR LOGIC & FONT
+        RICH TEXT EDITOR LOGIC
         ========================================================
     */
+    // Story File upload handling to show the file name
     document.getElementById('sFile').addEventListener('change', function() {
         if(this.files[0]) {
             document.getElementById('sFileNameDisplay').innerText = "ফাইল: " + this.files[0].name;
@@ -886,6 +1553,7 @@
 
     let savedRange;
     
+    // Save range on blur to keep color picker working on mobile
     document.getElementById('noteContent').addEventListener('blur', () => {
         const sel = window.getSelection();
         if(sel.rangeCount > 0) {
@@ -924,6 +1592,7 @@
         ========================================================
     */
     window.onload = () => {
+        // Load the previously set theme from local storage
         if(localStorage.getItem('prem_theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
@@ -931,6 +1600,7 @@
         
         initAutoDeleteUI();
         
+        // Listen to mentors data from database
         dbRef.collection('settings').doc('mentors_prem').onSnapshot(doc => {
             if(doc.exists) {
                 mentorRoles = doc.data().roles || mentorRoles;
@@ -942,6 +1612,7 @@
             }
         });
 
+        // Listen to file rules (PDF/DOC access)
         dbRef.collection('settings').doc('file_rules').onSnapshot(doc => {
             if(doc.exists) {
                 isDocAllowed = doc.data().docAllowed;
@@ -952,6 +1623,7 @@
             updateDocToggleUI(); 
             updateFileAccept('uCategory', 'uFile');
             
+            // Show or hide story file wrapper based on rules
             if(isDocAllowed) {
                 document.getElementById('storyFileWrapper').style.display = 'block';
             } else {
@@ -959,21 +1631,24 @@
             }
         });
 
+        // Word count functionality for Story Box (Red/Green logic applied)
         document.getElementById('sText').addEventListener('input', function() {
             const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
             const display = document.getElementById('wordCountDisplay');
             display.innerText = `শব্দ: ${words}`;
             if(words >= 5000) {
-                display.style.color = "#4caf50"; 
+                display.style.color = "#4caf50"; // Green
             } else {
-                display.style.color = "#ff5252"; 
+                display.style.color = "#ff5252"; // Red
             }
         });
+
+        auth.signInAnonymously().catch(console.error);
     };
 
     auth.onAuthStateChanged(user => {
         if (user) {
-            // Fix: If it's a residual anonymous user without a display name, sign out.
+            // Check if it's an old guest session without name
             if (user.isAnonymous && !user.displayName) {
                 auth.signOut();
                 return;
@@ -986,7 +1661,8 @@
                 document.getElementById('mainPortal').style.display = 'block';
                 document.getElementById('userPortal').style.display = 'block';
                 
-                const dName = user.displayName || user.email;
+                // Show actual name even if guest
+                const dName = user.displayName || user.email || "Guest";
                 document.getElementById('uNameDisplay').innerText = dName;
                 
                 loadInitialData();
@@ -1130,10 +1806,8 @@
         ========================================================
     */
     function getDownloadUrl(url) {
-        if(!url) {
-            return "";
-        }
-        // Force download parameter for Cloudinary links to avoid opening in browser natively
+        if(!url) return "";
+        // Force download parameter for Cloudinary links 
         if (url.includes('/upload/')) {
             return url.replace('/upload/', '/upload/fl_attachment/'); 
         }
@@ -1143,7 +1817,7 @@
     function openPreview(url, fileName) {
         const isAudio = url.match(/\.(mp3|wav|ogg|aac|m4a)$/i);
         const isImg = url.match(/\.(jpg|jpeg|png|gif|webp)$/i);
-        const isDocOrPdf = url.match(/\.(pdf|doc|docx)$/i);
+        const isDocOrPdf = url.match(/\.(pdf|doc|docx|txt)$/i);
         
         document.getElementById('previewTitle').innerText = fileName || "ফাইল প্রিভিউ";
         const frameContainer = document.querySelector('.preview-container');
@@ -1234,6 +1908,7 @@
 
     function loadMyFeedback() {
         if(!currentUser) return;
+        
         const workUI = document.getElementById('userStatusListUI');
         workUI.innerHTML = "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>লোড হচ্ছে...</p>";
         let workHtml = "";
@@ -1429,6 +2104,7 @@
             document.getElementById('sFile').value = ""; 
             document.getElementById('sFileNameDisplay').innerText = "";
             document.getElementById('wordCountDisplay').innerText = "শব্দ: ০";
+            document.getElementById('wordCountDisplay').style.color = "#ff5252";
             loadMyFeedback();
         } catch(e) { 
             msg.style.color = "#ff5252"; 
@@ -1808,6 +2484,7 @@
                     </div>`;
                 }
                 
+                // Status Select explicitly remembers its value
                 html += `
                 <div class="list-card" style="border-left:3px solid var(--primary-pink);">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
@@ -2004,9 +2681,11 @@
         if(isDocAllowed) {
             btn.innerText = "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)";
             btn.style.background = "linear-gradient(45deg, #4caf50, #81c784)";
+            btn.style.color = "#ffffff";
         } else {
             btn.innerText = "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
-            btn.style.background = "linear-gradient(45deg, var(--primary-pink), var(--secondary-pink))";
+            btn.style.background = "linear-gradient(45deg, #ffb300, #ffca28)";
+            btn.style.color = "#000000";
         }
     }
 
