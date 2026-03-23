@@ -9,13 +9,14 @@
         ========================================================
         EXTERNAL RESOURCES & FONTS
         ========================================================
+        We are importing Kalpurush font and FontAwesome for icons.
     -->
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- 
         JSZip & FileSaver for Zip Conversion
-        Used for batch downloading files from the admin panel
+        Used for batch downloading files from the admin panel securely
     -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -24,6 +25,7 @@
         /* ========================================================
             CSS VARIABLES & THEME DEFINITIONS
             ========================================================
+            Defining standard colors for dark mode and light mode.
         */
         :root {
             /* Primary Colors */
@@ -64,6 +66,7 @@
         /* ========================================================
             GLOBAL STYLES & RESETS
             ========================================================
+            Setting fonts, padding, margins, and transition effects globally.
         */
         * { 
             margin: 0; 
@@ -84,7 +87,9 @@
             overflow-x: hidden;
         }
 
-        /* Light Mode Specific Adjustments */
+        /* Light Mode Specific Adjustments 
+            Ensuring text and shadows look clean in day mode.
+        */
         body.light-mode .ch-title { 
             text-shadow: none; 
         }
@@ -217,30 +222,6 @@
             font-size: 22px; 
             cursor: pointer; 
             z-index: 10; 
-        }
-
-        /* ========================================================
-            TUTORIAL FOCUS ANIMATION
-            ========================================================
-        */
-        @keyframes tutPulse {
-            0% { 
-                box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.6); 
-            }
-            70% { 
-                box-shadow: 0 0 0 12px rgba(233, 30, 99, 0); 
-            }
-            100% { 
-                box-shadow: 0 0 0 0 rgba(233, 30, 99, 0); 
-            }
-        }
-        
-        .btn-tut-focus {
-            background: linear-gradient(45deg, #ff9800, #f57c00) !important;
-            color: #ffffff !important;
-            border: none !important;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            animation: tutPulse 2s infinite;
         }
 
         /* ========================================================
@@ -601,6 +582,7 @@
             border: 1px solid rgba(245, 127, 23, 0.3); 
         }
 
+        /* Batch Options */
         .batch-header { 
             display: flex; 
             justify-content: space-between; 
@@ -612,6 +594,7 @@
             margin-bottom: 15px; 
         }
 
+        /* Misc */
         .admin-box { 
             background: var(--card-bg); 
             padding: 15px; 
@@ -860,76 +843,7 @@
             border-color: #f44336 !important; 
         }
 
-        /* ========================================================
-            INTERACTIVE TUTORIAL OVERLAY STYLES 
-            (MODIFIED: REMOVED BLUR, JUST SPOTLIGHT)
-            ========================================================
-        */
-        body.tutorial-on .main-container {
-            backdrop-filter: none !important;
-            background: rgba(0, 0, 0, 0.8) !important;
-        }
-
-        .interactive-overlay {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6); 
-            z-index: 9990; 
-            pointer-events: auto;
-        }
-        
-        .highlighted-for-tutorial {
-            position: relative !important;
-            z-index: 9999 !important;
-            box-shadow: 0 0 0 4px var(--primary-pink), 0 0 30px rgba(233, 30, 99, 0.9) !important;
-            animation: pulseHighlight 1.5s infinite alternate;
-            border-radius: 12px !important;
-            pointer-events: auto !important;
-            background-color: var(--card-bg) !important;
-        }
-
-        @keyframes pulseHighlight {
-            0% { box-shadow: 0 0 0 3px var(--primary-pink), 0 0 15px rgba(233, 30, 99, 0.6); }
-            100% { box-shadow: 0 0 0 6px var(--primary-pink), 0 0 35px rgba(233, 30, 99, 1); }
-        }
-
-        .tutorial-tooltip-fixed {
-            display: none; 
-            position: fixed; 
-            bottom: 30px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            width: 90%; 
-            max-width: 450px; 
-            background: var(--dark-bg); 
-            padding: 20px;
-            border-radius: 15px; 
-            border: 2px solid var(--primary-pink);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9); 
-            z-index: 10000;
-            text-align: center;
-            pointer-events: auto;
-        }
-        
-        .tut-text { 
-            font-size: 15px; 
-            line-height: 1.5; 
-            color: #ffffff; 
-            margin-bottom: 15px; 
-        }
-        
-        .tut-actions { 
-            display: flex; 
-            gap: 10px; 
-            justify-content: center; 
-            margin-bottom: 15px; 
-            flex-wrap: wrap;
-        }
-
+        /* Grouped Story Status Box for Admin */
         .admin-story-container {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
@@ -1024,7 +938,7 @@
     
     <!-- Theme Toggle Button -->
     <button class="theme-toggle-btn" onclick="toggleTheme()">
-        <i id="themeIcon" class="fas fa-sun"></i>
+        <i id="themeIcon" class="fas fa-moon"></i>
     </button>
     
     <!-- Header Section -->
@@ -1518,7 +1432,7 @@
     
     const appId = "golposolpo-premium";
     
-    // Prevent multiple initializations
+    // Prevent multiple initializations of Firebase App
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
@@ -1531,7 +1445,7 @@
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
     const channel = "প্রেম কুটির"; 
 
-    // Global Variables
+    // Global Variables defined to manage states
     let currentUser = null;
     let allProjects = [];
     let allCategories = []; 
@@ -1541,7 +1455,10 @@
     let isMaster = false;
     let isDocAllowed = false;
     let activeMentor = "";
-    let mentorRoles = { "Master2002": "Master Admin", "Neha123": "নেহা (মেন্টর)" };
+    let mentorRoles = { 
+        "Master2002": "Master Admin", 
+        "Neha123": "নেহা (মেন্টর)" 
+    };
     
     let autoDeletePref = localStorage.getItem('prem_auto_delete_pref') || 'never'; 
     let adminAutoDeletePref = '168'; 
@@ -1567,7 +1484,9 @@
 
     adminVoiceInput.onchange = async function(e) {
         const file = e.target.files[0];
-        if(!file || !recordDocId || !recordCol) return;
+        if(!file || !recordDocId || !recordCol) {
+            return;
+        }
         
         const upMsg = document.getElementById(`audioUploading_${recordDocId}`);
         if(upMsg) { 
@@ -1584,19 +1503,31 @@
             const data = await res.json();
             
             if(data.secure_url) {
-                await dbRef.collection(recordCol).doc(recordDocId).update({ adminVoiceRemark: data.secure_url });
-                if(upMsg) upMsg.innerText = "✅ সম্পন্ন!";
+                await dbRef.collection(recordCol).doc(recordDocId).update({ 
+                    adminVoiceRemark: data.secure_url 
+                });
+                if(upMsg) {
+                    upMsg.innerText = "✅ সম্পন্ন!";
+                }
             } else { 
-                if(upMsg) upMsg.innerText = "❌ ত্রুটি!"; 
+                if(upMsg) {
+                    upMsg.innerText = "❌ ত্রুটি!"; 
+                }
             }
         } catch(err) { 
-            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
+            if(upMsg) {
+                upMsg.innerText = "❌ ব্যর্থ!"; 
+            }
         }
         
         e.target.value = ""; 
         recordDocId = null; 
         recordCol = null;
-        setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
+        setTimeout(() => { 
+            if(upMsg) {
+                upMsg.style.display = 'none'; 
+            }
+        }, 2000);
     };
 
     /*
@@ -1604,16 +1535,23 @@
         RICH TEXT EDITOR LOGIC
         ========================================================
     */
-    // Story File upload handling
+    // Story File upload handling to show the file name
     document.getElementById('sFile').addEventListener('change', function() {
-        document.getElementById('sFileNameDisplay').innerText = this.files[0] ? "ফাইল: " + this.files[0].name : '';
+        if(this.files[0]) {
+            document.getElementById('sFileNameDisplay').innerText = "ফাইল: " + this.files[0].name;
+        } else {
+            document.getElementById('sFileNameDisplay').innerText = '';
+        }
     });
 
     let savedRange;
     
+    // Save range on blur to keep color picker working on mobile
     document.getElementById('noteContent').addEventListener('blur', () => {
         const sel = window.getSelection();
-        if(sel.rangeCount > 0) savedRange = sel.getRangeAt(0);
+        if(sel.rangeCount > 0) {
+            savedRange = sel.getRangeAt(0);
+        }
     });
 
     function restoreSelection() {
@@ -1647,7 +1585,7 @@
         ========================================================
     */
     window.onload = () => {
-        // Load theme
+        // Load the previously set theme from local storage
         if(localStorage.getItem('prem_theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
@@ -1655,14 +1593,16 @@
         
         initAutoDeleteUI();
         
-        // Listen to mentors
+        // Listen to mentors data from database
         dbRef.collection('settings').doc('mentors_prem').onSnapshot(doc => {
             if(doc.exists) {
                 mentorRoles = doc.data().roles || mentorRoles;
             } else {
                 dbRef.collection('settings').doc('mentors_prem').set({ roles: mentorRoles });
             }
-            if(isMentor && isMaster) renderMentorList();
+            if(isMentor && isMaster) {
+                renderMentorList();
+            }
         });
 
         // Listen to file rules (PDF/DOC access)
@@ -1675,17 +1615,28 @@
             }
             updateDocToggleUI(); 
             updateFileAccept('uCategory', 'uFile');
-            document.getElementById('storyFileWrapper').style.display = isDocAllowed ? 'block' : 'none';
+            
+            // Show or hide story file wrapper based on rules
+            if(isDocAllowed) {
+                document.getElementById('storyFileWrapper').style.display = 'block';
+            } else {
+                document.getElementById('storyFileWrapper').style.display = 'none';
+            }
         });
 
-        // Word count functionality for Story Box (Red/Green)
+        // Word count functionality for Story Box (Red/Green logic applied)
         document.getElementById('sText').addEventListener('input', function() {
             const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
             const display = document.getElementById('wordCountDisplay');
             display.innerText = `শব্দ: ${words}`;
-            display.style.color = words >= 5000 ? "#4caf50" : "#ff5252";
+            if(words >= 5000) {
+                display.style.color = "#4caf50"; // Green
+            } else {
+                display.style.color = "#ff5252"; // Red
+            }
         });
 
+        // Initially sign in anonymously just to fetch basic public data
         auth.signInAnonymously().catch(console.error);
     };
 
@@ -1719,7 +1670,11 @@
     */
     function toggleAuthView(view) {
         document.getElementById('authErrorMsg').innerText = "";
-        document.querySelectorAll('.auth-wrapper').forEach(el => el.style.display = 'none');
+        
+        const wrappers = document.querySelectorAll('.auth-wrapper');
+        wrappers.forEach(function(el) {
+            el.style.display = 'none';
+        });
         
         if(view === 'register') {
             document.getElementById('registerBox').style.display = 'block';
@@ -1740,7 +1695,10 @@
         const pass = document.getElementById('regPass').value.trim();
         const err = document.getElementById('authErrorMsg');
         
-        if(!name || !email || !pass) return err.innerText = "সব ঘর পূরণ করুন!";
+        if(!name || !email || !pass) {
+            err.innerText = "সব ঘর পূরণ করুন!";
+            return;
+        }
         
         err.style.color = "var(--primary-pink)"; 
         err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
@@ -1759,7 +1717,10 @@
         const pass = document.getElementById('loginPass').value.trim();
         const err = document.getElementById('authErrorMsg');
         
-        if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
+        if(!email || !pass) {
+            err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
+            return;
+        }
         
         err.style.color = "var(--primary-pink)"; 
         err.innerText = "লগইন হচ্ছে...";
@@ -1774,7 +1735,10 @@
 
     async function loginGuest() {
         const name = document.getElementById('guestName').value.trim();
-        if(!name) return alert("আপনার নাম লিখতে হবে!");
+        if(!name) {
+            alert("আপনার নাম লিখতে হবে!");
+            return;
+        }
         
         try {
             const cred = await auth.signInAnonymously();
@@ -1803,7 +1767,10 @@
         const email = document.getElementById('resetEmail').value.trim();
         const err = document.getElementById('authErrorMsg');
         
-        if(!email) return err.innerText = "ইমেইল লিখুন!";
+        if(!email) {
+            err.innerText = "ইমেইল লিখুন!";
+            return;
+        }
         
         try { 
             await auth.sendPasswordResetEmail(email); 
@@ -1825,9 +1792,14 @@
         ========================================================
     */
     function getDownloadUrl(url) {
-        if(!url) return "";
-        // Force download parameter for Cloudinary links to avoid opening in browser
-        return url.replace('/upload/', '/upload/fl_attachment/'); 
+        if(!url) {
+            return "";
+        }
+        // Force download parameter for Cloudinary links to avoid opening in browser natively
+        if (url.includes('/upload/')) {
+            return url.replace('/upload/', '/upload/fl_attachment/'); 
+        }
+        return url;
     }
 
     function openPreview(url, fileName) {
@@ -1860,6 +1832,7 @@
     function updateFileAccept(selectId, fileInputId) {
         let cat = document.getElementById(selectId)?.value;
         const fileInput = document.getElementById(fileInputId);
+        
         if (!fileInput || !cat) return;
         
         if (cat === 'ভয়েস') {
@@ -1885,22 +1858,45 @@
         ========================================================
     */
     function switchUserTab(tab) {
-        document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
-        
-        document.getElementById('workUpload').style.display = tab === 'work' ? 'block' : 'none';
-        document.getElementById('storyUpload').style.display = tab === 'story' ? 'block' : 'none';
-        document.getElementById('statusView').style.display = tab === 'status' ? 'block' : 'none';
-        
-        const tabText = tab === 'work' ? 'কাজ জমা দিন' : (tab === 'story' ? 'গল্প পাঠান' : 'স্ট্যাটাস');
-        document.querySelectorAll('.tabs .tab').forEach(t => { 
-            if(t.innerText === tabText) t.classList.add('active'); 
+        const allTabs = document.querySelectorAll('.tabs .tab');
+        allTabs.forEach(function(t) {
+            t.classList.remove('active');
         });
         
-        if(tab === 'status') loadMyFeedback();
+        if(tab === 'work') {
+            document.getElementById('workUpload').style.display = 'block';
+        } else {
+            document.getElementById('workUpload').style.display = 'none';
+        }
+        
+        if(tab === 'story') {
+            document.getElementById('storyUpload').style.display = 'block';
+        } else {
+            document.getElementById('storyUpload').style.display = 'none';
+        }
+        
+        if(tab === 'status') {
+            document.getElementById('statusView').style.display = 'block';
+        } else {
+            document.getElementById('statusView').style.display = 'none';
+        }
+        
+        const tabText = tab === 'work' ? 'কাজ জমা দিন' : (tab === 'story' ? 'গল্প পাঠান' : 'স্ট্যাটাস');
+        
+        allTabs.forEach(function(t) { 
+            if(t.innerText === tabText) {
+                t.classList.add('active'); 
+            }
+        });
+        
+        if(tab === 'status') {
+            loadMyFeedback();
+        }
     }
 
     function loadMyFeedback() {
         if(!currentUser) return;
+        
         const workUI = document.getElementById('userStatusListUI');
         workUI.innerHTML = "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>লোড হচ্ছে...</p>";
         let workHtml = "";
@@ -1925,8 +1921,13 @@
                     }
                 });
                 
-                workUI.innerHTML = workHtml || "<p style='text-align:center; color:var(--text-muted); font-size:12px;'>কোনো কাজ বা গল্প জমা দেননি।</p>";
-                document.getElementById('clearAllContainer').style.display = workHtml ? 'flex' : 'none';
+                if (workHtml) {
+                    workUI.innerHTML = workHtml;
+                    document.getElementById('clearAllContainer').style.display = 'flex';
+                } else {
+                    workUI.innerHTML = "<p style='text-align:center; color:var(--text-muted); font-size:12px;'>কোনো কাজ বা গল্প জমা দেননি।</p>";
+                    document.getElementById('clearAllContainer').style.display = 'none';
+                }
             });
         });
     }
@@ -1935,13 +1936,13 @@
         if(!confirm("সব হিস্ট্রি মুছবেন?")) return;
         
         const snaps = await dbRef.collection('tasks').where('userId', '==', currentUser.uid).get();
-        for(let doc of snaps.docs) {
-            await dbRef.collection('tasks').doc(doc.id).delete();
+        for(let i = 0; i < snaps.docs.length; i++) {
+            await dbRef.collection('tasks').doc(snaps.docs[i].id).delete();
         }
         
         const sSnaps = await dbRef.collection('channel_stories').where('userId', '==', currentUser.uid).get();
-        for(let doc of sSnaps.docs) {
-            await dbRef.collection('channel_stories').doc(doc.id).delete();
+        for(let j = 0; j < sSnaps.docs.length; j++) {
+            await dbRef.collection('channel_stories').doc(sSnaps.docs[j].id).delete();
         }
         
         loadMyFeedback();
@@ -1949,7 +1950,9 @@
 
     function initAutoDeleteUI() {
         const select = document.getElementById('autoDeleteSelect');
-        if (select) select.value = autoDeletePref;
+        if (select) {
+            select.value = autoDeletePref;
+        }
     }
 
     function handleAutoDeleteChange(v) { 
@@ -1971,16 +1974,23 @@
     }
 
     async function submitWork() {
-        if(!currentUser) return alert("লগইন করুন!");
+        if(!currentUser) {
+            alert("লগইন করুন!");
+            return;
+        }
         
         const project = document.getElementById('uProject').value;
         const cat = document.getElementById('uCategory').value;
         const file = document.getElementById('uFile').files[0];
         
-        if(!project || !cat || !file) return alert("তথ্য দিন!");
+        if(!project || !cat || !file) {
+            alert("তথ্য দিন!");
+            return;
+        }
         
-        document.getElementById('statusMsg').style.color = "var(--primary-pink)";
-        document.getElementById('statusMsg').innerText = "⏳ পাঠানো হচ্ছে...";
+        const msgBox = document.getElementById('statusMsg');
+        msgBox.style.color = "var(--primary-pink)";
+        msgBox.innerText = "⏳ পাঠানো হচ্ছে...";
         
         const fd = new FormData(); 
         fd.append('file', file); 
@@ -2004,18 +2014,21 @@
                     isDeleted: false, 
                     isAdmin: false 
                 });
-                document.getElementById('statusMsg').style.color = "#4caf50"; 
-                document.getElementById('statusMsg').innerText = "✅ সফল!"; 
+                msgBox.style.color = "#4caf50"; 
+                msgBox.innerText = "✅ সফল!"; 
                 document.getElementById('uFile').value = "";
             }
         } catch(e) { 
-            document.getElementById('statusMsg').style.color = "#ff5252"; 
-            document.getElementById('statusMsg').innerText = "❌ ব্যর্থ!"; 
+            msgBox.style.color = "#ff5252"; 
+            msgBox.innerText = "❌ ব্যর্থ!"; 
         }
     }
 
     async function submitStory() {
-        if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
+        if(!currentUser) {
+            alert("দয়া করে প্রথমে লগইন করুন!");
+            return;
+        }
         
         const title = document.getElementById('sTitle').value.trim();
         const authorInput = document.getElementById('sAuthor').value.trim();
@@ -2023,13 +2036,21 @@
         const file = document.getElementById('sFile').files[0];
         const msg = document.getElementById('storyStatusMsg');
         
-        if(!title) return alert("শিরোনাম লিখুন!");
-        if(!text && !file) return alert("গল্প লিখুন অথবা ফাইল আপলোড করুন!");
+        if(!title) {
+            alert("শিরোনাম লিখুন!");
+            return;
+        }
+        
+        if(!text && !file) {
+            alert("গল্প লিখুন অথবা ফাইল আপলোড করুন!");
+            return;
+        }
         
         msg.style.color = "var(--primary-pink)"; 
         msg.innerText = "⏳ পাঠানো হচ্ছে...";
         
         let fileUrl = "";
+        
         if(file) {
             const fd = new FormData(); 
             fd.append('file', file); 
@@ -2037,9 +2058,12 @@
             try {
                 const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
                 const data = await res.json();
-                if(data.secure_url) fileUrl = data.secure_url;
+                if(data.secure_url) {
+                    fileUrl = data.secure_url;
+                }
             } catch(e) { 
-                return msg.innerText = "❌ ফাইল আপলোড ব্যর্থ!"; 
+                msg.innerText = "❌ ফাইল আপলোড ব্যর্থ!"; 
+                return;
             }
         }
 
@@ -2087,9 +2111,10 @@
             activeMentor = mentorRoles[pass]; 
             isMaster = pass === "Master2002";
             
-            // Hide Modals properly without removing background elements
+            // Fix: Clean all modals including overlays explicitly to remove blur
             document.getElementById('adminAuthModal').style.display = 'none';
-            document.querySelectorAll('.modal-overlay').forEach(function(modal) {
+            const overlays = document.querySelectorAll('.modal-overlay');
+            overlays.forEach(function(modal) {
                 modal.style.display = 'none';
             });
             
@@ -2122,20 +2147,32 @@
             allProjects = [];
             let h = '<option value="">বাছুন</option>';
             snap.forEach(doc => {
-                if(doc.data().channel === channel && !doc.data().isDeleted) {
-                    allProjects.push({id: doc.id, ...doc.data()});
-                    h += `<option value="${doc.data().name}">${doc.data().name}</option>`;
+                if(doc.data().channel === channel) {
+                    if(!doc.data().isDeleted) {
+                        allProjects.push({id: doc.id, ...doc.data()});
+                        h += `<option value="${doc.data().name}">${doc.data().name}</option>`;
+                    }
                 }
             });
             document.getElementById('uProject').innerHTML = h;
-            if(isMentor) renderAdminSidebar();
+            if(isMentor) {
+                renderAdminSidebar();
+            }
         });
         
         dbRef.collection('folders').onSnapshot(snap => {
-            allCategories = [{ id: 'def1', name: "ভয়েস" }, { id: 'def2', name: "থাম্বনেল" }, { id: 'def3', name: "অডিও এডিট" }, { id: 'def4', name: "স্ক্রিপ্টিং" }];
+            allCategories = [
+                { id: 'def1', name: "ভয়েস" }, 
+                { id: 'def2', name: "থাম্বনেল" }, 
+                { id: 'def3', name: "অডিও এডিট" }, 
+                { id: 'def4', name: "স্ক্রিপ্টিং" }
+            ];
+            
             snap.forEach(doc => { 
-                if(doc.data().channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(doc.data().name)) {
-                    allCategories.push({ id: doc.id, name: doc.data().name }); 
+                if(doc.data().channel === channel) {
+                    if(!["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(doc.data().name)) {
+                        allCategories.push({ id: doc.id, name: doc.data().name }); 
+                    }
                 }
             });
             
@@ -2156,7 +2193,9 @@
         let hiddenHtml = "";
         
         allProjects.forEach(p => {
-            if (p.isDeleted) return; 
+            if (p.isDeleted) {
+                return; 
+            }
             
             // Eye icon allows hiding/unhiding project
             const itemHtml = `
@@ -2168,11 +2207,18 @@
                     </div>
                 </div>`;
                 
-            if(p.isHidden) hiddenHtml += itemHtml; 
-            else activeHtml += itemHtml;
+            if(p.isHidden) {
+                hiddenHtml += itemHtml; 
+            } else {
+                activeHtml += itemHtml;
+            }
         });
         
-        let finalHtml = activeHtml + (hiddenHtml ? `<div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border-color);"><p style="font-size:11px; text-align:center; color:var(--text-muted);">আর্কাইভ</p>${hiddenHtml}</div>` : "");
+        let finalHtml = activeHtml;
+        if (hiddenHtml) {
+            finalHtml += `<div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border-color);"><p style="font-size:11px; text-align:center; color:var(--text-muted);">আর্কাইভ</p>${hiddenHtml}</div>`;
+        }
+        
         document.getElementById('adminProjectListUI').innerHTML = finalHtml || "<p style='text-align:center; color:var(--text-muted); font-size:11px;'>কোনো প্রজেক্ট নেই</p>";
     }
 
@@ -2183,7 +2229,10 @@
     function renderAdminCategoryTabs() {
         let html = "";
         allCategories.forEach(cat => {
-            let delBtn = !['def1','def2','def3','def4'].includes(cat.id) ? `<i class="fas fa-times-circle" style="margin-left:5px; opacity:0.7; cursor:pointer;" onclick="event.stopPropagation(); softDelete('folders', '${cat.id}', '${cat.name}')"></i>` : "";
+            let delBtn = "";
+            if (!['def1','def2','def3','def4'].includes(cat.id)) {
+                delBtn = `<i class="fas fa-times-circle" style="margin-left:5px; opacity:0.7; cursor:pointer;" onclick="event.stopPropagation(); softDelete('folders', '${cat.id}', '${cat.name}')"></i>`;
+            }
             html += `<div class="tab ${activeAdminCat === cat.name ? 'active' : ''}" onclick="selectAdminCategory('${cat.name}')">${cat.name} ${delBtn}</div>`;
         });
         document.getElementById('adminCatTabs').innerHTML = html;
@@ -2192,9 +2241,15 @@
 
     function selectAdminProject(n) { 
         activeAdminProj = n; 
-        document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); 
-        document.getElementById('projectView').style.display='block'; 
+        
+        const views = document.querySelectorAll('.content > div');
+        views.forEach(function(d) {
+            d.style.display = 'none';
+        });
+        
+        document.getElementById('projectView').style.display = 'block'; 
         document.getElementById('currentProjTitle').innerText = n; 
+        
         renderAdminSidebar(); 
         renderAdminCategoryTabs(); 
         loadAdminInbox(); 
@@ -2209,11 +2264,21 @@
     function setSpecialView(type) { 
         activeAdminProj = ""; 
         renderAdminSidebar(); 
-        document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); 
+        
+        const views = document.querySelectorAll('.content > div');
+        views.forEach(function(d) {
+            d.style.display = 'none';
+        });
+        
         document.getElementById(type + 'View').style.display = 'block'; 
-        if(type === 'story') loadStoriesForAdmin(); 
-        else if(type === 'record') loadNotes(); 
-        else if(type === 'trash') renderTrashList(); 
+        
+        if(type === 'story') {
+            loadStoriesForAdmin(); 
+        } else if(type === 'record') {
+            loadNotes(); 
+        } else if(type === 'trash') {
+            renderTrashList(); 
+        }
     }
 
     function initAdminAutoDeleteUI() {
@@ -2226,9 +2291,9 @@
     
     function handleAdminAutoDeleteChange(v) { 
         if(v === 'custom') {
-            document.getElementById('customAdminAutoDeleteBox').style.display='flex'; 
+            document.getElementById('customAdminAutoDeleteBox').style.display = 'flex'; 
         } else { 
-            adminAutoDeletePref=v; 
+            adminAutoDeletePref = v; 
             localStorage.setItem('prem_admin_auto_delete_'+activeMentor, v); 
             loadAdminInbox(); 
             loadStoriesForAdmin(); 
@@ -2246,7 +2311,11 @@
 
     function loadAdminInbox() {
         if(!activeAdminProj) return;
-        let cutoffTime = adminAutoDeletePref !== 'never' ? Date.now() - (parseInt(adminAutoDeletePref) * 3600000) : 0;
+        
+        let cutoffTime = 0;
+        if (adminAutoDeletePref !== 'never') {
+            cutoffTime = Date.now() - (parseInt(adminAutoDeletePref) * 3600000);
+        }
         
         dbRef.collection('tasks').onSnapshot(snap => {
             let rawHtml = ""; 
@@ -2256,23 +2325,50 @@
             snap.forEach(doc => {
                 let d = doc.data(); 
                 const ts = d.timestamp ? d.timestamp.toMillis() : Date.now();
-                if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat && !d.isDeleted && ts >= cutoffTime) {
-                    dataArr.push({id: doc.id, ...d, ts: ts});
+                if(d.channel === channel) {
+                    if (d.project === activeAdminProj) {
+                        if (d.category === activeAdminCat) {
+                            if (!d.isDeleted && ts >= cutoffTime) {
+                                dataArr.push({id: doc.id, ...d, ts: ts});
+                            }
+                        }
+                    }
                 }
             });
             
-            dataArr.sort((a,b) => b.ts - a.ts).forEach(d => {
+            dataArr.sort((a,b) => b.ts - a.ts);
+            
+            dataArr.forEach(d => {
                 const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
                 const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx)$/i);
                 
-                let btnAction = isAudio ? `<i class="fas fa-play"></i> Play` : (isImg ? `<i class="fas fa-eye"></i> Preview` : `<i class="fas fa-folder-open"></i> Open`);
+                let btnAction = "";
+                if (isAudio) {
+                    btnAction = `<i class="fas fa-play"></i> Play`;
+                } else if (isImg) {
+                    btnAction = `<i class="fas fa-eye"></i> Preview`;
+                } else {
+                    btnAction = `<i class="fas fa-folder-open"></i> Open`;
+                }
+                
                 const cardStyle = d.isAdmin ? 'border-left: 3px solid #4caf50;' : 'border-left: 3px solid var(--primary-pink);';
                 
-                let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
+                let voiceUi = "";
+                if (d.adminVoiceRemark) {
+                    voiceUi = `
+                    <div style="margin-top:5px; display:flex; align-items:center; gap:5px;">
+                        <audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio>
+                        <button onclick="deleteVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="color:#ff5252; background:none; border:none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>`;
+                }
                 
                 // Status Select explicitly remembers its value
-                let remarkSection = d.isAdmin ? "" : `
+                let remarkSection = "";
+                if (!d.isAdmin) {
+                    remarkSection = `
                     <div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border-color);">
                         <div class="remark-input-box" style="display:flex; gap:5px; align-items:center;">
                             <select id="status_${d.id}" style="width:90px; padding:6px; font-size:11px;">
@@ -2287,6 +2383,7 @@
                         </div>
                         ${voiceUi}
                     </div>`;
+                }
 
                 const card = `
                 <div class="list-card" style="${cardStyle}">
@@ -2310,20 +2407,36 @@
                 }
             });
             
-            document.getElementById('rawInboxUI').innerHTML = rawHtml || "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
-            document.getElementById('adminInboxUI').innerHTML = adminHtml || "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
+            if (rawHtml) {
+                document.getElementById('rawInboxUI').innerHTML = rawHtml;
+            } else {
+                document.getElementById('rawInboxUI').innerHTML = "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
+            }
+            
+            if (adminHtml) {
+                document.getElementById('adminInboxUI').innerHTML = adminHtml;
+            } else {
+                document.getElementById('adminInboxUI').innerHTML = "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
+            }
         });
     }
 
     function loadStoriesForAdmin() {
-        let cutoffTime = adminAutoDeletePref !== 'never' ? Date.now() - (parseInt(adminAutoDeletePref) * 3600000) : 0;
+        let cutoffTime = 0;
+        if (adminAutoDeletePref !== 'never') {
+            cutoffTime = Date.now() - (parseInt(adminAutoDeletePref) * 3600000);
+        }
         
         dbRef.collection('channel_stories').onSnapshot(snap => {
             let stories = [];
             snap.forEach(doc => { 
                 const ts = doc.data().timestamp ? doc.data().timestamp.toMillis() : Date.now();
-                if(doc.data().channel === channel && !doc.data().isDeleted && ts >= cutoffTime) {
-                    stories.push({id: doc.id, ...doc.data()}); 
+                if(doc.data().channel === channel) {
+                    if (!doc.data().isDeleted) {
+                        if (ts >= cutoffTime) {
+                            stories.push({id: doc.id, ...doc.data()}); 
+                        }
+                    }
                 }
             });
             
@@ -2336,7 +2449,16 @@
                 const wc = d.storyText ? d.storyText.trim().split(/\s+/).filter(w => w.length > 0).length : 0;
                 const wordColor = wc >= 5000 ? '#4caf50' : '#ff5252';
 
-                let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
+                let voiceUi = "";
+                if (d.adminVoiceRemark) {
+                    voiceUi = `
+                    <div style="margin-top:5px; display:flex; align-items:center; gap:5px;">
+                        <audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio>
+                        <button onclick="deleteVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="color:#ff5252; background:none; border:none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>`;
+                }
                 
                 // Status Select explicitly remembers its value
                 html += `
@@ -2372,106 +2494,45 @@
                     </div>
                 </div>`;
             });
-            document.getElementById('storyListUI').innerHTML = html || "<p style='text-align:center;'>গল্পের ঝুলি ফাঁকা।</p>";
+            
+            if (html) {
+                document.getElementById('storyListUI').innerHTML = html;
+            } else {
+                document.getElementById('storyListUI').innerHTML = "<p style='text-align:center;'>গল্পের ঝুলি ফাঁকা।</p>";
+            }
         });
     }
 
     async function updateTaskRemark(id, status, remark) {
-        await dbRef.collection('tasks').doc(id).update({ status: status, adminRemark: remark });
+        await dbRef.collection('tasks').doc(id).update({ 
+            status: status, 
+            adminRemark: remark 
+        });
         alert("আপডেট হয়েছে!");
     }
     
     async function updateStoryRemark(id, status, remark) {
-        await dbRef.collection('channel_stories').doc(id).update({ status: status, adminRemark: remark });
+        await dbRef.collection('channel_stories').doc(id).update({ 
+            status: status, 
+            adminRemark: remark 
+        });
         alert("আপডেট হয়েছে!");
     }
 
-    async function uploadVoiceRemark(blob, id, colName) {
-        const upMsg = document.getElementById(`audioUploading_${id}`);
-        if(upMsg) { 
-            upMsg.style.display = 'inline-block'; 
-            upMsg.innerText = "⏳ আপলোড হচ্ছে..."; 
-        }
-        
-        const fd = new FormData(); 
-        fd.append('file', blob); 
-        fd.append('upload_preset', UPLOAD_PRESET);
-        
-        try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
-            const data = await res.json();
-            if(data.secure_url) { 
-                await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url }); 
-                if(upMsg) upMsg.innerText = "✅ সম্পন্ন!"; 
-            } else if(upMsg) {
-                upMsg.innerText = "❌ ত্রুটি!";
-            }
-        } catch(e) { 
-            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
-        }
-        
-        setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
-    }
-
-    async function deleteVoiceRemark(id, colName) { 
-        if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) {
-            await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: firebase.firestore.FieldValue.delete() }); 
-        }
-    }
-
-    async function toggleVoiceRemark(id, colName) {
-        const btn = document.getElementById(`micBtn_${id}`);
-        
-        if(activeRecorder && recordDocId === id) {
-            activeRecorder.stop(); 
-            activeRecorder.stream.getTracks().forEach(t => t.stop()); 
-            activeRecorder = null;
-            btn.classList.remove('recording-pulse'); 
-            btn.innerHTML = '<i class="fas fa-microphone"></i>';
-        } else if(!activeRecorder) {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                activeRecorder = new MediaRecorder(stream); 
-                audioChunks = []; 
-                recordDocId = id; 
-                recordCol = colName;
-                
-                activeRecorder.ondataavailable = e => { 
-                    if(e.data.size > 0) audioChunks.push(e.data); 
-                };
-                
-                activeRecorder.onstop = async () => {
-                    const blob = new Blob(audioChunks, { type: 'audio/mp3' }); 
-                    uploadVoiceRemark(blob, recordDocId, recordCol);
-                    recordDocId = null; 
-                    recordCol = null;
-                };
-                
-                activeRecorder.start(); 
-                btn.classList.add('recording-pulse'); 
-                btn.innerHTML = '<i class="fas fa-stop"></i>';
-            } catch(e) { 
-                recordDocId = id; 
-                recordCol = colName; 
-                adminVoiceInput.click(); // Fallback for mobile 
-            }
-        } else {
-            alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
-        }
-    }
-
-    /*
-        ========================================================
-        MASTER ADMIN MANAGEMENT
-        ========================================================
-    */
+    // --- Master Actions ---
     async function addMentor() {
         if(!isMaster) return;
         const name = document.getElementById('newMentorName').value.trim(); 
         const pass = document.getElementById('newMentorPass').value.trim();
         
-        if(!name || !pass) return alert("তথ্য দিন!");
-        if(pass === "Master2002") return alert("সংরক্ষিত পাসওয়ার্ড!");
+        if(!name || !pass) {
+            alert("তথ্য দিন!");
+            return;
+        }
+        if(pass === "Master2002") {
+            alert("সংরক্ষিত পাসওয়ার্ড!");
+            return;
+        }
         
         let updatedRoles = { ...mentorRoles }; 
         updatedRoles[pass] = name;
@@ -2485,7 +2546,12 @@
         let html = "";
         for(let pass in mentorRoles) {
             if(pass !== "Master2002") {
-                html += `<div class="mentor-list-item"><span><i class="fas fa-user-tie" style="color:var(--primary-pink); margin-right:5px;"></i>${mentorRoles[pass]}</span><span style="color:var(--text-muted);">Pass: ${pass}</span><i class="fas fa-trash" style="color:#ff5252;cursor:pointer;" onclick="deleteMentor('${pass}')"></i></div>`;
+                html += `
+                <div class="mentor-list-item">
+                    <span><i class="fas fa-user-tie" style="color:var(--primary-pink); margin-right:5px;"></i>${mentorRoles[pass]}</span>
+                    <span style="color:var(--text-muted);">Pass: ${pass}</span>
+                    <i class="fas fa-trash" style="color:#ff5252;cursor:pointer;" onclick="deleteMentor('${pass}')"></i>
+                </div>`;
             }
         }
         document.getElementById('mentorListUI').innerHTML = html;
@@ -2493,20 +2559,30 @@
 
     async function deleteMentor(pass) {
         if(!confirm("মুছবেন?")) return;
+        
         let updatedRoles = { ...mentorRoles }; 
         delete updatedRoles[pass];
+        
         await dbRef.collection('settings').doc('mentors_prem').update({ roles: updatedRoles });
     }
 
     function toggleDocUploads() {
-        dbRef.collection('settings').doc('file_rules').update({ docAllowed: !isDocAllowed });
+        dbRef.collection('settings').doc('file_rules').update({ 
+            docAllowed: !isDocAllowed 
+        });
     }
 
     function updateDocToggleUI() {
         const btn = document.getElementById('docToggleBtn');
         if(!btn) return;
-        btn.innerText = isDocAllowed ? "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)" : "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
-        btn.style.background = isDocAllowed ? "linear-gradient(45deg, #4caf50, #81c784)" : "linear-gradient(45deg, var(--primary-pink), var(--secondary-pink))";
+        
+        if(isDocAllowed) {
+            btn.innerText = "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)";
+            btn.style.background = "linear-gradient(45deg, #4caf50, #81c784)";
+        } else {
+            btn.innerText = "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
+            btn.style.background = "linear-gradient(45deg, var(--primary-pink), var(--secondary-pink))";
+        }
     }
 
     async function addProject() {
@@ -2542,15 +2618,23 @@
         ========================================================
     */
     window.toggleSelectAll = (section, isChecked) => { 
-        document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked); 
+        const checkboxes = document.querySelectorAll('.chk-' + section);
+        checkboxes.forEach(function(cb) {
+            cb.checked = isChecked;
+        });
     };
 
     async function batchSoftDelete(section, col) {
         const cbs = document.querySelectorAll(`.chk-${section}:checked`);
-        if(cbs.length === 0) return alert("সিলেক্ট করুন!");
+        if(cbs.length === 0) {
+            alert("সিলেক্ট করুন!");
+            return;
+        }
+        
         if(confirm("রিসাইকেল বিনে পাঠাতে চান?")) {
-            for(let cb of cbs) {
-                await dbRef.collection(col).doc(cb.getAttribute('data-id')).update({ isDeleted: true });
+            for(let i = 0; i < cbs.length; i++) {
+                const id = cbs[i].getAttribute('data-id');
+                await dbRef.collection(col).doc(id).update({ isDeleted: true });
             }
             alert("সম্পন্ন!");
         }
@@ -2559,12 +2643,18 @@
     async function softDelete(col, id, name) {
         if(confirm(`'${name}' ডিলিট করবেন?`)) {
             await dbRef.collection(col).doc(id).update({ isDeleted: true });
-            if(col === 'projects' && activeAdminProj === name) { 
-                document.getElementById('projectView').style.display = "none"; 
-                activeAdminProj = ""; 
+            
+            if(col === 'projects') {
+                if(activeAdminProj === name) {
+                    document.getElementById('projectView').style.display = "none"; 
+                    activeAdminProj = ""; 
+                }
             }
-            if(col === 'folders' && activeAdminCat === name) { 
-                selectAdminCategory('ভয়েস'); 
+            
+            if(col === 'folders') {
+                if(activeAdminCat === name) {
+                    selectAdminCategory('ভয়েস'); 
+                }
             }
         }
     }
@@ -2578,18 +2668,58 @@
             dbRef.collection('channel_notes').get()
         ]).then(snaps => {
             let h = "";
-            snaps[0].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('projects', d.id, "প্রজেক্ট: "+d.data().name); });
-            snaps[1].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('folders', d.id, "ক্যাটাগরি: "+d.data().name); });
-            snaps[2].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('tasks', d.id, "ফাইল: "+(d.data().fileName || 'অজানা')); });
-            snaps[3].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('channel_stories', d.id, "গল্প: "+d.data().title); });
-            snaps[4].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('channel_notes', d.id, "ডায়েরি: "+d.data().title); });
-            document.getElementById('trashListUI').innerHTML = h || "<p style='text-align:center; color:var(--text-muted);'>বিন খালি</p>";
+            
+            snaps[0].forEach(d => { 
+                if(d.data().isDeleted && d.data().channel === channel) {
+                    h += makeTrashCard('projects', d.id, "প্রজেক্ট: " + d.data().name); 
+                }
+            });
+            
+            snaps[1].forEach(d => { 
+                if(d.data().isDeleted && d.data().channel === channel) {
+                    h += makeTrashCard('folders', d.id, "ক্যাটাগরি: " + d.data().name); 
+                }
+            });
+            
+            snaps[2].forEach(d => { 
+                if(d.data().isDeleted && d.data().channel === channel) {
+                    h += makeTrashCard('tasks', d.id, "ফাইল: " + (d.data().fileName || 'অজানা')); 
+                }
+            });
+            
+            snaps[3].forEach(d => { 
+                if(d.data().isDeleted && d.data().channel === channel) {
+                    h += makeTrashCard('channel_stories', d.id, "গল্প: " + d.data().title); 
+                }
+            });
+            
+            snaps[4].forEach(d => { 
+                if(d.data().isDeleted && d.data().channel === channel) {
+                    h += makeTrashCard('channel_notes', d.id, "ডায়েরি: " + d.data().title); 
+                }
+            });
+            
+            if (h) {
+                document.getElementById('trashListUI').innerHTML = h;
+            } else {
+                document.getElementById('trashListUI').innerHTML = "<p style='text-align:center; color:var(--text-muted);'>বিন খালি</p>";
+            }
         });
     }
 
     function makeTrashCard(col, id, name) {
-        const val = JSON.stringify({col, id}).replace(/"/g, '&quot;');
-        return `<div class="list-card" style="border-left:3px solid #ff5252;"><div style="display:flex;align-items:center;"><input type="checkbox" class="chk-trash select-check" value="${val}"><b style="margin-left:8px; font-size:14px;">${name}</b></div><div class="card-actions" style="margin-left:25px; margin-top:10px;"><button onclick="restoreItem('${col}','${id}')" class="btn-sm btn-download">রিস্টোর</button><button onclick="hardDelete('${col}','${id}')" class="btn-sm btn-del">চিরতরে মুছুন</button></div></div>`;
+        const val = JSON.stringify({col: col, id: id}).replace(/"/g, '&quot;');
+        return `
+        <div class="list-card" style="border-left:3px solid #ff5252;">
+            <div style="display:flex;align-items:center;">
+                <input type="checkbox" class="chk-trash select-check" value="${val}">
+                <b style="margin-left:8px; font-size:14px;">${name}</b>
+            </div>
+            <div class="card-actions" style="margin-left:25px; margin-top:10px;">
+                <button onclick="restoreItem('${col}','${id}')" class="btn-sm btn-download">রিস্টোর</button>
+                <button onclick="hardDelete('${col}','${id}')" class="btn-sm btn-del">চিরতরে মুছুন</button>
+            </div>
+        </div>`;
     }
 
     async function restoreItem(col, id) { 
@@ -2606,17 +2736,24 @@
 
     async function batchTrashAction(action) {
         const cbs = document.querySelectorAll('.chk-trash:checked');
-        if(cbs.length === 0) return alert("সিলেক্ট করুন!");
-        if(!confirm(action === 'restore' ? "রিস্টোর করবেন?" : "চিরতরে মুছবেন?")) return;
+        if(cbs.length === 0) {
+            alert("সিলেক্ট করুন!");
+            return;
+        }
         
-        for(let cb of cbs) {
-            const d = JSON.parse(cb.value.replace(/&quot;/g, '"'));
+        if(!confirm(action === 'restore' ? "রিস্টোর করবেন?" : "চিরতরে মুছবেন?")) {
+            return;
+        }
+        
+        for(let i = 0; i < cbs.length; i++) {
+            const d = JSON.parse(cbs[i].value.replace(/&quot;/g, '"'));
             if(action === 'restore') {
                 await dbRef.collection(d.col).doc(d.id).update({ isDeleted: false });
             } else {
                 await dbRef.collection(d.col).doc(d.id).delete();
             }
         }
+        
         renderTrashList(); 
         alert("সম্পন্ন!");
     }
@@ -2628,47 +2765,69 @@
     */
     async function downloadSelectedZIP(section) {
         const cbs = document.querySelectorAll('.chk-' + section + ':checked');
-        if(cbs.length === 0) return alert("অন্তত একটি ফাইল সিলেক্ট করুন!");
+        if(cbs.length === 0) {
+            alert("অন্তত একটি ফাইল সিলেক্ট করুন!");
+            return;
+        }
+        
         const zip = new JSZip();
         alert(`ZIP তৈরি হচ্ছে। অপেক্ষা করুন...`);
-        for(let cb of cbs) { 
-            let url = cb.value;
+        
+        for(let i = 0; i < cbs.length; i++) {
+            let url = cbs[i].value;
             if(url && url.includes('/upload/')) {
                 url = url.replace('/upload/', '/upload/fl_attachment/');
             }
             try { 
                 const res = await fetch(url); 
                 const blob = await res.blob(); 
-                zip.file(cb.getAttribute('data-name'), blob); 
-            } catch(e) { console.error(e) } 
+                zip.file(cbs[i].getAttribute('data-name'), blob); 
+            } catch(e) { 
+                console.error(e) 
+            } 
         }
-        zip.generateAsync({type:"blob"}).then(c => saveAs(c, `batch_${section}.zip`));
+        
+        zip.generateAsync({type:"blob"}).then(function(c) {
+            saveAs(c, `batch_${section}.zip`);
+        });
     }
 
     async function downloadProjectZIP() {
         if(!activeAdminProj) return;
-        if(!confirm(`'${activeAdminProj}' প্রজেক্টের সব ফাইল ZIP হিসেবে ডাউনলোড করবেন?`)) return;
+        
+        if(!confirm(`'${activeAdminProj}' প্রজেক্টের সব ফাইল ZIP হিসেবে ডাউনলোড করবেন?`)) {
+            return;
+        }
+        
         alert("পুরো প্রজেক্টের ZIP তৈরি হচ্ছে। ব্রাউজার বন্ধ করবেন না...");
         const zip = new JSZip(); 
         const rootFolder = zip.folder(activeAdminProj);
+        
         try {
             const snap = await dbRef.collection('tasks').where('channel', '==', channel).where('project', '==', activeAdminProj).get();
             const fetchPromises = [];
+            
             snap.forEach(doc => {
                 const d = doc.data();
                 if(!d.isDeleted) {
                     const catFolder = rootFolder.folder(d.category);
                     let url = d.fileUrl;
-                    if(url && url.includes('/upload/')) url = url.replace('/upload/', '/upload/fl_attachment/');
+                    if(url && url.includes('/upload/')) {
+                        url = url.replace('/upload/', '/upload/fl_attachment/');
+                    }
+                    
                     const p = fetch(url).then(res => res.blob()).then(blob => { 
                         catFolder.file(d.fileName || "unknown_file", blob); 
                     }).catch(e => console.error(e));
+                    
                     fetchPromises.push(p);
                 }
             });
+            
             await Promise.all(fetchPromises);
             const content = await zip.generateAsync({type:"blob"});
             saveAs(content, `${activeAdminProj}_Full_Backup.zip`);
+            
         } catch(e) { 
             alert("ZIP তৈরিতে সমস্যা হয়েছে।"); 
         }
@@ -2680,7 +2839,11 @@
         ========================================================
     */
     async function adminUploadFile() {
-        if(!activeAdminProj || !activeAdminCat) return alert("প্রজেক্ট ও ক্যাটাগরি সিলেক্ট করুন!");
+        if(!activeAdminProj || !activeAdminCat) {
+            alert("প্রজেক্ট ও ক্যাটাগরি সিলেক্ট করুন!");
+            return;
+        }
+        
         const file = document.getElementById('aFile').files[0];
         if(!file) return;
         
@@ -2688,9 +2851,11 @@
         const fd = new FormData(); 
         fd.append('file', file); 
         fd.append('upload_preset', UPLOAD_PRESET);
+        
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
+            
             if(data.secure_url) {
                 await dbRef.collection('tasks').add({ 
                     sender: "অ্যাডমিন", 
@@ -2720,7 +2885,11 @@
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
         const content = document.getElementById('noteContent').innerHTML.trim(); 
-        if(!title || !content || content === "<br>") return alert("তথ্য প্রদান করুন!");
+        
+        if(!title || !content || content === "<br>") {
+            alert("তথ্য প্রদান করুন!");
+            return;
+        }
         
         if (editingNoteId) {
             await dbRef.collection('channel_notes').doc(editingNoteId).update({ 
@@ -2777,6 +2946,7 @@
             
             items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
             let html = "";
+            
             items.forEach(d => {
                 html += `
                 <div class="list-card" style="border-left:4px solid var(--primary-pink);">
@@ -2793,7 +2963,12 @@
                     <div style="font-size:13px; color:var(--text-main); line-height:1.5; margin-top:8px; word-wrap: break-word; margin-left:25px;">${d.content}</div>
                 </div>`;
             });
-            document.getElementById('notesListUI').innerHTML = html || "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>কোনো রেকর্ড নেই।</p>";
+            
+            if (html) {
+                document.getElementById('notesListUI').innerHTML = html;
+            } else {
+                document.getElementById('notesListUI').innerHTML = "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>কোনো রেকর্ড নেই।</p>";
+            }
         });
     }
 </script>
