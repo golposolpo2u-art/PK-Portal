@@ -101,6 +101,7 @@
             border: 1px solid rgba(255,255,255,0.08);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         .portal-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
 
@@ -159,6 +160,121 @@
             text-align: center;
         }
 
+        /* ========================================================
+           MODAL STYLES FOR PASSWORD AUTHENTICATION
+           ======================================================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+        }
+
+        .modal-box {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 30px 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.show .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 14px 40px 14px 15px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background: #111;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+        
+        .auth-input:focus {
+            border-color: #fff;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: #ff5252;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .btn-enter { background: #4caf50; }
+        .btn-enter:hover { background: #45a049; }
+        
+        .btn-cancel { background: transparent; border: 1px solid #555; color: #aaa; }
+        .btn-cancel:hover { background: rgba(255,255,255,0.05); color: #fff; }
+
+        /* Color variations for modal based on selection */
+        .theme-prem .modal-box { border-color: #e91e63; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2); }
+        .theme-prem .modal-title, .theme-prem .modal-icon { color: #e91e63; }
+        .theme-prem .auth-input:focus { border-color: #e91e63; box-shadow: 0 0 10px rgba(233, 30, 99, 0.3); }
+        .theme-prem .btn-enter { background: linear-gradient(45deg, #e91e63, #f06292); }
+
+        .theme-panch .modal-box { border-color: #d4af37; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
+        .theme-panch .modal-title, .theme-panch .modal-icon { color: #d4af37; }
+        .theme-panch .auth-input:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+        .theme-panch .btn-enter { background: linear-gradient(45deg, #d4af37, #b8860b); color: #000;}
+
         /* --- DESKTOP & LAPTOP OPTIMIZATIONS (PC View) --- */
         @media (min-width: 768px) {
             .main-container {
@@ -201,7 +317,7 @@
     <h1>Story Go</h1>
     <p class="tagline">আপনার পছন্দের পোর্টালটি বেছে নিন</p>
 
-    <!-- ১. প্রথম কথা (অডিশন) -->
+    <!-- ১. প্রথম কথা (অডিশন) - কোন পাসওয়ার্ড নেই -->
     <a href="Prothom_kotha.html" class="portal-card btn-pk">
         <div style="display:flex; align-items:center;">
             <div class="icon-box" style="background: rgba(0, 210, 255, 0.15); color: #00d2ff;"><i class="fas fa-microphone-alt"></i></div>
@@ -210,26 +326,162 @@
         <i class="fas fa-chevron-right" style="opacity: 0.5; font-size: 16px;"></i>
     </a>
 
-    <!-- ২. প্রেম কুটির -->
-    <a href="prem_kuteer.html" class="portal-card btn-prem">
+    <!-- ২. প্রেম কুটির - পাসওয়ার্ড প্রোটেক্টেড -->
+    <div class="portal-card btn-prem" onclick="openSecurityModal('prem')">
         <div style="display:flex; align-items:center;">
             <img src="https://i.ibb.co/hJdb514B/Logo.png" class="logo-thumb">
             <span>প্রেম কুটির</span>
         </div>
-        <i class="fas fa-chevron-right" style="opacity: 0.5; font-size: 16px;"></i>
-    </a>
+        <i class="fas fa-lock" style="opacity: 0.7; font-size: 16px;"></i>
+    </div>
 
-    <!-- ৩. পাঁচকাহন -->
-    <a href="panchkahan.html" class="portal-card btn-panch">
+    <!-- ৩. পাঁচকাহন - পাসওয়ার্ড প্রোটেক্টেড -->
+    <div class="portal-card btn-panch" onclick="openSecurityModal('panch')">
         <div style="display:flex; align-items:center;">
             <img src="https://i.ibb.co/r2KNWgBv/Logo.png" class="logo-thumb">
             <span>পাঁচকাহন</span>
         </div>
-        <i class="fas fa-chevron-right" style="opacity: 0.5; font-size: 16px;"></i>
-    </a>
+        <i class="fas fa-lock" style="opacity: 0.7; font-size: 16px;"></i>
+    </div>
 
     <footer>&copy; 2026 Story Go - All Rights Reserved</footer>
 </div>
+
+<!-- Password Authentication Modal -->
+<div id="securityModal" class="modal-overlay">
+    <div class="modal-box" id="modalBoxTheme">
+        <div class="modal-icon" id="modalIcon"><i class="fas fa-lock"></i></div>
+        <h3 class="modal-title" id="modalTitle">পোর্টালের নাম</h3>
+        
+        <p style="font-size: 12px; color: #aaa; margin-bottom: 15px;">প্রবেশ করার জন্য সিকিউরিটি কোড দিন</p>
+        
+        <div class="input-group">
+            <input type="password" id="portalPassInput" class="auth-input" placeholder="সিকিউরিটি কোড দিন" onkeyup="checkEnter(event)">
+            <i class="fas fa-eye eye-icon" onclick="togglePassVisibility()"></i>
+        </div>
+        
+        <p id="errorText" class="error-msg">❌ ভুল সিকিউরিটি কোড!</p>
+        
+        <button class="modal-btn btn-enter" onclick="verifyPassword()">প্রবেশ করুন</button>
+        <button class="modal-btn btn-cancel" onclick="closeSecurityModal()">বাতিল করুন</button>
+    </div>
+</div>
+
+<script>
+    // ========================================================
+    // PORTAL SECURITY SETTINGS
+    // ========================================================
+    
+    // পাসওয়ার্ড আপডেট করা হয়েছে
+    const portalData = {
+        'prem': {
+            name: 'প্রেম কুটির',
+            password: 'Prem Kuteer', // আপডেট করা পাসওয়ার্ড
+            url: 'prem_kuteer.html',
+            themeClass: 'theme-prem',
+            icon: '<i class="fas fa-heart"></i>'
+        },
+        'panch': {
+            name: 'পাঁচকাহন',
+            password: 'Panch Kahon', // আপডেট করা পাসওয়ার্ড
+            url: 'panchkahan.html',
+            themeClass: 'theme-panch',
+            icon: '<i class="fas fa-book-open"></i>'
+        }
+    };
+
+    let activePortal = '';
+
+    function openSecurityModal(portalKey) {
+        const data = portalData[portalKey];
+        
+        // Check if password is already saved in local storage
+        if (localStorage.getItem('auth_portal_' + portalKey) === 'true') {
+            try {
+                window.location.href = data.url;
+            } catch(e) {
+                alert(`আপনি আগেই লগইন করেছেন! (Canvas preview-তে সরাসরি অন্য ফাইলে যাওয়া যায় না, তবে আসল ওয়েবসাইটে ${data.name} পেজটি ওপেন হবে।)`);
+            }
+            return; // Skip opening the modal
+        }
+
+        activePortal = portalKey;
+        
+        // Setup Modal UI based on selected portal
+        document.getElementById('modalTitle').innerText = data.name;
+        document.getElementById('modalIcon').innerHTML = data.icon;
+        
+        // Remove old theme class and add new one
+        const modalBox = document.getElementById('modalBoxTheme');
+        modalBox.className = 'modal-box ' + data.themeClass;
+        
+        // Reset Inputs and Errors
+        document.getElementById('portalPassInput').value = '';
+        document.getElementById('portalPassInput').type = 'password';
+        document.getElementById('errorText').style.display = 'none';
+        
+        // Show Modal
+        const overlay = document.getElementById('securityModal');
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('show'), 10);
+        
+        // Focus input
+        setTimeout(() => document.getElementById('portalPassInput').focus(), 100);
+    }
+
+    function closeSecurityModal() {
+        const overlay = document.getElementById('securityModal');
+        overlay.classList.remove('show');
+        setTimeout(() => overlay.style.display = 'none', 300);
+        activePortal = '';
+    }
+
+    function verifyPassword() {
+        const inputPass = document.getElementById('portalPassInput').value.trim();
+        const data = portalData[activePortal];
+        
+        if(inputPass === data.password) {
+            // Correct Password - Save state and Redirect
+            document.getElementById('errorText').style.display = 'none';
+            localStorage.setItem('auth_portal_' + activePortal, 'true'); // Password saved locally
+            
+            try {
+                window.location.href = data.url;
+            } catch(e) {
+                alert(`সঠিক পাসওয়ার্ড! (Canvas preview-তে সরাসরি অন্য ফাইলে যাওয়া যায় না, তবে আসল ওয়েবসাইটে ${data.name} পেজটি ওপেন হবে।)`);
+                closeSecurityModal();
+            }
+        } else {
+            // Wrong Password
+            const err = document.getElementById('errorText');
+            err.style.display = 'block';
+            
+            // Add a little shake effect
+            const box = document.getElementById('modalBoxTheme');
+            box.style.transform = 'scale(0.95)';
+            setTimeout(() => box.style.transform = 'scale(1)', 150);
+        }
+    }
+
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            verifyPassword();
+        }
+    }
+
+    function togglePassVisibility() {
+        const input = document.getElementById('portalPassInput');
+        const icon = document.querySelector('.eye-icon');
+        
+        if (input.type === "password") { 
+            input.type = "text"; 
+            icon.classList.replace('fa-eye', 'fa-eye-slash'); 
+        } else { 
+            input.type = "password"; 
+            icon.classList.replace('fa-eye-slash', 'fa-eye'); 
+        }
+    }
+</script>
 
 </body>
 </html>
