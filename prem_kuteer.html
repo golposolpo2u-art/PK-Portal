@@ -5,15 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Go - প্রেম কুটির পোর্টাল</title>
     
+    <!-- 
+        ========================================================
+        EXTERNAL RESOURCES & FONTS
+        ========================================================
+    -->
     <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- JSZip & FileSaver -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
+        /* ========================================================
+            CSS VARIABLES & THEME DEFINITIONS
+            ========================================================
+        */
         :root {
             --primary-pink: #e91e63;
             --secondary-pink: #f06292;
+            
             --bg-gradient: linear-gradient(135deg, #111111 0%, #000000 100%);
             --panel-bg: rgba(20, 20, 20, 0.95);
             --card-bg: #1a1a1a;
@@ -23,10 +35,12 @@
             --border-color: #333333;
             --tab-bg: #222222;
             --modal-overlay: rgba(0, 0, 0, 0.85);
+            
             --error-red: #ff5252;
             --success-green: #4caf50;
         }
 
+        /* Light Mode (Day Mode) Variables */
         body.light-mode {
             --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
             --panel-bg: rgba(255, 255, 255, 0.98);
@@ -39,38 +53,25 @@
             --modal-overlay: rgba(255, 255, 255, 0.8);
         }
 
-        body.light-mode .ch-title { text-shadow: none; }
-        body.light-mode .main-container { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); border: 1px solid #f8bbd0; }
-        body.light-mode .list-card { background: #ffffff; border: 1px solid #fce4ec; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); }
-        body.light-mode .folder-item { background: #fdfdfd; border-color: #f8bbd0; color: #222222; }
-        body.light-mode select, body.light-mode input, body.light-mode textarea { color: #222222 !important; border-color: #f8bbd0; background: #ffffff !important; }
-
-        /* Mentor Item Mode Fix */
-        .mentor-list-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            font-size: 14px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #ffffff;
-            font-weight: bold;
-        }
-        body.light-mode .mentor-list-item { 
-            background: #e0e0e0; 
-            border-color: #cccccc; 
-            color: #111111; 
-        }
-
+        /* ========================================================
+            GLOBAL STYLES & RESETS
+            ========================================================
+        */
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
             transition: background 0.3s, color 0.3s, border-color 0.3s ease; 
-            font-family: 'Kalpurush', Arial, sans-serif !important; 
+        }
+
+        /* Apply Bengali font to elements, but NOT icons */
+        body, input, textarea, button, select, a, span, p, h1, h2, h3, h4, h5, h6, div {
+            font-family: 'Kalpurush', Arial, sans-serif;
+        }
+
+        /* Force icons to keep their font-family */
+        .fas, .fab, .far, i {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
         }
 
         body { 
@@ -84,6 +85,41 @@
             overflow-x: hidden;
         }
 
+        /* Light Mode Specific Adjustments */
+        body.light-mode .ch-title { text-shadow: none; }
+        body.light-mode .main-container { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); border: 1px solid #f8bbd0; }
+        body.light-mode .list-card { background: #ffffff; border: 1px solid #fce4ec; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); }
+        body.light-mode .folder-item { background: #fdfdfd; border-color: #f8bbd0; color: #222222; }
+        body.light-mode select, body.light-mode input, body.light-mode textarea { color: #222222 !important; border-color: #f8bbd0; background: #ffffff !important; }
+
+        /* ========================================================
+            MENTOR LIST ITEM THEME ADJUSTMENT
+            ========================================================
+        */
+        .mentor-list-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            margin-top: 10px; 
+            font-size: 14px; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        body.light-mode .mentor-list-item { 
+            background: #e0e0e0 !important; 
+            border-color: #cccccc !important; 
+            color: #111111 !important; 
+        }
+
+        /* ========================================================
+            MAIN CONTAINER & HEADER
+            ========================================================
+        */
         .main-container { 
             width: 100%; 
             max-width: 900px; 
@@ -100,69 +136,94 @@
         .logo-box-fix { width: 80px !important; height: 80px !important; border-radius: 50%; border: 3px solid var(--primary-pink); background: #000000; overflow: hidden; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
         .ch-logo { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
         .ch-title { font-size: clamp(30px, 8vw, 45px); color: var(--primary-pink); font-weight: bold; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
-        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; z-index: 10; display: flex; align-items: center; gap: 5px; }
+        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; z-index: 10; display: flex; align-items: center; gap: 5px;}
         .theme-toggle-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--primary-pink); font-size: 22px; cursor: pointer; z-index: 10; }
 
-        /* Auth Styles */
+        /* ========================================================
+            AUTHENTICATION SCREENS
+            ========================================================
+        */
         #authScreen { text-align: center; padding: 20px 0; }
         .auth-wrapper { max-width: 320px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); }
         .auth-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); }
         .auth-input:focus { border-color: var(--primary-pink); box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: #ffffff; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 15px; }
+        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: #ffffff; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top: 15px;}
         .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
         .toggle-auth { color: var(--primary-pink); font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
-        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 15px; margin-top: 5px; }
+        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 15px; margin-top: 5px;}
         .forgot-links span { color: var(--text-muted); cursor: pointer; text-decoration: underline; }
         
         .eye-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink); }
         .input-group { position:relative; margin-bottom:15px; }
         .input-group input { margin-bottom:0; padding-right:35px; }
 
-        /* General Forms & Tabs */
+        /* ========================================================
+            USER TABS & INPUT FIELDS
+            ========================================================
+        */
         .tabs { display: flex; background: var(--tab-bg); border-radius: 10px; margin-bottom: 20px; overflow: hidden; padding: 4px; flex-wrap: wrap; border: 1px solid var(--border-color); }
-        .tab { flex: 1; padding: 10px 5px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-radius: 8px; font-size: clamp(12px, 4vw, 16px); min-width: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.2; }
+        .tab { flex: 1; padding: 10px 5px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-radius: 8px; font-size: clamp(12px, 4vw, 16px); min-width: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.2;}
         .tab.active { background: var(--primary-pink); color: #ffffff; }
 
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 5px 0; font-size: 13px; text-transform: uppercase; }
-        select, textarea, input[type="file"], input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); margin-bottom: 10px; }
-        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(233, 30, 99, 0.2); }
+        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 5px 0; font-size: 13px; text-transform: uppercase;}
+        select, textarea, input[type="file"], input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); margin-bottom:10px;}
+        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);}
         
-        #sText { min-height: 350px; resize: vertical; line-height: 1.6; padding-bottom: 30px; }
+        textarea { min-height: 80px; }
+        #sText { min-height: 350px; resize: vertical; line-height: 1.6; padding-bottom: 30px;}
         .word-counter-box { position: absolute; bottom: 20px; right: 15px; font-size:11px; font-weight:bold; background: var(--card-bg); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border-color); pointer-events: none; }
 
-        /* Rich Text Editor */
+        /* ========================================================
+            RICH TEXT EDITOR (CASTING DIARY)
+            ========================================================
+        */
         .rte-toolbar { display: flex; gap: 5px; background: var(--panel-bg); padding: 8px; border-radius: 8px 8px 0 0; border: 1px solid var(--border-color); border-bottom: none; align-items: center; flex-wrap: wrap; }
         .rte-toolbar button, .rte-toolbar .color-picker-wrap, .rte-toolbar .custom-font-btn { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 3px; position: relative; }
         .rte-toolbar button:hover, .rte-toolbar .custom-font-btn:hover { border-color: var(--primary-pink); }
-        .rte-toolbar select, .rte-toolbar input[type="number"] { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: var(--text-main); outline: none; width: auto; max-width: 100px; margin-bottom: 0; }
+        .rte-toolbar select, .rte-toolbar input[type="number"] { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: var(--text-main); outline: none; width: auto; max-width: 100px; margin-bottom:0;}
         .color-picker-wrap input[type="color"] { width: 20px; height: 20px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
         .rte-editor { background: var(--input-bg); min-height: 150px; padding: 10px; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; outline: none; color: var(--text-main); font-size: 14px; line-height: 1.5; overflow-y: auto; }
+        .rte-editor:empty:before { content: attr(placeholder); color: var(--text-muted); pointer-events: none; display: block; }
         .custom-font-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-        /* Admin Layout & Components */
+        /* ========================================================
+            ADMIN DASHBOARD & CARDS
+            ========================================================
+        */
         .admin-layout { display: grid; grid-template-columns: 220px 1fr; gap: 15px; margin-top: 15px; }
         @media (max-width: 768px) { .admin-layout { grid-template-columns: 1fr; } }
         .sidebar { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 13px; }
-        .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: #ffffff; border-color: var(--primary-pink); }
+        
+        .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 13px;}
+        
+        /* FIX: Ensure active projects show a bright pink highlight */
+        .folder-item.active { background: var(--primary-pink) !important; color: #ffffff !important; border-color: var(--primary-pink) !important; }
+        .folder-item.active i { color: #ffffff !important; }
+        .folder-item:hover { border-color: var(--primary-pink); }
+        
         .folder-item.hidden-proj { opacity: 0.7; border-style: dashed; }
 
-        .list-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+        .list-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative;}
+        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center;}
+        
         .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; }
         .btn-del { background: rgba(244, 67, 54, 0.1); color: #ff5252; border: 1px solid rgba(244, 67, 54, 0.3); }
         .btn-download { background: rgba(76, 175, 80, 0.1); color: #4caf50; border: 1px solid rgba(76, 175, 80, 0.3); }
         .btn-view { background: rgba(33, 150, 243, 0.1); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.3); }
         .btn-remark { background: rgba(245, 127, 23, 0.1); color: #f57f17; border: 1px solid rgba(245, 127, 23, 0.3); }
 
-        .batch-header { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; }
+        .batch-header { display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; }
+
         .admin-box { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-pink); }
         
         .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         @media (max-width: 600px) { .split-inbox { grid-template-columns: 1fr; } }
         .inbox-column { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; }
         .inbox-column h4 { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); font-size: 14px; }
-        
+        .col-raw h4 { color: var(--primary-pink); }
+        .col-admin h4 { color: #4caf50; }
+
+        /* Status Badges */
         .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
         .status-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; border-color: rgba(245, 127, 23, 0.3); }
         .status-approved { background: rgba(76, 175, 80, 0.1); color: #4caf50; border-color: rgba(76, 175, 80, 0.3); }
@@ -171,8 +232,9 @@
 
         .select-check { transform: scale(1.3); margin-right: 8px; cursor: pointer; accent-color: var(--primary-pink); }
         
+        /* Modals & Previews */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
-        .modal-box { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); border: 2px solid var(--primary-pink); color: var(--text-main); }
+        .modal-box { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 2px solid var(--primary-pink); color: var(--text-main); }
         #previewModal .modal-box { max-width: 700px; width: 95%; padding: 15px; }
         .preview-container { background: var(--panel-bg); border-radius: 10px; padding: 10px; text-align: center; border: 1px solid var(--border-color); overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 150px; }
         
@@ -193,6 +255,7 @@
         .recording-pulse { animation: pulseRec 1.5s infinite; background: rgba(244, 67, 54, 0.1) !important; color: #f44336 !important; border-color: #f44336 !important; }
         .admin-story-container { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 15px; padding: 15px; margin-top: 15px; }
 
+        /* PC Enhancements */
         @media (min-width: 768px) {
             .main-container { padding: 40px; max-width: 1000px; }
             .btn-home { top: 25px; left: 25px; font-size: 15px; }
@@ -395,7 +458,7 @@
                 <div id="storyStatusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
 
-            <!-- User Status Tab -->
+            <!-- User Status View -->
             <div id="statusView" style="display:none;">
                 <div class="auto-delete-wrapper" style="margin-bottom: 20px;">
                     <div class="auto-delete-inner">
@@ -483,24 +546,26 @@
                     
                     <div id="adminProjectListUI">লোড হচ্ছে...</div>
                     
-                    <div class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
+                    <div id="sidebarRecordBtn" class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
                         <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
                     </div>
                     
-                    <div class="folder-item" onclick="setSpecialView('story')">
+                    <div id="sidebarStoryBtn" class="folder-item" onclick="setSpecialView('story')">
                         <span><i class="fas fa-book-open"></i> গল্পের ঝুলি</span>
                     </div>
                     
-                    <div class="folder-item" style="margin-top: 5px; background: rgba(244, 67, 54, 0.1); border-color: rgba(244, 67, 54, 0.3);" onclick="setSpecialView('trash')">
+                    <div id="sidebarTrashBtn" class="folder-item" style="margin-top: 5px; background: rgba(244, 67, 54, 0.1); border-color: rgba(244, 67, 54, 0.3);" onclick="setSpecialView('trash')">
                         <span style="color: #ff5252;"><i class="fas fa-trash-restore"></i> রিসাইকেল বিন</span>
                     </div>
                 </div>
 
                 <!-- Content Area -->
                 <div class="content">
-                    <!-- Project View -->
+                    
+                    <!-- Project View Content -->
                     <div id="projectView" style="display:none;">
                         
+                        <!-- Admin Delete Settings -->
                         <div class="info-card" id="adminDeleteSettings" style="background: rgba(255, 255, 255, 0.05); border-color: var(--primary-pink); padding: 12px; margin-bottom:15px;">
                             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                                 <div>
@@ -525,13 +590,16 @@
                             </div>
                         </div>
 
+                        <!-- Current Project Info -->
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
                             <h3 id="currentProjTitle" style="color:var(--primary-pink); font-size: 18px; margin:0;"></h3>
                             <button class="btn-sm btn-main" style="padding:8px 15px; width:auto; font-size:12px;" onclick="downloadProjectZIP()"><i class="fas fa-file-archive"></i> Folder ZIP</button>
                         </div>
 
+                        <!-- Category Tabs -->
                         <div class="tabs" id="adminCatTabs" style="margin-bottom:15px;"></div>
                         
+                        <!-- Split Inbox (Raw and Admin) -->
                         <div class="split-inbox">
                             <div class="inbox-column col-raw">
                                 <h4 style="color:var(--primary-pink); margin-bottom:10px;"><i class="fas fa-inbox"></i> ইউজারদের ফাইল</h4>
@@ -580,9 +648,9 @@
                         </div>
                     </div>
 
-                    <!-- Record View Content -->
+                    <!-- Record View Content (Casting Diary) -->
                     <div id="recordView" style="display:none; padding: 15px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
-                        <h3 style="color:var(--primary-pink); margin-bottom:10px;">কাস্টিং ডায়েরি</h3>
+                        <h3 style="margin-bottom:15px; color:var(--primary-pink); font-size: 18px;"><i class="fas fa-clipboard"></i> কাস্টিং ডায়েরি</h3>
                         
                         <input type="text" id="noteTitle" placeholder="শিরোনাম">
                         
@@ -654,16 +722,16 @@
 
 <!-- 
     ========================================================
-    MODALS (Mentor Login & Preview)
+    MODALS (Login & Preview)
     ========================================================
 -->
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
         
-        <div class="input-group">
-            <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center;">
-            <i class="fas fa-eye eye-icon" onclick="togglePass('modalAdminPass', this)"></i>
+        <div style="position:relative; margin-top:15px; margin-bottom:15px;">
+            <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center; margin-bottom:0; padding-right:35px;">
+            <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('modalAdminPass', this)"></i>
         </div>
         
         <button class="btn-main" onclick="checkAdminPass()">প্রবেশ</button>
@@ -708,7 +776,6 @@
     
     const appId = "golposolpo-premium";
     
-    // Prevent multiple initializations of Firebase App
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
@@ -721,12 +788,12 @@
     const UPLOAD_PRESET = 'Prothom Kotha Voice';
     const channel = "প্রেম কুটির"; 
 
-    // Global Variables
     let currentUser = null;
     let allProjects = [];
     let allCategories = []; 
     let activeAdminProj = "";
     let activeAdminCat = "ভয়েস";
+    let activeSpecialView = "";
     let isMentor = false;
     let isMaster = false;
     let isDocAllowed = false;
@@ -779,9 +846,7 @@
             const data = await res.json();
             
             if(data.secure_url) {
-                await dbRef.collection(recordCol).doc(recordDocId).update({ 
-                    adminVoiceRemark: data.secure_url 
-                });
+                await dbRef.collection(recordCol).doc(recordDocId).update({ adminVoiceRemark: data.secure_url });
                 if(upMsg) {
                     upMsg.innerText = "✅ সম্পন্ন!";
                 }
@@ -904,12 +969,16 @@
                 display.style.color = "#ff5252"; 
             }
         });
-
-        auth.signInAnonymously().catch(console.error);
     };
 
     auth.onAuthStateChanged(user => {
         if (user) {
+            // Fix: If it's a residual anonymous user without a display name, sign out.
+            if (user.isAnonymous && !user.displayName) {
+                auth.signOut();
+                return;
+            }
+
             currentUser = user;
             document.getElementById('authScreen').style.display = 'none';
             
@@ -917,7 +986,7 @@
                 document.getElementById('mainPortal').style.display = 'block';
                 document.getElementById('userPortal').style.display = 'block';
                 
-                const dName = user.displayName || user.email || "Guest";
+                const dName = user.displayName || user.email;
                 document.getElementById('uNameDisplay').innerText = dName;
                 
                 loadInitialData();
@@ -1061,7 +1130,10 @@
         ========================================================
     */
     function getDownloadUrl(url) {
-        if(!url) return "";
+        if(!url) {
+            return "";
+        }
+        // Force download parameter for Cloudinary links to avoid opening in browser natively
         if (url.includes('/upload/')) {
             return url.replace('/upload/', '/upload/fl_attachment/'); 
         }
@@ -1162,7 +1234,6 @@
 
     function loadMyFeedback() {
         if(!currentUser) return;
-        
         const workUI = document.getElementById('userStatusListUI');
         workUI.innerHTML = "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>লোড হচ্ছে...</p>";
         let workHtml = "";
@@ -1464,12 +1535,15 @@
                 return; 
             }
             
+            // Highlight the active item with pink color and white text
+            const isActive = activeAdminProj === p.name ? 'active' : '';
+            
             const itemHtml = `
-                <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
-                    <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
+                <div class="folder-item ${isActive} ${p.isHidden ? 'hidden-proj' : ''}" onclick="selectAdminProject('${p.name}')">
+                    <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
                     <div style="display:flex; gap:8px; align-items:center;">
-                        <i class="fas ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}" style="color:${p.isHidden ? 'var(--text-muted)' : 'var(--primary-pink)'}; cursor:pointer;" onclick="toggleProjectHide('${p.id}', ${p.isHidden || false})"></i>
-                        <i class="fas fa-trash del-folder" onclick="softDelete('projects', '${p.id}', '${p.name}')" style="color:#ff5252; cursor:pointer;"></i>
+                        <i class="fas ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}" style="cursor:pointer;" onclick="event.stopPropagation(); toggleProjectHide('${p.id}', ${p.isHidden || false})"></i>
+                        <i class="fas fa-trash del-folder" onclick="event.stopPropagation(); softDelete('projects', '${p.id}', '${p.name}')" style="cursor:pointer;"></i>
                     </div>
                 </div>`;
                 
@@ -1486,6 +1560,11 @@
         }
         
         document.getElementById('adminProjectListUI').innerHTML = finalHtml || "<p style='text-align:center; color:var(--text-muted); font-size:11px;'>কোনো প্রজেক্ট নেই</p>";
+        
+        // Highlight special views
+        document.getElementById('sidebarRecordBtn').className = `folder-item ${activeSpecialView === 'record' ? 'active' : ''}`;
+        document.getElementById('sidebarStoryBtn').className = `folder-item ${activeSpecialView === 'story' ? 'active' : ''}`;
+        document.getElementById('sidebarTrashBtn').className = `folder-item ${activeSpecialView === 'trash' ? 'active' : ''}`;
     }
 
     async function toggleProjectHide(id, currentStatus) { 
@@ -1507,6 +1586,7 @@
 
     function selectAdminProject(n) { 
         activeAdminProj = n; 
+        activeSpecialView = "";
         
         const views = document.querySelectorAll('.content > div');
         views.forEach(function(d) {
@@ -1529,6 +1609,8 @@
     
     function setSpecialView(type) { 
         activeAdminProj = ""; 
+        activeSpecialView = type;
+        
         renderAdminSidebar(); 
         
         const views = document.querySelectorAll('.content > div');
@@ -1607,7 +1689,7 @@
             dataArr.forEach(d => {
                 const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac|m4a)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
-                const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx)$/i);
+                const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx|txt)$/i);
                 
                 let btnAction = "";
                 if (isAudio) {
@@ -1726,7 +1808,6 @@
                     </div>`;
                 }
                 
-                // Status Select explicitly remembers its value
                 html += `
                 <div class="list-card" style="border-left:3px solid var(--primary-pink);">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
