@@ -45,178 +45,859 @@
         }
 
         /* Light Mode Adjustments */
-        body.light-mode .ch-title { text-shadow: none; }
-        body.light-mode .main-container { box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid #f8bbd0; }
-        body.light-mode .list-card { background: #ffffff; border: 1px solid #fce4ec; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        body.light-mode .mentor-list-item { background: #f9f9f9; border-color: #fce4ec; color: #222; }
-        body.light-mode .folder-item { background: #fdfdfd; border-color: #f8bbd0; color: #222; }
-        body.light-mode select, body.light-mode input, body.light-mode textarea { color: #222 !important; border-color: #f8bbd0; background: #fff !important; }
+        body.light-mode .ch-title { 
+            text-shadow: none; 
+        }
+        
+        body.light-mode .main-container { 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
+            border: 1px solid #f8bbd0; 
+        }
+        
+        body.light-mode .list-card { 
+            background: #ffffff; 
+            border: 1px solid #fce4ec; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); 
+        }
+        
+        body.light-mode .mentor-list-item { 
+            background: #f9f9f9; 
+            border-color: #fce4ec; 
+            color: #222222; 
+        }
+        
+        body.light-mode .folder-item { 
+            background: #fdfdfd; 
+            border-color: #f8bbd0; 
+            color: #222222; 
+        }
+        
+        body.light-mode select, 
+        body.light-mode input, 
+        body.light-mode textarea { 
+            color: #222222 !important; 
+            border-color: #f8bbd0; 
+            background: #ffffff !important; 
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s, border-color 0.3s ease; font-family: 'Kalpurush', Arial, sans-serif; }
+        /* Global Reset */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            transition: background 0.3s, color 0.3s, border-color 0.3s ease; 
+            font-family: 'Kalpurush', Arial, sans-serif !important; 
+        }
 
         body { 
-            background: var(--bg-gradient); color: var(--text-main); 
-            min-height: 100vh; padding: 20px 10px 80px 10px; display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden;
+            background: var(--bg-gradient); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            padding: 20px 10px 80px 10px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            overflow-x: hidden;
         }
 
         .main-container { 
-            width: 100%; max-width: 900px; background: var(--panel-bg); padding: 20px 15px; 
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.15); 
-            border: 2px solid var(--primary-pink); position: relative; margin: 0 auto;
+            width: 100%; 
+            max-width: 900px; 
+            background: var(--panel-bg); 
+            padding: 20px 15px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.15); 
+            border: 2px solid var(--primary-pink); 
+            position: relative; 
+            margin: 0 auto;
         }
 
-        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; margin-top: 45px; text-align: center; }
-        .logo-box-fix { width: 80px !important; height: 80px !important; border-radius: 50%; border: 3px solid var(--primary-pink); background: #000; overflow: hidden; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
-        .ch-logo { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
-        .ch-title { font-size: clamp(30px, 8vw, 45px); color: var(--primary-pink); font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        .btn-home { position: absolute; top: 15px; left: 15px; text-decoration: none; color: var(--primary-pink); font-weight: bold; font-size: 13px; z-index: 10; display: flex; align-items: center; gap: 5px;}
-        .theme-toggle-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--primary-pink); font-size: 22px; cursor: pointer; z-index: 10; }
+        .header { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            margin-top: 45px; 
+            text-align: center; 
+        }
+        
+        .logo-box-fix { 
+            width: 80px !important; 
+            height: 80px !important; 
+            border-radius: 50%; 
+            border: 3px solid var(--primary-pink); 
+            background: #000000; 
+            overflow: hidden; 
+            margin-bottom: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        
+        .ch-logo { 
+            width: 100% !important; 
+            height: 100% !important; 
+            object-fit: cover !important; 
+            display: block; 
+        }
+        
+        .ch-title { 
+            font-size: clamp(30px, 8vw, 45px); 
+            color: var(--primary-pink); 
+            font-weight: bold; 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+        }
+        
+        .btn-home { 
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            text-decoration: none; 
+            color: var(--primary-pink); 
+            font-weight: bold; 
+            font-size: 13px; 
+            z-index: 10; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px;
+        }
+        
+        .theme-toggle-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: none; 
+            border: none; 
+            color: var(--primary-pink); 
+            font-size: 22px; 
+            cursor: pointer; 
+            z-index: 10; 
+        }
 
         /* Auth UI */
-        #authScreen { text-align: center; padding: 20px 0; }
-        .auth-wrapper { max-width: 320px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .auth-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); }
-        .auth-input:focus { border-color: var(--primary-pink); box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); }
-        .btn-main { background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); color: #fff; border: none; padding: 12px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; margin-top:15px;}
-        .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
-        .toggle-auth { color: var(--primary-pink); font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
-        .forgot-links { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 15px; margin-top: 5px;}
-        .forgot-links span { color: var(--text-muted); cursor: pointer; text-decoration: underline; }
+        #authScreen { 
+            text-align: center; 
+            padding: 20px 0; 
+        }
+        
+        .auth-wrapper { 
+            max-width: 320px; 
+            margin: 0 auto; 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 15px; 
+            border: 1px solid var(--border-color); 
+        }
+        
+        .auth-input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            font-size: 14px; 
+            outline: none; 
+            background: var(--input-bg); 
+            color: var(--text-main); 
+        }
+        
+        .auth-input:focus { 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 0 5px rgba(233, 30, 99, 0.3); 
+        }
+        
+        .btn-main { 
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink)); 
+            color: #ffffff; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            width: 100%; 
+            text-transform: uppercase; 
+            margin-top: 15px;
+        }
+        
+        .btn-main:hover { 
+            opacity: 0.9; 
+            transform: scale(1.02); 
+        }
+        
+        .toggle-auth { 
+            color: var(--primary-pink); 
+            font-size: 13px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            display: inline-block; 
+            text-decoration: underline; 
+        }
+        
+        .forgot-links { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 13px; 
+            margin-bottom: 15px; 
+            margin-top: 5px;
+        }
+        
+        .forgot-links span { 
+            color: var(--text-muted); 
+            cursor: pointer; 
+            text-decoration: underline; 
+        }
 
         /* Tabs */
-        .tabs { display: flex; background: var(--tab-bg); border-radius: 10px; margin-bottom: 20px; overflow: hidden; padding: 4px; flex-wrap: wrap; border: 1px solid var(--border-color); }
-        .tab { flex: 1; padding: 10px 5px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-radius: 8px; font-size: clamp(12px, 4vw, 16px); min-width: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.2;}
-        .tab.active { background: var(--primary-pink); color: #fff; }
+        .tabs { 
+            display: flex; 
+            background: var(--tab-bg); 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            overflow: hidden; 
+            padding: 4px; 
+            flex-wrap: wrap; 
+            border: 1px solid var(--border-color); 
+        }
+        
+        .tab { 
+            flex: 1; 
+            padding: 10px 5px; 
+            text-align: center; 
+            cursor: pointer; 
+            font-weight: bold; 
+            color: var(--text-muted); 
+            border-radius: 8px; 
+            font-size: clamp(12px, 4vw, 16px); 
+            min-width: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            line-height: 1.2;
+        }
+        
+        .tab.active { 
+            background: var(--primary-pink); 
+            color: #ffffff; 
+        }
 
-        /* Inputs */
-        label { font-weight: bold; color: var(--primary-pink); display: block; margin: 10px 0 5px 0; font-size: 13px; text-transform: uppercase;}
-        select, textarea, input[type="file"], input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); margin-bottom:10px;}
-        select:focus, textarea:focus, input:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);}
-        textarea { min-height: 80px; }
+        /* Inputs and Labels */
+        label { 
+            font-weight: bold; 
+            color: var(--primary-pink); 
+            display: block; 
+            margin: 10px 0 5px 0; 
+            font-size: 13px; 
+            text-transform: uppercase;
+        }
+        
+        select, 
+        textarea, 
+        input[type="file"], 
+        input[type="text"], 
+        input[type="password"], 
+        input[type="number"] { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            font-size: 14px; 
+            outline: none; 
+            background: var(--input-bg); 
+            color: var(--text-main); 
+            margin-bottom: 10px;
+        }
+        
+        select:focus, 
+        textarea:focus, 
+        input:focus { 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);
+        }
+        
+        textarea { 
+            min-height: 80px; 
+        }
 
         /* Story Height */
-        #sText { min-height: 350px; resize: vertical; line-height: 1.6; }
+        #sText { 
+            min-height: 350px; 
+            resize: vertical; 
+            line-height: 1.6; 
+        }
 
         /* Rich Text Editor */
-        .rte-toolbar { display: flex; gap: 5px; background: var(--panel-bg); padding: 8px; border-radius: 8px 8px 0 0; border: 1px solid var(--border-color); border-bottom: none; align-items: center; flex-wrap: wrap; }
-        .rte-toolbar button, .rte-toolbar .color-picker-wrap, .rte-toolbar .custom-font-btn { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 3px; position: relative; }
-        .rte-toolbar button:hover, .rte-toolbar .custom-font-btn:hover { border-color: var(--primary-pink); }
-        .rte-toolbar select, .rte-toolbar input[type="number"] { border: 1px solid var(--border-color); background: var(--input-bg); cursor: pointer; padding: 4px; border-radius: 4px; font-size: 12px; color: var(--text-main); outline: none; width: auto; max-width: 100px; margin-bottom:0;}
-        .color-picker-wrap input[type="color"] { width: 20px; height: 20px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: none; }
-        .rte-editor { background: var(--input-bg); min-height: 150px; padding: 10px; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; outline: none; color: var(--text-main); font-size: 14px; line-height: 1.5; overflow-y: auto; }
-        .rte-editor:empty:before { content: attr(placeholder); color: var(--text-muted); pointer-events: none; display: block; }
-        .custom-font-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .rte-toolbar { 
+            display: flex; 
+            gap: 5px; 
+            background: var(--panel-bg); 
+            padding: 8px; 
+            border-radius: 8px 8px 0 0; 
+            border: 1px solid var(--border-color); 
+            border-bottom: none; 
+            align-items: center; 
+            flex-wrap: wrap; 
+        }
+        
+        .rte-toolbar button, 
+        .rte-toolbar .color-picker-wrap, 
+        .rte-toolbar .custom-font-btn { 
+            border: 1px solid var(--border-color); 
+            background: var(--input-bg); 
+            cursor: pointer; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            gap: 3px; 
+            position: relative; 
+        }
+        
+        .rte-toolbar button:hover, 
+        .rte-toolbar .custom-font-btn:hover { 
+            border-color: var(--primary-pink); 
+        }
+        
+        .rte-toolbar select, 
+        .rte-toolbar input[type="number"] { 
+            border: 1px solid var(--border-color); 
+            background: var(--input-bg); 
+            cursor: pointer; 
+            padding: 4px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            color: var(--text-main); 
+            outline: none; 
+            width: auto; 
+            max-width: 100px; 
+            margin-bottom: 0;
+        }
+        
+        .color-picker-wrap input[type="color"] { 
+            width: 20px; 
+            height: 20px; 
+            padding: 0; 
+            border: none; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            background: none; 
+        }
+        
+        .rte-editor { 
+            background: var(--input-bg); 
+            min-height: 150px; 
+            padding: 10px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 0 0 8px 8px; 
+            outline: none; 
+            color: var(--text-main); 
+            font-size: 14px; 
+            line-height: 1.5; 
+            overflow-y: auto; 
+        }
+        
+        .rte-editor:empty:before { 
+            content: attr(placeholder); 
+            color: var(--text-muted); 
+            pointer-events: none; 
+            display: block; 
+        }
+        
+        .custom-font-input { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            opacity: 0; 
+            cursor: pointer; 
+        }
 
         /* Admin Layout & Cards */
-        .admin-layout { display: grid; grid-template-columns: 220px 1fr; gap: 15px; margin-top: 15px; }
-        @media (max-width: 768px) { .admin-layout { grid-template-columns: 1fr; } }
-        .sidebar { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .folder-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 6px; font-weight: bold; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 13px;}
-        .folder-item:hover, .folder-item.active { background: var(--primary-pink); color: #fff; border-color: var(--primary-pink); }
-        .folder-item i { margin-right: 8px; }
-        .folder-item.hidden-proj { opacity: 0.7; border-style: dashed; }
-
-        .list-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative;}
-        .card-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center;}
+        .admin-layout { 
+            display: grid; 
+            grid-template-columns: 220px 1fr; 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
         
-        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; }
-        .btn-del { background: rgba(244, 67, 54, 0.1); color: #ff5252; border: 1px solid rgba(244, 67, 54, 0.3); }
-        .btn-download { background: rgba(76, 175, 80, 0.1); color: #4caf50; border: 1px solid rgba(76, 175, 80, 0.3); }
-        .btn-view { background: rgba(33, 150, 243, 0.1); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.3); }
-        .btn-remark { background: rgba(245, 127, 23, 0.1); color: #f57f17; border: 1px solid rgba(245, 127, 23, 0.3); }
-
-        .admin-box { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-pink); }
-        .admin-upload-wrapper { background: var(--input-bg); border: 1px dashed var(--primary-pink); padding: 10px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .admin-upload-wrapper input[type="file"] { flex: 1; border: 1px solid var(--border-color); padding: 6px; margin: 0; min-width: 180px; font-size: 12px;}
+        @media (max-width: 768px) { 
+            .admin-layout { 
+                grid-template-columns: 1fr; 
+            } 
+        }
         
-        .split-inbox { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        @media (max-width: 600px) { .split-inbox { grid-template-columns: 1fr; } }
-        .inbox-column { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; }
-        .inbox-column h4 { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); font-size: 14px; }
-        .col-raw h4 { color: var(--primary-pink); }
-        .col-admin h4 { color: #4caf50; }
+        .sidebar { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px solid var(--border-color); 
+        }
+        
+        .folder-item { 
+            padding: 10px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-bottom: 6px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: var(--input-bg); 
+            border: 1px solid var(--border-color); 
+            font-size: 13px;
+        }
+        
+        .folder-item:hover, 
+        .folder-item.active { 
+            background: var(--primary-pink); 
+            color: #ffffff; 
+            border-color: var(--primary-pink); 
+        }
+        
+        .folder-item i { 
+            margin-right: 8px; 
+        }
+        
+        .folder-item.hidden-proj { 
+            opacity: 0.7; 
+            border-style: dashed; 
+        }
 
-        /* Status Badges */
-        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 5px; background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .status-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; border-color: rgba(245, 127, 23, 0.3); }
-        .status-approved { background: rgba(76, 175, 80, 0.1); color: #4caf50; border-color: rgba(76, 175, 80, 0.3); }
-        .status-rejected { background: rgba(244, 67, 54, 0.1); color: #ff5252; border-color: rgba(244, 67, 54, 0.3); }
-        .cloud-badge { background: rgba(33, 150, 243, 0.1); color: #2196f3; font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: bold; border: 1px solid rgba(33, 150, 243, 0.3); display: inline-flex; align-items: center; gap: 4px;}
+        .list-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+            position: relative;
+        }
+        
+        .card-actions { 
+            display: flex; 
+            gap: 8px; 
+            margin-top: 10px; 
+            flex-wrap: wrap; 
+            align-items: center;
+        }
+        
+        .btn-sm { 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 11px; 
+            font-weight: bold; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+        }
+        
+        .btn-del { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: #ff5252; 
+            border: 1px solid rgba(244, 67, 54, 0.3); 
+        }
+        
+        .btn-download { 
+            background: rgba(76, 175, 80, 0.1); 
+            color: #4caf50; 
+            border: 1px solid rgba(76, 175, 80, 0.3); 
+        }
+        
+        .btn-view { 
+            background: rgba(33, 150, 243, 0.1); 
+            color: #2196f3; 
+            border: 1px solid rgba(33, 150, 243, 0.3); 
+        }
+        
+        .btn-remark { 
+            background: rgba(245, 127, 23, 0.1); 
+            color: #f57f17; 
+            border: 1px solid rgba(245, 127, 23, 0.3); 
+        }
 
         /* Batch Options */
-        .batch-header { display:flex; justify-content:space-between; align-items:center; background:var(--input-bg); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; }
+        .batch-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--input-bg); 
+            padding: 10px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 15px; 
+        }
+
+        /* Misc */
+        .admin-box { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid var(--primary-pink); 
+        }
+        
+        .split-inbox { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-top: 15px; 
+        }
+        
+        @media (max-width: 600px) { 
+            .split-inbox { 
+                grid-template-columns: 1fr; 
+            } 
+        }
+        
+        .inbox-column { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            padding: 10px; 
+        }
+        
+        .inbox-column h4 { 
+            text-align: center; 
+            margin-bottom: 10px; 
+            padding-bottom: 8px; 
+            border-bottom: 1px dashed var(--border-color); 
+            font-size: 14px; 
+        }
+        
+        .col-raw h4 { 
+            color: var(--primary-pink); 
+        }
+        
+        .col-admin h4 { 
+            color: #4caf50; 
+        }
+
+        /* Status Badges */
+        .status-badge { 
+            display: inline-block; 
+            padding: 3px 8px; 
+            border-radius: 12px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            background: var(--input-bg); 
+            color: var(--text-muted); 
+            border: 1px solid var(--border-color); 
+        }
+        
+        .status-pending { 
+            background: rgba(245, 127, 23, 0.1); 
+            color: #f57f17; 
+            border-color: rgba(245, 127, 23, 0.3); 
+        }
+        
+        .status-approved { 
+            background: rgba(76, 175, 80, 0.1); 
+            color: #4caf50; 
+            border-color: rgba(76, 175, 80, 0.3); 
+        }
+        
+        .status-rejected { 
+            background: rgba(244, 67, 54, 0.1); 
+            color: #ff5252; 
+            border-color: rgba(244, 67, 54, 0.3); 
+        }
+        
+        .cloud-badge { 
+            background: rgba(33, 150, 243, 0.1); 
+            color: #2196f3; 
+            font-size: 11px; 
+            padding: 4px 8px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            border: 1px solid rgba(33, 150, 243, 0.3); 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px;
+        }
 
         /* Select All Checkbox Styles */
-        .select-check { transform: scale(1.3); margin-right: 8px; cursor: pointer; accent-color: var(--primary-pink); }
+        .select-check { 
+            transform: scale(1.3); 
+            margin-right: 8px; 
+            cursor: pointer; 
+            accent-color: var(--primary-pink); 
+        }
         
         /* Modals & Previews */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
-        .modal-box { background: var(--card-bg); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 2px solid var(--primary-pink); color: var(--text-main); }
-        #previewModal .modal-box { max-width: 700px; width: 95%; padding: 15px; }
-        .preview-container { background: var(--panel-bg); border-radius: 10px; padding: 10px; text-align: center; border: 1px solid var(--border-color); overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 150px; }
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--modal-overlay); 
+            z-index: 999; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            backdrop-filter: blur(5px); 
+        }
         
-        .admin-trigger { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: var(--text-main); font-size: 13px; padding: 12px; border-radius: 10px; margin-top: 30px; cursor: pointer; width: 100%; text-align: center; font-weight: bold; display: flex; justify-content:center; align-items:center; gap:8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
-        .admin-trigger:hover { background: rgba(255,255,255,0.2); border-color: var(--primary-pink); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); transform: translateY(-2px); }
-
-        audio { width: 100%; height: 35px; margin-top: 10px; filter: invert(0.9) hue-rotate(180deg); }
-        body.light-mode audio { filter: none; }
-        .media-preview { max-width: 100%; max-height: 100px; border-radius: 6px; margin-top: 5px; border: 1px solid var(--border-color); object-fit: contain;}
-
-        #adminDashboard, #mainPortal { display: none; }
-        .user-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); flex-wrap: wrap; gap:10px;}
+        .modal-box { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 15px; 
+            width: 100%; 
+            max-width: 320px; 
+            text-align: center; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+            border: 2px solid var(--primary-pink); 
+            color: var(--text-main); 
+        }
         
-        .mentor-list-item { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 8px; border-radius: 6px; margin-top: 5px; font-size: 12px; border: 1px solid var(--border-color); color: var(--text-main);}
+        #previewModal .modal-box { 
+            max-width: 700px; 
+            width: 95%; 
+            padding: 15px; 
+        }
         
-        .auto-delete-wrapper { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--glass-border); }
-        .auto-delete-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .preview-container { 
+            background: var(--panel-bg); 
+            border-radius: 10px; 
+            padding: 10px; 
+            text-align: center; 
+            border: 1px solid var(--border-color); 
+            overflow: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 150px; 
+        }
+        
+        .admin-trigger { 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.25); 
+            color: var(--text-main); 
+            font-size: 13px; 
+            padding: 12px; 
+            border-radius: 10px; 
+            margin-top: 30px; 
+            cursor: pointer; 
+            width: 100%; 
+            text-align: center; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .admin-trigger:hover { 
+            background: rgba(255,255,255,0.2); 
+            border-color: var(--primary-pink); 
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2); 
+            transform: translateY(-2px); 
+        }
 
-        @keyframes pulseRec { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } }
-        .recording-pulse { animation: pulseRec 1.5s infinite; background: rgba(244,67,54,0.1) !important; color: #f44336 !important; border-color: #f44336 !important; }
+        audio { 
+            width: 100%; 
+            height: 35px; 
+            margin-top: 10px; 
+            filter: invert(0.9) hue-rotate(180deg); 
+        }
+        
+        body.light-mode audio { 
+            filter: none; 
+        }
+        
+        .media-preview { 
+            max-width: 100%; 
+            max-height: 100px; 
+            border-radius: 6px; 
+            margin-top: 5px; 
+            border: 1px solid var(--border-color); 
+            object-fit: contain;
+        }
+
+        #adminDashboard, 
+        #mainPortal { 
+            display: none; 
+        }
+        
+        .user-nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--card-bg); 
+            padding: 10px 15px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color); 
+            flex-wrap: wrap; 
+            gap: 10px;
+        }
+        
+        .mentor-list-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--input-bg); 
+            padding: 8px; 
+            border-radius: 6px; 
+            margin-top: 5px; 
+            font-size: 12px; 
+            border: 1px solid var(--border-color); 
+            color: var(--text-main);
+        }
+        
+        .auto-delete-wrapper { 
+            background: rgba(255,255,255,0.05); 
+            padding: 12px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            border: 1px solid var(--glass-border); 
+        }
+        
+        .auto-delete-inner { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+
+        @keyframes pulseRec { 
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); } 
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); } 
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); } 
+        }
+        
+        .recording-pulse { 
+            animation: pulseRec 1.5s infinite; 
+            background: rgba(244,67,54,0.1) !important; 
+            color: #f44336 !important; 
+            border-color: #f44336 !important; 
+        }
 
         /* PC Enhancements */
         @media (min-width: 768px) {
-            .main-container { padding: 40px; max-width: 1000px; }
-            .btn-home { top: 25px; left: 25px; font-size: 15px; }
-            .ch-title { font-size: 55px; }
-            .header { margin-top: 20px;}
-            .input-label { font-size: 15px; margin: 15px 0 8px 0; }
-            input[type="text"], input[type="password"], select, textarea { padding: 15px; font-size: 16px; margin-bottom: 20px; border-radius: 10px;}
-            .u-tab { padding: 15px 10px; font-size: 18px; } 
-            .btn-action { padding: 16px; font-size: 16px; border-radius: 10px;}
-            .info-card { padding: 20px; font-size: 15px; line-height: 1.6; border-radius: 12px;}
-            .list-card { padding: 25px; border-radius: 15px;}
-            .iphone-note { font-size: 14px; max-width: 450px; padding: 15px; }
+            .main-container { 
+                padding: 40px; 
+                max-width: 1000px; 
+            }
+            .btn-home { 
+                top: 25px; 
+                left: 25px; 
+                font-size: 15px; 
+            }
+            .ch-title { 
+                font-size: 55px; 
+            }
+            .header { 
+                margin-top: 20px;
+            }
+            .input-label { 
+                font-size: 15px; 
+                margin: 15px 0 8px 0; 
+            }
+            input[type="text"], 
+            input[type="password"], 
+            select, 
+            textarea { 
+                padding: 15px; 
+                font-size: 16px; 
+                margin-bottom: 20px; 
+                border-radius: 10px;
+            }
+            .u-tab { 
+                padding: 15px 10px; 
+                font-size: 18px; 
+            } 
+            .btn-action { 
+                padding: 16px; 
+                font-size: 16px; 
+                border-radius: 10px;
+            }
+            .info-card { 
+                padding: 20px; 
+                font-size: 15px; 
+                line-height: 1.6; 
+                border-radius: 12px;
+            }
+            .list-card { 
+                padding: 25px; 
+                border-radius: 15px;
+            }
+            .iphone-note { 
+                font-size: 14px; 
+                max-width: 450px; 
+                padding: 15px; 
+            }
         }
         
-        .iphone-note { font-size: 12px; color: var(--primary-pink); background: rgba(233, 30, 99, 0.1); border: 1px dashed var(--primary-pink); padding: 12px; border-radius: 8px; margin: 10px auto 20px auto; text-align: center; font-weight: bold; width: 100%; max-width: 350px; }
+        .iphone-note { 
+            font-size: 12px; 
+            color: var(--primary-pink); 
+            background: rgba(233, 30, 99, 0.1); 
+            border: 1px dashed var(--primary-pink); 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 10px auto 20px auto; 
+            text-align: center; 
+            font-weight: bold; 
+            width: 100%; 
+            max-width: 350px; 
+        }
     </style>
 </head>
 <body class="light-mode">
 
 <div class="container main-container">
-    <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> হোমপেজ</a>
-    <button class="theme-toggle-btn" onclick="toggleTheme()"><i id="themeIcon" class="fas fa-sun"></i></button>
+    <a href="index.html" class="btn-home">
+        <i class="fas fa-arrow-left"></i> হোমপেজ
+    </a>
+    
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <i id="themeIcon" class="fas fa-sun"></i>
+    </button>
     
     <div class="header">
-        <div class="logo-box-fix"><img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Logo"></div>
+        <div class="logo-box-fix">
+            <img src="https://i.ibb.co/hJdb514B/Logo.png" class="ch-logo" alt="Logo">
+        </div>
         <h1 class="ch-title">প্রেম কুটির</h1>
-        <div id="cloudSyncBadge" class="cloud-badge" style="display: none;"><i class="fas fa-cloud"></i> আনলিমিটেড ক্লাউড সিঙ্ক চালু</div>
+        <div id="cloudSyncBadge" class="cloud-badge" style="display: none;">
+            <i class="fas fa-cloud"></i> আনলিমিটেড ক্লাউড সিঙ্ক চালু
+        </div>
     </div>
 
     <!-- Auth -->
     <div id="authScreen">
         <div class="auth-wrapper" id="loginBox">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইউজার লগইন</h3>
+            
             <input type="email" id="loginEmail" class="auth-input" placeholder="আপনার ইমেইল" style="margin-bottom:10px;">
+            
             <div style="position:relative; margin-bottom:5px;">
                 <input type="password" id="loginPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom: 0; padding-right: 35px;">
                 <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('loginPass', this)"></i>
             </div>
+            
             <div class="forgot-links">
                 <span onclick="toggleAuthView('forgotPass')">Forgot Password?</span>
                 <span onclick="toggleAuthView('forgotEmail')">Forgot Email?</span>
             </div>
+            
             <button class="btn-main" onclick="loginUser()">লগইন</button>
+            
             <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 13px; align-items:center;">
                 <span class="toggle-auth" style="margin-top: 0;" onclick="toggleAuthView('register')">নতুন অ্যাকাউন্ট খুলুন</span>
                 <span class="toggle-auth" style="margin-top: 0; font-weight: 900;" onclick="toggleAuthView('guest')">Guest Login</span>
@@ -225,12 +906,15 @@
 
         <div class="auth-wrapper" id="registerBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">রেজিস্ট্রেশন</h3>
+            
             <input type="text" id="regName" class="auth-input" placeholder="সম্পূর্ণ নাম" style="margin-bottom:10px;">
             <input type="email" id="regEmail" class="auth-input" placeholder="ইমেইল" style="margin-bottom:10px;">
+            
             <div style="position:relative; margin-bottom:15px;">
                 <input type="password" id="regPass" class="auth-input" placeholder="পাসওয়ার্ড" style="margin-bottom:0; padding-right: 35px;">
                 <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('regPass', this)"></i>
             </div>
+            
             <button class="btn-main" onclick="registerUser()">অ্যাকাউন্ট খুলুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">লগইন করুন</span>
         </div>
@@ -238,7 +922,9 @@
         <div class="auth-wrapper" id="guestBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">Guest Login</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">কোনো ইমেইল বা পাসওয়ার্ডের প্রয়োজন নেই। শুধু নিজের নাম লিখেই কাজ জমা দিতে পারবেন।</p>
+            
             <input type="text" id="guestName" class="auth-input" placeholder="আপনার সম্পূর্ণ নাম লিখুন" style="margin-bottom:15px;">
+            
             <button class="btn-main" onclick="loginGuest()">প্রবেশ করুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
@@ -246,7 +932,9 @@
         <div class="auth-wrapper" id="forgotPassBox" style="display:none;">
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">পাসওয়ার্ড রিসেট</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">আপনার ইমেইল অ্যাড্রেস দিন। আমরা পাসওয়ার্ড রিসেট করার লিঙ্ক পাঠাবো।</p>
+            
             <input type="email" id="resetEmail" class="auth-input" placeholder="আপনার ইমেইল" style="margin-bottom:15px;">
+            
             <button class="btn-main" onclick="resetPassword()">রিসেট লিঙ্ক পাঠান</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')">ফিরে যান (লগইন)</span>
         </div>
@@ -255,21 +943,30 @@
             <h3 style="color:var(--primary-pink); margin-bottom:15px;">ইমেইল ভুলে গেছেন?</h3>
             <p style="font-size: 13px; color: var(--text-main); margin-bottom: 15px; line-height: 1.5;">নিরাপত্তার কারণে হারানো ইমেইল সরাসরি রিকভার করার উপায় নেই।</p>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">অনুগ্রহ করে একটি <b>নতুন অ্যাকাউন্ট</b> তৈরি করুন অথবা মেন্টরের সাথে যোগাযোগ করুন।</p>
+            
             <button class="btn-main" onclick="toggleAuthView('register')" style="background: linear-gradient(45deg, #4caf50, #81c784);">নতুন অ্যাকাউন্ট খুলুন</button>
             <span class="toggle-auth" onclick="toggleAuthView('login')" style="margin-top: 15px;">ফিরে যান (লগইন)</span>
         </div>
         
         <p id="authErrorMsg" style="color:#ff5252; font-size:12px; margin-top:10px; font-weight:bold;"></p>
-        <button onclick="document.getElementById('adminAuthModal').style.display='flex'" class="admin-trigger">মেন্টর / অ্যাডমিন লগইন</button>
+        
+        <button onclick="document.getElementById('adminAuthModal').style.display='flex'" class="admin-trigger">
+            <i class="fas fa-user-shield" style="margin-right: 5px;"></i> মেন্টর / অ্যাডমিন লগইন
+        </button>
     </div>
 
     <!-- Main Portal -->
     <div id="mainPortal">
         <div id="userPortal">
             <div class="user-nav">
-                <div style="font-weight: bold; color: var(--primary-pink);"><i class="fas fa-user"></i> <span id="uNameDisplay"></span></div>
-                <button onclick="logoutUser()" style="background:none; border:none; color:#ff5252; cursor:pointer; font-weight:bold; padding:5px;"><i class="fas fa-sign-out-alt"></i> লগ আউট</button>
+                <div style="font-weight: bold; color: var(--primary-pink);">
+                    <i class="fas fa-user"></i> <span id="uNameDisplay"></span>
+                </div>
+                <button onclick="logoutUser()" style="background:none; border:none; color:#ff5252; cursor:pointer; font-weight:bold; padding:5px;">
+                    <i class="fas fa-sign-out-alt"></i> লগ আউট
+                </button>
             </div>
+            
             <div class="tabs">
                 <div class="tab active" onclick="switchUserTab('work')">কাজ জমা দিন</div>
                 <div class="tab" onclick="switchUserTab('story')">গল্প পাঠান</div>
@@ -278,20 +975,23 @@
 
             <div id="workUpload">
                 <label>প্রজেক্ট:</label>
-                <select id="uProject"><option value="">লোড হচ্ছে...</option></select>
+                <select id="uProject">
+                    <option value="">লোড হচ্ছে...</option>
+                </select>
+                
                 <label>ধরণ:</label>
                 <select id="uCategory" onchange="updateFileAccept('uCategory', 'uFile')">
-                    <option value="ভয়েস">🎙️ ভয়েস</option>
-                    <option value="থাম্বনেল">🖼️ থাম্বনেল</option>
-                    <option value="অডিও এডিট">🎧 অডিও এডিট</option>
-                    <option value="স্ক্রিপ্টিং">✍️ স্ক্রিপ্টিং</option>
+                    <option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>
                 </select>
+                
                 <label>ফাইল:</label>
                 <button type="button" class="btn-action" style="background: rgba(255,255,255,0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
+                
                 <div class="iphone-note">iPhone ইউজাররা 'Files' অ্যাপ থেকে সিলেক্ট করুন।</div>
+                
                 <button id="btnUpload" class="btn-main" onclick="submitWork()">জমা দিন</button>
                 <div id="statusMsg" style="text-align:center; margin-top:10px; font-weight:bold; font-size:13px;"></div>
             </div>
@@ -336,6 +1036,7 @@
                             <option value="custom">নিজের মতো (Custom)</option>
                         </select>
                     </div>
+                    
                     <div id="customAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-pink); align-items: center; justify-content:center; gap: 8px; flex-wrap: wrap; margin-top:10px;">
                         <input type="number" id="customDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
                         <select id="customDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
@@ -369,10 +1070,12 @@
                 <div style="border-top:1px dashed var(--border-color); padding-top:15px;">
                     <p style="font-weight: bold; color: var(--primary-pink); margin-bottom: 10px; font-size:13px;"><i class="fas fa-users-cog"></i> মেন্টর ম্যানেজমেন্ট</p>
                     <input type="text" id="newMentorName" placeholder="মেন্টরের নাম" style="font-size:13px; padding:10px; margin-bottom:8px;">
+                    
                     <div style="position:relative; margin-bottom:10px;">
                         <input type="password" id="newMentorPass" placeholder="পাসওয়ার্ড দিন" style="width:100%; padding:10px; font-size:13px; margin:0; padding-right:35px; border:1px solid var(--border-color); border-radius:10px; background:var(--input-bg); color:var(--text-main); outline:none;">
                         <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('newMentorPass', this)"></i>
                     </div>
+                    
                     <button onclick="addMentor()" class="btn-main" style="padding: 10px; font-size: 13px;">মেন্টর যোগ করুন</button>
                     <div id="mentorListUI" style="margin-top:15px;"></div>
                 </div>
@@ -395,6 +1098,7 @@
                 <div class="sidebar" id="projectSidebar">
                     <p style="font-weight: bold; margin-bottom: 12px; color: var(--primary-pink); text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; font-size:14px;"><i class="fas fa-folders"></i> প্রজেক্টসমূহ</p>
                     <div id="adminProjectListUI">লোড হচ্ছে...</div>
+                    
                     <div class="folder-item" style="margin-top: 20px; border-style: dashed; border-color: var(--primary-pink);" onclick="setSpecialView('record')">
                         <span><i class="fas fa-clipboard-list"></i> কাস্টিং ও রেকর্ড</span>
                     </div>
@@ -421,6 +1125,7 @@
                                     <option value="custom">নিজের মতো (Custom)</option>
                                 </select>
                             </div>
+                            
                             <div id="customAdminAutoDeleteBox" style="display:none; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary-pink); align-items: center; justify-content:center; gap: 8px; flex-wrap: wrap; margin-top:10px;">
                                 <input type="number" id="customAdminDelNum" min="1" placeholder="5" style="width: 70px; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
                                 <select id="customAdminDelUnit" style="width: auto; padding: 6px; font-size: 11px; margin: 0; background:rgba(255,255,255,0.9); color:#000;">
@@ -442,7 +1147,9 @@
                             <div class="inbox-column col-raw">
                                 <h4 style="color:var(--primary-pink); margin-bottom:10px;"><i class="fas fa-inbox"></i> ইউজারদের ফাইল</h4>
                                 <div class="batch-header">
-                                    <label style="font-size:11px; cursor:pointer; color:var(--text-muted); margin:0; display:flex; align-items:center; gap:5px;"><input type="checkbox" onchange="toggleSelectAll('raw', this.checked)"> সব সিলেক্ট</label>
+                                    <label style="font-size:11px; cursor:pointer; color:var(--text-muted); margin:0; display:flex; align-items:center; gap:5px;">
+                                        <input type="checkbox" onchange="toggleSelectAll('raw', this.checked)"> সব সিলেক্ট
+                                    </label>
                                     <div style="display:flex; gap:5px;">
                                         <button class="btn-sm btn-download" onclick="downloadSelectedZIP('raw')">ZIP</button>
                                         <button class="btn-sm btn-del" onclick="batchSoftDelete('raw', 'tasks')">ডিলিট</button>
@@ -450,10 +1157,13 @@
                                 </div>
                                 <div id="rawInboxUI"></div>
                             </div>
+                            
                             <div class="inbox-column col-admin">
                                 <h4 style="color:#4caf50; margin-bottom:10px;"><i class="fas fa-check-circle"></i> ফাইনাল ফাইল</h4>
                                 <div class="batch-header">
-                                    <label style="font-size:11px; cursor:pointer; color:var(--text-muted); margin:0; display:flex; align-items:center; gap:5px;"><input type="checkbox" onchange="toggleSelectAll('admin', this.checked)"> সব সিলেক্ট</label>
+                                    <label style="font-size:11px; cursor:pointer; color:var(--text-muted); margin:0; display:flex; align-items:center; gap:5px;">
+                                        <input type="checkbox" onchange="toggleSelectAll('admin', this.checked)"> সব সিলেক্ট
+                                    </label>
                                     <div style="display:flex; gap:5px;">
                                         <button class="btn-sm btn-download" onclick="downloadSelectedZIP('admin')">ZIP</button>
                                         <button class="btn-sm btn-del" onclick="batchSoftDelete('admin', 'tasks')">ডিলিট</button>
@@ -472,7 +1182,9 @@
                                 <span id="adminTotalStories" style="background:var(--primary-pink); color:#fff; padding:2px 8px; border-radius:10px; font-size:12px;"></span>
                             </div>
                             <div class="batch-header">
-                                <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);"><input type="checkbox" onchange="toggleSelectAll('story', this.checked)"> সব সিলেক্ট করুন</label>
+                                <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
+                                    <input type="checkbox" onchange="toggleSelectAll('story', this.checked)"> সব সিলেক্ট করুন
+                                </label>
                                 <button class="btn-sm btn-del" onclick="batchSoftDelete('story', 'channel_stories')" style="padding:6px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
                             </div>
                             <div id="storyListUI"></div>
@@ -483,28 +1195,48 @@
                     <div id="recordView" style="display:none; padding: 15px; border-radius: 12px; background: var(--card-bg); border:1px solid var(--border-color);">
                         <h3 style="color:var(--primary-pink); margin-bottom:10px;">কাস্টিং ডায়েরি</h3>
                         <input type="text" id="noteTitle" placeholder="শিরোনাম">
+                        
                         <div class="rte-toolbar">
-                            <select onchange="applyCommand('fontName', this.value)"><option value="Kalpurush">Kalpurush</option><option value="Arial">Arial</option></select>
+                            <select onchange="applyCommand('fontName', this.value)">
+                                <option value="Kalpurush">Kalpurush</option>
+                                <option value="Arial">Arial</option>
+                            </select>
+                            
                             <div style="display:flex; align-items:center; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; background: var(--input-bg);">
                                 <select onchange="applyCommand('fontSize', this.value)" style="border:none; border-right:1px solid var(--border-color); border-radius:0;">
-                                    <option value="3">সাধারণ</option><option value="1">ছোট</option><option value="5">বড়</option>
+                                    <option value="3">সাধারণ</option>
+                                    <option value="1">ছোট</option>
+                                    <option value="5">বড়</option>
                                 </select>
                                 <input type="number" id="manualFontSize" placeholder="Size" style="width: 50px; border: none; padding: 4px; font-size: 12px; border-radius: 0;" onchange="setManualFontSize(this.value)">
                             </div>
+                            
                             <button type="button" title="Bold" onclick="applyCommand('bold')"><i class="fas fa-bold"></i></button>
                             <button type="button" title="Italic" onclick="applyCommand('italic')"><i class="fas fa-italic"></i></button>
-                            <div class="color-picker-wrap" title="Text Color"><i class="fas fa-palette"></i> <input type="color" id="fColor" oninput="applyColor('foreColor', this.value)"></div>
-                            <div class="color-picker-wrap" title="Highlight Color"><i class="fas fa-highlighter"></i> <input type="color" id="hColor" oninput="applyColor('hiliteColor', this.value)"></div>
+                            
+                            <div class="color-picker-wrap" title="Text Color">
+                                <i class="fas fa-palette"></i> <input type="color" id="fColor" oninput="applyColor('foreColor', this.value)">
+                            </div>
+                            
+                            <div class="color-picker-wrap" title="Highlight Color">
+                                <i class="fas fa-highlighter"></i> <input type="color" id="hColor" oninput="applyColor('hiliteColor', this.value)">
+                            </div>
                         </div>
+                        
                         <div id="noteContent" contenteditable="true" class="rte-editor" placeholder="বিস্তারিত লিখুন..."></div>
+                        
                         <div style="display:flex; gap:8px; margin-top: 10px;">
                             <button id="saveNoteBtn" class="btn-main" onclick="saveNote()" style="color:#fff;">সেভ করুন</button>
                             <button id="cancelEditBtn" style="display:none; width: 100%; padding:10px; border-radius:10px; font-weight:bold; background:var(--input-bg); color:var(--text-main); border:1px solid var(--border-color);" onclick="cancelEdit()">বাতিল</button>
                         </div>
+                        
                         <div class="batch-header" style="margin-top:20px;">
-                            <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);"><input type="checkbox" onchange="toggleSelectAll('note', this.checked)"> সব সিলেক্ট করুন</label>
+                            <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
+                                <input type="checkbox" onchange="toggleSelectAll('note', this.checked)"> সব সিলেক্ট করুন
+                            </label>
                             <button class="btn-sm btn-del" onclick="batchSoftDelete('note', 'channel_notes')" style="padding:6px 15px;"><i class="fas fa-trash"></i> ডিলিট করুন</button>
                         </div>
+                        
                         <div id="notesListUI"></div>
                     </div>
 
@@ -512,7 +1244,9 @@
                     <div id="trashView" style="display:none;">
                         <h3 style="margin-bottom:12px; color:#ff5252; font-size: 18px;"><i class="fas fa-trash-alt"></i> রিসাইকেল বিন</h3>
                         <div class="batch-header">
-                            <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);"><input type="checkbox" onchange="toggleSelectAll('trash', this.checked)"> সব সিলেক্ট</label>
+                            <label style="font-size:12px; cursor:pointer; margin:0; display:flex; align-items:center; gap:5px; color:var(--text-muted);">
+                                <input type="checkbox" onchange="toggleSelectAll('trash', this.checked)"> সব সিলেক্ট
+                            </label>
                             <div style="display:flex; gap:8px;">
                                 <button class="btn-main" onclick="batchTrashAction('restore')" style="width:auto; padding:5px 15px;"><i class="fas fa-undo"></i> রিস্টোর</button>
                                 <button class="btn-del" onclick="batchTrashAction('delete')" style="padding:5px 15px;"><i class="fas fa-trash-alt"></i> মুছুন</button>
@@ -530,10 +1264,12 @@
 <div id="adminAuthModal" class="modal-overlay">
     <div class="modal-box">
         <h3 style="color:var(--primary-pink); margin-bottom:15px; font-size:20px;">মেন্টর লগইন</h3>
+        
         <div style="position:relative; margin-top:15px; margin-bottom:15px;">
             <input type="password" id="modalAdminPass" class="auth-input" placeholder="মেন্টর পাসওয়ার্ড দিন" style="text-align:center; margin-bottom:0; padding-right:35px;">
             <i class="fas fa-eye eye-icon" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:var(--primary-pink);" onclick="togglePass('modalAdminPass', this)"></i>
         </div>
+        
         <button class="btn-main" onclick="checkAdminPass()">প্রবেশ</button>
         <button onclick="document.getElementById('adminAuthModal').style.display='none'" style="background:none; border:none; margin-top:15px; color:var(--text-muted); cursor:pointer; font-weight:bold;">বাতিল</button>
     </div>
@@ -545,7 +1281,9 @@
             <h3 id="previewTitle" style="color:var(--primary-pink); font-size:15px; word-break:break-all;">প্রিভিউ</h3>
             <button onclick="closePreview()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-muted);">&times;</button>
         </div>
-        <div class="preview-container"><div id="previewFrame"></div></div>
+        <div class="preview-container">
+            <div id="previewFrame"></div>
+        </div>
         <div style="margin-top:15px;">
             <a id="previewDownloadBtn" href="#" download target="_blank" class="btn-main" style="text-decoration:none; display:inline-block; padding:10px 20px; font-size:13px; color:#fff;"><i class="fas fa-download"></i> ডাউনলোড করুন</a>
         </div>
@@ -558,9 +1296,15 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 <script>
-    const firebaseConfig = { apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", projectId: "prothomkotha-2002" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyCjrGdZMocegvJBIXKI5UKAfzFK7k3-iKI", 
+        projectId: "prothomkotha-2002" 
+    };
     const appId = "golposolpo-premium";
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
     const db = firebase.firestore();
     const auth = firebase.auth();
     const dbRef = db.collection('artifacts').doc(appId).collection('public').doc('data');
@@ -587,7 +1331,10 @@
 
     // Mobile Fallback file inputs for Admin Voice
     let adminVoiceInput = document.createElement('input');
-    adminVoiceInput.type = 'file'; adminVoiceInput.accept = 'audio/*'; adminVoiceInput.setAttribute('capture', 'microphone'); adminVoiceInput.style.display = 'none';
+    adminVoiceInput.type = 'file'; 
+    adminVoiceInput.accept = 'audio/*'; 
+    adminVoiceInput.setAttribute('capture', 'microphone'); 
+    adminVoiceInput.style.display = 'none';
     document.body.appendChild(adminVoiceInput);
 
     let activeRecorder = null;
@@ -599,18 +1346,29 @@
         const file = e.target.files[0];
         if(!file || !recordDocId || !recordCol) return;
         const upMsg = document.getElementById(`audioUploading_${recordDocId}`);
-        if(upMsg) { upMsg.style.display = 'inline-block'; upMsg.innerText = "⏳ আপলোড হচ্ছে..."; }
+        if(upMsg) { 
+            upMsg.style.display = 'inline-block'; 
+            upMsg.innerText = "⏳ আপলোড হচ্ছে..."; 
+        }
         
-        const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
+        const fd = new FormData(); 
+        fd.append('file', file); 
+        fd.append('upload_preset', UPLOAD_PRESET);
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
             if(data.secure_url) {
                 await dbRef.collection(recordCol).doc(recordDocId).update({ adminVoiceRemark: data.secure_url });
                 if(upMsg) upMsg.innerText = "✅ সম্পন্ন!";
-            } else { if(upMsg) upMsg.innerText = "❌ ত্রুটি!"; }
-        } catch(err) { if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; }
-        e.target.value = ""; recordDocId = null; recordCol = null;
+            } else { 
+                if(upMsg) upMsg.innerText = "❌ ত্রুটি!"; 
+            }
+        } catch(err) { 
+            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
+        }
+        e.target.value = ""; 
+        recordDocId = null; 
+        recordCol = null;
         setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
     };
 
@@ -625,13 +1383,20 @@
         const sel = window.getSelection();
         if(sel.rangeCount > 0) savedRange = sel.getRangeAt(0);
     });
+
     function restoreSelection() {
-        if(savedRange) { const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange); }
+        if(savedRange) { 
+            const sel = window.getSelection(); 
+            sel.removeAllRanges(); 
+            sel.addRange(savedRange); 
+        }
     }
+
     function applyCommand(cmd, val=null) { 
         restoreSelection(); 
         document.execCommand(cmd, false, val); 
     }
+
     function applyColor(cmd, val) { 
         restoreSelection(); 
         document.execCommand(cmd, false, val); 
@@ -645,19 +1410,31 @@
     }
 
     window.onload = () => {
-        if(localStorage.getItem('prem_theme') === 'light') document.body.classList.add('light-mode');
+        if(localStorage.getItem('prem_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
+        }
+        
         initAutoDeleteUI();
         
         dbRef.collection('settings').doc('mentors_prem').onSnapshot(doc => {
-            if(doc.exists) mentorRoles = doc.data().roles || mentorRoles;
-            else dbRef.collection('settings').doc('mentors_prem').set({ roles: mentorRoles });
+            if(doc.exists) {
+                mentorRoles = doc.data().roles || mentorRoles;
+            } else {
+                dbRef.collection('settings').doc('mentors_prem').set({ roles: mentorRoles });
+            }
             if(isMentor && isMaster) renderMentorList();
         });
 
         dbRef.collection('settings').doc('file_rules').onSnapshot(doc => {
-            if(doc.exists) isDocAllowed = doc.data().docAllowed;
-            else { dbRef.collection('settings').doc('file_rules').set({ docAllowed: false }); isDocAllowed = false; }
-            updateDocToggleUI(); updateFileAccept('uCategory', 'uFile');
+            if(doc.exists) {
+                isDocAllowed = doc.data().docAllowed;
+            } else { 
+                dbRef.collection('settings').doc('file_rules').set({ docAllowed: false }); 
+                isDocAllowed = false; 
+            }
+            updateDocToggleUI(); 
+            updateFileAccept('uCategory', 'uFile');
             document.getElementById('storyFileWrapper').style.display = isDocAllowed ? 'block' : 'none';
         });
 
@@ -670,9 +1447,7 @@
             document.getElementById('authScreen').style.display = 'none';
             if(!isMentor) {
                 document.getElementById('mainPortal').style.display = 'block';
-                // Explicitly check for guest login
-                const dName = user.displayName || user.email || "Guest";
-                document.getElementById('uNameDisplay').innerText = dName;
+                document.getElementById('uNameDisplay').innerText = user.displayName || user.email || "Guest";
                 loadInitialData();
                 loadMyFeedback();
             }
@@ -699,11 +1474,15 @@
         const pass = document.getElementById('regPass').value.trim();
         const err = document.getElementById('authErrorMsg');
         if(!name || !email || !pass) return err.innerText = "সব ঘর পূরণ করুন!";
-        err.style.color = "var(--primary-pink)"; err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
+        err.style.color = "var(--primary-pink)"; 
+        err.innerText = "অ্যাকাউন্ট তৈরি হচ্ছে...";
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, pass);
             await cred.user.updateProfile({ displayName: name });
-        } catch(error) { err.style.color = "#ff5252"; err.innerText = error.message; }
+        } catch(error) { 
+            err.style.color = "#ff5252"; 
+            err.innerText = error.message; 
+        }
     }
 
     async function loginUser() {
@@ -711,9 +1490,14 @@
         const pass = document.getElementById('loginPass').value.trim();
         const err = document.getElementById('authErrorMsg');
         if(!email || !pass) return err.innerText = "ইমেইল ও পাসওয়ার্ড দিন!";
-        err.style.color = "var(--primary-pink)"; err.innerText = "লগইন হচ্ছে...";
-        try { await auth.signInWithEmailAndPassword(email, pass); } 
-        catch(error) { err.style.color = "#ff5252"; err.innerText = "লগইন ব্যর্থ হয়েছে!"; }
+        err.style.color = "var(--primary-pink)"; 
+        err.innerText = "লগইন হচ্ছে...";
+        try { 
+            await auth.signInWithEmailAndPassword(email, pass); 
+        } catch(error) { 
+            err.style.color = "#ff5252"; 
+            err.innerText = "লগইন ব্যর্থ হয়েছে!"; 
+        }
     }
 
     async function loginGuest() {
@@ -721,70 +1505,110 @@
         if(!name) return alert("আপনার নাম লিখতে হবে!");
         try {
             const cred = await auth.signInAnonymously();
-            await cred.user.updateProfile({ displayName: name + " (Guest)" });
-            document.getElementById('uNameDisplay').innerText = name + " (Guest)";
+            const guestName = name + " (Guest)";
+            await cred.user.updateProfile({ displayName: guestName });
+            document.getElementById('uNameDisplay').innerText = guestName;
             currentUser = auth.currentUser;
-        } catch(error) { alert("ত্রুটি!"); }
+        } catch(error) { 
+            alert("ত্রুটি!"); 
+        }
     }
 
     function togglePass(inputId, icon) {
         const input = document.getElementById(inputId);
-        if (input.type === "password") { input.type = "text"; icon.classList.replace('fa-eye', 'fa-eye-slash'); } 
-        else { input.type = "password"; icon.classList.replace('fa-eye-slash', 'fa-eye'); }
+        if (input.type === "password") { 
+            input.type = "text"; 
+            icon.classList.replace('fa-eye', 'fa-eye-slash'); 
+        } else { 
+            input.type = "password"; 
+            icon.classList.replace('fa-eye-slash', 'fa-eye'); 
+        }
     }
     
     async function resetPassword() {
         const email = document.getElementById('resetEmail').value.trim();
         const err = document.getElementById('authErrorMsg');
         if(!email) return err.innerText = "ইমেইল লিখুন!";
-        try { await auth.sendPasswordResetEmail(email); err.style.color = "#4caf50"; err.innerText = "রিসেট লিঙ্ক পাঠানো হয়েছে।"; } 
-        catch(error) { err.style.color = "#ff5252"; err.innerText = "ইমেইল সঠিক নয়।"; }
+        try { 
+            await auth.sendPasswordResetEmail(email); 
+            err.style.color = "#4caf50"; 
+            err.innerText = "রিসেট লিঙ্ক পাঠানো হয়েছে।"; 
+        } catch(error) { 
+            err.style.color = "#ff5252"; 
+            err.innerText = "ইমেইল সঠিক নয়।"; 
+        }
     }
-    function logoutUser() { auth.signOut(); }
+
+    function logoutUser() { 
+        auth.signOut(); 
+    }
 
     function getDownloadUrl(url) {
         if(!url) return "";
-        return url.replace('/upload/', '/upload/fl_attachment/'); // Force download parameter for Cloudinary
+        return url.replace('/upload/', '/upload/fl_attachment/'); 
     }
 
     function openPreview(url, fileName) {
         const isAudio = url.match(/\.(mp3|wav|ogg|aac)$/i);
         const isImg = url.match(/\.(jpg|jpeg|png|gif|webp)$/i);
         const isDocOrPdf = url.match(/\.(pdf|doc|docx)$/i);
+        
         document.getElementById('previewTitle').innerText = fileName || "ফাইল প্রিভিউ";
         const frameContainer = document.querySelector('.preview-container');
         
-        if (isImg) frameContainer.innerHTML = `<img src="${url}" style="max-width:100%; max-height:50vh; object-fit:contain; border-radius:6px;">`;
-        else if (isAudio) frameContainer.innerHTML = `<audio controls src="${url}" style="width:100%;" autoplay></audio>`;
-        else if (isDocOrPdf) frameContainer.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%; height:50vh; border:none;"></iframe>`;
-        else frameContainer.innerHTML = `<p style="color:var(--text-muted);">প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
+        if (isImg) {
+            frameContainer.innerHTML = `<img src="${url}" style="max-width:100%; max-height:50vh; object-fit:contain; border-radius:6px;">`;
+        } else if (isAudio) {
+            frameContainer.innerHTML = `<audio controls src="${url}" style="width:100%;" autoplay></audio>`;
+        } else if (isDocOrPdf) {
+            frameContainer.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%; height:50vh; border:none;"></iframe>`;
+        } else {
+            frameContainer.innerHTML = `<p style="color:var(--text-muted);">প্রিভিউ সম্ভব নয়। ডাউনলোড করুন।</p>`;
+        }
         
         document.getElementById('previewDownloadBtn').href = getDownloadUrl(url);
         document.getElementById('previewModal').style.display = 'flex';
     }
-    function closePreview() { document.getElementById('previewModal').style.display = 'none'; document.querySelector('.preview-container').innerHTML = ''; }
+
+    function closePreview() { 
+        document.getElementById('previewModal').style.display = 'none'; 
+        document.querySelector('.preview-container').innerHTML = ''; 
+    }
 
     function updateFileAccept(selectId, fileInputId) {
         let cat = document.getElementById(selectId)?.value;
         const fileInput = document.getElementById(fileInputId);
         if (!fileInput || !cat) return;
-        if (cat === 'ভয়েস') fileInput.accept = ".mp3, .wav, .aac, audio/*";
-        else if (cat === 'অডিও এডিট') fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
-        else if (cat === 'থাম্বনেল') fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
-        else if (cat === 'স্ক্রিপ্টিং') {
-            if(isDocAllowed) fileInput.accept = ".doc, .docx, .pdf, .txt";
-            else fileInput.accept = ".txt";
+        
+        if (cat === 'ভয়েস') {
+            fileInput.accept = ".mp3, .wav, .aac, audio/*";
+        } else if (cat === 'অডিও এডিট') {
+            fileInput.accept = ".zip, .rar, .mp3, .wav, audio/*";
+        } else if (cat === 'থাম্বনেল') {
+            fileInput.accept = ".png, .jpg, .jpeg, .psd, image/*";
+        } else if (cat === 'স্ক্রিপ্টিং') {
+            if(isDocAllowed) {
+                fileInput.accept = ".doc, .docx, .pdf, .txt";
+            } else {
+                fileInput.accept = ".txt";
+            }
+        } else {
+            fileInput.accept = "*/*";
         }
-        else fileInput.accept = "*/*";
     }
 
     function switchUserTab(tab) {
         document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+        
         document.getElementById('workUpload').style.display = tab === 'work' ? 'block' : 'none';
         document.getElementById('storyUpload').style.display = tab === 'story' ? 'block' : 'none';
         document.getElementById('statusView').style.display = tab === 'status' ? 'block' : 'none';
+        
         const tabText = tab === 'work' ? 'কাজ জমা দিন' : (tab === 'story' ? 'গল্প পাঠান' : 'স্ট্যাটাস');
-        document.querySelectorAll('.tabs .tab').forEach(t => { if(t.innerText === tabText) t.classList.add('active'); });
+        document.querySelectorAll('.tabs .tab').forEach(t => { 
+            if(t.innerText === tabText) t.classList.add('active'); 
+        });
+        
         if(tab === 'status') loadMyFeedback();
     }
 
@@ -822,10 +1646,17 @@
 
     async function clearMyHistory() {
         if(!confirm("সব হিস্ট্রি মুছবেন?")) return;
+        
         const snaps = await dbRef.collection('tasks').where('userId', '==', currentUser.uid).get();
-        for(let doc of snaps.docs) await dbRef.collection('tasks').doc(doc.id).delete();
+        for(let doc of snaps.docs) {
+            await dbRef.collection('tasks').doc(doc.id).delete();
+        }
+        
         const sSnaps = await dbRef.collection('channel_stories').where('userId', '==', currentUser.uid).get();
-        for(let doc of sSnaps.docs) await dbRef.collection('channel_stories').doc(doc.id).delete();
+        for(let doc of sSnaps.docs) {
+            await dbRef.collection('channel_stories').doc(doc.id).delete();
+        }
+        
         loadMyFeedback();
     }
 
@@ -833,33 +1664,72 @@
         const select = document.getElementById('autoDeleteSelect');
         if (select) select.value = autoDeletePref;
     }
-    function handleAutoDeleteChange(v) { if(v==='custom') document.getElementById('customAutoDeleteBox').style.display='flex'; else { autoDeletePref=v; localStorage.setItem('prem_auto_delete_pref', v); loadMyFeedback(); } }
+
+    function handleAutoDeleteChange(v) { 
+        if(v === 'custom') {
+            document.getElementById('customAutoDeleteBox').style.display = 'flex'; 
+        } else { 
+            autoDeletePref = v; 
+            localStorage.setItem('prem_auto_delete_pref', v); 
+            loadMyFeedback(); 
+        } 
+    }
+
     function saveCustomAutoDelete() { 
-        const n = document.getElementById('customDelNum').value; const u = document.getElementById('customDelUnit').value;
-        autoDeletePref = (n*u).toString(); localStorage.setItem('prem_auto_delete_pref', autoDeletePref); loadMyFeedback();
+        const n = document.getElementById('customDelNum').value; 
+        const u = document.getElementById('customDelUnit').value;
+        autoDeletePref = (n * u).toString(); 
+        localStorage.setItem('prem_auto_delete_pref', autoDeletePref); 
+        loadMyFeedback();
     }
 
     async function submitWork() {
         if(!currentUser) return alert("লগইন করুন!");
+        
         const project = document.getElementById('uProject').value;
         const cat = document.getElementById('uCategory').value;
         const file = document.getElementById('uFile').files[0];
+        
         if(!project || !cat || !file) return alert("তথ্য দিন!");
+        
         document.getElementById('statusMsg').style.color = "var(--primary-pink)";
         document.getElementById('statusMsg').innerText = "⏳ পাঠানো হচ্ছে...";
-        const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
+        
+        const fd = new FormData(); 
+        fd.append('file', file); 
+        fd.append('upload_preset', UPLOAD_PRESET);
+        
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
+            
             if(data.secure_url) {
-                await dbRef.collection('tasks').add({ sender: currentUser.displayName, userId: currentUser.uid, project, category: cat, fileUrl: data.secure_url, fileName: file.name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), status: "Pending", isDeleted: false, isAdmin: false });
-                document.getElementById('statusMsg').style.color = "#4caf50"; document.getElementById('statusMsg').innerText = "✅ সফল!"; document.getElementById('uFile').value = "";
+                await dbRef.collection('tasks').add({ 
+                    sender: currentUser.displayName, 
+                    userId: currentUser.uid, 
+                    project: project, 
+                    category: cat, 
+                    fileUrl: data.secure_url, 
+                    fileName: file.name, 
+                    channel: channel, 
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
+                    status: "Pending", 
+                    isDeleted: false, 
+                    isAdmin: false 
+                });
+                document.getElementById('statusMsg').style.color = "#4caf50"; 
+                document.getElementById('statusMsg').innerText = "✅ সফল!"; 
+                document.getElementById('uFile').value = "";
             }
-        } catch(e) { document.getElementById('statusMsg').style.color = "#ff5252"; document.getElementById('statusMsg').innerText = "❌ ব্যর্থ!"; }
+        } catch(e) { 
+            document.getElementById('statusMsg').style.color = "#ff5252"; 
+            document.getElementById('statusMsg').innerText = "❌ ব্যর্থ!"; 
+        }
     }
 
     async function submitStory() {
         if(!currentUser) return alert("দয়া করে প্রথমে লগইন করুন!");
+        
         const title = document.getElementById('sTitle').value.trim();
         const authorInput = document.getElementById('sAuthor').value.trim();
         const text = document.getElementById('sText').value.trim();
@@ -869,49 +1739,86 @@
         if(!title) return alert("শিরোনাম লিখুন!");
         if(!text && !file) return alert("গল্প লিখুন অথবা ফাইল আপলোড করুন!");
         
-        msg.style.color = "var(--primary-pink)"; msg.innerText = "⏳ পাঠানো হচ্ছে...";
+        msg.style.color = "var(--primary-pink)"; 
+        msg.innerText = "⏳ পাঠানো হচ্ছে...";
         
         let fileUrl = "";
         if(file) {
-            const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
+            const fd = new FormData(); 
+            fd.append('file', file); 
+            fd.append('upload_preset', UPLOAD_PRESET);
             try {
                 const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
                 const data = await res.json();
                 if(data.secure_url) fileUrl = data.secure_url;
-            } catch(e) { return msg.innerText = "❌ ফাইল আপলোড ব্যর্থ!"; }
+            } catch(e) { 
+                return msg.innerText = "❌ ফাইল আপলোড ব্যর্থ!"; 
+            }
         }
 
         const finalAuthor = authorInput || currentUser.displayName || currentUser.email || "Guest";
 
         try {
             await dbRef.collection('channel_stories').add({ 
-                author: finalAuthor, userId: currentUser.uid,
-                title: title, storyText: text, fileUrl: fileUrl, channel: channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), status: "Pending", adminRemark: "", isDeleted: false
+                author: finalAuthor, 
+                userId: currentUser.uid,
+                title: title, 
+                storyText: text, 
+                fileUrl: fileUrl, 
+                channel: channel, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
+                status: "Pending", 
+                adminRemark: "", 
+                isDeleted: false
             });
-            msg.style.color = "#4caf50"; msg.innerText = "✅ গল্প সফলভাবে জমা হয়েছে!";
-            document.getElementById('sTitle').value = ""; document.getElementById('sAuthor').value = ""; document.getElementById('sText').value = ""; document.getElementById('sFile').value = ""; document.getElementById('sFileNameDisplay').innerText = "";
+            
+            msg.style.color = "#4caf50"; 
+            msg.innerText = "✅ গল্প সফলভাবে জমা হয়েছে!";
+            
+            document.getElementById('sTitle').value = ""; 
+            document.getElementById('sAuthor').value = ""; 
+            document.getElementById('sText').value = ""; 
+            document.getElementById('sFile').value = ""; 
+            document.getElementById('sFileNameDisplay').innerText = "";
             loadMyFeedback();
-        } catch(e) { msg.style.color = "#ff5252"; msg.innerText = "❌ ব্যর্থ হয়েছে!"; }
+        } catch(e) { 
+            msg.style.color = "#ff5252"; 
+            msg.innerText = "❌ ব্যর্থ হয়েছে!"; 
+        }
     }
 
     // --- Admin Logic ---
     async function checkAdminPass() {
         const pass = document.getElementById('modalAdminPass').value.trim();
+        
         if(mentorRoles[pass]) {
-            isMentor = true; activeMentor = mentorRoles[pass]; isMaster = pass === "Master2002";
+            isMentor = true; 
+            activeMentor = mentorRoles[pass]; 
+            isMaster = pass === "Master2002";
+            
             document.getElementById('authScreen').style.display = "none";
             document.getElementById('userPortal').style.display = "none";
             document.getElementById('mainPortal').style.display = "block";
             document.getElementById('adminDashboard').style.display = "block";
             document.getElementById('nameTag').innerText = `👤 ${activeMentor}`;
+            
             initAdminAutoDeleteUI();
-            if(isMaster) { document.getElementById('masterConfigPanel').style.display = 'block'; renderMentorList(); }
+            
+            if(isMaster) { 
+                document.getElementById('masterConfigPanel').style.display = 'block'; 
+                renderMentorList(); 
+            }
+            
             loadInitialData();
             loadStoriesForAdmin();
-        } else { alert("ভুল পাসওয়ার্ড!"); }
+        } else { 
+            alert("ভুল পাসওয়ার্ড!"); 
+        }
     }
 
-    function exitAdmin() { location.reload(); }
+    function exitAdmin() { 
+        location.reload(); 
+    }
 
     function loadInitialData() {
         dbRef.collection('projects').onSnapshot(snap => {
@@ -926,17 +1833,51 @@
             document.getElementById('uProject').innerHTML = h;
             if(isMentor) renderAdminSidebar();
         });
+        
         dbRef.collection('folders').onSnapshot(snap => {
             allCategories = [{ id: 'def1', name: "ভয়েস" }, { id: 'def2', name: "থাম্বনেল" }, { id: 'def3', name: "অডিও এডিট" }, { id: 'def4', name: "স্ক্রিপ্টিং" }];
-            snap.forEach(doc => { if(doc.data().channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(doc.data().name)) allCategories.push({ id: doc.id, name: doc.data().name }); });
-            if(isMentor && activeAdminProj) renderAdminCategoryTabs();
+            snap.forEach(doc => { 
+                if(doc.data().channel === channel && !["ভয়েস", "থাম্বনেল", "অডিও এডিট", "স্ক্রিপ্টিং"].includes(doc.data().name)) {
+                    allCategories.push({ id: doc.id, name: doc.data().name }); 
+                }
+            });
+            
+            let html = '<option value="" disabled selected>কাজের ধরণ সিলেক্ট করুন</option>';
+            allCategories.forEach(cat => {
+                html += `<option value="${cat.name}">📁 ${cat.name}</option>`;
+            });
+            document.getElementById('uCategory').innerHTML = html;
+            
+            if(isMentor && activeAdminProj) {
+                renderAdminCategoryTabs();
+            }
         });
     }
 
     function renderAdminSidebar() {
-        let h = "";
-        allProjects.forEach(p => h += `<div class="folder-item ${activeAdminProj===p.name?'active':''}"><span onclick="selectAdminProject('${p.name}')">📁 ${p.name}</span><i class="fas fa-trash" onclick="softDelete('projects','${p.id}','${p.name}')"></i></div>`);
-        document.getElementById('adminProjectListUI').innerHTML = h || "প্রজেক্ট নেই";
+        let activeHtml = ""; 
+        let hiddenHtml = "";
+        
+        allProjects.forEach(p => {
+            if (p.isDeleted) return; 
+            const itemHtml = `
+                <div class="folder-item ${activeAdminProj === p.name ? 'active' : ''} ${p.isHidden ? 'hidden-proj' : ''}">
+                    <span onclick="selectAdminProject('${p.name}')" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><i class="fas fa-folder"></i> ${p.name}</span>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <i class="fas ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}" style="color:${p.isHidden ? 'var(--text-muted)' : 'var(--primary-pink)'}; cursor:pointer;" onclick="toggleProjectHide('${p.id}', ${p.isHidden || false})"></i>
+                        <i class="fas fa-trash del-folder" onclick="softDelete('projects', '${p.id}', '${p.name}')" style="color:#ff5252; cursor:pointer;"></i>
+                    </div>
+                </div>`;
+            if(p.isHidden) hiddenHtml += itemHtml; 
+            else activeHtml += itemHtml;
+        });
+        
+        let finalHtml = activeHtml + (hiddenHtml ? `<div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border-color);"><p style="font-size:11px; text-align:center; color:var(--text-muted);">আর্কাইভ</p>${hiddenHtml}</div>` : "");
+        document.getElementById('adminProjectListUI').innerHTML = finalHtml || "<p style='text-align:center; color:var(--text-muted); font-size:11px;'>কোনো প্রজেক্ট নেই</p>";
+    }
+
+    async function toggleProjectHide(id, currentStatus) { 
+        await dbRef.collection('projects').doc(id).update({ isHidden: !currentStatus }); 
     }
 
     function renderAdminCategoryTabs() {
@@ -949,38 +1890,87 @@
         updateFileAccept('dummy', 'aFile'); 
     }
 
-    function selectAdminProject(n) { activeAdminProj = n; document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); document.getElementById('projectView').style.display='block'; document.getElementById('currentProjTitle').innerText = n; renderAdminSidebar(); renderAdminCategoryTabs(); loadAdminInbox(); }
-    function selectAdminCategory(n) { activeAdminCat = n; renderAdminCategoryTabs(); loadAdminInbox(); }
-    function setSpecialView(type) { activeAdminProj = ""; renderAdminSidebar(); document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); document.getElementById(type + 'View').style.display = 'block'; if(type === 'story') loadStoriesForAdmin(); else if(type === 'record') loadNotes(); else if(type === 'trash') renderTrashList(); }
+    function selectAdminProject(n) { 
+        activeAdminProj = n; 
+        document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); 
+        document.getElementById('projectView').style.display='block'; 
+        document.getElementById('currentProjTitle').innerText = n; 
+        renderAdminSidebar(); 
+        renderAdminCategoryTabs(); 
+        loadAdminInbox(); 
+    }
+    
+    function selectAdminCategory(n) { 
+        activeAdminCat = n; 
+        renderAdminCategoryTabs(); 
+        loadAdminInbox(); 
+    }
+    
+    function setSpecialView(type) { 
+        activeAdminProj = ""; 
+        renderAdminSidebar(); 
+        document.querySelectorAll('.content > div').forEach(d => d.style.display='none'); 
+        document.getElementById(type + 'View').style.display = 'block'; 
+        if(type === 'story') loadStoriesForAdmin(); 
+        else if(type === 'record') loadNotes(); 
+        else if(type === 'trash') renderTrashList(); 
+    }
 
     function initAdminAutoDeleteUI() {
         const select = document.getElementById('adminAutoDeleteSelect');
-        if(select) { adminAutoDeletePref = localStorage.getItem('prem_admin_auto_delete_'+activeMentor) || '168'; select.value = adminAutoDeletePref; }
+        if(select) { 
+            adminAutoDeletePref = localStorage.getItem('prem_admin_auto_delete_'+activeMentor) || '168'; 
+            select.value = adminAutoDeletePref; 
+        }
     }
-    function handleAdminAutoDeleteChange(v) { if(v==='custom') document.getElementById('customAdminAutoDeleteBox').style.display='flex'; else { adminAutoDeletePref=v; localStorage.setItem('prem_admin_auto_delete_'+activeMentor, v); loadAdminInbox(); loadStoriesForAdmin(); } }
+    
+    function handleAdminAutoDeleteChange(v) { 
+        if(v === 'custom') {
+            document.getElementById('customAdminAutoDeleteBox').style.display='flex'; 
+        } else { 
+            adminAutoDeletePref=v; 
+            localStorage.setItem('prem_admin_auto_delete_'+activeMentor, v); 
+            loadAdminInbox(); 
+            loadStoriesForAdmin(); 
+        } 
+    }
+    
     function saveCustomAdminAutoDelete() {
-        const n = document.getElementById('customAdminDelNum').value; const u = document.getElementById('customAdminDelUnit').value;
-        adminAutoDeletePref = (n*u).toString(); localStorage.setItem('prem_admin_auto_delete_'+activeMentor, adminAutoDeletePref); loadAdminInbox(); loadStoriesForAdmin();
+        const n = document.getElementById('customAdminDelNum').value; 
+        const u = document.getElementById('customAdminDelUnit').value;
+        adminAutoDeletePref = (n * u).toString(); 
+        localStorage.setItem('prem_admin_auto_delete_'+activeMentor, adminAutoDeletePref); 
+        loadAdminInbox(); 
+        loadStoriesForAdmin();
     }
 
     function loadAdminInbox() {
         if(!activeAdminProj) return;
         let cutoffTime = adminAutoDeletePref !== 'never' ? Date.now() - (parseInt(adminAutoDeletePref) * 3600000) : 0;
+        
         dbRef.collection('tasks').onSnapshot(snap => {
-            let rawHtml = ""; let adminHtml = "";
+            let rawHtml = ""; 
+            let adminHtml = "";
             let dataArr = [];
+            
             snap.forEach(doc => {
-                let d = doc.data(); const ts = d.timestamp ? d.timestamp.toMillis() : Date.now();
-                if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat && !d.isDeleted && ts >= cutoffTime) dataArr.push({id: doc.id, ...d, ts: ts});
+                let d = doc.data(); 
+                const ts = d.timestamp ? d.timestamp.toMillis() : Date.now();
+                if(d.channel === channel && d.project === activeAdminProj && d.category === activeAdminCat && !d.isDeleted && ts >= cutoffTime) {
+                    dataArr.push({id: doc.id, ...d, ts: ts});
+                }
             });
+            
             dataArr.sort((a,b) => b.ts - a.ts).forEach(d => {
                 const isAudio = d.fileUrl && d.fileUrl.match(/\.(mp3|wav|ogg|aac)$/i);
                 const isImg = d.fileUrl && d.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i);
                 const isDoc = d.fileUrl && d.fileUrl.match(/\.(pdf|doc|docx)$/i);
+                
                 let btnAction = isAudio ? `<i class="fas fa-play"></i> Play` : (isImg ? `<i class="fas fa-eye"></i> Preview` : `<i class="fas fa-folder-open"></i> Open`);
                 const cardStyle = d.isAdmin ? 'border-left: 3px solid #4caf50;' : 'border-left: 3px solid var(--primary-pink);';
                 
                 let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'tasks')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
+                
                 let remarkSection = d.isAdmin ? "" : `
                     <div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border-color);">
                         <div class="remark-input-box" style="display:flex; gap:5px; align-items:center;">
@@ -1011,8 +2001,14 @@
                     </div>
                     ${remarkSection}
                 </div>`;
-                if(d.isAdmin) adminHtml += card; else rawHtml += card;
+                
+                if(d.isAdmin) {
+                    adminHtml += card; 
+                } else {
+                    rawHtml += card;
+                }
             });
+            
             document.getElementById('rawInboxUI').innerHTML = rawHtml || "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
             document.getElementById('adminInboxUI').innerHTML = adminHtml || "<p style='text-align:center;font-size:12px;color:var(--text-muted);'>ফাঁকা</p>";
         });
@@ -1020,14 +2016,19 @@
 
     function loadStoriesForAdmin() {
         let cutoffTime = adminAutoDeletePref !== 'never' ? Date.now() - (parseInt(adminAutoDeletePref) * 3600000) : 0;
+        
         dbRef.collection('channel_stories').onSnapshot(snap => {
             let stories = [];
             snap.forEach(doc => { 
                 const ts = doc.data().timestamp ? doc.data().timestamp.toMillis() : Date.now();
-                if(doc.data().channel === channel && !doc.data().isDeleted && ts >= cutoffTime) stories.push({id: doc.id, ...doc.data()}); 
+                if(doc.data().channel === channel && !doc.data().isDeleted && ts >= cutoffTime) {
+                    stories.push({id: doc.id, ...doc.data()}); 
+                }
             });
+            
             stories.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
             document.getElementById('adminTotalStories').innerText = "মোট গল্প: " + stories.length;
+            
             let html = "";
             stories.forEach((d, index) => {
                 const serialNum = stories.length - index;
@@ -1035,6 +2036,7 @@
                 const wordColor = wc >= 5000 ? '#4caf50' : '#ff5252';
 
                 let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px; display:flex; align-items:center; gap:5px;"><audio controls src="${d.adminVoiceRemark}" style="height:30px; flex:1; max-width:200px;"></audio><button onclick="deleteVoiceRemark('${d.id}', 'channel_stories')" class="btn-sm" style="color:#ff5252; background:none; border:none;"><i class="fas fa-times"></i></button></div>` : '';
+                
                 html += `
                 <div class="list-card" style="border-left:3px solid var(--primary-pink);">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
@@ -1073,110 +2075,198 @@
     }
 
     async function updateTaskRemark(id, status, remark) {
-        await dbRef.collection('tasks').doc(id).update({ status, adminRemark: remark });
+        await dbRef.collection('tasks').doc(id).update({ status: status, adminRemark: remark });
         alert("আপডেট হয়েছে!");
     }
+    
     async function updateStoryRemark(id, status, remark) {
-        await dbRef.collection('channel_stories').doc(id).update({ status, adminRemark: remark });
+        await dbRef.collection('channel_stories').doc(id).update({ status: status, adminRemark: remark });
         alert("আপডেট হয়েছে!");
-    }
-
-    async function toggleVoiceRemark(id, colName) {
-        const btn = document.getElementById(`micBtn_${id}`);
-        if(activeRecorder && recordDocId === id) {
-            activeRecorder.stop(); activeRecorder.stream.getTracks().forEach(t => t.stop()); activeRecorder = null;
-            btn.classList.remove('recording-pulse'); btn.innerHTML = '<i class="fas fa-microphone"></i>';
-        } else if(!activeRecorder) {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                activeRecorder = new MediaRecorder(stream); audioChunks = []; recordDocId = id; recordCol = colName;
-                activeRecorder.ondataavailable = e => { if(e.data.size > 0) audioChunks.push(e.data); };
-                activeRecorder.onstop = async () => {
-                    const blob = new Blob(audioChunks, { type: 'audio/mp3' }); uploadVoiceRemark(blob, recordDocId, recordCol);
-                    recordDocId = null; recordCol = null;
-                };
-                activeRecorder.start(); btn.classList.add('recording-pulse'); btn.innerHTML = '<i class="fas fa-stop"></i>';
-            } catch(e) { 
-                recordDocId = id; recordCol = colName; adminVoiceInput.click(); // Fallback for mobile 
-            }
-        } else alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
     }
 
     async function uploadVoiceRemark(blob, id, colName) {
         const upMsg = document.getElementById(`audioUploading_${id}`);
-        if(upMsg) { upMsg.style.display = 'inline-block'; upMsg.innerText = "⏳ আপলোড হচ্ছে..."; }
-        const fd = new FormData(); fd.append('file', blob); fd.append('upload_preset', UPLOAD_PRESET);
+        if(upMsg) { 
+            upMsg.style.display = 'inline-block'; 
+            upMsg.innerText = "⏳ আপলোড হচ্ছে..."; 
+        }
+        
+        const fd = new FormData(); 
+        fd.append('file', blob); 
+        fd.append('upload_preset', UPLOAD_PRESET);
+        
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
-            if(data.secure_url) { await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url }); if(upMsg) upMsg.innerText = "✅ সম্পন্ন!"; }
-            else if(upMsg) upMsg.innerText = "❌ ত্রুটি!";
-        } catch(e) { if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; }
+            if(data.secure_url) { 
+                await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url }); 
+                if(upMsg) upMsg.innerText = "✅ সম্পন্ন!"; 
+            } else if(upMsg) {
+                upMsg.innerText = "❌ ত্রুটি!";
+            }
+        } catch(e) { 
+            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
+        }
+        
         setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
     }
-    async function deleteVoiceRemark(id, colName) { if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: firebase.firestore.FieldValue.delete() }); }
+
+    async function deleteVoiceRemark(id, colName) { 
+        if(confirm("ভয়েস রিমার্কটি মুছে ফেলবেন?")) {
+            await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: firebase.firestore.FieldValue.delete() }); 
+        }
+    }
+
+    async function toggleVoiceRemark(id, colName) {
+        const btn = document.getElementById(`micBtn_${id}`);
+        
+        if(activeRecorder && recordDocId === id) {
+            activeRecorder.stop(); 
+            activeRecorder.stream.getTracks().forEach(t => t.stop()); 
+            activeRecorder = null;
+            btn.classList.remove('recording-pulse'); 
+            btn.innerHTML = '<i class="fas fa-microphone"></i>';
+        } else if(!activeRecorder) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                activeRecorder = new MediaRecorder(stream); 
+                audioChunks = []; 
+                recordDocId = id; 
+                recordCol = colName;
+                
+                activeRecorder.ondataavailable = e => { 
+                    if(e.data.size > 0) audioChunks.push(e.data); 
+                };
+                
+                activeRecorder.onstop = async () => {
+                    const blob = new Blob(audioChunks, { type: 'audio/mp3' }); 
+                    uploadVoiceRemark(blob, recordDocId, recordCol);
+                    recordDocId = null; 
+                    recordCol = null;
+                };
+                
+                activeRecorder.start(); 
+                btn.classList.add('recording-pulse'); 
+                btn.innerHTML = '<i class="fas fa-stop"></i>';
+            } catch(e) { 
+                recordDocId = id; 
+                recordCol = colName; 
+                adminVoiceInput.click(); // Fallback for mobile 
+            }
+        } else {
+            alert("দয়া করে আগের রেকর্ডিংটি বন্ধ করুন!");
+        }
+    }
 
     // --- Master Actions ---
     async function addMentor() {
         if(!isMaster) return;
-        const name = document.getElementById('newMentorName').value.trim(); const pass = document.getElementById('newMentorPass').value.trim();
+        const name = document.getElementById('newMentorName').value.trim(); 
+        const pass = document.getElementById('newMentorPass').value.trim();
+        
         if(!name || !pass) return alert("তথ্য দিন!");
         if(pass === "Master2002") return alert("সংরক্ষিত পাসওয়ার্ড!");
-        let updatedRoles = { ...mentorRoles }; updatedRoles[pass] = name;
+        
+        let updatedRoles = { ...mentorRoles }; 
+        updatedRoles[pass] = name;
+        
         await dbRef.collection('settings').doc('mentors_prem').update({ roles: updatedRoles });
-        document.getElementById('newMentorName').value = ""; document.getElementById('newMentorPass').value = "";
+        document.getElementById('newMentorName').value = ""; 
+        document.getElementById('newMentorPass').value = "";
     }
+
     function renderMentorList() {
         let html = "";
         for(let pass in mentorRoles) {
-            if(pass !== "Master2002") html += `<div class="mentor-list-item"><span><i class="fas fa-user-tie" style="color:var(--primary-pink); margin-right:5px;"></i>${mentorRoles[pass]}</span><span style="color:var(--text-muted);">Pass: ${pass}</span><i class="fas fa-trash" style="color:#ff5252;cursor:pointer;" onclick="deleteMentor('${pass}')"></i></div>`;
+            if(pass !== "Master2002") {
+                html += `<div class="mentor-list-item"><span><i class="fas fa-user-tie" style="color:var(--primary-pink); margin-right:5px;"></i>${mentorRoles[pass]}</span><span style="color:var(--text-muted);">Pass: ${pass}</span><i class="fas fa-trash" style="color:#ff5252;cursor:pointer;" onclick="deleteMentor('${pass}')"></i></div>`;
+            }
         }
         document.getElementById('mentorListUI').innerHTML = html;
     }
+
     async function deleteMentor(pass) {
         if(!confirm("মুছবেন?")) return;
-        let updatedRoles = { ...mentorRoles }; delete updatedRoles[pass];
+        let updatedRoles = { ...mentorRoles }; 
+        delete updatedRoles[pass];
         await dbRef.collection('settings').doc('mentors_prem').update({ roles: updatedRoles });
     }
+
     function toggleDocUploads() {
         dbRef.collection('settings').doc('file_rules').update({ docAllowed: !isDocAllowed });
     }
+
     function updateDocToggleUI() {
         const btn = document.getElementById('docToggleBtn');
         if(!btn) return;
         btn.innerText = isDocAllowed ? "PDF/DOC আপলোড চালু আছে (বন্ধ করুন)" : "PDF/DOC আপলোড বন্ধ আছে (চালু করুন)";
         btn.style.background = isDocAllowed ? "linear-gradient(45deg, #4caf50, #81c784)" : "linear-gradient(45deg, var(--primary-pink), var(--secondary-pink))";
     }
+
     async function addProject() {
         const name = document.getElementById('newProjectName').value.trim();
-        if(name) await dbRef.collection('projects').add({ name, channel, isHidden: false, isDeleted: false, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('newProjectName').value = "";
+        if(name) {
+            await dbRef.collection('projects').add({ 
+                name: name, 
+                channel: channel, 
+                isHidden: false, 
+                isDeleted: false, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            });
+            document.getElementById('newProjectName').value = "";
+        }
     }
+
     async function addCategory() {
         const name = document.getElementById('newCategoryName').value.trim();
-        if(name) await dbRef.collection('folders').add({ name, channel, isDeleted: false, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('newCategoryName').value = "";
+        if(name) {
+            await dbRef.collection('folders').add({ 
+                name: name, 
+                channel: channel, 
+                isDeleted: false, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            });
+            document.getElementById('newCategoryName').value = "";
+        }
     }
 
     // --- Batch Actions & Trash ---
-    window.toggleSelectAll = (section, isChecked) => { document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked); };
+    window.toggleSelectAll = (section, isChecked) => { 
+        document.querySelectorAll('.chk-' + section).forEach(cb => cb.checked = isChecked); 
+    };
+
     async function batchSoftDelete(section, col) {
         const cbs = document.querySelectorAll(`.chk-${section}:checked`);
         if(cbs.length === 0) return alert("সিলেক্ট করুন!");
         if(confirm("রিসাইকেল বিনে পাঠাতে চান?")) {
-            for(let cb of cbs) await dbRef.collection(col).doc(cb.getAttribute('data-id')).update({ isDeleted: true });
+            for(let cb of cbs) {
+                await dbRef.collection(col).doc(cb.getAttribute('data-id')).update({ isDeleted: true });
+            }
             alert("সম্পন্ন!");
         }
     }
+
     async function softDelete(col, id, name) {
         if(confirm(`'${name}' ডিলিট করবেন?`)) {
             await dbRef.collection(col).doc(id).update({ isDeleted: true });
-            if(col === 'projects' && activeAdminProj === name) { document.getElementById('projectView').style.display = "none"; activeAdminProj = ""; }
-            if(col === 'folders' && activeAdminCat === name) { selectAdminCategory('ভয়েস'); }
+            if(col === 'projects' && activeAdminProj === name) { 
+                document.getElementById('projectView').style.display = "none"; 
+                activeAdminProj = ""; 
+            }
+            if(col === 'folders' && activeAdminCat === name) { 
+                selectAdminCategory('ভয়েস'); 
+            }
         }
     }
+
     function renderTrashList() {
-        Promise.all([dbRef.collection('projects').get(), dbRef.collection('folders').get(), dbRef.collection('tasks').get(), dbRef.collection('channel_stories').get(), dbRef.collection('channel_notes').get()]).then(snaps => {
+        Promise.all([
+            dbRef.collection('projects').get(), 
+            dbRef.collection('folders').get(), 
+            dbRef.collection('tasks').get(), 
+            dbRef.collection('channel_stories').get(), 
+            dbRef.collection('channel_notes').get()
+        ]).then(snaps => {
             let h = "";
             snaps[0].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('projects', d.id, "প্রজেক্ট: "+d.data().name); });
             snaps[1].forEach(d => { if(d.data().isDeleted && d.data().channel===channel) h += makeTrashCard('folders', d.id, "ক্যাটাগরি: "+d.data().name); });
@@ -1186,22 +2276,39 @@
             document.getElementById('trashListUI').innerHTML = h || "<p style='text-align:center; color:var(--text-muted);'>বিন খালি</p>";
         });
     }
+
     function makeTrashCard(col, id, name) {
         const val = JSON.stringify({col, id}).replace(/"/g, '&quot;');
         return `<div class="list-card" style="border-left:3px solid #ff5252;"><div style="display:flex;align-items:center;"><input type="checkbox" class="chk-trash select-check" value="${val}"><b style="margin-left:8px; font-size:14px;">${name}</b></div><div class="card-actions" style="margin-left:25px; margin-top:10px;"><button onclick="restoreItem('${col}','${id}')" class="btn-sm btn-download">রিস্টোর</button><button onclick="hardDelete('${col}','${id}')" class="btn-sm btn-del">চিরতরে মুছুন</button></div></div>`;
     }
-    async function restoreItem(col, id) { await dbRef.collection(col).doc(id).update({ isDeleted: false }); renderTrashList(); }
-    async function hardDelete(col, id) { if(confirm("চিরতরে মুছে যাবে। নিশ্চিত?")) { await dbRef.collection(col).doc(id).delete(); renderTrashList(); } }
+
+    async function restoreItem(col, id) { 
+        await dbRef.collection(col).doc(id).update({ isDeleted: false }); 
+        renderTrashList(); 
+    }
+
+    async function hardDelete(col, id) { 
+        if(confirm("চিরতরে মুছে যাবে। নিশ্চিত?")) { 
+            await dbRef.collection(col).doc(id).delete(); 
+            renderTrashList(); 
+        } 
+    }
+
     async function batchTrashAction(action) {
         const cbs = document.querySelectorAll('.chk-trash:checked');
         if(cbs.length === 0) return alert("সিলেক্ট করুন!");
         if(!confirm(action === 'restore' ? "রিস্টোর করবেন?" : "চিরতরে মুছবেন?")) return;
+        
         for(let cb of cbs) {
             const d = JSON.parse(cb.value.replace(/&quot;/g, '"'));
-            if(action === 'restore') await dbRef.collection(d.col).doc(d.id).update({ isDeleted: false });
-            else await dbRef.collection(d.col).doc(d.id).delete();
+            if(action === 'restore') {
+                await dbRef.collection(d.col).doc(d.id).update({ isDeleted: false });
+            } else {
+                await dbRef.collection(d.col).doc(d.id).delete();
+            }
         }
-        renderTrashList(); alert("সম্পন্ন!");
+        renderTrashList(); 
+        alert("সম্পন্ন!");
     }
 
     async function downloadSelectedZIP(section) {
@@ -1211,16 +2318,24 @@
         alert(`ZIP তৈরি হচ্ছে। অপেক্ষা করুন...`);
         for(let cb of cbs) { 
             let url = cb.value;
-            if(url && url.includes('/upload/')) url = url.replace('/upload/', '/upload/fl_attachment/');
-            try { const res = await fetch(url); const blob = await res.blob(); zip.file(cb.getAttribute('data-name'), blob); } catch(e){} 
+            if(url && url.includes('/upload/')) {
+                url = url.replace('/upload/', '/upload/fl_attachment/');
+            }
+            try { 
+                const res = await fetch(url); 
+                const blob = await res.blob(); 
+                zip.file(cb.getAttribute('data-name'), blob); 
+            } catch(e) { console.error(e) } 
         }
         zip.generateAsync({type:"blob"}).then(c => saveAs(c, `batch_${section}.zip`));
     }
+
     async function downloadProjectZIP() {
         if(!activeAdminProj) return;
         if(!confirm(`'${activeAdminProj}' প্রজেক্টের সব ফাইল ZIP হিসেবে ডাউনলোড করবেন?`)) return;
         alert("পুরো প্রজেক্টের ZIP তৈরি হচ্ছে। ব্রাউজার বন্ধ করবেন না...");
-        const zip = new JSZip(); const rootFolder = zip.folder(activeAdminProj);
+        const zip = new JSZip(); 
+        const rootFolder = zip.folder(activeAdminProj);
         try {
             const snap = await dbRef.collection('tasks').where('channel', '==', channel).where('project', '==', activeAdminProj).get();
             const fetchPromises = [];
@@ -1230,60 +2345,111 @@
                     const catFolder = rootFolder.folder(d.category);
                     let url = d.fileUrl;
                     if(url && url.includes('/upload/')) url = url.replace('/upload/', '/upload/fl_attachment/');
-                    const p = fetch(url).then(res => res.blob()).then(blob => { catFolder.file(d.fileName || "unknown_file", blob); }).catch(e => console.error(e));
+                    const p = fetch(url).then(res => res.blob()).then(blob => { 
+                        catFolder.file(d.fileName || "unknown_file", blob); 
+                    }).catch(e => console.error(e));
                     fetchPromises.push(p);
                 }
             });
             await Promise.all(fetchPromises);
             const content = await zip.generateAsync({type:"blob"});
             saveAs(content, `${activeAdminProj}_Full_Backup.zip`);
-        } catch(e) { alert("ZIP তৈরিতে সমস্যা হয়েছে।"); }
+        } catch(e) { 
+            alert("ZIP তৈরিতে সমস্যা হয়েছে।"); 
+        }
     }
 
     async function adminUploadFile() {
         if(!activeAdminProj || !activeAdminCat) return alert("প্রজেক্ট ও ক্যাটাগরি সিলেক্ট করুন!");
         const file = document.getElementById('aFile').files[0];
         if(!file) return;
+        
         document.getElementById('aUploadMsg').innerText = "⏳ আপলোড হচ্ছে...";
-        const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
+        const fd = new FormData(); 
+        fd.append('file', file); 
+        fd.append('upload_preset', UPLOAD_PRESET);
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
             const data = await res.json();
             if(data.secure_url) {
-                await dbRef.collection('tasks').add({ sender: "অ্যাডমিন", project: activeAdminProj, category: activeAdminCat, fileUrl: data.secure_url, fileName: file.name, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isAdmin: true, isDeleted: false, status: "Approved" });
+                await dbRef.collection('tasks').add({ 
+                    sender: "অ্যাডমিন", 
+                    project: activeAdminProj, 
+                    category: activeAdminCat, 
+                    fileUrl: data.secure_url, 
+                    fileName: file.name, 
+                    channel: channel, 
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
+                    isAdmin: true, 
+                    isDeleted: false, 
+                    status: "Approved" 
+                });
                 document.getElementById('aUploadMsg').innerText = "✅ সফল!";
                 document.getElementById('aFile').value = "";
             }
-        } catch(e) { document.getElementById('aUploadMsg').innerText = "❌ ব্যর্থ!"; }
+        } catch(e) { 
+            document.getElementById('aUploadMsg').innerText = "❌ ব্যর্থ!"; 
+        }
     }
 
     async function saveNote() {
         const title = document.getElementById('noteTitle').value.trim();
         const content = document.getElementById('noteContent').innerHTML.trim(); 
         if(!title || !content || content === "<br>") return alert("তথ্য প্রদান করুন!");
+        
         if (editingNoteId) {
-            await dbRef.collection('channel_notes').doc(editingNoteId).update({ title, content, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            await dbRef.collection('channel_notes').doc(editingNoteId).update({ 
+                title: title, 
+                content: content, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            });
             cancelEdit();
         } else {
-            await dbRef.collection('channel_notes').add({ title, content, channel, timestamp: firebase.firestore.FieldValue.serverTimestamp(), isDeleted: false });
-            document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').innerHTML = "";
+            await dbRef.collection('channel_notes').add({ 
+                title: title, 
+                content: content, 
+                channel: channel, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
+                isDeleted: false 
+            });
+            document.getElementById('noteTitle').value = ""; 
+            document.getElementById('noteContent').innerHTML = "";
         }
     }
+
     function editNote(id) {
-        const note = currentNotes[id]; if(!note) return;
-        document.getElementById('noteTitle').value = note.title; document.getElementById('noteContent').innerHTML = note.content;
+        const note = currentNotes[id]; 
+        if(!note) return;
+        
+        document.getElementById('noteTitle').value = note.title; 
+        document.getElementById('noteContent').innerHTML = note.content;
         editingNoteId = id;
-        document.getElementById('saveNoteBtn').innerText = "আপডেট করুন"; document.getElementById('cancelEditBtn').style.display = "block";
+        document.getElementById('saveNoteBtn').innerText = "আপডেট করুন"; 
+        document.getElementById('cancelEditBtn').style.display = "block";
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
     function cancelEdit() {
-        editingNoteId = null; document.getElementById('noteTitle').value = ""; document.getElementById('noteContent').innerHTML = "";
-        document.getElementById('saveNoteBtn').innerText = "সেভ করুন"; document.getElementById('cancelEditBtn').style.display = "none";
+        editingNoteId = null; 
+        document.getElementById('noteTitle').value = ""; 
+        document.getElementById('noteContent').innerHTML = "";
+        document.getElementById('saveNoteBtn').innerText = "সেভ করুন"; 
+        document.getElementById('cancelEditBtn').style.display = "none";
     }
+
     function loadNotes() {
         dbRef.collection('channel_notes').onSnapshot(snap => {
-            let items = []; currentNotes = {};
-            snap.forEach(doc => { let d = doc.data(); if(d.channel === channel && !d.isDeleted) { items.push({ id: doc.id, ...d }); currentNotes[doc.id] = d; } });
+            let items = []; 
+            currentNotes = {};
+            
+            snap.forEach(doc => { 
+                let d = doc.data(); 
+                if(d.channel === channel && !d.isDeleted) { 
+                    items.push({ id: doc.id, ...d }); 
+                    currentNotes[doc.id] = d; 
+                } 
+            });
+            
             items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
             let html = "";
             items.forEach(d => {
