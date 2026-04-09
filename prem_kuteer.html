@@ -1147,6 +1147,7 @@
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
+                <div id="uFileNameDisplay" style="font-size:13px; color:var(--success-green); text-align:center; margin-bottom:10px; font-weight:bold;"></div>
                 
                 <div class="iphone-note">iPhone ইউজাররা 'Files' অ্যাপ থেকে সিলেক্ট করুন।</div>
                 
@@ -1165,6 +1166,7 @@
                 <label>গল্প (লিখে বা আপলোড করে পাঠান):</label>
                 <div style="position: relative;">
                     <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে বিস্তারিতভাবে লিখুন..."></textarea>
+                    <div id="wordCountDisplay" class="word-counter-box" style="color:#ff5252;">শব্দ: ০</div>
                 </div>
                 
                 <!-- Story File Upload Option (Visible only if Doc Allowed) -->
@@ -1591,12 +1593,12 @@
                 }
             } else { 
                 if(upMsg) {
-                    upMsg.innerText = "❌ ত্রুটি!"; 
+                    upMsg.innerText = `❌ ত্রুটি! (${data.error ? data.error.message : 'Unknown error'})`; 
                 }
             }
         } catch(err) { 
             if(upMsg) {
-                upMsg.innerText = "❌ ব্যর্থ!"; 
+                upMsg.innerText = `❌ ব্যর্থ! (${err.message || 'Unknown error'})`; 
             }
         }
         
@@ -1621,6 +1623,16 @@
             document.getElementById('sFileNameDisplay').innerText = "ফাইল: " + this.files[0].name;
         } else {
             document.getElementById('sFileNameDisplay').innerText = '';
+        }
+    });
+
+    // Added for Work Upload
+    document.getElementById('uFile').addEventListener('change', function() {
+        const display = document.getElementById('uFileNameDisplay');
+        if(this.files[0]) {
+            display.innerHTML = `✅ ফাইল সিলেক্ট করা হয়েছে: ${this.files[0].name}<br><span style="color:var(--primary-pink);">এবার নিচে 'জমা দিন' বাটনে ক্লিক করুন।</span>`;
+        } else {
+            display.innerHTML = '';
         }
     });
 
@@ -1981,10 +1993,18 @@
         workUI.innerHTML = "<p style='text-align:center; font-size:12px; color:var(--text-muted);'>লোড হচ্ছে...</p>";
         let workHtml = "";
         
+        const currentTime = Date.now();
+        
         dbRef.collection('tasks').where('userId', '==', currentUser.uid).get().then(snap => {
             snap.forEach(doc => {
                 let d = doc.data();
                 if(d.channel === channel && !d.isDeleted) {
+                    const ts = d.timestamp ? d.timestamp.toMillis() : currentTime;
+                    if(autoDeletePref !== 'never' && (currentTime - ts) >= (parseInt(autoDeletePref) * 3600000)) {
+                        dbRef.collection('tasks').doc(doc.id).delete();
+                        return;
+                    }
+                    
                     let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
                     let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
                     workHtml += `<div class="list-card" style="border-left:3px solid var(--primary-pink);"><b>📦 ${d.project}</b><p style="font-size:12px; color:var(--text-muted);">ফোল্ডার: ${d.category} | ফাইল: ${d.fileName || 'অজানা'}</p><span class="status-badge ${badgeClass}">${d.status}</span>${d.adminRemark || d.adminVoiceRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark || ''} ${voiceUi}</div>` : ''}</div>`;
@@ -1995,6 +2015,12 @@
                 storySnap.forEach(doc => {
                     let d = doc.data();
                     if(d.channel === channel && !d.isDeleted) {
+                        const ts = d.timestamp ? d.timestamp.toMillis() : currentTime;
+                        if(autoDeletePref !== 'never' && (currentTime - ts) >= (parseInt(autoDeletePref) * 3600000)) {
+                            dbRef.collection('channel_stories').doc(doc.id).delete(); 
+                            return;
+                        }
+                        
                         let badgeClass = d.status === "Approved" ? "status-approved" : (d.status === "Rejected" ? "status-rejected" : "status-pending");
                         let voiceUi = d.adminVoiceRemark ? `<div style="margin-top:5px;"><p style="font-size:11px; color:var(--text-muted); margin-bottom:3px;">মেন্টরের ভয়েস মেসেজ:</p><audio controls src="${d.adminVoiceRemark}"></audio></div>` : '';
                         workHtml += `<div class="list-card" style="border-left:3px solid var(--primary-pink);"><b>📖 ${d.title}</b><br><span class="status-badge ${badgeClass}">${d.status}</span>${d.adminRemark || d.adminVoiceRemark ? `<div class="remark-display"><b>মেন্টর:</b> ${d.adminRemark || ''} ${voiceUi}</div>` : ''}</div>`;
@@ -2070,23 +2096,66 @@
         
         const msgBox = document.getElementById('statusMsg');
         msgBox.style.color = "var(--primary-pink)";
-        msgBox.innerText = "⏳ পাঠানো হচ্ছে...";
-        
-        const fd = new FormData(); 
-        fd.append('file', file); 
-        fd.append('upload_preset', UPLOAD_PRESET);
+        msgBox.innerText = "⏳ পাঠানো হচ্ছে... (বড় ফাইল হলে কিছুটা সময় লাগতে পারে)";
         
         try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
-            const data = await res.json();
+            const cloudUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+            let secure_url = "";
             
-            if(data.secure_url) {
+            if (file.size > 100000000) { 
+                // Chunked upload for files > 100MB
+                const chunkSize = 20000000; // 20MB chunks
+                const uniqueUploadId = "up_" + Math.random().toString(36).substr(2, 9);
+                const totalChunks = Math.ceil(file.size / chunkSize);
+                let currentChunk = 0;
+                
+                while (currentChunk < totalChunks) {
+                    const start = currentChunk * chunkSize;
+                    const end = Math.min(start + chunkSize, file.size);
+                    const chunk = file.slice(start, end);
+                    
+                    const fd = new FormData();
+                    fd.append('file', chunk);
+                    fd.append('upload_preset', UPLOAD_PRESET);
+                    
+                    const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
+                    msgBox.innerText = `⏳ বড় ফাইল আপলোড হচ্ছে... (${Math.round((end/file.size)*100)}%)`;
+
+                    const res = await fetch(cloudUrl, {
+                        method: 'POST',
+                        headers: {
+                            'X-Unique-Upload-Id': uniqueUploadId,
+                            'Content-Range': contentRange
+                        },
+                        body: fd
+                    });
+                    const data = await res.json();
+                    if (data.secure_url) {
+                        secure_url = data.secure_url;
+                    }
+                    currentChunk++;
+                }
+            } else {
+                const fd = new FormData(); 
+                fd.append('file', file); 
+                fd.append('upload_preset', UPLOAD_PRESET);
+                
+                const res = await fetch(cloudUrl, { method: 'POST', body: fd });
+                const data = await res.json();
+                if(data.secure_url) {
+                    secure_url = data.secure_url;
+                } else {
+                    throw new Error(data.error ? data.error.message : "Upload failed");
+                }
+            }
+            
+            if(secure_url) {
                 await dbRef.collection('tasks').add({ 
                     sender: currentUser.displayName, 
                     userId: currentUser.uid, 
                     project: project, 
                     category: cat, 
-                    fileUrl: data.secure_url, 
+                    fileUrl: secure_url, 
                     fileName: file.name, 
                     channel: channel, 
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
@@ -2097,10 +2166,13 @@
                 msgBox.style.color = "#4caf50"; 
                 msgBox.innerText = "✅ সফল!"; 
                 document.getElementById('uFile').value = "";
+                document.getElementById('uFileNameDisplay').innerHTML = ""; 
+            } else {
+                throw new Error("Upload failed");
             }
         } catch(e) { 
             msgBox.style.color = "#ff5252"; 
-            msgBox.innerText = "❌ ব্যর্থ!"; 
+            msgBox.innerText = `❌ ব্যর্থ! (${e.message || "Unknown error"})`; 
         }
     }
 
@@ -2140,9 +2212,11 @@
                 const data = await res.json();
                 if(data.secure_url) {
                     fileUrl = data.secure_url;
+                } else {
+                    throw new Error(data.error ? data.error.message : "Upload failed");
                 }
             } catch(e) { 
-                msg.innerText = "❌ ফাইল আপলোড ব্যর্থ!"; 
+                msg.innerText = `❌ ফাইল আপলোড ব্যর্থ! (${e.message || "Unknown error"})`; 
                 return;
             }
         }
@@ -2171,10 +2245,12 @@
             document.getElementById('sText').value = ""; 
             document.getElementById('sFile').value = ""; 
             document.getElementById('sFileNameDisplay').innerText = "";
+            document.getElementById('wordCountDisplay').innerText = "শব্দ: ০";
+            document.getElementById('wordCountDisplay').style.color = "#ff5252";
             loadMyFeedback();
         } catch(e) { 
             msg.style.color = "#ff5252"; 
-            msg.innerText = "❌ ব্যর্থ হয়েছে!"; 
+            msg.innerText = `❌ ব্যর্থ হয়েছে! (${e.message || "Unknown error"})`; 
         }
     }
 
@@ -2624,10 +2700,10 @@
                 await dbRef.collection(colName).doc(id).update({ adminVoiceRemark: data.secure_url }); 
                 if(upMsg) upMsg.innerText = "✅ সম্পন্ন!"; 
             } else if(upMsg) {
-                upMsg.innerText = "❌ ত্রুটি!";
+                upMsg.innerText = `❌ ত্রুটি! (${data.error ? data.error.message : 'Unknown error'})`;
             }
         } catch(e) { 
-            if(upMsg) upMsg.innerText = "❌ ব্যর্থ!"; 
+            if(upMsg) upMsg.innerText = `❌ ব্যর্থ! (${e.message || "Unknown error"})`; 
         }
         
         setTimeout(() => { if(upMsg) upMsg.style.display = 'none'; }, 2000);
@@ -3038,9 +3114,11 @@
                 });
                 document.getElementById('aUploadMsg').innerText = "✅ সফল!";
                 document.getElementById('aFile').value = "";
+            } else {
+                throw new Error(data.error ? data.error.message : "Upload failed");
             }
         } catch(e) { 
-            document.getElementById('aUploadMsg').innerText = "❌ ব্যর্থ!"; 
+            document.getElementById('aUploadMsg').innerText = `❌ ব্যর্থ! (${e.message || "Unknown error"})`; 
         }
     }
 
