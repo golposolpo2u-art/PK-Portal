@@ -999,7 +999,7 @@
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
 
 <!-- MAIN CONTAINER -->
 <div class="container main-container">
@@ -1147,10 +1147,11 @@
                 </select>
                 
                 <label>ফাইল:</label>
-                <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color);" onclick="document.getElementById('uFile').click()">
+                <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); margin-bottom: 8px; font-size: 14px; padding: 12px; border: 1px solid var(--border-color); width:100%; cursor:pointer;" onclick="document.getElementById('uFile').click()">
                     <i class="fas fa-file-audio"></i> ফাইল সিলেক্ট করুন
                 </button>
                 <input type="file" id="uFile" style="display:none;">
+                <div id="uFileNameDisplay" style="font-size:13px; color:var(--success-green); text-align:center; margin-bottom:10px; font-weight:bold;"></div>
                 
                 <div class="iphone-note">iPhone ইউজাররা 'Files' অ্যাপ থেকে সিলেক্ট করুন।</div>
                 
@@ -1169,13 +1170,14 @@
                 <label>গল্প (লিখে বা আপলোড করে পাঠান):</label>
                 <div style="position: relative;">
                     <textarea id="sText" placeholder="আপনার চমৎকার গল্পটি এখানে বিস্তারিতভাবে লিখুন..."></textarea>
+                    <div id="wordCountDisplay" class="word-counter-box" style="color:#ff5252;">শব্দ: ০</div>
                 </div>
                 
                 <!-- Story File Upload Option (Visible only if Doc Allowed) -->
                 <div id="storyFileWrapper" style="display:none; margin-top:10px;">
                     <label style="color:var(--primary-gold); font-size:12px;">গল্পের ফাইল (PDF/DOC):</label>
                     <input type="file" id="sFile" accept=".txt, .doc, .docx, .pdf" style="display:none;">
-                    <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color);" onclick="document.getElementById('sFile').click()">
+                    <button type="button" class="btn-action" style="background: rgba(255, 255, 255, 0.1); color: var(--text-main); font-size: 13px; padding: 10px; border: 1px solid var(--border-color); width:100%; cursor:pointer;" onclick="document.getElementById('sFile').click()">
                         <i class="fas fa-file-pdf"></i> ফাইল সিলেক্ট করুন
                     </button>
                     <div id="sFileNameDisplay" style="font-size:12px; color:var(--success-green); text-align:center; margin-top:5px; font-weight:bold;"></div>
@@ -1628,6 +1630,16 @@
         }
     });
 
+    // Added for Work Upload
+    document.getElementById('uFile').addEventListener('change', function() {
+        const display = document.getElementById('uFileNameDisplay');
+        if(this.files[0]) {
+            display.innerHTML = `✅ ফাইল সিলেক্ট করা হয়েছে: ${this.files[0].name}<br><span style="color:var(--primary-gold);">এবার নিচে 'জমা দিন' বাটনে ক্লিক করুন।</span>`;
+        } else {
+            display.innerHTML = '';
+        }
+    });
+
     let savedRange;
     
     // Save range on blur to keep color picker working on mobile
@@ -1710,6 +1722,18 @@
                 document.getElementById('storyFileWrapper').style.display = 'none';
             }
         });
+
+        // Word count functionality for Story Box (Red/Green logic applied)
+        document.getElementById('sText').addEventListener('input', function() {
+            const words = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const display = document.getElementById('wordCountDisplay');
+            display.innerText = `শব্দ: ${words}`;
+            if(words >= 5000) {
+                display.style.color = "#4caf50"; // Green
+            } else {
+                display.style.color = "#ff5252"; // Red
+            }
+        });
     };
 
     auth.onAuthStateChanged(user => {
@@ -1726,6 +1750,7 @@
                 document.getElementById('mainPortal').style.display = 'block';
                 document.getElementById('userPortal').style.display = 'block';
                 
+                // Show actual name even if guest
                 const dName = user.displayName || user.email || "Guest";
                 document.getElementById('uNameDisplay').innerText = dName;
                 
@@ -2090,23 +2115,64 @@
         
         const msgBox = document.getElementById('statusMsg');
         msgBox.style.color = "var(--primary-gold)";
-        msgBox.innerText = "⏳ পাঠানো হচ্ছে...";
-        
-        const fd = new FormData(); 
-        fd.append('file', file); 
-        fd.append('upload_preset', UPLOAD_PRESET);
+        msgBox.innerText = "⏳ পাঠানো হচ্ছে... (বড় ফাইল হলে কিছুটা সময় লাগতে পারে)";
         
         try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: fd });
-            const data = await res.json();
+            const cloudUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+            let secure_url = "";
             
-            if(data.secure_url) {
+            if (file.size > 100000000) { 
+                // Chunked upload for files > 100MB
+                const chunkSize = 20000000; // 20MB chunks
+                const uniqueUploadId = "up_" + Math.random().toString(36).substr(2, 9);
+                const totalChunks = Math.ceil(file.size / chunkSize);
+                let currentChunk = 0;
+                
+                while (currentChunk < totalChunks) {
+                    const start = currentChunk * chunkSize;
+                    const end = Math.min(start + chunkSize, file.size);
+                    const chunk = file.slice(start, end);
+                    
+                    const fd = new FormData();
+                    fd.append('file', chunk);
+                    fd.append('upload_preset', UPLOAD_PRESET);
+                    
+                    const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
+                    msgBox.innerText = `⏳ বড় ফাইল আপলোড হচ্ছে... (${Math.round((end/file.size)*100)}%)`;
+
+                    const res = await fetch(cloudUrl, {
+                        method: 'POST',
+                        headers: {
+                            'X-Unique-Upload-Id': uniqueUploadId,
+                            'Content-Range': contentRange
+                        },
+                        body: fd
+                    });
+                    const data = await res.json();
+                    if (data.secure_url) {
+                        secure_url = data.secure_url;
+                    }
+                    currentChunk++;
+                }
+            } else {
+                const fd = new FormData(); 
+                fd.append('file', file); 
+                fd.append('upload_preset', UPLOAD_PRESET);
+                
+                const res = await fetch(cloudUrl, { method: 'POST', body: fd });
+                const data = await res.json();
+                if(data.secure_url) {
+                    secure_url = data.secure_url;
+                }
+            }
+            
+            if(secure_url) {
                 await dbRef.collection('tasks').add({ 
                     sender: currentUser.displayName, 
                     userId: currentUser.uid, 
                     project: project, 
                     category: cat, 
-                    fileUrl: data.secure_url, 
+                    fileUrl: secure_url, 
                     fileName: file.name, 
                     channel: channel, 
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(), 
@@ -2117,6 +2183,9 @@
                 msgBox.style.color = "#4caf50"; 
                 msgBox.innerText = "✅ সফল!"; 
                 document.getElementById('uFile').value = "";
+                document.getElementById('uFileNameDisplay').innerHTML = ""; 
+            } else {
+                throw new Error("Upload failed");
             }
         } catch(e) { 
             msgBox.style.color = "#ff5252"; 
@@ -3165,4 +3234,4 @@
     }
 </script>
 </body>
-</html>
+</html> 
